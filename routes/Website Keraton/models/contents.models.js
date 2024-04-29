@@ -30,31 +30,31 @@ const createUpdate = async (ident, id, data) => {
     try {
         if (ident != "create") await isExist(id).then(exist => { if (!exist) throw Error('Content ID didnt Exist') })
         if (textList) {
-            delete data.textList
-            for (let textIndex in textList) {
-                context[`xs${textIndex}`] = textList[textIndex]
+            for (let textIndex = 0; textIndex < textList.length; textIndex++) {
+                context[`xs${textIndex + 1}`] = {
+                    data: textList[textIndex].data,
+                    textSize: textList[textIndex].textSize
+                }
             }
             data.context = context
         }
         if (imageList) {
-            delete data.imageList
-            for (let imgIndex in imageList) {
-                context[`xi${imgIndex}`] = convertFilesToURL(imageList[imgIndex].path)
+            for (let imgIndex = 0; imgIndex < imageList.length; imgIndex++) {
+                context[`xi${imgIndex + 1}`] = imageList[imgIndex]?.path ? convertFilesToURL(imageList[imgIndex].path) : imageList[imgIndex]
             }
             data.context = context
         }
         if (linkList) {
-            delete data.linkList
-            for (let linkIndex of linkList) {
-                context[`xl${linkIndex}`] = linkList[linkIndex]
+            for (let linkIndex = 0; linkIndex < linkList.length; linkIndex++) {
+                context[`xl${linkIndex + 1}`] = linkList[linkIndex]
             }
             data.context = context
         }
         let dataToReturn
         if (ident != 'create') {
-            dataToReturn = await prisma.contents.create({ data })
-        } else dataToReturn = await prisma.contents.update({ where: { id }, data })
-        return updatedContent
+            dataToReturn = await prisma.contents.update({ where: { id }, data: { context } })
+        } else dataToReturn = await prisma.contents.create({ data })
+        return dataToReturn
     } catch (err) {
         throwError(err)
     }

@@ -6,6 +6,7 @@ const contentModel = require('../models/contents.models')
 const multer = require("multer");
 const crypto = require('crypto');
 const path = require('path');
+const { send } = require('process');
 
 //Start Multer
 const allowedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
@@ -44,14 +45,14 @@ router.get('/:id?', async (req, res) => {
     }
 })
 
-router.post('/:ident?/:id', upload.array('imageList'), async (req, res) => {
+router.post('/:ident?/:id', upload.array('imageList[]'), async (req, res) => {
     let sendedData
     try {
         if (req.files) req.body.imageList = req.files
         if (req.params.ident != "create") {
-            sendedData = await contentModel.createUpdate('create', null, req.body)
-        } else sendedData = await contentModel.createUpdate('update', +req.params.id, req.body)
-        return sendedData
+            sendedData = await contentModel.createUpdate('update', +req.params.id, req.body)
+        } else sendedData = await contentModel.createUpdate('create', null, req.body)
+        return success(res, 'Action success', sendedData)
     } catch (err) {
         return error(res, err.message)
     }

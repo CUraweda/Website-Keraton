@@ -51,13 +51,13 @@ const io = require('socket.io')(
 )
 
 io.on('connection', async (socket) => {
-  io.emit('online', onlineTrackJson.readDataKey())
-  socket.on('diss', () => {
-    io.emit('diss', { message: 'Log out' })
+  console.log(socket.id + 'User connected')
+  socket.on('dashboard', () => {
+    console.log('Dashboard called')
+    io.emit('dashboard')
   })
   socket.on('disconnect', () => {
-    onlineTrackJson.deleteEntry(name)
-    io.emit('online', onlineTrackJson.readDataKey())
+    console.log('User disconnected')
   })
 
 })
