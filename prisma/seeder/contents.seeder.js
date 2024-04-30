@@ -4,6 +4,7 @@ const contents = [
     {
         pageId: 1,
         sectionName: "Warisan Leluhur Cirebon",
+        sectionOrder: 0,
         context: {
             xs1: {
                 data: "Bersama Lestarikan Keraton Tertua di Kota Cirebon",
@@ -20,6 +21,7 @@ const contents = [
     {
         pageId: 1,
         sectionName: "Tentang",
+        sectionOrder: 1,
         context: {
             xs1: {
                 data: "Keraton Kesepuham Cirebon",
@@ -37,6 +39,7 @@ const contents = [
     {
         pageId: 1,
         sectionName: "Youtube Video",
+        sectionOrder: 2,
         context: {
             xi1: {
                 data: `${process.env.BASE_URL}/assets/dashboard/section-3.png`
@@ -49,6 +52,7 @@ const contents = [
     {
         pageId: 1,
         sectionName: "Sejarah",
+        sectionOrder: 3,
         context: {
             xs1: {
                 data: "Keraton Kesepuhan Cirebon"
@@ -70,18 +74,25 @@ const contents = [
     {
         pageId: 1,
         sectionName: "Event",
+        sectionOrder: 4,
         context: {
             xs1: {
                 data: "Keraton Kasepuhan Cirebon"
             },
+            xs2: {
+                data: "Hingga saat ini, Keraton Kasepuhan Cirebon tetap mempertahankan keaslian dan tradisi turun menurun dengan rutin melaksanakan upacara adat tradisi mereka."
+            },
             xi1: {
                 data: `${process.env.BASE_URL}/assets/dashboard/section-5a.png`,
+                sub: "Tadarus di Langgar Anggit"
             },
             xi2: {
-                data: `${process.env.BASE_URL}/assets/dashboard/section-5b.png`
+                data: `${process.env.BASE_URL}/assets/dashboard/section-5b.png`,
+                sub: "Jamasan Kerisa dan Tombak"
             },
             xi3: {
-                data: `${process.env.BASE_URL}/assets/dashboard/section-5c.png`
+                data: `${process.env.BASE_URL}/assets/dashboard/section-5c.png`,
+                sub: "Siraman Panjat Jimat"
             },
             xl1: {
                 data: "#/eventgratis"
@@ -90,6 +101,7 @@ const contents = [
     },
     {
         pageId: 1,
+        sectionOrder: 5,
         sectionName: "Objek Wisata",
         context: {
             xs1: {
@@ -106,6 +118,7 @@ const contents = [
     {
         pageId: 1,
         sectionName: "FAQ",
+        sectionOrder: 6,
         context: {
             xs1: {
                 data: "Ada pertanyaan untuk Kami?"
