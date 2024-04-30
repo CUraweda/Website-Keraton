@@ -36,18 +36,21 @@ const createUpdate = async (ident, id, data) => {
                     textSize: textList[textIndex].textSize
                 }
             }
+            delete data.textList
             data.context = context
         }
         if (imageList) {
             for (let imgIndex = 0; imgIndex < imageList.length; imgIndex++) {
                 context[`xi${imgIndex + 1}`] = imageList[imgIndex]?.path ? convertFilesToURL(imageList[imgIndex].path) : imageList[imgIndex]
             }
+            delete data.imageList
             data.context = context
         }
         if (linkList) {
             for (let linkIndex = 0; linkIndex < linkList.length; linkIndex++) {
                 context[`xl${linkIndex + 1}`] = linkList[linkIndex]
             }
+            delete data.linkList
             data.context = context
         }
         let dataToReturn

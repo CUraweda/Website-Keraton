@@ -17,7 +17,6 @@ router.get('/content/:id', async (req, res) => {
 router.get('/:id?', async (req, res) => {
     let { id } = req.params
     try {
-        console.log('sdbhjsdjbhasdbjk')
         const data = id ? await pagesModels.getOne(id) : await pagesModels.getAll()
         return success(res, 'Success', data)
     } catch (err) {

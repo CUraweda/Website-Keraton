@@ -116,7 +116,7 @@ const contents = [
 
             },
             xs3: {
-                data: "Bagaimana cara saya memesan lonte melalui website?",
+                data: "Bagaimana saya ?",
                 sub: "Anda tidak bisa memesan lonte melalui website kami"
 
             }

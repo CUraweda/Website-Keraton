@@ -24,6 +24,7 @@ const server = http.createServer(app)
 const allowedOrigins = [
   "https://www.postman.com", //Postman
   "http://localhost:9000", //Development
+  "http://localhost:5173" // POS Development
 ];
 const corsOptions = {
   origin: function (origin, callback) {
