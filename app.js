@@ -13,6 +13,8 @@ var invoiceRouter = require('./routes/invoice')
 var reportRouter = require('./routes/report')
 var checkoutRouter = require('./routes/checkout')
 const keratonWebsiteRouter = require('./routes/Website Keraton/controller/index')
+const { error } = require('console')
+const { success } = require('./routes/utils/response')
 
 var app = express()
 var port = normalizePort(process.env.PORT || '3000')
@@ -22,17 +24,18 @@ const server = http.createServer(app)
 
 //? CORS SECTION START
 const allowedOrigins = [
-  "https://www.postman.com", //Postman
   "http://localhost:9000", //Development
   "http://localhost:5173" // POS Development
 ];
 const corsOptions = {
   origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
+    if(origin){
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    }else callback(null, true)
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTION",
   credentials: true,
@@ -72,6 +75,15 @@ app.use(cookieParser())
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors(corsOptions))
+
+app.get('/ping', async (req, res) => {
+  try{
+    return success(res, 'Pinging...', { data: "Pong" })
+  }catch(err){
+    console.log(err)
+    return error(res, err.message)
+  }
+})
 
 //? ROUTES
 app.use('/', dashboardRouter)
