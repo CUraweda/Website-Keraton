@@ -5,7 +5,17 @@ const prisma = new PrismaClient()
 
 router.get('/guide-list', async (req, res) => {
   try {
-    const guide = await prisma.guide.findMany()
+    const guide = await prisma.guide.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        gender: true,
+        birthdate: true,
+        image: true,
+        desc: true,
+      }
+    })
     res.status(200).json(guide)
   } catch (error) {
     console.error(error)
