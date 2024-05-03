@@ -93,7 +93,7 @@ app.use('/invoice', invoiceRouter)
 app.use('/report', reportRouter)
 app.use('/checkout', checkoutRouter)
 app.use('/keraton', keratonWebsiteRouter)
-// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 //? RUN DEVELOPMENT SERVER
