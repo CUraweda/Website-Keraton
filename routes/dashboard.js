@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
     res.status(200).json({ token: token })
   } catch (error) {
     console.error('Error:', error)
-    res.status(500).json({ message: 'Terjadi kesalahan saat login' })
+    res.status(500).json({ message: 'Password tidak sesuai' })
   }
 })
 

@@ -13,7 +13,7 @@ const cashiers = [
         name: 'admin',
         email: 'admin@dewa.com',
         number: '999999999999',
-        password: 'admin',
+        password: 'tesadm123',
       }
 ]
 
