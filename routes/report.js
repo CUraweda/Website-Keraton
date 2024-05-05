@@ -12,23 +12,8 @@ startDate.setHours(7, 0, 0, 0);
 const endDate = new Date(today);
 endDate.setHours(30, 59, 59, 999);
 
-const monthMap = {
-  1: "Januari",
-  2: "Februari",
-  3: "Maret",
-  4: "April",
-  5: "Mei",
-  6: "Juni",
-  7: "Juli",
-  8: "Agustus",
-  9: "September",
-  10: "Oktober",
-  11: "November",
-  12: "Desember",
-};
-
 // Fungsi untuk menghasilkan kategori tahun berdasarkan data tahunan
-function generateYearlyCategory(yearlyData) {
+function generateYearlyCategory() {
   const months = {
     1: "JAN",
     2: "FEB",
@@ -44,39 +29,17 @@ function generateYearlyCategory(yearlyData) {
     12: "DEC",
   };
 
-  let usedMonths = 0;
-
-  yearlyData.forEach((order) => {
-    order.detailTrans.forEach((detail) => {
-      const month = detail.transaction.createdDate.getMonth() + 1;
-      usedMonths = month;
-    });
-  });
-
   const yearlyCategory = [""];
   for (let month = 1; month <= 12; month++) {
-    if (usedMonths >= month) {
-      yearlyCategory.push(months[month]);
-    }
+    yearlyCategory.push(months[month]);
   }
   return yearlyCategory;
 }
 // Fungsi untuk menghasilkan kategori bulan berdasarkan data bulanan
-function generateMonthlyCategory(monthlyData, daysInMonth) {
-  let usedDays = 0;
-
-  monthlyData.forEach((order) => {
-    order.detailTrans.forEach((detail) => {
-      const day = detail.transaction.createdDate.getDate();
-      usedDays = day;
-    });
-  });
-
+function generateMonthlyCategory(daysInMonth) {
   const monthlyCategory = [""];
   for (let day = 1; day <= daysInMonth; day++) {
-    if (usedDays >= day) {
-      monthlyCategory.push(day);
-    }
+    monthlyCategory.push(day);
   }
   return monthlyCategory;
 }
@@ -291,7 +254,7 @@ router.get("/yearly-chart-data/:targetYear", async (req, res, next) => {
       return {
         name: category,
         color: colors[index],
-        data: [0, ...Array.from({ length: 11 }, () => 0)], // Menambahkan data kosong di index 0
+        data: [0, ...Array.from({ length: 12 }, () => 0)], // Menambahkan data kosong di index 0
       };
     });
 
@@ -309,7 +272,7 @@ router.get("/yearly-chart-data/:targetYear", async (req, res, next) => {
       });
     });
 
-    const yearlyCategory = generateYearlyCategory(yearlyData);
+    const yearlyCategory = generateYearlyCategory();
 
     res.json({
       targetYear: targetYear,
@@ -386,11 +349,9 @@ router.get(
         });
       });
 
-      const monthlyCategory = generateMonthlyCategory(monthlyData, daysInMonth);
-      const targetMonth = monthMap[targetMonthInt];
+      const monthlyCategory = generateMonthlyCategory(daysInMonth);
 
       res.status(200).json({
-        targetMonth,
         monthlyCategory: monthlyCategory,
         monthlyData: Object.values(monthlyChartData),
       });
