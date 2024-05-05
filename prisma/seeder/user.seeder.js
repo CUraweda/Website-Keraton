@@ -6,7 +6,7 @@ const users = [
     {
         name: 'Teddy Lazuardi',
         email: 'TeddyLazuardi@gmail.com',
-        role: "USER",
+        role: "CASHIER",
         number: '085678901234',
         password: 'Teddy1234',
     },
@@ -17,10 +17,10 @@ const users = [
         password: "password"
     },
     {
-        name: "User 1",
+        name: "adminpos",
         email: "user1@gmail.com",
-        role: "USER",
-        password: "password"
+        role: "CASHIER",
+        password: "tesadm1"
     },
     {
         name: "Customers 1",
@@ -33,6 +33,12 @@ const users = [
         email: "customer2@gmail.com",
         role: "CUSTOMER",
         password: "password"
+    },
+    {
+        name: "superadmincuraweda",
+        email: "curaweda@gmail.com",
+        role: "SUPER_ADMIN",
+        password: "curawedasuper"
     },
 ]
 

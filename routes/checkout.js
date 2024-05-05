@@ -45,13 +45,13 @@ router.post('/create-transaction', async function (req, res, next) {
 
   try {
     // Menemukan kasir dengan nama "Teddy Lazuardi"
-    const cashier = await prisma.cashier.findFirst({
+    const user = await prisma.user.findFirst({
       where: {
         name: name
       }
     })
 
-    if (!cashier) {
+    if (!user) {
       throw new Error('Kasir tidak ditemukan')
     }
 
@@ -64,9 +64,9 @@ router.post('/create-transaction', async function (req, res, next) {
         discount: discount,
         cashback: cashback,
         plannedDate: plannedDate,
-        cashier: {
+        user: {
           connect: {
-            id: cashier.id
+            id: user.id
           }
         },
         nationality: nationality
@@ -86,11 +86,11 @@ router.post('/create-transaction', async function (req, res, next) {
               id: transaction.id
             }
           },
-          guide: {
+          guide: o.guideId ? {
             connect: {
               id: o.guideId
             }
-          },
+          } : {},
           order: {
             connect: {
               id: o.id

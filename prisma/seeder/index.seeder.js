@@ -1,5 +1,4 @@
 const { userSeed } = require('./user.seeder')
-const { cashierData } = require('./cashier.seeder')
 const { guideData } = require('./guide.seeder')
 const { contentSeed } = require('./contents.seeder')
 const { eventSeed } = require('./event.seeder.')
@@ -13,7 +12,6 @@ const { typeSeed } = require('./purchasableType.seeder.')
 
 async function main() {
   await userSeed()
-  await cashierData()
   await guideData()
   await nationalitySeed()
   await iterationSeed()
