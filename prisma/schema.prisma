@@ -27,12 +27,6 @@ enum Category {
   MANCANEGARA
 }
 
-enum Interval {
-  PERMINGGU
-  PERBULAN
-  PERTAHUN
-}
-
 enum Status {
   SUDAH_DIGUNAKAN
   DAPAT_DIGUNAKAN
@@ -71,15 +65,33 @@ model Tokens {
 }
 
 model Order {
-  id          String        @id @default(uuid())
-  image       String?
-  name        String
-  desc        String?
-  price       Decimal       @db.Decimal(18, 2)
-  category    Category?
-  interval    Interval?
-  createdAt   DateTime      @default(now())
-  detailTrans DetailTrans[]
+  id             String        @id @default(uuid())
+  image          String?
+  name           String
+  desc           String?
+  price          Decimal       @db.Decimal(18, 2)
+  category       Category?
+  createdAt      DateTime      @default(now())
+  detailTrans    DetailTrans[]
+  OrderType      OrderType?    @relation(fields: [orderTypeId], references: [id])
+  orderTypeId    Int?
+  OrderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
+  orderSubTypeId Int?
+}
+
+model OrderType {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  OrderSubType OrderSubType[]
+  Order        Order[]
+}
+
+model OrderSubType {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  orderType   OrderType @relation(fields: [orderTypeId], references: [id])
+  orderTypeId Int
+  Order       Order[]
 }
 
 model Transaction {
@@ -101,6 +113,7 @@ model Transaction {
 model DetailTrans {
   id            String      @id @default(uuid())
   amount        Int
+  createdAt     DateTime    @default(now())
   transaction   Transaction @relation(fields: [transactionID], references: [id])
   transactionID String
   order         Order       @relation(fields: [orderID], references: [id])
@@ -151,31 +164,4 @@ model EventIteration {
   id     Int      @id @default(autoincrement())
   name   String   @unique
   Events Events[]
-}
-
-model Purchasable {
-  id               Int                @id @default(autoincrement())
-  name             String
-  desc             String             @db.Text
-  unit             String
-  price            Float?
-  priceUmum        Float?
-  priceMancanegara Float?
-  image            String
-  subType          PurchasableSubType @relation(fields: [subTypeId], references: [id])
-  subTypeId        Int
-}
-
-model PurchasableType {
-  id                 Int                  @id @default(autoincrement())
-  name               String               @unique
-  PurchasableSubType PurchasableSubType[]
-}
-
-model PurchasableSubType {
-  id          Int             @id @default(autoincrement())
-  name        String          @unique
-  type        PurchasableType @relation(fields: [typeId], references: [id])
-  typeId      Int
-  Purchasable Purchasable[]
 }

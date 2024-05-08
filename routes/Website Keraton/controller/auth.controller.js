@@ -32,7 +32,7 @@ expressRouter.post('/login', async (req, res) => {
 
 expressRouter.post('/logout', auth(), async (req, res) => {
     try {
-        const data = await authModels.logOut(req.user.id)
+        await authModels.logOut(req.user.id)
         res.clearCookie('refresh_token');
         return success(res, 'Log Out Success')
     } catch (err) {

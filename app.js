@@ -1,18 +1,13 @@
 var express = require('express')
 var cors = require('cors')
-var path = require('path')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var logger = require('morgan')
 var http = require('http')
 
-var dashboardRouter = require('./routes/dashboard')
-var addRouter = require('./routes/add')
-var editRouter = require('./routes/edit')
-var invoiceRouter = require('./routes/invoice')
 var reportRouter = require('./routes/report')
-var checkoutRouter = require('./routes/checkout')
 const keratonWebsiteRouter = require('./routes/Website Keraton/controller/index')
+const keratonPosRouter = require('./routes/Keraton PoS/controller/index')
 const { error } = require('console')
 const { success } = require('./routes/utils/response')
 
@@ -86,14 +81,10 @@ app.get('/ping', async (req, res) => {
 })
 
 //? ROUTES
-app.use('/', dashboardRouter)
-app.use('/add', addRouter)
-app.use('/edit', editRouter)
-app.use('/invoice', invoiceRouter)
 app.use('/report', reportRouter)
-app.use('/checkout', checkoutRouter)
 app.use('/keraton', keratonWebsiteRouter)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/keraton-pos', keratonPosRouter)
+app.use('/uploads', express.static('./public/assets/uploads'));
 
 
 //? RUN DEVELOPMENT SERVER

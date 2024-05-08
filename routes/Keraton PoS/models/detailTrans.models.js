@@ -1,19 +1,17 @@
-var express = require("express");
-var router = express.Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const { throwError } = require("../../utils/helper");
+const { prisma } = require("../../utils/prisma");
 
-router.get("/transaction-list", async (req, res) => {
+const getAll = async (search) => {
   try {
-    const detailTrans = await prisma.detailTrans.findMany({
-      where: req.query.search
+    return await prisma.detailTrans.findMany({
+      where: search
         ? {
             OR: [
               {
                 transaction: {
                   user: {
                     name: {
-                      contains: req.query.search,
+                      contains: search,
                     },
                   },
                 },
@@ -21,7 +19,7 @@ router.get("/transaction-list", async (req, res) => {
               {
                 order: {
                   name: {
-                    contains: req.query.search,
+                    contains: search,
                   },
                 },
               },
@@ -49,12 +47,9 @@ router.get("/transaction-list", async (req, res) => {
         },
       },
     });
-
-    res.status(200).json(detailTrans);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+  } catch (err) {
+    throwError(err);
   }
-});
+};
 
-module.exports = router;
+module.exports = { getAll };
