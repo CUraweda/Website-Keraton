@@ -11,7 +11,7 @@ expressRouter.get("/type-details", async (req, res) => {
   }
 });
 expressRouter.post(
-  "/type-details/:action/:id?",
+  "/type-action/:action/:id?",
   async (req, res) => {
     try {
       switch (req.params.action) {
@@ -22,7 +22,7 @@ expressRouter.post(
           await orderTypeModel.update(req.params.id, req.body);
           return success(res, "Update tipe pesanan berhasil!");
         case "delete":
-          await orderTypeModel.deleteOrder(req.params.id);
+          await orderTypeModel.deleteOrderType(req.params.id);
           return success(res, "Penghapusan tipe pesanan berhasil!");
         default:
           throw new Error(`Aksi ${action} tidak ditemukan`);

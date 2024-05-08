@@ -4,7 +4,7 @@ const { prisma } = require("../../utils/prisma");
 
 const isExist = async (id) => {
   try {
-    return await prisma.orderSubType.findFirst({ where: { id: id } });
+    return await prisma.category.findFirst({ where: { id: id } });
   } catch (err) {
     throwError(err);
   }
@@ -12,7 +12,7 @@ const isExist = async (id) => {
 
 const getAll = async () => {
   try {
-    return await prisma.orderSubType.findMany();
+    return await prisma.category.findMany();
   } catch (err) {
     throwError(err);
   }
@@ -20,7 +20,7 @@ const getAll = async () => {
 
 const create = async (data) => {
   try {
-    return await prisma.orderSubType.create({ data });
+    return await prisma.category.create({ data });
   } catch (err) {
     throwError(err);
   }
@@ -28,22 +28,22 @@ const create = async (data) => {
 
 const update = async (id, data) => {
   try {
-    const orderSubType = await isExist(id);
-    if (!orderSubType) throw Error("Order Sub Type ID tidak ditemukan");
-    return await prisma.orderSubType.update({ where: { id }, data });
+    const category = await isExist(id);
+    if (!category) throw Error("Order Sub Type ID tidak ditemukan");
+    return await prisma.category.update({ where: { id }, data });
   } catch (err) {
     throwError(err);
   }
 };
 
-const deleteOrderSubType = async (id) => {
+const deleteCategory = async (id) => {
   try {
     const order = await isExist(id);
     if (!order) throw Error("Order Sub Type ID tidak ditemukan");
-    return await prisma.orderSubType.delete({ where: { id } });
+    return await prisma.category.delete({ where: { id } });
   } catch (err) {
     throwError(err);
   }
 };
 
-module.exports = { isExist, getAll, create, update, deleteOrderSubType };
+module.exports = { isExist, getAll, create, update, deleteCategory };

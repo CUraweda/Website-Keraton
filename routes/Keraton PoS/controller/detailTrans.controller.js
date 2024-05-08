@@ -5,7 +5,15 @@ const detailTransModel = require("../models/detailTrans.models");
 expressRouter.get("/transaction-invoice", async (req, res) => {
   try {
     const data = await detailTransModel.getAll(req.query.search);
-    return success(res, "Data Transaksi berhasil di-fetch!", data);
+    return success(res, "Data Invoice berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
+expressRouter.get("/table-data", async (req, res) => {
+  try {
+    const data = await detailTransModel.getTableData(req.query.category.toUpperCase());
+    return success(res, "Data Tabel berhasil di-fetch!", data);
   } catch (err) {
     return error(res, err.message);
   }

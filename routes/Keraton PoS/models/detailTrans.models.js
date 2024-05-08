@@ -52,4 +52,32 @@ const getAll = async (search) => {
   }
 };
 
-module.exports = { getAll };
+const getTableData = async (category) => {
+  try {
+    const detailTrans = await prisma.detailTrans.findMany({
+      where: category
+        ? { order: { category: category } }
+        : {},
+      select: {
+        amount: true,
+        transaction: {
+          select: { createdDate: true },
+        },
+        order: {
+          select: { id: true, name: true, category: true, price: true },
+        },
+      },
+    });
+
+    // Menghitung total harga pesanan dan menggabungkannya dengan hasil
+    const finalDetailTrans = detailTrans.map((detailTrans) => ({
+      ...detailTrans,
+      total_price: detailTrans.amount * detailTrans.order.price,
+    }));
+    return finalDetailTrans
+  } catch (err) {
+    throwError;
+  }
+};
+
+module.exports = { getAll, getTableData };

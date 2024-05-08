@@ -11,7 +11,7 @@ expressRouter.get("/sub-type-details", async (req, res) => {
   }
 });
 expressRouter.post(
-  "/sub-type-details/:action/:id?",
+  "/sub-type-action/:action/:id?",
   async (req, res) => {
     try {
       switch (req.params.action) {
@@ -22,7 +22,7 @@ expressRouter.post(
           await orderSubTypeModel.update(req.params.id, req.body);
           return success(res, "Update sub tipe pesanan berhasil!");
         case "delete":
-          await orderSubTypeModel.deleteOrder(req.params.id);
+          await orderSubTypeModel.deleteOrderSubType(req.params.id);
           return success(res, "Penghapusan sub tipe pesanan berhasil!");
         default:
           throw new Error(`Aksi ${action} tidak ditemukan`);

@@ -2,6 +2,14 @@ const { expressRouter } = require("../../utils/router");
 const { error, success } = require("../../utils/response");
 const transactionModel = require("../models/transaction.models");
 
+expressRouter.get("/income-revenue", async (req, res) => {
+  try {
+    const data = await transactionModel.getRevenue();
+    return success(res, "Data Income berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 expressRouter.post("/create-transaction", async (req, res) => {
   try {
     const data = await transactionModel.create(

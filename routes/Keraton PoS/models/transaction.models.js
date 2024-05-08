@@ -1,4 +1,4 @@
-const { throwError } = require("../../utils/helper");
+const { throwError, startDate, endDate } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
 
 const findUser = async (name) => {
@@ -8,7 +8,19 @@ const findUser = async (name) => {
     throwError(err);
   }
 };
-
+const getRevenue = async () => {
+  try {
+    const transaction = await prisma.transaction.findMany({
+      where: { createdDate: { gte: startDate, lte: endDate } },
+    });
+    const total = parseInt(
+      transaction.reduce((acc, curr) => acc + parseInt(curr.total), 0)
+    );
+    return total;
+  } catch (err) {
+    throwError(err);
+  }
+};
 const create = async (data, username, nationality) => {
   try {
     const order = data.order;
@@ -36,7 +48,6 @@ const create = async (data, username, nationality) => {
     throwError(err);
   }
 };
-
 const createDetail = async (order, transaction) => {
   try {
     for (const o of order) {
@@ -68,4 +79,4 @@ const createDetail = async (order, transaction) => {
   }
 };
 
-module.exports = { create };
+module.exports = { getRevenue, create };

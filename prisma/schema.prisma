@@ -21,12 +21,6 @@ enum Gender {
   FEMALE
 }
 
-enum Category {
-  UMUM
-  PELAJAR
-  MANCANEGARA
-}
-
 enum Status {
   SUDAH_DIGUNAKAN
   DAPAT_DIGUNAKAN
@@ -70,13 +64,20 @@ model Order {
   name           String
   desc           String?
   price          Decimal       @db.Decimal(18, 2)
-  category       Category?
   createdAt      DateTime      @default(now())
   detailTrans    DetailTrans[]
+  category       Category?     @relation(fields: [categoryId], references: [id])
+  categoryId     Int?
   OrderType      OrderType?    @relation(fields: [orderTypeId], references: [id])
   orderTypeId    Int?
   OrderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
   orderSubTypeId Int?
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  Order Order[]
 }
 
 model OrderType {
