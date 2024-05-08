@@ -16,6 +16,7 @@ import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
 import silsilahDesktop from "../pages/silsilahDesktop.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
+import NyobaAdmin from "../pages/nyobaAdmin.vue";
 
 const routes = [
   {
@@ -107,6 +108,11 @@ const routes = [
     path: "/silsilahdesktop",
     name: "silsilahktop",
     component: silsilahDesktop,
+  },
+  {
+    path: "/nyobaAdmin",
+    name: "nyobaAdmin",
+    component: NyobaAdmin,
   },
 ];
 

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar border />
+    <navbar border :isCheckoutPage="true"/>
   </nav>
   <div class="header">
     <div class="text1">
@@ -359,6 +359,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 .header {
+  margin-top: 93px;
   background: linear-gradient(
     90deg,
     rgba(218, 165, 32, 0.5) 0%,

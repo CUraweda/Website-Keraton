@@ -14,31 +14,102 @@
     <div class="navbar-right">
       <nav>
         <ul>
-          <li class="sub"><a href="beranda">Beranda</a></li>
           <li class="sub">
-            <p>Sejarah</p>
-            <ul class="dropdown-list" style="margin-top: -1rem">
-              <li><a href="#/sejarah">Keraton</a></li>
-              <li><a href="#/sejarahsilsilah">Silsilah</a></li>
-            </ul>
+            <q-btn
+              flat
+              label="Beranda"
+              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              no-caps
+              dense
+              clickable v-ripple to="/"
+            ></q-btn>
           </li>
           <li class="sub">
-            <p>Booking</p>
-            <ul class="dropdown-list">
-              <li><a href="#/booking">Paket Keraton</a></li>
-              <li><a href="#/eventgratis">Tiket Event</a></li>
-            </ul>
+            <q-btn
+              flat
+              label="Sejarah"
+              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              no-caps
+              dense
+
+            >
+            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-menu>
+                <q-list>
+                  <q-item clickable v-ripple to="/sejarah">
+                    <q-item-section>
+                      <q-item-label>Keraton</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple to="/sejarahsilsilah">
+                    <q-item-section>
+                      <q-item-label>Silsilah</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </li>
           <li class="sub">
-            <p>Objek Wisata</p>
-            <ul class="dropdown-list">
-              <li><a href="#/areakeraton">Keraton Kesepuhan</a></li>
-              <li><a href="#/museum">Museum Pusaka</a></li>
-              <li><a href="#/agungdalem">Dalem Agung Pakungwati</a></li>
-              <!-- <li><a href="../views/Lotus.vue">Lotus</a></li> -->
-            </ul>
+            <q-btn
+              flat
+              label="Booking"
+              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              no-caps
+              dense
+            >
+            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-menu>
+                <q-list>
+                  <q-item clickable v-ripple to="/booking">
+                    <q-item-section>
+                      <q-item-label>Paket Keraton</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple to="/eventgratis">
+                    <q-item-section>
+                      <q-item-label>Tiket Event</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
           </li>
-          <button
+          <li class="sub">
+            <q-btn
+              flat
+              label="Objek Wisata"
+              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              no-caps
+              dense
+            >
+            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-menu>
+                <q-list>
+                  <q-item clickable v-ripple to="/areakeraton">
+                    <q-item-section>
+                      <q-item-label>Keraton Kesepuhan</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple to="/museum">
+                    <q-item-section>
+                      <q-item-label>Museum Pusaka</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-ripple to="/agungdalem">
+                    <q-item-section>
+                      <q-item-label>Dalem Agung Pangkuwati</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </li>
+          <!-- <button
             @click="getTickets"
             style="
               border-radius: 5px;
@@ -54,7 +125,15 @@
             "
           >
             Dapatkan Tiket
-          </button>
+          </button> -->
+          <q-btn
+            style="background: #123b32; color: white; padding-inline: 30px"
+            no-caps
+            dense
+            @click="getTickets"
+          >
+            <span class="text-bold">Dapatkan Tiket</span>
+          </q-btn>
         </ul>
       </nav>
     </div>
@@ -77,7 +156,11 @@ export default {
       type: Boolean,
       default: false,
     },
+  isCheckoutPage: {
+    type: Boolean,
+    default: false,
   },
+},
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
@@ -159,6 +242,7 @@ nav ul.dropdown-list li {
   color: black;
 }
 
+
 @keyframes moveUp {
   0% {
     opacity: 0;
@@ -226,6 +310,7 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin-right: 88px;
 }
 

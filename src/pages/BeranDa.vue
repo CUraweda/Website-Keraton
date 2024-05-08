@@ -1,34 +1,46 @@
 <template>
   <navbar isWhiteText />
-  <section id="hero">
+  <section id="hero"
+  :style="{
+       'min-height': '100vh',
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionData4?.xi1.data  })`,
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'background-position': 'center',
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      'justify-content': 'center',
+  }"
+  >
     <div class="texthero">
-      <h5 style="color: #fae084">{{ sectionData["0"]?.name }}</h5>
+      <!-- <h5 style="color: #fae084">{{ sectionData["0"]?.name }}</h5> -->
+      <h5 style="color: #fae084">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
-        {{ sectionData["0"]?.context.xs1.data }}
+        {{ sectionData?.xs1?.data }}
       </h2>
-      <a :href="sectionData['0']?.context.xi1.data" v-mod class="btn1">
+      <a :href="sectionData?.xi1?.data" v-mod class="btn1"> 
         <img class="btn1" src="../assets/images/btn1.png" />
-      </a>
+      </a> 
     </div>
   </section>
 
-  <section
-    class="sec-home"
-    id="section2"
-    :style="{
-      'background-image': `url(${sectionData['1']?.context.xi1.data}),
+  <section class="sec-home" id="section2"
+  :style="{
+      'background-image': `url(${sectionData1?.xi1.data}),
     linear-gradient(transparent, #fff9a0, #ffe96e)`,
       'background-position': 'center',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
+      'height':'500px'
     }"
   >
     <div class="container">
       <div class="hero">
-        <p class="aboutText">{{ sectionData["1"]?.name }}</p>
-        <h2 class="ksc2Text">{{ sectionData["1"]?.context.xs1.data }}</h2>
+        <p class="aboutText">{{ sectionName1 }}</p>
+        <h2 class="ksc2Text">{{ sectionData1?.xs1?.data }}</h2> 
         <p class="sej1Text" style="margin-top: 50px">
-          {{ sectionData["1"]?.context.xs2.data }}
+          {{ sectionData1?.xs2?.data }}
         </p>
       </div>
     </div>
@@ -37,7 +49,7 @@
   <section class="sec-home" id="section3">
     <div class="container">
       <div class="text">
-        <a :href="sectionData['2']?.context.xl1.data">
+        <a :href="sectionData2?.xl1.data">
           <img src="../assets/images/Frame.png" />
         </a>
       </div>
@@ -47,25 +59,25 @@
   <section class="sec-home" id="section4">
     <div class="container">
       <div class="text">
-        <p class="sej2Text">{{ sectionData["3"]?.name }}</p>
-        <h2 class="ksc4Text">{{ sectionData["3"]?.context.xs1.data }}</h2>
+        <p class="sej2Text">{{ sectionName3 }}</p>
+        <h2 class="ksc4Text">{{ sectionData3?.xs1.data }}</h2> 
       </div>
 
       <div class="card1">
         <a href="https://your-link-here.com">
-          <img :src="sectionData['3']?.context.xi1.data" alt="sejarah1" />
+          <img :src="sectionData3?.xi1.data" alt="sejarah1" />
         </a>
       </div>
 
       <div class="card2">
         <a href="https://your-link-here.com">
-          <img :src="sectionData['3']?.context.xi2.data" alt="sejarah2" />
+          <img :src="sectionData3?.xi2.data" alt="sejarah2" />
         </a>
       </div>
 
       <div class="card3">
         <a href="https://your-link-here.com">
-          <img :src="sectionData['3']?.context.xi3.data" alt="sejarah3" />
+          <img :src="sectionData3?.xi3.data" alt="sejarah3" />
           <div class="caption">
             <svg
               width="32"
@@ -83,7 +95,7 @@
         </a>
       </div>
 
-      <a :href="sectionData['3']?.context.xl1.data">
+      <a :href="sectionData3?.xl1.data">
         <img class="pls" src="../assets/images/btninfo.png"
       /></a>
     </div>
@@ -92,21 +104,21 @@
   <section id="section5">
     <div class="container">
       <div class="text">
-        <p class="eventText">{{ sectionData["4"]?.name }}</p>
-        <p class="ksc5Text">{{ sectionData["4"]?.context.xs1.data }}</p>
+        <p class="eventText">{{ sectionName4}}</p>
+        <p class="ksc5Text">{{ sectionData4?.xs1.data }}</p>
       </div>
       <div class="container-card">
         <div
           class="card4"
           :style="{
-            'background-image': `url(${sectionData['4']?.context.xi1.data})`,
+            'background-image': `url(${sectionData4?.xi1.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
             'margin-left': '10px',
             'background-color': '#b6b6b6',
           }"
         >
-          <div class="overlay"></div>
+          <div class="overlay"></div> 
           <a href="#">
             <p class="title5" style="filter: brightness(200%)">
               Tadarus di Langgar Anggit
@@ -116,7 +128,7 @@
         <div
           class="card5"
           :style="{
-            'background-image': `url(${sectionData['4']?.context.xi2.data})`,
+            'background-image': `url(${sectionData4?.xi2.data})`,
           }"
         >
           <a href="#">
@@ -126,7 +138,7 @@
         <div
           class="card6"
           :style="{
-            'background-image': `url(${sectionData['4']?.context.xi3.data})`,
+            'background-image': `url(${sectionData4?.xi3.data})`,
           }"
         >
           <a href="#">
@@ -139,7 +151,7 @@
         dan tradisi turun menurun dengan rutin melaksanakan upacara adat tradisi
         mereka.
       </p>
-      <a :href="sectionData['4']?.context.xl1.data">
+      <a :href="sectionData4?.xl1.data">
         <img class="btnViewMore" src="../assets/images/btninfo.png" />
       </a>
     </div>
@@ -148,15 +160,15 @@
   <section class="sec-home" id="section6">
     <div class="container">
       <div class="text">
-        <p class="owText">{{ sectionData["5"]?.name }}</p>
-        <p class="ksc6Text">{{ sectionData["5"]?.context.xs1.data }}</p>
+        <p class="owText">{{ sectionName5 }}</p>
+        <p class="ksc6Text">{{ sectionData5?.xs1.data }}</p>
       </div>
       <div class="tiket">
         <div class="text2">
           <p class="sej3Text">
-            {{ sectionData["5"]?.context.xs2.data }}
+            {{ sectionData5?.xs2.data }}
           </p>
-          <a :href="sectionData['5']?.context.xl1.data">
+          <a :href="sectionData5?.xl1.data">
             <img class="btn2" src="../assets/images/tiket.png" />
           </a>
         </div>
@@ -167,8 +179,8 @@
   <section class="sec-home" id="section7">
     <div class="container">
       <div class="text">
-        <p class="faqText">{{ sectionData["6"]?.name }}</p>
-        <h2 class="tanyaText">{{ sectionData["6"]?.context.xs1.data }}</h2>
+        <p class="faqText">{{ sectionName6 }}</p>
+        <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
       </div>
       <div class="faq">
         <div
@@ -230,7 +242,7 @@
             <li>
               <a href="https://web.facebook.com/smkn4bandung">Facebook</a>
             </li>
-            <li><a href="">Instagram</a></li>
+            <li><a href="https://www.instagram.com/algianra_">Instagram</a></li>
             <li><a href="#">Threads</a></li>
           </ul>
         </div>
@@ -270,7 +282,7 @@ import { ref } from "vue";
 export default {
   data() {
     return {
-      sectionData: ref({}),
+      sectionData: ref(),
       linkYoutube: ref(),
       title1: ref(""),
       subTitle1: ref(""),
@@ -345,18 +357,48 @@ export default {
       let rawSection = {};
       try {
         const response = await this.$api.get("page/content/1");
-        const { data, status } = response;
-        if (status != 200) throw Error("Error Occured");
-        if (data.data.length < 1) throw Error("No Section send from Databasea");
-        data.data[0].Contents.forEach((content) => {
-          rawSection[content.sectionOrder] = {
-            name: content.sectionName,
-            context: content.context,
-          };
-        });
+        const dataRest = response.data.data[0]
+        console.log(dataRest.Contents[1].context.xi1)
 
-        console.log(rawSection);
-        this.sectionData = rawSection;
+        // dataRest.Contents.map((content) => {
+        //   if (content.sectionOrder === 6) {
+        //     const contextValue = Object.values(content.context);
+        //     contextValue.shift();
+        //     this.faqs = contextValue.map((context, i) => ({
+        //       nomor: String(i + 1).padStart(2, "0"),
+        //       pertanyaan: context.data,
+        //       jawaban: context.sub,
+        //       active: false,
+        //     }));
+        //   }
+        //   rawSection[content.sectionOrder] = {
+        //     name: content.sectionName,
+        //     context: content.context,
+        //   };
+        // });
+
+        //section1
+        this.sectionData = dataRest.Contents[0].context;
+        this.sectionName = dataRest.Contents[0].sectionName;
+        //section2
+        this.sectionName1 = dataRest.Contents[1].sectionName;
+        this.sectionData1 = dataRest.Contents[1].context;
+        //section3
+        this.sectionName2 = dataRest.Contents[2].sectionName;
+        this.sectionData2 = dataRest.Contents[2].context;
+        //section4
+        this.sectionName3 = dataRest.Contents[3].sectionName;
+        this.sectionData3 = dataRest.Contents[3].context;
+        //section5  
+        this.sectionName4 = dataRest.Contents[4].sectionName;
+        this.sectionData4 = dataRest.Contents[4].context;
+        //section6
+        this.sectionName5 = dataRest.Contents[5].sectionName;
+        this.sectionData5 = dataRest.Contents[5].context;
+        //section
+        this.sectionName6 = dataRest.Contents[6].sectionName;
+        this.sectionData6 = dataRest.Contents[6].context;
+
       } catch (err) {
         console.log(err);
       }
@@ -370,7 +412,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
 
-#hero {
+/* #hero {
   min-height: 100vh;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("../assets/images/bg1.png");
@@ -381,7 +423,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
+} */
 .texthero {
   text-align: center;
   color: white;

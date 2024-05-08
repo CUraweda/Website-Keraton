@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar border />
+    <navbar border :isCheckoutPage="true"/>
   </nav>
   <div class="header">
     <div class="text1">
@@ -72,16 +72,22 @@
       </div>
     </div>
   </div>
+  <footerdesk class="bawah"></footerdesk>
 </template>
 
 <script setup>
 import navbar from "../components/NavBar.vue";
+import footerdesk from "../components/FooterComp.vue"
 </script>
 
 <script>
 import { ref } from "vue";
 
 export default {
+  components: {
+    navbar,
+    footerdesk
+  },
   props: {
     disabled: {
       type: Boolean,
@@ -194,6 +200,11 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
+.bawah{
+  transform: scale(0.9);
+  margin-left: -70px;
+}
+
 .header {
   background: linear-gradient(
     90deg,
@@ -211,6 +222,7 @@ export default {
   flex: none;
   order: 0;
   flex-grow: 0;
+  margin-top: 92.3px;
 }
 
 .text1 {
@@ -314,8 +326,10 @@ nav ul li button:hover {
 .container {
   display: flex;
   margin-left: 131px;
-  width: 250px; /* Contoh ukuran lebar */
-  height: 200px; /* Contoh ukuran tinggi */
+  /* width: 250px; */
+  height: 450px; 
+  overflow-x: auto;
+  width: 85%;
 }
 
 .buttonaji {

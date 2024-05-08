@@ -7,7 +7,7 @@
 
 
     <div class="image-container">
-      <img alt="Area Keraton Image" class="image" src="../assets/images/image 19.png" />
+      <img alt="Area Keraton Image" class="image" src="../assets/images/museumPaket.png" />
       <p class="image-text">MUSEUM PUSAKA</p>
       <p class="text-bottom1">Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan, Cirebon, Jawa Barat.</p>
       <p class="text-bottom2">Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja Mochamad Jayadiningrat.</p>
@@ -15,33 +15,36 @@
       <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
     </div>
 
+    <div class="destinasi-container">
     <div class="Destinasi">
       <p> <span class="bold">Mengenal</span> sejarah dan budaya Cirebon</p>
     </div>
     <p class="bawah-destinasi">Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta kencana, gamelan,
       dan lukisan.</p>
+    </div>
 
       <div class="slider" ref="slider">
-  <div
-    v-for="(card, index) in cards"
-    :key="index"
-    :id="'card-' + index"
-    :class="{ cardd: true, active: index === currentIndex || index === (currentIndex + 1) % cards.length }"
-  >
-    {{ card.content }}
+    <div
+      v-for="(card, index) in cards"
+      :key="index"
+      :id="'card-' + index"
+      :class="{ cardd: true, active: index === currentIndex }"
+    >
+      {{ card.content }}
+    </div>
   </div>
-</div>
 
   <div class="button-container">
-  <button class="button-slider" @click="prevCard">&lt;</button>
-  <div
-    class="bulet"
-    v-for="(bullet, index) in bullets"
-    :key="index"
-    :class="{ active: index === currentIndex }"
-  ></div>
-  <button class="button-slider" @click="nextCard">&gt;</button>
+    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+    <div
+      class="bulet"
+      v-for="(bulet, index) in bullets"
+      :key="index"
+      :class="{ active: index === currentIndex }"
+    ></div>
+    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
 </div>
+
 
     <div class="Fasilitas">
       <p>Fasilitas</p>
@@ -73,6 +76,7 @@
       <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button>
     </div>
 
+    <a href="/#/booking">
     <div class="Paket">
       <p class="bold2">Tiket Masuk Museum Pusaka</p>
       <div class="teks-kunjungan">
@@ -81,9 +85,9 @@
       <div class="teks-kunjungan2">
         <p>Area Museum Pusaka</p>
       </div>
-
       <img class="paket-images" src="../assets/images/museumPaket.png">
     </div>
+  </a>
 
     <div class="footer">
 
@@ -165,8 +169,6 @@ const scrollToContent = () => {
   });
 };
 
-
-
 export default {
   data() {
     return {
@@ -186,38 +188,42 @@ export default {
     }
   },
   methods: {
-  prevCard() {
-    this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-  },
-  nextCard() {
-    this.currentIndex = (this.currentIndex + 1) % this.cards.length;
-  },
-  centerActiveCard() {
-    const sliderWidth = this.$refs.slider.offsetWidth;
-    const cardWidth = 250;
-    const offset = (sliderWidth - cardWidth) / 2;
-    const cardContainer = document.querySelector('.slider');
-    const activeCard = document.querySelector('.cardd.active');
-
-    if (activeCard && cardContainer) {
-      const index = this.currentIndex;
-      const newPosition = -index * cardWidth + offset;
-      cardContainer.style.transform = `translateX(${newPosition}px)`;
-    }
-  
-},
-
-  adjacentIndex(index, offset) {
-    const length = this.cards.length;
-    return (index + offset + length) % length;
+    prevCard() {
+  if (this.currentIndex === 0) {
+    this.currentIndex = this.cards.length - 1;
+  } else {
+    this.currentIndex--;
   }
 },
-watch: {
+nextCard() {
+  if (this.currentIndex === this.cards.length - 1) {
+    this.currentIndex = 0;
+  } else {
+    this.currentIndex++;
+  }
+},
+    centerActiveCard() {
+      const sliderWidth = this.$refs.slider.offsetWidth;
+      const cardWidth = 250;
+      const offset = (sliderWidth - cardWidth) / 2;
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
+
+      if (activeCard && cardContainer) {
+        const index = this.currentIndex;
+        const newPosition = -index * cardWidth + offset;
+        cardContainer.style.transform = translateX`(${newPosition}px)`;
+      }
+    }
+  },
+  watch: {
   currentIndex() {
     this.centerActiveCard();
   }
 }
 };
+
+
 </script>
 
 <style>
@@ -248,7 +254,6 @@ overflow-x: hidden;
 }
 
 .Paket {
-
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -256,10 +261,10 @@ overflow-x: hidden;
   padding: 0px 0px 10px ;
   gap: 109px;
   position: absolute;
-  width: 1085px;
+  width: 1080px;
   height: 207px;
   left: 109px;
-  top: 3700px;
+  top: 3350px;
   margin-top: 86px;
   border-bottom: 1px solid #D0D5DD;
 }
@@ -306,59 +311,111 @@ overflow-x: hidden;
 
 
 .paket-images {
-  width: 1280px;
+  width: 100%;
   height: 207px;
-  left: 109px;
+  left: 100px;
   top: 3715px;
   object-fit: cover;
 }
 
 .image-container {
-  position: absolute;
+  position: relative;
   width: 100%;
-  height: 600px;
+  height: auto; 
 }
 
 .image {
-  width: 100%;
-  width: 1280px;
-  height: 640px;
-  object-fit: cover;
+  width: 100vw; 
+  height: 120vh; 
+  object-fit: cover; 
   filter: brightness(60%);
 }
 
-
-
-
-.Fasilitas {
-  position: absolute;
-  width: 542px;
-  height: 72px;
-  top: 1500px;
-  left: 120px;
-  margin-left: -50px;
+.image-text {
   font-family: Raleway;
+  position: absolute;
+  width: 625px;
+  height: 72px;
+  top: 250px;
+  left: 327px;
+  color: white;
   font-size: 64px;
-  font-weight: 400;
-  line-height: 400px;
+  font-weight: 700;
+  line-height: 72px;
   letter-spacing: 0em;
-  text-align: left;
-  color: #000000;
-
+  text-align: center;
 
 }
 
-.Fasilitas-Text {
+.text-bottom1 {
+  position: absolute;
+  width: 362px;
+  height: 18px;
+  top: 420px;
+  left: 90px;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+}
+
+.text-bottom2 {
+  position: absolute;
+  width: 360px;
+  height: 48px;
+  top: 420px;
+  left: 499px;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+
+}
+
+.text-bottom3 {
+  position: absolute;
+  width: 362px;
+  height: 48px;
+  top: 420px;
+  left: 889px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.arrow-down {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 530px;
+  left: 624px;
+  cursor: pointer;
+}
+
+.Fasilitas{
+    width: 542px;
+    height: 72px;
+    top: 1500px;
+    left: 150px;
+    margin-left: 50px;
+    font-family: Raleway;
+    font-size: 64px;
+    font-weight: 400;
+    line-height: 400px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000000;
+}
+
+.Fasilitas-Text{
   width: 542px;
-  height: 72px;
-  margin-top: -220px;
-  margin-left: 650px;
-  font-family: Raleway;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 25px;
-  letter-spacing: 0em;
-  text-align: right;
+    height: 72px;
+    margin-top: -220px;
+      margin-left: 650px;
+    font-family: Raleway;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: right;
 }
 
 .Fasilitas-Images {
@@ -374,44 +431,40 @@ overflow-x: hidden;
 .card {
   width: 600px;
   height: 649px;
-  top: 5773px;
-  left: 55px;
-  margin-left: 30px;
-  border-radius: 30px;
-  margin-top: 320px;
+  top: 1773px;
+  left: 30px; /* Menggeser ke kanan sedikit */
+  margin-top: 200px;
+  margin-left: 20px;
   border-radius: 30px;
   filter: opacity(70%);
   background-size: cover;
   background-image: url(../assets/images/image33.png);
-
-
 }
 
 .card2 {
   width: 600px;
   height: 649px;
   top: 1773px;
-  left: 685px;
-  margin-top: 110px;
-  margin-left: -40px;
+  left: 660px;/* Menggeser ke kiri sedikit */
+  margin-top: -650px;
+  margin-left: 640px;
   border-radius: 30px;
   filter: opacity(70%);
   background-size: cover;
   background-image: url(../assets/images/card2.png);
-  position: absolute;
 }
+
 
 .card3 {
   width: 600px;
   height: 649px;
-  top: 1850px;
-  left: 0;
-  margin-left: 30px;
-  margin-top: 690px;
+  top: 1773px;
+  left: 30px; /* Menggeser ke kanan sedikit */
+  margin-top: 10px;
+  margin-left: 20px;
   border-radius: 30px;
   filter: opacity(70%);
   background-size: cover;
-  position: absolute;
 }
 
 .card3 {
@@ -422,15 +475,14 @@ overflow-x: hidden;
 .card4 {
   width: 600px;
   height: 649px;
-  top: 1850px;
-  left: 685px;
-  margin-top: 690px;
-  margin-left: -40px;
+  top: 1773px;
+  left: 660px;/* Menggeser ke kiri sedikit */
+  margin-top: -1100px;
+  margin-left: 640px;
   border-radius: 30px;
   filter: opacity(70%);
-  background-image: url(../assets/images/card4Museum.png);
   background-size: cover;
-  position: absolute;
+  background-image: url(../assets/images/card4Museum.png);
 }
 
 .card-text {
@@ -479,6 +531,7 @@ overflow-x: hidden;
 }
 
 .card-text4 {
+  padding-top: 460px;
   width: 500px;
   height: 18px;
   left: 242px;
@@ -494,12 +547,10 @@ overflow-x: hidden;
 }
 
 .Kunjungan {
-  position: absolute;
   width: 542px;
   height: 72px;
   top: 3400px;
-  left: 100px;
-  margin-left: 0px;
+  margin-left: 8%;
   font-family: Raleway;
   font-size: 64px;
   font-weight: 400;
@@ -524,80 +575,40 @@ overflow-x: hidden;
   text-align: right;
 }
 
-.image-text {
-  font-family: Raleway;
-  position: absolute;
-  width: 625px;
-  height: 72px;
-  top: 280px;
-  left: 327px;
-  color: white;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 72px;
-  letter-spacing: 0em;
-  text-align: center;
-
+.destinasi-container {
+  position: relative;
+  width: 100%; 
+  height: 100%;
 }
-
-.text-bottom1 {
-  position: absolute;
-  width: 362px;
-  height: 18px;
-  top: 490px;
-  left: 90px;
-  font-size: 16px;
-  line-height: 24px;
-  color: white;
-}
-
-.text-bottom2 {
-  position: absolute;
-  width: 360px;
-  height: 48px;
-  top: 490px;
-  left: 499px;
-  font-size: 16px;
-  line-height: 24px;
-  color: white;
-
-}
-
-.text-bottom3 {
-  position: absolute;
-  width: 362px;
-  height: 48px;
-  top: 490px;
-  left: 889px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-}
-
-.arrow-down {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 600px;
-  left: 624px;
-  cursor: pointer;
-}
-
 
 .Destinasi {
   font-family: Raleway;
-  margin-top: 750px;
-  width: 1104px;
+  margin-top: 200px; 
+  width: 100%;
   height: 64px;
-  top: 922px;
-  left: 88px;
-  margin-left: 80px;
+  top: 40%; /* Posisi vertikal di tengah */
+  transform: translateY(-150%); /* Menggeser elemen ke tengah vertikal */
   color: #000000;
   font-size: 56px;
   font-weight: 400;
   line-height: 64px;
   text-align: center;
 }
+
+.bawah-destinasi {
+  width: 886px;
+  height: 68px;
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  position: absolute;
+  left: 50%; /* Posisi horizontal di tengah */
+  top: 70%; /* Posisi vertikal di tengah */
+  transform: translate(-50%, -50%); /* Menggeser elemen ke tengah horizontal dan vertikal */
+}
+
 
 .bold {
   font-family: Raleway;
@@ -608,19 +619,7 @@ overflow-x: hidden;
   text-align: center;
 }
 
-.bawah-destinasi {
-  width: 886px;
-  height: 68px;
-  top: 1014px;
-  left: 197px;
-  margin-left: 200px;
-  margin-top: 40px;
-  font-family: Raleway;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 30px;
-  text-align: center;
-}
+
 
 
 
@@ -647,7 +646,7 @@ overflow-x: hidden;
 .footer {
   width: 1280px;
   height: 650px;
-  margin-top: 1900px;
+  margin-top: 3000px;
   position: relative;
 
 
@@ -777,6 +776,9 @@ ul {
 }
 
 .button-Kunjungan {
+  align-items: center;
+  justify-content: center;
+  display: flex;
   width: 300px;
   height: 40px;
   border-radius: 10px;
@@ -787,18 +789,16 @@ ul {
   padding-left: 22px;
   font-size: 20px;
   font-weight: 800;
-  margin-top: 250px;
   margin-left: 800px;
-  line-height: 28px;
   font-family: Raleway;
-  position: absolute;
+  line-height: 22px;
 }
 
 .slider {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1260px;
+  width: 100%;
 }
 
 .cardd {
@@ -853,7 +853,6 @@ right: 100px;
 .cardd.active{
   width: 255.72px;
   height: 414px;
-  z-index: 9999;
 }
 
 .button-container {
@@ -864,14 +863,8 @@ right: 100px;
   gap: 10px;
 }
 
-.button-slider {
-  width:30px;
-  height: 35px;
-  background: transparent;
-  color: #212121;
+.button-slider{
   font-weight: bold;
-  border: 3px solid #212121;
-  border-radius: 50%;
   cursor: pointer;
   transition: all 0.5s ease;
 }

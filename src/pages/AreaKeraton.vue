@@ -11,12 +11,12 @@
       <p class="text-bottom3">Keraton Kasepuhan merupakan salah satu peninggalan sejarah yang penting di Cirebon</p>
       <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
     </div>
-
+<div class="destinasi-container">
     <div class="Destinasi">
      <p> Destinasi wisata yang <span class="bold">wajib</span> dikunjungi</p> 
     </div>
     <p class="bawah-destinasi">Menawarkan berbagai hal menarik untuk dilihat dan dipelajari, mulai dari sejarah, arsitektur, hingga budaya.</p>
-    
+  </div>
   
     <div class="slider" ref="slider">
     <div
@@ -30,15 +30,15 @@
   </div>
 
   <div class="button-container">
-    <button class="button-slider" @click="prevCard">&lt;</button>
+    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
     <div
       class="bulet"
-      v-for="(bullet, index) in bullets"
+      v-for="(bulet, index) in bullets"
       :key="index"
       :class="{ active: index === currentIndex }"
     ></div>
-    <button class="button-slider" @click="nextCard">&gt;</button>
-  </div>
+    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
+</div>
 
   <div class="Tourist">
      <p> Top <span class="bold">Tourist</span> attraction</p> 
@@ -89,8 +89,6 @@
   </div>
   <div class="Lokasi-samping">
     <p>Dengan luas sekitar 13,5 hektar dan terdiri dari 2 komplek yaitu Dalem Agung Pakungwati dan kompleks Keraton Pakungwati.</p>
-  </div>
-</div>
 
 
     <div class="Denah">
@@ -98,6 +96,8 @@
     </div>
 
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.3439357079596!2d108.5708669!3d-6.7278234999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ee263eaaaaaab%3A0x20ea18cbfb1df195!2sKeraton%20Kasepuhan!5e0!3m2!1sid!2sid!4v1710081749605!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>
 
 <div class="Fasilitas">
   <p>Fasilitas</p>
@@ -124,85 +124,30 @@
 <div class="Kunjungan">
   <p>Kunjungan</p>
   <p class="Kunjungan-Text">Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik.</p>
+  <a href="/#/booking">
+  <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button></a>
 </div>
-
+<a href="/#/booking">
 <div class="Paket">
   <img src="../assets/images/Frame 81.png">
   <img src="../assets/images/Frame 82.png">
   <img src="../assets/images/Frame 83.png">
   <img src="../assets/images/Frame 84.png">
 </div>
-<div class="footer">
-     
-     <div class="logo">
-        <img src="../assets/images/logo_keraton.png" alt="">
-        <p>KERATON <br>KASEPUHAN <br>CIREBON</p>
-     </div>
-     <div class="footer-col">
-        <div class="footer-col-1">
-           <h3>Quick Links</h3>
-           <ul>
-           <li><a href="#">Beranda</a></li>
-           <li><a href="#">Sejarah</a></li>
-           <li><a href="#">Booking</a></li>
-           <li><a href="#">Objek Wisata</a></li>
-        </ul>
-        </div>
-        <div class="footer-col-2">
-           <h3>Socials</h3>
-           <ul>
-              <li><a href="#">Whatsapp</a></li>
-              <li><a href="#">Facebook</a></li>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">Threads</a></li>
-           </ul>
-        </div>
-        <div class="footer-col-3">
-           <h3>Company</h3>
-           <ul>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Contact</a></li>
-           </ul>
-        </div>
-        <div class="footer-col-4">
-           <h3>Subscribes your email for updates!</h3>
-           <button class="button">Enter your email</button>
-           
-
-        </div>
-     </div>
-     <div class="adress">
-        Jalan Kasepuhan 43
-        Cirebon, Jawa Barat
-        45114 
-     </div>
-     <div class="lower">
-        <div class="inlower">
-        @2024 Keraton Kasepuhan Cirebon
-        </div>
-        <div class="susun">
-        <p>In collaboration</p>
-
-        <div class="collab">
-            <img src="../assets/images/logo_keraton.png" alt="" class="foto1">
-           <img src="../assets/images/1 931.png" alt="" class="foto2">
-           <img src="../assets/images/telkom.png" alt="" class="foto3">
-           <img src="../assets/images/bjb.png" alt="" class="foto4">
-           
-        </div>
-     </div>
-     </div>
-    </div>
+</a>
   </body>
+  <bawah class="bawah"></bawah>
 </template>
 
 <script setup>
 import navbar from '../components/NavBar.vue'
+import bawah from '../components/FooterComp.vue'
+
 </script>
 
 
-<script >
+<script>
+
 
 const scrollToContent = () => {
     document.querySelector('.Destinasi').scrollIntoView({ 
@@ -214,7 +159,11 @@ const scrollToContent = () => {
       behavior: 'smooth' 
   });}
 
- export default {
+  export default {
+    component:{
+      bawah,
+      navbar
+    },
   data() {
     return {
       cards: [
@@ -262,15 +211,14 @@ nextCard() {
     }
   },
   watch: {
-    currentIndex() {
-      this.centerActiveCard();
-    }
-  },
-  mounted() {
+  currentIndex() {
     this.centerActiveCard();
-    setInterval(this.nextCard, 100000000); // Auto slide every 3 seconds
   }
+},
+
+
 };
+
 </script>
 
 <style>
@@ -302,33 +250,98 @@ nav {
 .Paket{
   position: absolute;
   width: 1,085px;
-height: 207px;
-top: 7661px;
-left: 119px;
-padding: 0px, 0px, 10px, 0px;
-border: 0px, 0px, 1px, 0px;
-gap: 109px;
+  height: 207px;
+  top: 6361px;
+  left: 100px;
+  padding: 0px, 0px, 10px, 0px;
+  border: 0px, 0px, 1px, 0px;
+  gap: 109px;
 
 }
-  .image-container {
-position: relative;   
-    width: 1280px;
-    height: 854px; 
-    z-index: 999;
+.image-container {
+  position: relative;
+  width: 100%;
+  height: auto; 
+}
+
+.image {
+  width: 100vw; 
+  height: 120vh; 
+  object-fit: cover; 
+  filter: brightness(60%);
+}
+.image-text {
+  font-family: Raleway;
+  position: absolute;
+  min-width: 100vw;
+  height: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 72px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  }
+  .text-bottom1 {
+  position: absolute;
+  width: 362px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  left: 5%;
+  transform: translateX(-50%);
+  top: 70%; 
+  transform: translateY(-50%);
+}
+
+  .text-bottom2 {
+    position: absolute;
+  width: 362px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  left: 37%;
+  top: 70%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
+
+  }
+  .text-bottom3 {
+    position: absolute;
+  width: 362px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  color: white;
+  left: 70%;
+  transform: translateX(-50%);
+  top: 70%;
+  transform: translateY(-50%);
+  }
+  .arrow-down {
+    position: absolute;
+  width: 362px;
+  height: 18px;
+  font-size: 16px;
+  line-height: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 90%; 
+  transform: translateY(-50%);
+    cursor: pointer; 
   }
 
-  .image {
-    width: 1280px;
-    height: 654px;
-    object-fit: cover; 
-    filter: brightness(60%);
-  }
-  .Tourist-Container {
+
+.Tourist-Container {
     display: flex;
     background-color: #212121;
-    width: 1280px;
+    width: 100%;
     height: 700px;
-    
 }
 
 .Tourist-content {
@@ -336,12 +349,13 @@ position: relative;
     height: 600px;
     margin-left: 50px;
 }
+
 .Tourist-content2 {
     flex: 1;
     height: 700px;
     margin-left: -70px;
-    
 }
+
 .Tourist-content3 {
     flex: 1;
     height: 700px;
@@ -349,30 +363,33 @@ position: relative;
 }
 
 .image-Tourist {
-    width: 40%; 
-    margin-right: 120px; 
-    margin-top: -300px;
+    max-width: 40%; 
+    margin-right: 100px; 
+    margin-top: -180px;
 }
+
 .image-Tourist2 {
-    width: 40%; 
-    margin-left: 20px; 
-    margin-top: -450px;
+    max-width: 50%; 
+    margin-left: 50px; 
+    margin-top: -250px;
 }
+
 .image-Tourist3 {
-    width: 40%; 
-    margin-right: 120px; 
-    margin-top: -450px;
+    max-width: 50%; 
+    margin-right: 100px; 
+    margin-top: -250px;
 }
 .Lokasi-container {
   display: flex;
-  flex-direction: row;
+  justify-content: center; /* Memastikan konten berada di tengah secara horizontal */
+  position: relative;
   margin-top: 243px;
 }
 
 .Lokasi {
   width: 542px;
   height: 72px; 
-  margin-left: 120px;
+  margin-left: 50px;
   font-family: Raleway;
   font-size: 64px;
   font-weight: 400;
@@ -387,7 +404,7 @@ position: relative;
 .Lokasi-samping {
   width: 562px; 
   height: 112px; 
-  margin-left: 20px; 
+  margin-left: 50px; 
   font-family: Raleway;
   font-size: 20px;
   font-weight: 400;
@@ -396,32 +413,32 @@ position: relative;
   text-align: right;
 }
 
-.Denah{
+.Denah {
   position: absolute;
-  width: 600px;
-height: 781.85px;
-top: 4454px;
-left: 20px;
-border-radius: 9.2px;
-margin-top: 200px;
+  width: 550px;
+  height: 781.85px;
+  top: 50%; /* Pusat vertikal */
+  left: 25%; /* Pusat horizontal */
+  transform: translate(-50%, 10%); /* Geser ke tengah */
 }
 
-iframe{
-  width: 600px;
-height: 781.85px;
-top: 4454px;
-left: 20px;
-border-radius: 9.2px;
-margin-top: 200px;
-margin-left: 640px;
-position: absolute;
+iframe {
+  position: absolute;
+  width: 550px;
+  height: 781.85px;
+  top: 50%; /* Pusat vertikal */
+  left: 75%; /* Pusat horizontal */
+  transform: translate(-50%, 10%); /* Geser ke tengah */
 }
+
+
+
 
 .Fasilitas{
     position: absolute;
     width: 542px;
     height: 72px;
-    top: 5500px;
+    top: 4500px;
     left: 150px;
     margin-left: -120px;
     font-family: Raleway;
@@ -431,8 +448,6 @@ position: absolute;
     letter-spacing: 0em;
     text-align: left;
     color: #000000;
-
-
 }
 .Fasilitas-Text{
   width: 542px;
@@ -458,13 +473,14 @@ position: absolute;
 .card{
   width: 600px;
 height: 649px;
-top: 4153px;
-left: 55px;
-margin-top: 1220px;
-margin-left: 25px;
+top: 3153px;
+left: 0;
+margin-left: 30px;
+margin-top: 1600px;
 border-radius: 30px;
 filter: opacity(70%);
 background-size: cover;
+position: absolute;
 background-image: url(../assets/images/Rectangle57.png);
 
 }
@@ -472,7 +488,7 @@ background-image: url(../assets/images/Rectangle57.png);
 .card2{
   width: 600px;
 height: 649px;
-top: 4153px;
+top: 3153px;
 left: 685px;
 margin-top: 1600px;
 margin-left: -40px;
@@ -485,24 +501,22 @@ position: absolute;
 .card3{
   width: 600px;
 height: 649px;
-top: 4850px;
+top: 3850px;
 left: 0;
-margin-left: 25px;
+margin-left: 30px;
 margin-top: 1565px;
 border-radius: 30px;
 filter: opacity(70%);
 background-size: cover;
 position: absolute;
-}
-.card3{
-  background-image: url(../assets/images/Rectangle59.png);
+background-image: url(../assets/images/Rectangle59.png);
 
 }
 
 .card4{
   width: 600px;
 height: 649px;
-top: 4850px;
+top: 3850px;
 left: 685px;
 margin-left: -40px;
 margin-top: 1560px;
@@ -555,6 +569,7 @@ position: absolute;
   color: #ffffff;
   }
   .card-text4{
+  padding-top: 300px;
   width: 500px;
   height: 48px;
   top: 662px;
@@ -574,9 +589,9 @@ position: absolute;
     position: absolute;
     width: 542px;
     height: 72px;
-    top: 7149px;
+    top: 6000px;
     left: 100px;
-    margin-left: -50px;
+    margin-left: -30px;
     font-family: Raleway;
     font-size: 64px;
     font-weight: 400;
@@ -600,60 +615,6 @@ position: absolute;
     text-align: right;
 }
 
-  .image-text {
-    font-family: Raleway;
-    position: absolute;
-    width: 625px;
-    height: 72px;
-    top: 280px;
-    left: 327px;
-    color: white;
-    font-size: 64px;
-    font-weight: 700;
-    line-height: 72px;
-    letter-spacing: 0em;
-    text-align: center;
-
-  }
-  .text-bottom1 {
-    position: absolute;
-    width: 362px;
-    height: 18px;
-    top: 490px;
-    left: 90px;
-    font-size: 16px;
-    line-height: 24px;
-    color: white;
-  }
-  .text-bottom2 {
-    position: absolute;
-    width: 360px;
-    height: 48px;
-    top: 490px;
-    left: 489px;
-    font-size: 16px;
-    line-height: 24px;
-    color: white;
-
-  }
-  .text-bottom3 {
-    position: absolute;
-    width: 350px;
-    height: 48px;
-    top: 490px;
-    left: 889px;
-    font-size: 16px;
-    line-height: 24px;
-    color: #ffffff;
-  }
-  .arrow-down {
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    top: 600px;
-    left: 624px;
-    cursor: pointer; 
-  }
   .arrow-down2 {
     width: 32px;
     height: 32px;
@@ -661,26 +622,46 @@ position: absolute;
     left: 624px;
     cursor: pointer; 
   }
-  
-  .Destinasi {
-    font-family: Raleway;
-    margin-top: 70px; 
-    width: 1104px;
-    height: 64px;
-    top: 922px;
-    left: 88px;
-    margin-left: 80px;
-    color: #000000;
-    font-size: 56px;
-    font-weight: 400;
-    line-height: 64px;
-    text-align: center;
-  }
+
+  .destinasi-container {
+  position: relative;
+  width: 100%; 
+  height: 100%;
+}
+
+.Destinasi {
+  font-family: Raleway;
+  margin-top: 200px; 
+  width: 100%;
+  height: 64px;
+  top: 40%; /* Posisi vertikal di tengah */
+  transform: translateY(-150%); /* Menggeser elemen ke tengah vertikal */
+  color: #000000;
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 64px;
+  text-align: center;
+}
+
+.bawah-destinasi {
+  width: 886px;
+  height: 68px;
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 30px;
+  text-align: center;
+  position: absolute;
+  left: 50%; /* Posisi horizontal di tengah */
+  top: 70%; /* Posisi vertikal di tengah */
+  transform: translate(-50%, -50%); /* Menggeser elemen ke tengah horizontal dan vertikal */
+}
+
   .Tourist {
     font-family: Raleway;
     margin-top: 200px; 
     color: #ffffff;
-    width: 1280px;
+    width: 100%;
     height: 1844px;
     top: 2168px;
     background: linear-gradient(to bottom,#21212100,#2121215d,#212121ab, #212121);
@@ -699,19 +680,7 @@ position: absolute;
     line-height: 64px;
     text-align: center;
   }
-.bawah-destinasi{
-    width: 886px;
-    height: 68px;
-    top: 1014px;
-    left: 197px;
-    margin-left: 200px;
-    margin-top: 40px;
-    font-family: Raleway;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 30px;
-    text-align: center;
-}
+
 
 .Dalem{
     width: 370px;
@@ -811,35 +780,13 @@ position: absolute;
  width : 100px;
  height: 49px;
 }
-.footer {
- width:1280px;
- height: 650px;
- margin-top: 2500px;
- position: relative;
-
- 
-} 
+  
 a {
  text-decoration: none;
  color: #212121;
 }
 ul {
  list-style-type: none;
-}
-.footer-col {
- display: flex;
-}
-.footer-col h3 {
- font-size: 30px;
- font-weight: 40px;
- display: inline-block;
- margin-bottom: 11px;
- margin-top: 76px;
-}
-.footer-col-1 {
- margin-left: 88px;
- color: #212121;
- 
 }
 
 
@@ -858,58 +805,6 @@ ul {
  width: 70px;
  margin-right: 9px;
 
-}
-
-.footer-col-2 {
- margin-left: 60px;
-}
-.footer-col-3 {
- margin-left: 60px;
-}
-.footer-col-4 {
- margin-left: 139px;
- width: 434px;
-}
-.footer-col li {
-    color: #212121;
-}
-.footer-col li:not(:last-child) {
- margin-bottom: 11px;
-}
-.adress {
- width:184px;
- height: 84px;
- font-size: 20px;
- font-weight: 400;
- margin-top:62px;
- margin-left: 88px;
-}
-.lower {
-  width:1080px;
-  height: 142px;
-  margin-left: 88px;
-  display: flex;
-}
-.inlower {
- padding-top:600px;
- margin-left: 80px;
- position: absolute;
- 
- 
-}
-.collab {
- display: flex;
- flex-direction: row;
- gap:46px;
- 
-}
-.susun {
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- gap:46px;
- padding-left: 645px;
 }
 
 .button {
@@ -932,7 +827,7 @@ ul {
  height: 40px;
  border-radius: 10px;
  background-color: #123B32;
- color: #FFFFFF;
+ color: #ffffff;
  text-align: left;
  padding-left: 22px;
  font-size: 20px;
@@ -950,7 +845,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1260px;
+  width: 100%;
 }
   
 
@@ -999,9 +894,8 @@ background-size:cover;
 }
 
 .cardd.active{
-  width: 255px;
+  width: 255.72px;
   height: 414px;
-  z-index: 9999;
 }
 
 .button-container{
@@ -1015,16 +909,9 @@ background-size:cover;
 }
 
 .button-slider{
-  width: 32px;
-  height: 35px;
-  background:transparent;
-  color: #212121;
   font-weight: bold;
-  border: 3px solid #212121;
-  border-radius: 50%;
   cursor: pointer;
   transition: all 0.5s ease;
-  
 }
 .bulet{
   width: 6px;
@@ -1039,5 +926,9 @@ background-size:cover;
   background-color: rgb(0, 0, 0);
 }
 
-
+.bawah{
+  transform: scale(0.9);
+  margin-left: -70px;
+  margin-top: 3100px;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <navbar isWhiteText/>
+  <navbar isWhiteText :isCheckoutPage="true"/>
   <section id="hero">
     <div class="text">
       <h5 style="color: #FAE084;">Warisan Leluhur Cirebon</h5>
@@ -10,7 +10,7 @@
     <div class="container">
       <img
         src="../assets/images/Line 17.png"
-        style="margin-left: -100px; margin-top: 15px"
+        style="margin-left: -100px; margin-top: -10px"
       />
       <p class="Sulthan">
         <span class="sultan-title"><b>Sultan Sepuh I</b></span> <br /><br />
@@ -22,7 +22,7 @@
       <div>
         <img
           src="../assets/images/buled.jpeg"
-          style="margin-left: -106px; margin-top: 15px"
+          style="margin-left: -106px; margin-top: 50px"
         />
         <span class="gold-text">1662 M</span> <br /><br />
         <div class="garis">
@@ -430,13 +430,19 @@
       </div>
     </div>
   </section>
+  <bawah class="bawah"></bawah>
 </template>
 
-<script>
+<script setup>
 import navbar from "../components/NavBar.vue"
+import bawah from "../components/FooterComp.vue"
+</script>
+
+<script>
 export default {
   components: {
-    navbar
+    navbar,
+    bawah
   }
 }
 </script>
@@ -444,12 +450,18 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+.bawah{
+  transform: scale(0.9);
+  margin-left: -70px;
+  margin-top: 50px;
+}
+
 * {
   font-family: "Raleway", sans-serif;
 }
 #hero {
   min-height: 90vh;
-  background-image: url(../assets/images/sejarah.jpg);
+  background-image: url(../assets/images/silsilahsejarah.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -457,6 +469,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 90px;
 }
 .text {
   text-align: center;

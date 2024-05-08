@@ -2,16 +2,18 @@
 
   <body>
     <nav>
-    <navbar isWhiteText/> 
+    <navbar isWhiteText/>
   </nav>
+
+
     <div class="image-container">
       <img alt="Area Keraton Image" class="image" src="../assets/images/agung.png" />
-      <p class="image-text">AGUNG DALEM PANGKUWATI</p>
+      <p class="image-text"> DALEM AGUNG PANGKUWATI</p>
       <p class="text-bottom1">Salah satu destinasi wisata yang wajib dikunjungi jika Anda berkunjung ke Cirebon.</p>
       <p class="text-bottom2">Dibangun pada tahun 1430 oleh Pangeran Cakrabuana, pendiri Kerajaan Cirebon.</p>
       <p class="text-bottom3">Memiliki koleksi benda bersejarah, seperti kereta kencana, gamelan, dan lukisan.</p>
-      <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
     </div>
+    <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
 
     <div class="Destinasi">
       <p> <span class="bold">Mengapresiasi</span> nilai seni Cirebon </p>
@@ -29,15 +31,16 @@
   </div>
 </div>
 
-  <div class="button-container">
-  <button class="button-slider1" @click="prevCard">&lt;</button>
-  <div
-    class="bulet"
-    v-for="(bullet, index) in bullets"
-    :key="index"
-    :class="{ active: index === currentIndex }"
-  ></div>
-  <button class="button-slider" @click="nextCard">&gt;</button>
+
+<div class="button-container">
+    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+    <div
+      class="bulet"
+      v-for="(bulet, index) in bullets"
+      :key="index"
+      :class="{ active: index === currentIndex }"
+    ></div>
+    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
 </div>
 
     <div class="Fasilitas">
@@ -153,6 +156,7 @@ Kasepuhan</p>
 
 <script setup>
 import navbar from '../components/NavBar.vue'
+
 </script>
 
 <script>
@@ -166,6 +170,7 @@ const scrollToContent = () => {
 
 
 export default {
+    
   data() {
     return {
       cards: [
@@ -185,20 +190,40 @@ export default {
   },
   methods: {
     prevCard() {
-      if (this.currentIndex === 0) {
-        this.currentIndex = this.cards.length - 1;
-      } else {
-        this.currentIndex--;
-      }
-    },
-    nextCard() {
-      if (this.currentIndex === this.cards.length - 1) {
-        this.currentIndex = 0;
-      } else {
-        this.currentIndex++;
+  if (this.currentIndex === 0) {
+    this.currentIndex = this.cards.length - 1;
+  } else {
+    this.currentIndex--;
+  }
+},
+nextCard() {
+  if (this.currentIndex === this.cards.length - 1) {
+    this.currentIndex = 0;
+  } else {
+    this.currentIndex++;
+  }
+},
+    centerActiveCard() {
+      const sliderWidth = this.$refs.slider.offsetWidth;
+      const cardWidth = 250;
+      const offset = (sliderWidth - cardWidth) / 2;
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
+
+      if (activeCard && cardContainer) {
+        const index = this.currentIndex;
+        const newPosition = -index * cardWidth + offset;
+        cardContainer.style.transform = translateX`(${newPosition}px)`;
       }
     }
+  },
+  watch: {
+  currentIndex() {
+    this.centerActiveCard();
   }
+},
+
+
 };
 
 </script>
@@ -210,15 +235,14 @@ export default {
 <style scoped>
 nav {
   position: relative;
-  z-index: 1000;
   width: 95%;
-  margin-left: 1px;
+  margin-left: 0px;
   color: white;
 }
 
 body {
-  width: 1300px;
-  height: 768px;
+  width: 1280px;
+  overflow-y: 1024px;
 }
 
 * {
@@ -238,13 +262,13 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 10px;
-  gap: 109px;
+  padding: 0px 0px 0px;
+  gap: 199px;
 
   position: absolute;
-  width: 1085px;
-  height: 207px;
-  left: 109px;
+  width: 1285px;
+  height: 220px;
+  left: 115px;
   top: 3700px;
   margin-top: 86px;
 
@@ -254,19 +278,20 @@ body {
 .bold2 {
   width: 1050px;
   height: 120px;
-  top: 32px;
+  margin-top: -20px;
   font-family: Raleway;
   font-size: 24px;
   font-weight: 700;
   line-height: 30px;
   letter-spacing: 0em;
   text-align: left;
+
 }
 
 .teks-kunjungan {
   width: 600px;
   height: 200px;
-  top: 32px;
+  top: 42px;
   font-family: Raleway;
   font-size: 24px;
   font-weight: 700;
@@ -280,7 +305,7 @@ body {
 .teks-kunjungan2 {
   width: 600px;
   height: 20px;
-  top: 130px;
+  top: 120px;
   font-family: Raleway;
   font-size: 20px;
   font-weight: 700;
@@ -293,7 +318,7 @@ body {
 
 
 .paket-images {
-  width: 1085px;
+  width: 1095px;
   max-width: 1085px;
   height: 207px;
   left: 109px;
@@ -306,11 +331,12 @@ body {
   position: absolute;
   width: 1280px;
   height: 859px;
+  z-index: -1;
 }
 
 .image {
-  width: 1305px;
-  height: 859px;
+  width: 1481px;
+  height: 792px;
   object-fit: cover;
   filter: brightness(60%);
 }
@@ -323,8 +349,7 @@ body {
   width: 442px;
   height: 72px;
   top: 1600px;
-  left: 120px;
-  margin-left: -50px;
+  left: 100px;
   font-family: Raleway;
   font-size: 64px;
   font-weight: 400;
@@ -340,7 +365,7 @@ body {
   width: 542px;
   height: 72px;
   margin-top: -220px;
-  margin-left: 650px;
+  margin-left: 750px;
   font-family: Raleway;
   font-size: 20px;
   font-weight: 400;
@@ -361,13 +386,12 @@ body {
 
 .card {
   font: raleway;
-  width: 600px;
+  width: 690px;
   height: 649px;
-  top: 5773px;
-  left: 55px;
-  margin-left: 60px;
+  top: 1773px;
+  margin-left: 50px;
   border-radius: 30px;
-  margin-top: 222px;
+  margin-top: 325px;
   border-radius: 30px;
   filter: opacity(70%);
   background-size: cover;
@@ -377,12 +401,12 @@ body {
 }
 
 .card2 {
-  width: 600px;
+  width: 690px;
   height: 649px;
   top: 1773px;
-  left: 685px;
+  left: 785px;
   margin-top: 110px;
-  margin-left: -10px;
+  margin-left: -25px;
   border-radius: 30px;
   filter: opacity(70%);
   background-size: cover;
@@ -391,11 +415,10 @@ body {
 }
 
 .card3 {
-  width: 600px;
+  width: 690px;
   height: 649px;
   top: 1850px;
-  left: 0;
-  margin-left: 60px;
+  margin-left: 50px;
   margin-top: 690px;
   border-radius: 30px;
   filter: opacity(70%);
@@ -409,12 +432,12 @@ body {
 }
 
 .card4 {
-  width: 600px;
+  width: 690px;
   height: 649px;
   top: 1850px;
-  left: 685px;
+  left: 780px;
   margin-top: 690px;
-  margin-left: -10px;
+  margin-left: -20px;
   border-radius: 30px;
   filter: opacity(70%);
   background-image: url(../assets/images/rec4.png);
@@ -424,15 +447,14 @@ body {
 }
 
 .card-text {
-  width: 1000px;
+  width: 600px;
   height: 48px;
   top: 662px;
-  left: 242px;
+  margin-left: 62px;
   font-family: Raleway;
   font-size: 40px;
   font-weight: 700;
   padding-top: 489px;
-  margin-left: -180px;
   letter-spacing: 0em;
   text-align: center;
   color: #ffffff;
@@ -441,45 +463,42 @@ body {
 
 
 .card-text2 {
-  width: 1000px;
+  width: 600px;
   height: 48px;
   top: 662px;
-  left: 242px;
+  margin-left: 62px;
   font-family: Raleway;
   font-size: 40px;
   font-weight: 700;
   padding-top: 489px;
-  margin-left: -180px;
   letter-spacing: 0em;
   text-align: center;
   color: #ffffff;
 }
 
 .card-text3 {
-  width: 1000px;
+  width: 600px;
   height: 48px;
   top: 662px;
-  left: 242px;
+  margin-left: 62px;
   font-family: Raleway;
   font-size: 40px;
   font-weight: 700;
   padding-top: 489px;
-  margin-left: -180px;
   letter-spacing: 0em;
   text-align: center;
   color: #ffffff;
 }
 
 .card-text4 {
-  width: 1000px;
-  height: 48px;
+  width: 600px;
+  height: 0px;
   top: 662px;
-  left: 242px;
+  margin-left: 62px;
   font-family: Raleway;
   font-size: 40px;
   font-weight: 700;
   padding-top: 489px;
-  margin-left: -180px;
   letter-spacing: 0em;
   text-align: center;
   color: #ffffff;
@@ -507,7 +526,7 @@ body {
   width: 542px;
   height: 72px;
   margin-top: -220px;
-  margin-left: 550px;
+  margin-left: 760px;
   font-family: Raleway;
   font-size: 20px;
   font-weight: 400;
@@ -519,10 +538,10 @@ body {
 .image-text {
   font-family: Raleway;
   position: absolute;
-  width: 1000px;
+  width: 983px;
   height: 72px;
-  top: 380px;
-left: 160px;
+  top: 370px;
+  left: 275px;
   color: white;
   font-size: 64px;
   font-weight: 700;
@@ -538,8 +557,8 @@ left: 160px;
   position: absolute;
   width: 362px;
   height: 18px;
-  top: 690px;
-  left: 90px;
+  top: 600px;
+  left: 120px;
   font-size: 16px;
   line-height: 24px;
   color: white;
@@ -549,8 +568,8 @@ left: 160px;
   position: absolute;
   width: 360px;
   height: 48px;
-  top: 690px;
-  left: 499px;
+  top: 600px;
+  left: 565px;
   font-size: 16px;
   line-height: 24px;
   color: white;
@@ -561,8 +580,8 @@ left: 160px;
   position: absolute;
   width: 362px;
   height: 48px;
-  top: 690px;
-  left: 889px;
+  top: 600px;
+  left: 999px;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
@@ -572,8 +591,8 @@ left: 160px;
   position: absolute;
   width: 32px;
   height: 32px;
-  top: 820px;
-  left: 624px;
+  top: 740px;
+  left: 700px;
   cursor: pointer;
 }
 
@@ -585,7 +604,7 @@ left: 160px;
   height: 64px;
   top: 922px;
   left: 88px;
-  margin-left: 80px;
+  margin-left:200px;
   color: #000000;
   font-size: 56px;
   font-weight: 400;
@@ -600,6 +619,7 @@ left: 160px;
   font-weight: 700;
   line-height: 64px;
   text-align: center;
+  
 }
 
 .bawah-destinasi {
@@ -607,7 +627,7 @@ left: 160px;
   height: 68px;
   top: 1014px;
   left: 197px;
-  margin-left: 200px;
+  margin-left: 305px;
   margin-top: 40px;
   font-family: Raleway;
   font-size: 24px;
@@ -782,7 +802,7 @@ ul {
   font-size: 20px;
   font-weight: 800;
   margin-top: 250px;
-  margin-left: 800px;
+  margin-left: 1000px;
   line-height: 28px;
   font-family: Raleway;
   position: absolute;
@@ -792,7 +812,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1260px;
+  width: 1480px;
 }
 
 .cardd {
@@ -859,7 +879,6 @@ right: 100px;
 .cardd.active{
   width: 255.72px;
   height: 414px;
-  z-index: 9999;
 }
 
 .button-container {
@@ -876,7 +895,6 @@ right: 100px;
   background: transparent;
   color: #212121;
   font-weight: bold;
-  border: 3px solid #212121;
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.5s ease;
@@ -906,25 +924,50 @@ right: 100px;
 
 .button-slider.active {
   background-color: rgb(0, 0, 0);
-  color: blue;
+}
+.button-slider1.active {
+  background-color: rgb(0, 0, 0);
 }
 
-@media screen and (max-width: 1000px)  
-{
-  .image-text {
-  top: 250px;
-  font-size: 40px;
-  text-align: left;
-}
+@media screen and (max-width: 1920px) {
+  body {
+    width: auto; /* Lebar auto untuk kecilin layout pada perangkat mobile */
+  }
+
+  nav {
+    width: 100%; /* Buat navbar penuh lebar pada layar kecil */
+  }
 }
 
-@media screen and (max-width: 500px)  
-{
+@media screen and (max-width: 920px) {
   .image-text {
-  top: 200px;
-  font-size: 30px;
-  text-align: left;
+    font-family: 'Raleway', sans-serif;  /* Memastikan penggunaan font Raleway dengan fallback ke sans-serif */
+    position: absolute;
+    width: 52%; /* Mengubah lebar dari px ke persentase untuk responsivitas */
+    top: 40%; /* Mengubah posisi atas dari px ke persentase */
+    left: 12%; /* Mengubah posisi kiri dari px ke persentase */
+    color: white;
+    font-size: calc(1.5vw + 24px); /* Ukuran font dinamis berdasarkan lebar viewport */
+    font-weight: 700;
+    line-height: 1.1; /* Menyesuaikan line-height sebagai multiplier dari ukuran font */
+    letter-spacing: normal; /* Menggunakan 'normal' sebagai pengaturan standar untuk letter-spacing */
+    text-align: center;
+  }
 }
+@media screen and (max-width: 920px) {
+  .image {
+    font-family: 'Raleway', sans-serif;  /* Memastikan penggunaan font Raleway dengan fallback ke sans-serif */
+    position: absolute;
+    width: 72%; /* Mengubah lebar dari px ke persentase untuk responsivitas */
+    top: 0%; /* Mengubah posisi atas dari px ke persentase */
+    left: 0%; /* Mengubah posisi kiri dari px ke persentase */
+    color: white;
+    font-size: calc(1.5vw + 24px); /* Ukuran font dinamis berdasarkan lebar viewport */
+    letter-spacing: normal; /* Menggunakan 'normal' sebagai pengaturan standar untuk letter-spacing */
+    text-align: center;
+  }
 }
+
+
 
 </style>

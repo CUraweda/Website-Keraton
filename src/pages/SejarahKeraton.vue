@@ -1,5 +1,7 @@
 <template>
-  <navbar isWhiteText/>
+  <nav>
+  <navbar isWhiteText :isCheckoutPage="true"/>
+</nav>
   <section id="hero">
     <div class="text">
       <h5 style="color: #FAE084;">Warisan Leluhur Cirebon</h5>
@@ -66,19 +68,31 @@
       </div>
     </div>
   </section>
+  <bawah class="bawah"></bawah>
 </template>
 
-<script>
+<script setup>
 import navbar from "../components/NavBar.vue"
+import bawah from "../components/FooterComp.vue"
+</script>
+
+<script>
 export default {
   components: {
-    navbar
+    navbar,
+    bawah
   }
 }
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+.bawah{
+  transform: scale(0.9);
+  margin-left: -70px;
+  margin-top: 50px;
+}
+
 
 * {
   font-family: "Raleway", sans-serif;
@@ -93,6 +107,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 90px;
 }
 .text {
   text-align: center;

@@ -7,9 +7,13 @@
       :rows="rows"
       :columns="columns"
       row-key="name"
-      hide-bottom
       class="q-mt-xl"
-    />
+      selection="single"
+    >
+      <template v-slot:body-selection="scope" >
+        <q-btn v-model="scope.selected" v-for="id in 7" :key="id" color="positive" :label="'Edit ' + id" :href="'#/admin/add/' + id"/>
+      </template>
+      </q-table>
   </div>
 </template>
 
@@ -25,9 +29,9 @@ const columns = [
     field: "nomor",
   },
   {
-    name: "Section Name",
+    name: "Section",
     align: "center",
-    label: "Section Name",
+    label: "Section ",
     field: "sectionName",
     sortable: true,
   },
@@ -50,9 +54,11 @@ const columns = [
     align: "center",
     label: "Action",
     field: "action",
-    sortable: true,
-  },
-];
+    format: (val, row) => {
+      return `
+        <q-btn @click="handleButtonClick('${row.id}')">Klik di sini</q-btn>
+      `;
+    }}];
 
 const rows = [
   {
@@ -178,8 +184,8 @@ export default {
           nomor: i + 1,
           sectionName: content.sectionName,
           pageName: content.page.name,
-          updatedAt: this.convertISOToReadableDate(content.updatedAt)
-        }))
+          updatedAt: this.convertISOToReadableDate(content.updatedAt),
+            }))
       }catch(err){
         console.log(err)
       }
