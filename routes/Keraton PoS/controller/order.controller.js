@@ -5,23 +5,17 @@ const orderModel = require("../models/order.models");
 
 expressRouter.get("/order-details/:id?", async (req, res) => {
   try {
-    let data;
-    switch (req.params.id) {
-      case true:
-        data = await orderModel.getOne(req.params.id);
-        return success(res, "Data Order berhasil di-fetch!", data);
-      case false:
-        data = await orderModel.getAll();
-        return success(res, "Data Order berhasil di-fetch!", data);
-      default:
-        throw new Error(`Aksi ${action} tidak ditemukan`);
-    }
+    const { id } = req.params;
+    const data = id
+      ? await orderModel.getOne(req.params.id)
+      : await orderModel.getAll();
+    return success(res, "Data Order berhasil di-fetch!", data);
   } catch (err) {
     return error(res, err.message);
   }
 });
 expressRouter.post(
-  "/order-details/:action/:id?",
+  "/order-action/:action/:id?",
   upload.single("image"),
   async (req, res) => {
     try {
