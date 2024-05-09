@@ -5,14 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const getUser = async (name) => {
   try {
-    return await prisma.user.findFirst({
-      where: { name: name },
-    });
+    return await prisma.user.findFirst({ where: { name: name } });
   } catch (err) {
     throwError(err);
   }
 };
-
 const isExist = async (id) => {
   try {
     return await prisma.user.findFirst({
@@ -22,7 +19,6 @@ const isExist = async (id) => {
     throwError(err);
   }
 };
-
 const logIn = async (body) => {
   let { name, password } = body;
   try {

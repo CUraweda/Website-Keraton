@@ -5,7 +5,6 @@ var bodyParser = require('body-parser')
 var logger = require('morgan')
 var http = require('http')
 
-var reportRouter = require('./routes/report')
 const keratonWebsiteRouter = require('./routes/Website Keraton/controller/index')
 const keratonPosRouter = require('./routes/Keraton PoS/controller/index')
 const { error } = require('console')
@@ -81,7 +80,6 @@ app.get('/ping', async (req, res) => {
 })
 
 //? ROUTES
-app.use('/report', reportRouter)
 app.use('/keraton', keratonWebsiteRouter)
 app.use('/keraton-pos', keratonPosRouter)
 app.use('/uploads', express.static('./public/assets/uploads'));

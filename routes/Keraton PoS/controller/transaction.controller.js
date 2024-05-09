@@ -22,5 +22,16 @@ expressRouter.post("/create-transaction", async (req, res) => {
     return error(res, err.message);
   }
 });
+expressRouter.get("/target-revenue/:date", async (req, res) => {
+  try {
+    const data =
+      req.params.date === "year"
+        ? await transactionModel.getYear()
+        : await transactionModel.getMonth();
+    return success(res, "Data Invoice berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 
 module.exports = expressRouter;

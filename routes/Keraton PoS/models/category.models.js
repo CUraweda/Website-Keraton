@@ -1,7 +1,6 @@
 const { throwError } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
 
-
 const isExist = async (id) => {
   try {
     return await prisma.category.findFirst({ where: { id: id } });
@@ -46,4 +45,19 @@ const deleteCategory = async (id) => {
   }
 };
 
-module.exports = { isExist, getAll, create, update, deleteCategory };
+const findPurchaseCategories = async () => {
+  try {
+    return await prisma.category.findMany({ select: { name: true } });
+  } catch (err) {
+    throwError(err);
+  }
+};
+
+module.exports = {
+  isExist,
+  getAll,
+  create,
+  update,
+  deleteCategory,
+  findPurchaseCategories,
+};

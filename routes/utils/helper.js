@@ -93,6 +93,93 @@ function generateMonthlyCategory(daysInMonth) {
 }
 // Detail Trans End
 
+// Order Initialization
+function groupedPurchase(orders, category) {
+  const groupedOrders = {};
+
+  orders.forEach((order) => {
+    const categoryName = order.category.name;
+    if (!groupedOrders[categoryName]) {
+      groupedOrders[categoryName] = 0;
+    }
+
+    order.detailTrans.forEach((detail) => {
+      groupedOrders[categoryName] += detail.amount;
+    });
+  });
+
+  const orderInfo = Object.keys(groupedOrders).map((category) => ({
+    category,
+    sum: groupedOrders[category],
+  }));
+
+  orderInfo.sort(
+    (a, b) => category.indexOf(a.category) - category.indexOf(b.category)
+  );
+
+  return orderInfo;
+}
+function groupYearData(data, categories, colors) {
+  const yearlyData = categories.map((category, index) => {
+    return {
+      name: category,
+      color: colors[index],
+      data: [0, ...Array.from({ length: 12 }, () => 0)],
+    };
+  });
+
+  data.forEach((order) => {
+    const categoryIndex = categories
+      .map((cat) => cat)
+      .indexOf(order.category.name);
+    order.detailTrans.forEach((detail) => {
+      const month = detail.transaction.createdDate.getMonth() + 1;
+      const amount = detail.amount;
+      if (categoryIndex !== -1) {
+        yearlyData[categoryIndex].data[month] += parseInt(amount);
+      }
+    });
+  });
+
+  const yearlyCategory = generateYearlyCategory();
+
+  return {
+    yearlyCategory,
+    yearlyData,
+  };
+}
+function groupMonthData(data, categories, colors, daysInMonth) {
+  const monthlyData = categories.map((category, index) => {
+    return {
+      name: category,
+      color: colors[index],
+      data: [0, ...Array.from({ length: daysInMonth }, () => 0)], // Menambahkan data kosong di index 0
+    };
+  });
+
+  // Mengisi data langsung dengan amount
+  data.forEach((order) => {
+    const categoryIndex = categories
+      .map((cat) => cat)
+      .indexOf(order.category.name);
+    order.detailTrans.forEach((detail) => {
+      const day = detail.transaction.createdDate.getDate();
+      const amount = detail.amount;
+      if (categoryIndex !== -1) {
+        monthlyData[categoryIndex].data[day] += amount;
+      }
+    });
+  });
+
+  const monthlyCategory = generateMonthlyCategory(daysInMonth);
+
+  return {
+    monthlyCategory,
+    monthlyData: Object.values(monthlyData),
+  };
+}
+// Order End
+
 const throwError = (err) => {
   console.log(err);
   throw err;
@@ -124,6 +211,9 @@ module.exports = {
   endDate,
   generateYearlyCategory,
   generateMonthlyCategory,
+  groupedPurchase,
+  groupYearData,
+  groupMonthData,
   throwError,
   generateRandomString,
   convertFilesToURL,

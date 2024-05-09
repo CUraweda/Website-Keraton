@@ -43,5 +43,23 @@ expressRouter.post(
     }
   }
 );
+expressRouter.get("/recent-purchase", async (req, res) => {
+  try {
+    const data = await orderModel.recentPurchase();
+    return success(res, "Data Purchase Info berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
+expressRouter.get("/chart-data/:year/:month?", async (req, res) => {
+  try {
+    const data = req.params.month
+      ? await orderModel.getMonthData(req.params.year, req.params.month)
+      : await orderModel.getYearData(req.params.year);
+    return success(res, "Data Chart berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 
 module.exports = expressRouter;

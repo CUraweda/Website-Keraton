@@ -1,9 +1,10 @@
 const { throwError, startDate, endDate } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
+const userModel = require("./user.models");
 
-const findUser = async (name) => {
+const getOne = async (id) => {
   try {
-    return await prisma.user.findFirst({ where: { name: name } });
+    return await prisma.transaction.findFirst({ where: { id: id } });
   } catch (err) {
     throwError(err);
   }
@@ -21,13 +22,61 @@ const getRevenue = async () => {
     throwError(err);
   }
 };
+const updateTransData = async (
+  transaction = [],
+  order = [],
+  detailTrans = []
+) => {
+  try {
+    await prisma.transaction.update({
+      where: { id: transaction.id },
+      data: {
+        total: (transaction.total -=
+          order.price * detailTrans.amount + 3500 - transaction.discount),
+      },
+    });
+  } catch (err) {
+    throwError(err);
+  }
+};
+const getDistinctDate = async () => {
+  try {
+    return await prisma.transaction.findMany({ distinct: ["createdDate"] });
+  } catch (err) {
+    throwError(err);
+  }
+};
+const getYear = async () => {
+  try {
+    const distinct = await getDistinctDate();
+    const years = distinct.map((transaction) => {
+      return new Date(transaction.createdDate).getFullYear();
+    });
+    const data = [...new Set(years)];
+    return data;
+  } catch (err) {
+    throwError(err);
+  }
+};
+const getMonth = async () => {
+  try {
+    const distinct = await getDistinctDate();
+    const months = distinct.map((transaction) => {
+      return new Date(transaction.createdDate).getMonth() + 1;
+    });
+    const data = [...new Set(months)];
+    return data;
+  } catch (err) {
+    throwError(err);
+  }
+};
 const create = async (data, username, nationality) => {
   try {
     const order = data.order;
     delete data.name;
     delete data.nationality;
     delete data.order;
-    const user = await findUser(username);
+    const user = await userModel.getUser(username);
     const transactionData = {
       user: {
         connect: { id: user.id },
@@ -79,4 +128,11 @@ const createDetail = async (order, transaction) => {
   }
 };
 
-module.exports = { getRevenue, create };
+module.exports = {
+  getOne,
+  getRevenue,
+  getYear,
+  getMonth,
+  updateTransData,
+  create,
+};

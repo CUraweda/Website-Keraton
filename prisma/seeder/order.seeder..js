@@ -5,77 +5,77 @@ const orders = [
   {
     name: "Tiket masuk Keraton Kasepuhan Cirebon",
     price: 10000.0,
-    category: "UMUM",
+    categoryId: 1,
   },
   {
     name: "Tiket masuk Keraton Kasepuhan Cirebon",
     price: 10000.0,
-    category: "PELAJAR",
+    categoryId: 2,
   },
   {
     name: "Tiket masuk Keraton Kasepuhan Cirebon",
     price: 10000.0,
-    category: "MANCANEGARA",
+    categoryId: 3,
   },
   {
     name: "Bundling tiket masuk Keraton Kasepuhan Cirebon",
     price: 30000.0,
-    category: "UMUM",
+    categoryId: 1,
   },
   {
     name: "Bundling tiket masuk Keraton Kasepuhan Cirebon",
     price: 30000.0,
-    category: "PELAJAR",
+    categoryId: 2,
   },
   {
     name: "Bundling tiket masuk Keraton Kasepuhan Cirebon",
     price: 30000.0,
-    category: "MANCANEGARA",
+    categoryId: 3,
   },
   {
     name: "Bertemu Pangeran",
     price: 25000.0,
-    category: "UMUM",
+    categoryId: 1,
   },
   {
     name: "Bertemu Pangeran",
     price: 25000.0,
-    category: "PELAJAR",
+    categoryId: 2,
   },
   {
     name: "Bertemu Pangeran",
     price: 25000.0,
-    category: "MANCANEGARA",
+    categoryId: 3,
   },
   {
     name: "Event bulanan",
     price: 15000.0,
-    category: "UMUM",
+    categoryId: 1,
   },
   {
     name: "Event bulanan",
     price: 15000.0,
-    category: "PELAJAR",
+    categoryId: 2,
   },
   {
     name: "Event bulanan",
     price: 15000.0,
-    category: "MANCANEGARA",
+    categoryId: 3,
   },
   {
     name: "Event mingguan",
     price: 15000.0,
-    category: "UMUM",
+    categoryId: 1,
   },
   {
     name: "Event mingguan",
     price: 15000.0,
-    category: "PELAJAR",
+    categoryId: 2,
   },
   {
     name: "Event mingguan",
     price: 15000.0,
-    category: "MANCANEGARA",
+    categoryId: 3,
   },
 ];
 

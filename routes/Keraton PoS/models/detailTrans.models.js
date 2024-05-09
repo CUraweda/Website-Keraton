@@ -26,37 +26,33 @@ const getAll = async (search) => {
             ],
           }
         : {},
-      select: {
-        order: {
-          select: {
-            name: true,
-          },
-        },
-        transaction: {
-          select: {
-            plannedDate: true,
-            method: true,
-            user: {
-              select: {
-                name: true,
-                email: true,
-                number: true,
-              },
-            },
-          },
-        },
+      include: {
+        order: true,
+        transaction: { include: { user: true } },
       },
     });
   } catch (err) {
     throwError(err);
   }
 };
-
+const getFromOrderId = async (id) => {
+  try {
+    return await prisma.detailTrans.findFirst({ where: { orderID: id } });
+  } catch (err) {
+    throwError(err);
+  }
+};
 const getTableData = async (category) => {
   try {
     const detailTrans = await prisma.detailTrans.findMany({
       where: category
-        ? { order: { category: category } }
+        ? {
+            order: {
+              category: {
+                name: category,
+              },
+            },
+          }
         : {},
       select: {
         amount: true,
@@ -64,7 +60,12 @@ const getTableData = async (category) => {
           select: { createdDate: true },
         },
         order: {
-          select: { id: true, name: true, category: true, price: true },
+          select: {
+            id: true,
+            name: true,
+            category: { select: { name: true } },
+            price: true,
+          },
         },
       },
     });
@@ -74,10 +75,17 @@ const getTableData = async (category) => {
       ...detailTrans,
       total_price: detailTrans.amount * detailTrans.order.price,
     }));
-    return finalDetailTrans
+    return finalDetailTrans;
   } catch (err) {
     throwError;
   }
 };
+const deleteDetailTrans = async (id) => {
+  try {
+    return await prisma.detailTrans.deleteMany({ where: { id: id } });
+  } catch (err) {
+    throwError(err);
+  }
+};
 
-module.exports = { getAll, getTableData };
+module.exports = { getAll, getFromOrderId, getTableData, deleteDetailTrans };
