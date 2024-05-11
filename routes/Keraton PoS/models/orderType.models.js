@@ -1,6 +1,6 @@
 const { throwError } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
-
+const orderRelationModel = require("./orderRelation.models");
 
 const isExist = async (id) => {
   try {
@@ -29,7 +29,7 @@ const create = async (data) => {
 const update = async (id, data) => {
   try {
     const orderType = await isExist(id);
-    if (!orderType) throw Error("Order Type ID tidak ditemukan");
+    if (!orderType) throw Error("ID Order Type tidak ditemukan");
     return await prisma.orderType.update({ where: { id }, data });
   } catch (err) {
     throwError(err);
@@ -38,8 +38,12 @@ const update = async (id, data) => {
 
 const deleteOrderType = async (id) => {
   try {
-    const order = await isExist(id);
-    if (!order) throw Error("Order Type ID tidak ditemukan");
+    const type = await isExist(id);
+    if (!type) throw Error("ID Order Type tidak ditemukan");
+    const orders = await prisma.order.findMany({ where: { orderTypeId: id } });
+    for (const order of orders) {
+      await orderRelationModel.deleteOrder(order.id);
+    }
     return await prisma.orderType.delete({ where: { id } });
   } catch (err) {
     throwError(err);

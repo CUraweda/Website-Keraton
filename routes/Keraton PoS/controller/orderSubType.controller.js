@@ -19,10 +19,10 @@ expressRouter.post(
           const data = await orderSubTypeModel.create(req.body);
           return success(res, "Penambahan sub tipe pesanan berhasil", data);
         case "update":
-          await orderSubTypeModel.update(req.params.id, req.body);
+          await orderSubTypeModel.update(Number(req.params.id), req.body);
           return success(res, "Update sub tipe pesanan berhasil!");
         case "delete":
-          await orderSubTypeModel.deleteOrderSubType(req.params.id);
+          await orderSubTypeModel.deleteOrderSubType(Number(req.params.id));
           return success(res, "Penghapusan sub tipe pesanan berhasil!");
         default:
           throw new Error(`Aksi ${action} tidak ditemukan`);

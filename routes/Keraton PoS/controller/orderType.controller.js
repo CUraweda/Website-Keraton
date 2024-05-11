@@ -19,10 +19,10 @@ expressRouter.post(
           const data = await orderTypeModel.create(req.body);
           return success(res, "Penambahan tipe pesanan berhasil", data);
         case "update":
-          await orderTypeModel.update(req.params.id, req.body);
+          await orderTypeModel.update(Number(req.params.id), req.body);
           return success(res, "Update tipe pesanan berhasil!");
         case "delete":
-          await orderTypeModel.deleteOrderType(req.params.id);
+          await orderTypeModel.deleteOrderType(Number(req.params.id));
           return success(res, "Penghapusan tipe pesanan berhasil!");
         default:
           throw new Error(`Aksi ${action} tidak ditemukan`);

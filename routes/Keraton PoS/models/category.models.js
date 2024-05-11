@@ -1,5 +1,6 @@
 const { throwError } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
+const orderRelationModel = require("./orderRelation.models");
 
 const isExist = async (id) => {
   try {
@@ -28,7 +29,7 @@ const create = async (data) => {
 const update = async (id, data) => {
   try {
     const category = await isExist(id);
-    if (!category) throw Error("Order Sub Type ID tidak ditemukan");
+    if (!category) throw Error("ID Category tidak ditemukan");
     return await prisma.category.update({ where: { id }, data });
   } catch (err) {
     throwError(err);
@@ -37,8 +38,12 @@ const update = async (id, data) => {
 
 const deleteCategory = async (id) => {
   try {
-    const order = await isExist(id);
-    if (!order) throw Error("Order Sub Type ID tidak ditemukan");
+    const category = await isExist(id);
+    if (!category) throw Error("ID Category tidak ditemukan");
+    const orders = await prisma.order.findMany({ where: { categoryId: id } });
+    for (const order of orders) {
+      await orderRelationModel.deleteOrder(order.id);
+    }
     return await prisma.category.delete({ where: { id } });
   } catch (err) {
     throwError(err);

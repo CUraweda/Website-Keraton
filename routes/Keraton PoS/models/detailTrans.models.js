@@ -75,6 +75,12 @@ const getTableData = async (category) => {
       ...detailTrans,
       total_price: detailTrans.amount * detailTrans.order.price,
     }));
+    finalDetailTrans.sort((a, b) => {
+      return (
+        new Date(b.transaction.createdDate) -
+        new Date(a.transaction.createdDate)
+      );
+    });
     return finalDetailTrans;
   } catch (err) {
     throwError;
@@ -82,7 +88,9 @@ const getTableData = async (category) => {
 };
 const deleteDetailTrans = async (id) => {
   try {
-    return await prisma.detailTrans.deleteMany({ where: { id: id } });
+    const data = await prisma.detailTrans.findMany({ where: { id: id } });
+    await prisma.detailTrans.deleteMany({ where: { id: id } });
+    return data
   } catch (err) {
     throwError(err);
   }
