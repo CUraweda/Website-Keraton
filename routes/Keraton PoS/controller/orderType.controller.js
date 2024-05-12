@@ -16,16 +16,16 @@ expressRouter.post(
   upload.none(),
   async (req, res) => {
     try {
-      req.body.id = parseInt(req.body.id)
+      req.params.id = parseInt(req.params.id)
       switch (req.params.action) {
         case "create":
           const data = await orderTypeModel.create(req.body);
           return success(res, "Penambahan tipe pesanan berhasil", data);
         case "update":
-          await orderTypeModel.update(Number(req.params.id), req.body);
+          await orderTypeModel.update(req.params.id, req.body);
           return success(res, "Update tipe pesanan berhasil!");
         case "delete":
-          await orderTypeModel.deleteOrderType(Number(req.params.id));
+          await orderTypeModel.deleteOrderType(req.params.id);
           return success(res, "Penghapusan tipe pesanan berhasil!");
         default:
           throw new Error(`Aksi ${action} tidak ditemukan`);

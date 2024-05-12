@@ -30,9 +30,7 @@ const logIn = async (body) => {
     if (user.role === "CUSTOMER") {
       throw Error("User tidak memiliki akses!");
     }
-    const token = jwt.sign(user, process.env.SECRET_KEY_AUTH, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(user, process.env.SECRET_KEY_AUTH);
     return token;
   } catch (err) {
     throwError(err);
