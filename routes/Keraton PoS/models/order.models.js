@@ -59,7 +59,7 @@ const getRecentData = async (start, end) => {
 };
 const create = async (data) => {
   try {
-    return await prisma.order.create({ data });
+    return await prisma.order.create({ data: data });
   } catch (err) {
     throwError(err);
   }
@@ -68,7 +68,7 @@ const update = async (id, data) => {
   try {
     const order = await isExist(id);
     if (!order) throw Error("Order ID tidak ditemukan");
-    return await prisma.order.update({ where: { id }, data });
+    return await prisma.order.update({ where: { id: id }, data: data });
   } catch (err) {
     throwError(err);
   }

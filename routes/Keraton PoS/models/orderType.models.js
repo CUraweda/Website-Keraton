@@ -20,7 +20,7 @@ const getAll = async () => {
 
 const create = async (data) => {
   try {
-    return await prisma.orderType.create({ data });
+    return await prisma.orderType.create({ data: data });
   } catch (err) {
     throwError(err);
   }
@@ -30,7 +30,7 @@ const update = async (id, data) => {
   try {
     const orderType = await isExist(id);
     if (!orderType) throw Error("ID Order Type tidak ditemukan");
-    return await prisma.orderType.update({ where: { id }, data });
+    return await prisma.orderType.update({ where: { id: id }, data: data });
   } catch (err) {
     throwError(err);
   }

@@ -1,5 +1,6 @@
 const { expressRouter } = require("../../utils/router");
 const { error, success } = require("../../utils/response");
+const { upload } = require("../../utils/helper");
 const categoryModel = require("../models/category.models");
 
 expressRouter.get("/category-details", async (req, res) => {
@@ -10,30 +11,28 @@ expressRouter.get("/category-details", async (req, res) => {
     return error(res, err.message);
   }
 });
-expressRouter.post("/category-action/:action/:id?", async (req, res) => {
-  try {
-    req.body.image = req.file
-      ? req.file.originalname
-      : req.body.imgName
-      ? req.body.imgName
-      : null;
-    delete req.body.imgName;
-    switch (req.params.action) {
-      case "create":
-        const data = await categoryModel.create(req.body);
-        return success(res, "Penambahan kategori berhasil", data);
-      case "update":
-        await categoryModel.update(Number(req.params.id), req.body);
-        return success(res, "Update kategori berhasil!");
-      case "delete":
-        await categoryModel.deleteCategory(Number(req.params.id));
-        return success(res, "Penghapusan kategori berhasil!");
-      default:
-        throw new Error(`Aksi ${action} tidak ditemukan`);
+expressRouter.post(
+  "/category-action/:action/:id?",
+  upload.none(),
+  async (req, res) => {
+    try {
+      switch (req.params.action) {
+        case "create":
+          const data = await categoryModel.create(req.body);
+          return success(res, "Penambahan kategori berhasil", data);
+        case "update":
+          await categoryModel.update(Number(req.params.id), req.body);
+          return success(res, "Update kategori berhasil!");
+        case "delete":
+          await categoryModel.deleteCategory(Number(req.params.id));
+          return success(res, "Penghapusan kategori berhasil!");
+        default:
+          throw new Error(`Aksi ${action} tidak ditemukan`);
+      }
+    } catch (err) {
+      return error(res, err.message);
     }
-  } catch (err) {
-    return error(res, err.message);
   }
-});
+);
 
 module.exports = expressRouter;

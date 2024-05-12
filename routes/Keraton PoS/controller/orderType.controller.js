@@ -1,5 +1,6 @@
 const { expressRouter } = require("../../utils/router");
 const { error, success } = require("../../utils/response");
+const { upload } = require("../../utils/helper");
 const orderTypeModel = require("../models/orderType.models");
 
 expressRouter.get("/type-details", async (req, res) => {
@@ -12,6 +13,7 @@ expressRouter.get("/type-details", async (req, res) => {
 });
 expressRouter.post(
   "/type-action/:action/:id?",
+  upload.none(),
   async (req, res) => {
     try {
       switch (req.params.action) {

@@ -20,7 +20,8 @@ const getAll = async () => {
 
 const create = async (data) => {
   try {
-    return await prisma.category.create({ data });
+    console.log(data);
+    return await prisma.category.create({ data: data });
   } catch (err) {
     throwError(err);
   }
@@ -30,7 +31,7 @@ const update = async (id, data) => {
   try {
     const category = await isExist(id);
     if (!category) throw Error("ID Category tidak ditemukan");
-    return await prisma.category.update({ where: { id }, data });
+    return await prisma.category.update({ where: { id: id }, data: data });
   } catch (err) {
     throwError(err);
   }
