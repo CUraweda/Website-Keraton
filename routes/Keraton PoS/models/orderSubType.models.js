@@ -9,7 +9,6 @@ const isExist = async (id) => {
     throwError(err);
   }
 };
-
 const getAll = async () => {
   try {
     return await prisma.orderSubType.findMany();
@@ -17,7 +16,13 @@ const getAll = async () => {
     throwError(err);
   }
 };
-
+const getRelated = async (id) => {
+  try {
+    return await prisma.orderSubType.findMany({ where: { orderTypeId: id } });
+  } catch (err) {
+    throwError(err);
+  }
+};
 const create = async (data) => {
   try {
     return await prisma.orderSubType.create({ data });
@@ -25,7 +30,6 @@ const create = async (data) => {
     throwError(err);
   }
 };
-
 const update = async (id, data) => {
   try {
     const orderSubType = await isExist(id);
@@ -35,12 +39,13 @@ const update = async (id, data) => {
     throwError(err);
   }
 };
-
 const deleteOrderSubType = async (id) => {
   try {
     const subtype = await isExist(id);
     if (!subtype) throw Error("ID Order Sub Type tidak ditemukan");
-    const orders = await prisma.order.findMany({ where: { orderSubTypeId: id } });
+    const orders = await prisma.order.findMany({
+      where: { orderSubTypeId: id },
+    });
     for (const order of orders) {
       await orderRelationModel.deleteOrder(order.id);
     }
@@ -50,4 +55,11 @@ const deleteOrderSubType = async (id) => {
   }
 };
 
-module.exports = { isExist, getAll, create, update, deleteOrderSubType };
+module.exports = {
+  isExist,
+  getAll,
+  getRelated,
+  create,
+  update,
+  deleteOrderSubType,
+};

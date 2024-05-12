@@ -11,24 +11,24 @@ const categoryModel = require("./category.models");
 
 const isExist = async (id) => {
   try {
-    return await prisma.order.findFirst({
-      where: { id: id },
-      include: { category: true },
-    });
+    return await prisma.order.findFirst({ where: { id: id } });
   } catch (err) {
     throwError(err);
   }
 };
 const getOne = async (id) => {
   try {
-    return await prisma.order.findFirst({ where: { id: id } });
+    return await prisma.order.findFirst({
+      where: { id: id },
+      include: { category: true, orderType: true, orderSubType: true },
+    });
   } catch (err) {
     throwError(err);
   }
 };
 const getAll = async () => {
   try {
-    return await prisma.order.findMany({ include: { category: true } });
+    return await prisma.order.findMany({ include: { category: true, orderType: true, orderSubType: true } });
   } catch (err) {
     throwError(err);
   }

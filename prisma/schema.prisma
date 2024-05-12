@@ -36,7 +36,7 @@ model Guide {
   birthdate   DateTime
   image       String?
   desc        String?
-  DetailTrans DetailTrans[]
+  detailTrans DetailTrans[]
 }
 
 model User {
@@ -49,7 +49,7 @@ model User {
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
   transaction   Transaction[]
-  Tokens        Tokens[]
+  tokens        Tokens[]
 }
 
 model Tokens {
@@ -68,9 +68,9 @@ model Order {
   detailTrans    DetailTrans[]
   category       Category?     @relation(fields: [categoryId], references: [id])
   categoryId     Int?
-  OrderType      OrderType?    @relation(fields: [orderTypeId], references: [id])
+  orderType      OrderType?    @relation(fields: [orderTypeId], references: [id])
   orderTypeId    Int?
-  OrderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
+  orderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
   orderSubTypeId Int?
 }
 
@@ -78,7 +78,7 @@ model Category {
   id    Int     @id @default(autoincrement())
   name  String  @unique
   color String
-  Order Order[]
+  order Order[]
 }
 
 model OrderType {
@@ -148,7 +148,7 @@ model Pages {
   name      String     @unique
   updatedAt DateTime   @updatedAt
   createdAt DateTime   @default(now())
-  Contents  Contents[]
+  contents  Contents[]
 }
 
 model Events {
@@ -165,5 +165,5 @@ model Events {
 model EventIteration {
   id     Int      @id @default(autoincrement())
   name   String   @unique
-  Events Events[]
+  events Events[]
 }

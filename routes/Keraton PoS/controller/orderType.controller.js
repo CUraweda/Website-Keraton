@@ -16,6 +16,7 @@ expressRouter.post(
   upload.none(),
   async (req, res) => {
     try {
+      req.body.id = parseInt(req.body.id)
       switch (req.params.action) {
         case "create":
           const data = await orderTypeModel.create(req.body);

@@ -3,9 +3,11 @@ const { error, success } = require("../../utils/response");
 const { upload } = require("../../utils/helper");
 const orderSubTypeModel = require("../models/orderSubType.models");
 
-expressRouter.get("/sub-type-details", async (req, res) => {
+expressRouter.get("/sub-type-details/:id?", async (req, res) => {
   try {
-    const data = await orderSubTypeModel.getAll();
+    const data = req.params.id > 0
+      ? await orderSubTypeModel.getRelated(Number(req.params.id))
+      : await orderSubTypeModel.getAll();
     return success(res, "Data Order Sub Type berhasil di-fetch!", data);
   } catch (err) {
     return error(res, err.message);
@@ -16,6 +18,7 @@ expressRouter.post(
   upload.none(),
   async (req, res) => {
     try {
+      req.body.id = parseInt(req.body.id)
       switch (req.params.action) {
         case "create":
           const data = await orderSubTypeModel.create(req.body);
