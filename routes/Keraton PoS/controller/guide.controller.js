@@ -13,12 +13,17 @@ expressRouter.get("/guide-list", async (req, res) => {
 });
 
 expressRouter.post(
-  "/guide/:action/:id?",
+  "/guide-action/:action/:id?",
   upload.single("image"),
   async (req, res) => {
     const action = req.params.action;
     try {
-      req.body.image = req.file ? req.file.originalname : null;
+      req.body.image = req.file
+        ? req.file.originalname
+        : req.body.imgName
+        ? req.body.imgName
+        : null;
+      delete req.body.imgName;
       let data;
       switch (action) {
         case "create":
