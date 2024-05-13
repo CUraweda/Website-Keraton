@@ -11,14 +11,17 @@ const isExist = async (id) => {
 };
 const getAll = async () => {
   try {
-    return await prisma.orderSubType.findMany();
+    return await prisma.orderSubType.findMany({ include: { orderType: true } });
   } catch (err) {
     throwError(err);
   }
 };
 const getRelated = async (id) => {
   try {
-    return await prisma.orderSubType.findMany({ where: { orderTypeId: id } });
+    return await prisma.orderSubType.findMany({
+      where: { orderTypeId: id },
+      include: { orderType: true },
+    });
   } catch (err) {
     throwError(err);
   }

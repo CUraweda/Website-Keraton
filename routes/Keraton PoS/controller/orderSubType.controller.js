@@ -19,6 +19,7 @@ expressRouter.post(
   async (req, res) => {
     try {
       req.params.id = parseInt(req.params.id)
+      req.body.orderTypeId = parseInt(req.body.orderTypeId)
       switch (req.params.action) {
         case "create":
           const data = await orderSubTypeModel.create(req.body);
