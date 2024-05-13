@@ -4,7 +4,7 @@ CREATE TABLE `Guide` (
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `gender` ENUM('MALE', 'FEMALE') NOT NULL,
-    `birthdate` DATETIME(3) NOT NULL,
+    `birthdate` DATE NOT NULL,
     `image` VARCHAR(191) NULL,
     `desc` VARCHAR(191) NULL,
 

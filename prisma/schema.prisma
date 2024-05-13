@@ -33,7 +33,7 @@ model Guide {
   name        String
   email       String        @unique
   gender      Gender
-  birthdate   DateTime
+  birthdate   DateTime      @db.Date
   image       String?
   desc        String?
   detailTrans DetailTrans[]
