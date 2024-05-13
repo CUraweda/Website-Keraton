@@ -29,13 +29,13 @@ expressRouter.post(
       let data;
       switch (action) {
         case "create":
-          data = await orderModel.create(req.body);
+          data = await guideModel.create(req.body);
           break;
         case "update":
-          data = await orderModel.update(+req.params.id, req.body);
+          data = await guideModel.update(req.params.id, req.body);
           break;
         case "delete":
-          data = await orderModel.deleteOrder(+req.params.id);
+          data = await guideModel.deleteGuide(req.params.id);
           break;
         default:
           throw new Error(`Action ${action} tidak ditemukan`);

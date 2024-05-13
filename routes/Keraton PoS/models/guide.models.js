@@ -31,5 +31,14 @@ const update = async (id, data) => {
     throwError(err);
   }
 };
+const deleteGuide = async (id) => {
+  try {
+    const exist = await getOne(id);
+    if (!exist) throw Error("Guide ID tidak ditemukan");
+    return await prisma.guide.delete({ where: { id: id } });
+  } catch (err) {
+    throwError(err);
+  }
+};
 
-module.exports = { getOne, getAll, create, update };
+module.exports = { getOne, getAll, create, update, deleteGuide };
