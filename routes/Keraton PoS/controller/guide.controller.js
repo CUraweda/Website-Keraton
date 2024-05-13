@@ -3,9 +3,11 @@ const { error, success } = require("../../utils/response");
 const { upload } = require("../../utils/helper");
 const guideModel = require("../models/guide.models");
 
-expressRouter.get("/guide-list", async (req, res) => {
+expressRouter.get("/guide-list/:id?", async (req, res) => {
   try {
-    const data = await guideModel.getAll();
+    const data = req.params.id
+      ? await guideModel.getOne(req.params.id)
+      : await guideModel.getAll();
     return success(res, "Data Guide berhasil di-fetch!", data);
   } catch (err) {
     return error(res, err.message);
