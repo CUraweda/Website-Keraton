@@ -86,14 +86,42 @@ const getTableData = async (category) => {
     throwError;
   }
 };
+const getUnavailableGuide = async (date) => {
+  try {
+    date = date.split(" ")[0];
+    const startTarget = new Date(date);
+    const endTarget = new Date(startTarget.getTime() + 8 * 60 * 60 * 1000);
+    return await prisma.detailTrans.findMany({
+      where: {
+        transaction: {
+          plannedDate: {
+            gte: startTarget,
+            lte: endTarget,
+          },
+        },
+      },
+      select: {
+        guide: { select: { id: true } },
+      },
+    });
+  } catch (err) {
+    throwError;
+  }
+};
 const deleteDetailTrans = async (id) => {
   try {
     const data = await prisma.detailTrans.findMany({ where: { id: id } });
     await prisma.detailTrans.deleteMany({ where: { id: id } });
-    return data
+    return data;
   } catch (err) {
     throwError(err);
   }
 };
 
-module.exports = { getAll, getFromOrderId, getTableData, deleteDetailTrans };
+module.exports = {
+  getAll,
+  getFromOrderId,
+  getTableData,
+  getUnavailableGuide,
+  deleteDetailTrans,
+};

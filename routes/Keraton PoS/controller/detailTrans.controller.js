@@ -18,5 +18,13 @@ expressRouter.get("/table-data", async (req, res) => {
     return error(res, err.message);
   }
 });
+expressRouter.get("/unavailable-guide", async (req, res) => {
+  try {
+    const data = await detailTransModel.getUnavailableGuide(req.query.date);
+    return success(res, "Data Guide yang tidak tersedia berhasil di-fetch!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 
 module.exports = expressRouter;
