@@ -94,6 +94,7 @@
       text-color="white"
       label="Save and Update"
       class="full-width q-mt-md"
+      href="/#/"
     />
   </div>
 </template>
