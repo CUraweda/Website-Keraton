@@ -1,45 +1,42 @@
 <template>
-  <div class="text-center text-h6 text-bold q-mt-md">Edit Section {{ sectionName }}</div>
+  <div class="text-center text-h6 text-bold q-mt-md">
+    Edit Section {{ sectionName }}
+  </div>
   <div class="text-center q-mt-sm">Ubah dan alur konten web Keraton</div>
 
   <div style="padding-inline: 300px; margin-top: 120px">
-    
     <div class="col-grow">
-        <q-input
-          filled
-          v-model="sectionName"
-          label="Section Name"
-          color="black"
-          bg-color="gray"
-        />
-      </div>
       <q-input
         filled
-        v-model="sectionOrder"
-        type="number"
-        label="Order"
+        v-model="sectionName"
+        label="Section Name"
         color="black"
         bg-color="gray"
       />
-
-
-    <q-btn
-    no-caps
-    @click="addNewInput('text')"
-    label="Tambahkan Text Input"
-    />
-    <q-btn
-    no-caps
-    @click="addNewInput('link')"
-    label="Tambahkan Link Input"
-    />
-    <q-btn
-    no-caps
-    @click="addNewInput('image')"
-    label="Tambahkan Image Input"
+    </div>
+    <q-input
+      filled
+      v-model="sectionOrder"
+      type="number"
+      label="Order"
+      color="black"
+      bg-color="gray"
     />
 
-    <div v-for="(item, i) in textInputs" :key="i" class="flex full-width" style="gap: 5px">
+    <q-btn no-caps @click="addNewInput('text')" label="Tambahkan Text Input" />
+    <q-btn no-caps @click="addNewInput('link')" label="Tambahkan Link Input" />
+    <q-btn
+      no-caps
+      @click="addNewInput('image')"
+      label="Tambahkan Image Input"
+    />
+
+    <div
+      v-for="(item, i) in textInputs"
+      :key="i"
+      class="flex full-width"
+      style="gap: 5px"
+    >
       <div class="col-grow">
         <q-input
           filled
@@ -74,24 +71,26 @@
         />
       </div>
     </div>
+
     <div v-for="(image, i) in imageInputs" :key="i">
       <q-file
-       
         filled
         type="file"
         v-model="image.data"
+        :name="'imageList'"
         :label="image.data ? 'Ganti Image' : 'Tambah Image'"
         color="black"
         class="q-mt-md"
-        @update:model-value="handleUpload(image.data)"
+        @update:model-value="(file) => handleUpload(file, i)"
       />
-      <q-img :src="image.data?.data || image.data" v-if="image.data" />
+      <q-img :src="image.preview" v-if="image.preview" />
+      <q-img :src="image.data" v-else />
     </div>
+
     <q-btn
       no-caps
       @click="sendUpdate"
       style="background: #123b32"
-      href="/#/"
       text-color="white"
       label="Save and Update"
       class="full-width q-mt-md"
@@ -102,10 +101,12 @@
 <script>
 import socket from "src/socket";
 import { ref } from "vue";
+
 export default {
   setup() {
     return {
-      sectionName: ref(),
+      sectionName: ref(""),
+      sectionOrder: ref(0),
       textInputs: ref([]),
       imageInputs: ref([]),
       linkInputs: ref([]),
@@ -124,105 +125,113 @@ export default {
   beforeUnmount() {
     socket.disconnect();
   },
-  methods:{
-    async fetchData(){
-      try{
-        if(!this.contentId) return this.setUpDefault()
-        const response = await this.$api.get(`/content/${this.contentId}`)
-        if(response.status != 200) throw Error('Error occured')
-        this.sectionName = response.data.data.sectionName
-        this.sectionOrder = response.data.data.sectionOrder
+  methods: {
+    async fetchData() {
+      try {
+        if (!this.contentId) return this.setUpDefault();
+        const response = await this.$api.get(`/content/${this.contentId}`);
+        if (response.status != 200) throw Error("Error occurred");
 
-        const contextKeys = Object.keys(response.data.data.context)
-        let rawContext = { xs: [], xi: [], xl: [] }
-        console.log(response.data.data.context)
-        for(let context of contextKeys) rawContext[this.takeTwoChars(context)].push({
-          ...response.data.data.context[context]
-        })
-        console.log(rawContext)
-        this.textInputs = rawContext.xs
-        this.imageInputs = rawContext.xi
-        this.linkInputs = rawContext.xl
-      }catch(err){
-        console.log(err)
+        const { sectionName, sectionOrder, context } = response.data.data;
+        this.sectionName = sectionName;
+        this.sectionOrder = sectionOrder;
+
+        const contextKeys = Object.keys(context);
+        let rawContext = { xs: [], xi: [], xl: [] };
+
+        for (let contextKey of contextKeys) {
+          rawContext[this.takeTwoChars(contextKey)].push({
+            ...context[contextKey],
+          });
+        }
+
+        this.textInputs = rawContext.xs;
+        this.imageInputs = rawContext.xi;
+        this.linkInputs = rawContext.xl;
+      } catch (err) {
+        console.log(err);
       }
     },
     async sendUpdate() {
-    try {
-        let textList = [], imageList = [], linkList = [];
-        
-        // Mengumpulkan data teks dari input
-        for (let text of this.textInputs) textList.push(text);
-        
-        // Mengumpulkan data gambar dari input
-        for (let image of this.imageInputs) {
-            // Jika gambar ada, sertakan ke dalam daftar
-            if (image.data) {
-                imageList.push({
-                    id: image.id, // Menyertakan ID gambar jika ada
-                    data: image.data
-                });
-            }
-        }
+      try {
+        let formData = new FormData();
 
-        // Mengumpulkan data link dari input
-        for (let link of this.linkInputs) linkList.push(link.data);
-        
-        // Mengirimkan permintaan update dengan data yang dikumpulkan
-        const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/';
-        const response = await this.$api.post(`/content/${linkIdentifier}`, {
-            pageId: 1,
-            sectionName: this.sectionName,
-            sectionOrder: this.sectionOrder,
-            textList,
-            imageList,
-            linkList
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        formData.append("pageId", 1);
+        formData.append("sectionName", this.sectionName);
+        formData.append("sectionOrder", this.sectionOrder);
+
+        // Append text inputs
+        this.textInputs.forEach((text, index) => {
+          formData.append(`textList[${index}].data`, text.data);
+          formData.append(`textList[${index}].textSize`, text.textSize);
         });
 
-        if (response.status != 200) throw Error('Error occurred');
+        // Append image inputs
+        this.imageInputs.forEach((image, index) => {
+          if (image.data) {
+            formData.append(`imageList`, image.data); // Ensure this matches the backend
+          }
+        });
 
-        socket.emit('dashboard', {});
-    } catch (err) {
+        // Append link inputs
+        this.linkInputs.forEach((link, index) => {
+          formData.append(`linkList[${index}].data`, link.data);
+        });
+
+        const linkIdentifier = this.contentId
+          ? `edit/${this.contentId}`
+          : "create/";
+        const response = await this.$api.post(
+          `/content/${linkIdentifier}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status != 200) throw Error("Error occurred");
+
+        socket.emit("dashboard", {});
+      } catch (err) {
         console.log(err);
-    }
-},
-
-    setUpDefault(){
-      this.sectionName = ""
-      this.sectionOrder = 0
-      this.addNewInput('text')
-      this.addNewInput('image')
-      this.addNewInput('link')
+      }
     },
-    addNewInput(type){
-      switch(type){
+    setUpDefault() {
+      this.sectionName = "";
+      this.sectionOrder = 0;
+      this.addNewInput("text");
+      this.addNewInput("image");
+      this.addNewInput("link");
+    },
+    addNewInput(type) {
+      switch (type) {
         case "text":
           this.textInputs.push({
             data: "",
-            textSize: ""
-          }) 
+            textSize: "",
+          });
           break;
         case "image":
           this.imageInputs.push({
-            data: ""
-          })
+            data: null,
+            preview: null,
+          });
           break;
         case "link":
           this.linkInputs.push({
-            data: ""
-          })
+            data: "",
+          });
           break;
         default:
           break;
       }
     },
-    handleUpload(image) {
-      if (image){
-       image.data = URL.createObjectURL(image)
+    handleUpload(file, index) {
+      if (file) {
+        this.imageInputs[index].data = file;
+        this.imageInputs[index].preview = URL.createObjectURL(file);
       }
     },
     takeTwoChars(str) {

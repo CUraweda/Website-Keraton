@@ -20,7 +20,7 @@
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
       </h2>
-      <a :href="sectionData?.xi1?.data" v-mod class="btn1">
+      <a :href="sectionData?.xl1?.data" v-mod class="btn1">
         <img class="btn1" src="../assets/images/btn1.png" />
       </a>
     </div>
@@ -66,7 +66,7 @@
 
   <section class="sec-home" id="section4"
   :style="{
-    'background-image': `url(${sectionimg})`,
+    'background-image': `url(${sectionimg1})`,
     'background-position': 'center',
     'background-repeat': 'no-repeat',
     'background-size': 'cover',
@@ -118,7 +118,7 @@
 
   <section id="section5"
   :style="{
-    'background-image': `url(${sectionimg})`,
+    'background-image': `url(${sectionData4?.xi1.data})`,
     'background-position': 'center',
     'background-repeat': 'no-repeat',
     'background-size': 'cover',
@@ -181,7 +181,7 @@
 
   <section class="sec-home" id="section6"
   :style="{
-    'background-image': `url(${sectionimg})`,
+    'background-image': `url(${sectionimg1})`,
     'background-position': 'center',
     'background-repeat': 'no-repeat',
     'background-size': 'cover',
@@ -386,8 +386,7 @@ export default {
       try {
         const response = await this.$api.get("page/content/1");
         const dataRest = response.data.data[0];
-        console.log(dataRest.contents[1].context?.xi1?.data?.data)
-
+        // console.log(dataRest.contents[0].context.xi1.data)
         // dataRest.Contents.map((content) => {
         //   if (content.sectionOrder === 6) {
         //     const contextValue = Object.values(content.context);
@@ -406,22 +405,22 @@ export default {
         // });
 
         //section1
-        this.sectionimg = dataRest.contents[0]?.context?.xi1?.data?.data;
+        this.sectionimg = dataRest.contents[0]?.context?.xi1?.data;
         this.sectionData = dataRest.contents[0].context;
         this.sectionName = dataRest.contents[0].sectionName;
         //section2
-        this.sectionimg1 = dataRest.contents[1]?.context?.xi1?.data?.data;
+        this.sectionimg1 = dataRest.contents[1]?.context?.xi1?.data;
         this.sectionName1 = dataRest.contents[1].sectionName;
         this.sectionData1 = dataRest.contents[1].context;
         //section3
         this.sectionName2 = dataRest.contents[2].sectionName;
-        this.sectionimg2 = dataRest.contents[2]?.context?.xi1?.data?.data;
+        this.sectionimg2 = dataRest.contents[2]?.context?.xi1?.data;
         //section4
         this.sectionName3 = dataRest.contents[3].sectionName;
         this.sectionData3 = dataRest.contents[3].context; 
         //section5
         this.sectionName4 = dataRest.contents[4].sectionName;
-        this.sectionimg4 = dataRest.contents[4].context?.xi1?.data?.data;
+        this.sectionimg4 = dataRest.contents[4].context?.xi1?.data;
         this.sectionData4 = dataRest.contents[4].context;
         //section6
         this.sectionName5 = dataRest.contents[5].sectionName;

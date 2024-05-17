@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar border :isCheckoutPage="true"/>
+    <navbar border :isCheckoutPage="true" />
   </nav>
   <div class="header">
     <div class="text1">
@@ -57,14 +57,14 @@
     </div>
     <div class="container">
       <div class="ni" v-for="(item, index) in events" :key="index">
-    <img class="image" :src="item.image" alt="Gambar" />
-     <div class="buttonaji">
-    <button class="btn-small">{{ item.buttonText1 }}</button>
-    <button class="btn-small">{{ item.buttonText2 }}</button>
-          </div>
-          <h2 class="judul-sedang">{{ item.titleBig }}</h2>
-          <h1 class="judul-besar">{{ item.titleMedium }}</h1>
-          <div class="tengah">
+        <img class="image" :src="item.image" alt="Gambar" />
+        <div class="buttonaji">
+          <button class="btn-small">{{ item.buttonText1 }}</button>
+          <button class="btn-small">{{ item.buttonText2 }}</button>
+        </div>
+        <h2 class="judul-sedang">{{ item.titleBig }}</h2>
+        <h1 class="judul-besar">{{ item.titleMedium }}</h1>
+        <div class="tengah">
           <button class="tambah">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
@@ -77,7 +77,7 @@
 
 <script setup>
 import navbar from "../components/NavBar.vue";
-import footerdesk from "../components/FooterComp.vue"
+import footerdesk from "../components/FooterComp.vue";
 </script>
 
 <script>
@@ -86,7 +86,7 @@ import { ref } from "vue";
 export default {
   components: {
     navbar,
-    footerdesk
+    footerdesk,
   },
   props: {
     disabled: {
@@ -102,19 +102,19 @@ export default {
       default: "Jenis Event",
     },
   },
-  watch:{
+  watch: {
     selectedOptions: {
-      handler(val){
-        console.log(val)
-        this.fetchData()
-      }
+      handler(val) {
+        console.log(val);
+        this.fetchData();
+      },
     },
     selectedOptions2: {
-      handler(val){
-        console.log(val)
-        this.fetchData()
-      }
-    }
+      handler(val) {
+        console.log(val);
+        this.fetchData();
+      },
+    },
   },
   data() {
     return {
@@ -128,39 +128,53 @@ export default {
       ],
       selectedOptions: [],
       selectedOptions2: [],
-      events: ref()
+      events: ref(),
     };
   },
-  mounted(){
-    this.fetchData()
+  mounted() {
+    this.fetchData();
   },
   methods: {
-    async fetchData(){
-      let freeOptions, iterationOptions
-      try{
-        if(this.selectedOptions) iterationOptions = Object.values(this.selectedOptions)
-        if(this.selectedOptions2) freeOptions = Object.values(this.selectedOptions2)
-        console.log(freeOptions, iterationOptions)
-        const eventResponse = await this.$axios.post('http://localhost:3000/keraton/event/page', {
-          ...(iterationOptions && iterationOptions.length != 0 && { iterat: Object.values(this.selectedOptions) }),
-          ...(freeOptions && freeOptions.length < 2 && freeOptions.length != 0 && { free: freeOptions[0] != 0 ? true : false })
-        })
-        const iterationResponse = await this.$axios.get('http://localhost:3000/keraton/iteration')
-        if(eventResponse.status != 200) throw Error('Error occured')
-        if(iterationResponse.status != 200) throw Error('Error occured')
-        this.events = eventResponse.data.data.map((event) =>({
+    async fetchData() {
+      let freeOptions, iterationOptions;
+      try {
+        if (this.selectedOptions)
+          iterationOptions = Object.values(this.selectedOptions);
+        if (this.selectedOptions2)
+          freeOptions = Object.values(this.selectedOptions2);
+        console.log(freeOptions, iterationOptions);
+        const eventResponse = await this.$axios.post(
+          "http://localhost:3000/keraton/event/page",
+          {
+            ...(iterationOptions &&
+              iterationOptions.length != 0 && {
+                iterat: Object.values(this.selectedOptions),
+              }),
+            ...(freeOptions &&
+              freeOptions.length < 2 &&
+              freeOptions.length != 0 && {
+                free: freeOptions[0] != 0 ? true : false,
+              }),
+          }
+        );
+        const iterationResponse = await this.$axios.get(
+          "http://localhost:3000/keraton/iteration"
+        );
+        if (eventResponse.status != 200) throw Error("Error occured");
+        if (iterationResponse.status != 200) throw Error("Error occured");
+        this.events = eventResponse.data.data.map((event) => ({
           image: event.image,
           buttonText1: event.iteration.name,
           buttonText2: event.isFree ? "Gratis" : "Bayar",
           titleMedium: event.desc,
-          titleBig: event.name
-        }))
+          titleBig: event.name,
+        }));
         this.options = iterationResponse.data.data.map((iterat) => ({
           label: iterat.name,
-          value: iterat.id
-        }))
-      }catch(err){
-        console.log(err)
+          value: iterat.id,
+        }));
+      } catch (err) {
+        console.log(err);
       }
     },
     toggleDropdown() {
@@ -200,7 +214,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-.bawah{
+.bawah {
   transform: scale(0.9);
   margin-left: -70px;
 }
@@ -327,7 +341,7 @@ nav ul li button:hover {
   display: flex;
   margin-left: 131px;
   /* width: 250px; */
-  height: 450px; 
+  height: 450px;
   overflow-x: auto;
   width: 85%;
 }
