@@ -1,4 +1,4 @@
-const { throwError } = require("../../utils/helper");
+const { throwError, createQr } = require("../../utils/helper");
 const { prisma } = require("../../utils/prisma");
 
 const getAll = async (search) => {
@@ -38,7 +38,31 @@ const getAll = async (search) => {
 };
 const getFromOrderId = async (id) => {
   try {
-    return await prisma.detailTrans.findFirst({ where: { orderID: id } });
+    return await prisma.detailTrans.findFirst({ where: { orderId: id } });
+  } catch (err) {
+    throwError(err);
+  }
+};
+const getTickets = async (id) => {
+  try {
+    const data = await prisma.detailTrans.findMany({
+      where: { transactionId: id },
+      include: {
+        order: {
+          include: {
+            category: true,
+          },
+        },
+      },
+    });
+    const finalData = data.map((item) => {
+      const qr = createQr(item);
+      return {
+        ...item,
+        qr,
+      };
+    });
+    return finalData;
   } catch (err) {
     throwError(err);
   }
@@ -122,6 +146,7 @@ const deleteDetailTrans = async (id) => {
 module.exports = {
   getAll,
   getFromOrderId,
+  getTickets,
   getTableData,
   getUnavailableGuide,
   deleteDetailTrans,
