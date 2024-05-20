@@ -247,67 +247,23 @@
   </section>
 
   <section class="sec-home" id="section8">
-    <div class="container">
-      <div class="header">
-        <img src="../assets/images/icon.png" />
-        <p class="headerText">Keraton Kesepuhan Cirebon</p>
-      </div>
-      <div class="text">
-        <h4 class="qlText">Quick Links</h4>
-        <div class="quickLinks">
-          <ul>
-            <li><a href="/">Beranda</a></li>
-            <li><a href="#sejarah">Sejarah</a></li>
-            <li><a href="#booking">Booking</a></li>
-            <li><a href="#areakeraton">Objek Wisata</a></li>
-          </ul>
-        </div>
-
-        <h4 class="socText">Social</h4>
-        <div class="social">
-          <ul>
-            <li><a href="/wabuarne">WhatsApp</a></li>
-            <li>
-              <a href="https://web.facebook.com/smkn4bandung">Facebook</a>
-            </li>
-            <li><a href="https://www.instagram.com/algianra_">Instagram</a></li>
-            <li><a href="#">Threads</a></li>
-          </ul>
-        </div>
-
-        <h4 class="compText">Company</h4>
-        <div class="company">
-          <ul>
-            <li><a href="curaweda.com">About us</a></li>
-            <li><a href="curaweda.com">Partners</a></li>
-            <li><a href="curaweda.com">Contact</a></li>
-          </ul>
-        </div>
-        <!-- <h4 class="subscribe">Subscribes your email for updates!</h4> -->
-      </div>
-      <!-- <input type="text" placeholder="Enter Your Email" /> -->
-
-      <p class="alamat">Jalan Kesepuhan 43 Cirebon, Jawa Barat 45114</p>
-      <footer>
-        <p class="wm">@ 2024 Keraton Kasepuhan Cirebon</p>
-        <p class="collab">In collaboration</p>
-        <img src="../assets/images/icon.png" class="footer1" />
-        <img src="../assets/images/curaweda.png" class="footer2" />
-        <img src="../assets/images/telkom.png" class="footer3" />
-        <img src="../assets/images/bjb.png" class="footer4" />
-      </footer>
-    </div>
+    <bawah class="footer"></bawah>
   </section>
 </template>
 
 <script setup>
 import navbar from "../components/NavBar.vue";
+import bawah from "../components/FooterComp.vue";
 import socket from "src/socket";
 import { ref } from "vue";
 </script>
 
 <script>
 export default {
+  components : {
+    navbar,
+    bawah
+  },
   data() {
     return {
       sectionData: ref(),
@@ -1208,36 +1164,9 @@ input::placeholder {
   color: #212121;
 }
 
-.footer1 {
-  position: absolute;
-  width: 68px;
-  height: 70.62px;
-  left: 740px;
-  top: 682px;
-}
-
-.footer2 {
-  position: absolute;
-  width: 69px;
-  height: 74px;
-  left: 854px;
-  top: 681px;
-}
-
-.footer3 {
-  position: absolute;
-  width: 53px;
-  height: 71px;
-  left: 969px;
-  top: 682px;
-}
-
-.footer4 {
-  position: absolute;
-  width: 100px;
-  height: 49.01px;
-  left: 1068px;
-  top: 693px;
+.footer{
+  background-image: url(../assets/images/batik.png);
+  margin-top: -10px;
 }
 
 @media screen and (max-width: 600px) {
@@ -2058,38 +1987,6 @@ input::placeholder {
     font-size: 20px;
     line-height: 24px;
     color: #212121;
-  }
-
-  .footer1 {
-    position: absolute;
-    width: 68px;
-    height: 70.62px;
-    left: 740px;
-    top: 682px;
-  }
-
-  .footer2 {
-    position: absolute;
-    width: 69px;
-    height: 74px;
-    left: 854px;
-    top: 681px;
-  }
-
-  .footer3 {
-    position: absolute;
-    width: 53px;
-    height: 71px;
-    left: 969px;
-    top: 682px;
-  }
-
-  .footer4 {
-    position: absolute;
-    width: 100px;
-    height: 49.01px;
-    left: 1068px;
-    top: 693px;
   }
 }
 </style>

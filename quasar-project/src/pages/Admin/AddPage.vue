@@ -105,6 +105,19 @@
         class="full-width q-mt-md"
       />
     </div>
+<<<<<<< HEAD
+=======
+
+    <q-btn
+      no-caps
+      @click="sendUpdate"
+      style="background: #123b32"
+      text-color="white"
+      label="Save and Update"
+      class="full-width q-mt-md"
+      href="/#/"
+    />
+>>>>>>> dcb70e146047c34391ca5463e339472be1122c69
   </div>
 </template>
 
