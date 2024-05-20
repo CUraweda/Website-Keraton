@@ -1,43 +1,49 @@
-const { error, success } = require("../../utils/response")
-const { expressRouter } = require("../../utils/router")
-const { auth } = require("../middlewares/auth")
-const authModels = require('../models/user.models')
+const { expressRouter } = require("../../utils/router");
+const { error, success } = require("../../utils/response");
+const userModel = require("../models/user.models");
+const { verif } = require("../middlewares/verif");
+const bcrypt = require("bcrypt");
 
-expressRouter.get('/', async (req, res) => {
-    try{
-        const users = await authModels.getAll()
-        return success(res, 'Success', users)
-    }catch(err){
-        return error(res, err.message)
-    }
-})
+expressRouter.post("/register", async (req, res) => {
+  const { email, password, name } = req.body;
 
-expressRouter.post('/login', async (req, res) => {
-    let expires = new Date(Date.now() + 1000 * 3600 * 24 * 30) // Expires in 30 days
-    try {
-        const data = await authModels.logIn(req.body)
-        res.cookie('refresh_token', data.generatedToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none',
-            expires
-        });
-        delete data.userExist.password
-        delete data.userExist.id
-        return success(res, 'Log In Success', data)
-    } catch (err) {
-        return error(res, err.message)
-    }
-})
+  if (!email || !password || !name) {
+    return error(
+      res,
+      "Email, password, name, and password confirmation are required."
+    );
+  }
 
-expressRouter.post('/logout', auth(), async (req, res) => {
-    try {
-        await authModels.logOut(req.user.id)
-        res.clearCookie('refresh_token');
-        return success(res, 'Log Out Success')
-    } catch (err) {
-        return error(res, err.message)  
-    }
-})
+  try {
+    const token = await userModel.signUp(req.body);
+    return success(res, "Register akun berhasil", await token);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 
-module.exports = expressRouter
+expressRouter.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return error(res, "Name and password are required.");
+  }
+
+  try {
+    const token = await userModel.logIn(req.body);
+    return success(res, "Login berhasil", { token });
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
+
+expressRouter.get("/auth", verif, async (req, res) => {
+  try {
+    const data = await userModel.isExist(req.user.id);
+    return success(res, "Autentikasi berhasil!", data);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
+
+module.exports = expressRouter;

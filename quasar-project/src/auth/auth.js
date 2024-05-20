@@ -1,35 +1,55 @@
-import { ref } from "vue";
-import axios from "axios";
-import router from "../router/routes";
-const isAuthenticated = ref(false);
-const authToken = ref("");
+export async function verifyTokenBool() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return false;
+  }
 
-const checkAuthentication = () => {
-  isAuthenticated.value = !!authToken.value;
-
-  return isAuthenticated.value;
-};
-
-const login = async (email, password) => {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/keraton/auth/login",
-      {
-        email: email,
-        password: password,
-      }
-    );
+    const response = await fetch("http://localhost:3000/keraton/auth/auth", {
+      headers: {
+        Authorization: token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      localStorage.removeItem("token");
+      return false;
+    }
+    return true;
+  } catch (error) {
+    console.error("Failed to verify token:", error);
+    localStorage.removeItem("token");
+    return false;
+  }
+}
 
-    console.log("Login response:", response.data);
-    console.log(response.data.success);
-    router.push({ name: "beranda" });
+export async function verifyTokenAdmin() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    this.$router.push("/");
+    return false;
+  }
 
-    if (response.data.success == true) {
-      authToken.value = response.data.token;
+  try {
+    const response = await fetch("http://localhost:3000/keraton/auth/auth", {
+      headers: {
+        Authorization: token,
+      },
+    });
+    if (!response.ok) {
+      localStorage.removeItem("token");
+      return false;
+    }
+    const data = await response.json();
+    if (data.data.role === "SUPER_ADMIN") return true;
+    else {
+      this.$router.push("/");
+      return false;
     }
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Failed to verify token:", error);
+    localStorage.removeItem("token");
+    this.$router.push("/");
+    return false;
   }
-};
-
-export { isAuthenticated, checkAuthentication, login };
+}

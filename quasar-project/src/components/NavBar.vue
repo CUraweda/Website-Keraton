@@ -1,14 +1,7 @@
 <template>
-  <div
-    class="navbar"
-    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
-  >
+  <div class="navbar" :class="{ white: isWhiteText, border: border, scrolled: isScrolled }">
     <div class="navbar-left">
-      <img
-        alt="icon-aplikasi"
-        src="../assets/images/logo_keraton.png"
-        class="app-icon"
-      />
+      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" />
       <span class="app-name">KERATON KASEPUHAN CIREBON</span>
     </div>
     <div class="navbar-right">
@@ -18,22 +11,23 @@
             <q-btn
               flat
               label="Beranda"
-              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
               no-caps
               dense
-              clickable v-ripple to="/"
+              clickable
+              v-ripple
+              to="/"
             ></q-btn>
           </li>
           <li class="sub">
             <q-btn
               flat
               label="Sejarah"
-              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
               no-caps
               dense
-
             >
-            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
                   <q-item clickable v-ripple to="/sejarah">
@@ -41,7 +35,6 @@
                       <q-item-label>Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-
                   <q-item clickable v-ripple to="/sejarahsilsilah">
                     <q-item-section>
                       <q-item-label>Silsilah</q-item-label>
@@ -55,11 +48,11 @@
             <q-btn
               flat
               label="Booking"
-              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
               no-caps
               dense
             >
-            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
                   <q-item clickable v-ripple to="/booking">
@@ -67,7 +60,6 @@
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-
                   <q-item clickable v-ripple to="/eventgratis">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
@@ -81,11 +73,11 @@
             <q-btn
               flat
               label="Objek Wisata"
-              :text-color="isCheckoutPage ? 'black' : (isScrolled ? 'black' : 'white')"
+              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
               no-caps
               dense
             >
-            <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
+              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
                   <q-item clickable v-ripple to="/areakeraton">
@@ -93,13 +85,11 @@
                       <q-item-label>Keraton Kesepuhan</q-item-label>
                     </q-item-section>
                   </q-item>
-
                   <q-item clickable v-ripple to="/museum">
                     <q-item-section>
                       <q-item-label>Museum Pusaka</q-item-label>
                     </q-item-section>
                   </q-item>
-
                   <q-item clickable v-ripple to="/agungdalem">
                     <q-item-section>
                       <q-item-label>Dalem Agung Pangkuwati</q-item-label>
@@ -109,31 +99,32 @@
               </q-menu>
             </q-btn>
           </li>
-          <!-- <button
-            @click="getTickets"
-            style="
-              border-radius: 5px;
-              background-color: #123b32;
-              color: white;
-              padding: 2px 8px;
-              width: 162px;
-              height: 34px;
-              border: none;
-              font-family: 'Raleway';
-              font-size: 14px;
-              font-weight: 700;
-            "
-          >
-            Dapatkan Tiket
-          </button> -->
-          <q-btn
-            style="background: #123b32; color: white; padding-inline: 30px"
-            no-caps
-            dense
-            @click="getTickets"
-          >
-            <span class="text-bold">Dapatkan Tiket</span>
-          </q-btn>
+          <li>
+            <q-btn
+              style="background: #123b32; color: white; padding-inline: 30px"
+              no-caps
+              dense
+              v-if="!isLogin"
+              @click="getTickets"
+            >
+              <span class="text-bold">Dapatkan Tiket</span>
+            </q-btn>
+            <q-btn v-else round flat dense @click="toggleMenu">
+              <q-avatar>
+                <img src="../assets/images/avatar.png" alt="Profile" />
+              </q-avatar>
+              <q-menu>
+                <q-list>
+                  <q-item clickable v-ripple @click="logout">
+                    <q-item-section>Logout</q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple @click="goToPurchases">
+                    <q-item-section>Pembelian</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </li>
         </ul>
       </nav>
     </div>
@@ -141,10 +132,12 @@
 </template>
 
 <script>
+import { verifyTokenBool } from "src/auth/auth";
 export default {
   data() {
     return {
       isScrolled: false,
+      isLogin: false,
     };
   },
   props: {
@@ -156,27 +149,35 @@ export default {
       type: Boolean,
       default: false,
     },
-  isCheckoutPage: {
-    type: Boolean,
-    default: false,
+    isCheckoutPage: {
+      type: Boolean,
+      default: false,
+    },
   },
-},
-  mounted() {
+  async mounted() {
     window.addEventListener("scroll", this.handleScroll);
+    this.isLogin = await verifyTokenBool(); // Menggunakan fungsi langsung
   },
-  unmounted() {
+  beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    logout() {
+      localStorage.removeItem("token");
+      this.isLogin = false; // Set isLogin ke false saat logout
+      this.$router.push("/signin");
+    },
     getTickets() {
-      this.$router.push({ name: "signin" });
+      this.$router.push("/signin");
     },
     handleScroll() {
-      if (window.pageYOffset > 50) {
-        this.isScrolled = true;
-      } else {
-        this.isScrolled = false;
-      }
+      this.isScrolled = window.pageYOffset > 50;
+    },
+    goToPurchases() {
+      this.$router.push("/purchases");
+    },
+    toggleMenu() {
+      this.menu = !this.menu;
     },
   },
 };
@@ -241,7 +242,6 @@ nav ul.dropdown-list li {
   background-color: white;
   color: black;
 }
-
 
 @keyframes moveUp {
   0% {
