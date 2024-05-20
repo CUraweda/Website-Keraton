@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar border :isCheckoutPage="true"/>
+    <navbar border :isCheckoutPage="true" />
   </nav>
   <div class="header">
     <div class="text1">
@@ -244,42 +244,45 @@ export default {
     async fetchData() {
       try {
         const response = await this.$api.get("items/booking");
-        if (response.status != 200) throw Error("Error Occured");
-        console.log(response);
+        if (response.status !== 200) throw Error("Error Occured");
+
         let tikets = [],
           pakets = {};
+
         for (let subType of response.data.data) {
-          switch (subType.typeId) {
+          switch (subType.orderTypeId) {
             case 1:
-              for (let purchasable of subType.Purchasable) {
+              for (let order of subType.orders) {
                 let harga =
-                  purchasable.priceUmum || purchasable.priceMancanegara
+                  order.priceUmum || order.priceMancanegara
                     ? this.countPrice(
-                        purchasable.price,
-                        purchasable.priceUmum,
-                        purchasable.priceMancanegara
+                        order.price,
+                        order.priceUmum,
+                        order.priceMancanegara
                       )
-                    : `Rp. ${this.formatRupiah(purchasable.price)}`;
+                    : `Rp. ${this.formatRupiah(order.price)}`;
                 tikets.push({
-                  id: purchasable.id,
-                  image: purchasable.image,
-                  titleMedium: purchasable.name,
-                  titleBig: purchasable.desc,
-                  price: `${harga}/${purchasable.unit}`,
+                  id: order.id,
+                  image: order.image,
+                  titleMedium: order.name,
+                  titleBig: order.desc,
+                  price: `${harga}/${order.unit || ""}`,
                 });
               }
               break;
             case 2:
               const subTypeName = subType.name;
-              for (let purchasable of subType.Purchasable) {
+              if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
+              }
+              for (let order of subType.orders) {
                 pakets[subTypeName].push({
-                  id: purchasable.id,
-                  image: purchasable.image,
-                  titleMedium: purchasable.name,
-                  titleBig: purchasable.desc,
-                  price: `Rp. ${this.formatRupiah(purchasable.price)}/${
-                    purchasable.unit
+                  id: order.id,
+                  image: order.image,
+                  titleMedium: order.name,
+                  titleBig: order.desc,
+                  price: `Rp. ${this.formatRupiah(order.price)}/${
+                    order.unit || ""
                   }`,
                 });
               }
@@ -288,6 +291,7 @@ export default {
               break;
           }
         }
+
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
         this.paketNameItems = Object.keys(pakets);
