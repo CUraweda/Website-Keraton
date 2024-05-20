@@ -12,14 +12,14 @@
         selection="single"
       >
         <template v-slot:body-selection="scope">
-          <q-btn
-            v-model="scope.selected"
-            v-for="id in 7"
-            :key="id"
-            color="positive"
-            :label="'Edit ' + id"
-            :href="'#/admin/add/' + id"
+          <div :key="scope.row.id" style="margin-bottom: 10px;">
+          <q-btn 
+            color="positive" 
+            :label="'Edit ' + scope.row.id" 
+            :href="'#/admin/add/' + scope.row.id" 
+            @click="scope.selected = scope.row.id"
           />
+          </div>
         </template>
       </q-table>
     </div>

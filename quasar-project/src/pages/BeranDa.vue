@@ -33,7 +33,7 @@
     'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
     'background-position': 'center',
     'background-repeat': 'no-repeat',
-    'background-size': 'cover', 
+    'background-size': 'cover',
   }"
   >
     <div class="container">
@@ -51,7 +51,7 @@
   id="section3"
   :style="{
     'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${sectionData3?.xi?.data});`,
+    url(../assets/images/Frame.png);`,
   'background-size': 'cover;',
 }"
   >
@@ -66,7 +66,7 @@
 
   <section class="sec-home" id="section4"
   :style="{
-    'background-image': `url(${sectionimg1})`,
+    'background-image': `url(${sectionimg3})`,
     'background-position': 'center',
     'background-repeat': 'no-repeat',
     'background-size': 'cover',
@@ -116,13 +116,15 @@
     </div>
   </section>
 
-  <section id="section5"
-  :style="{
-    'background-image': `url(${sectionData4?.xi1.data})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }"
+  <section
+    id="section5"
+    :style="{
+      'background-image': `url(${currentBackground})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'transition': 'background-image 0.5s ease-in-out'
+    }"
   >
     <div class="container">
       <div class="text">
@@ -132,13 +134,14 @@
       <div class="container-card">
         <div
           class="card4"
+          :class="{ active: activeCard === 'card4' }"
           :style="{
-            'background-image':` url(${sectionData4?.xi1.data})`,
+            'background-image': `url(${sectionData4?.xi1.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'margin-left': '10px',
-            'background-color': '#b6b6b6',
+            'background-color': '#b6b6b6'
           }"
+          @click="setActiveCard('card4', sectionData4?.xi1.data)"
         >
           <div class="overlay"></div>
           <a href="#">
@@ -149,9 +152,14 @@
         </div>
         <div
           class="card5"
+          :class="{ active: activeCard === 'card5' }"
           :style="{
             'background-image': `url(${sectionData4?.xi2.data})`,
+            'background-size': 'cover',
+            'border-radius': '20px',
+            'background-color': '#b6b6b6'
           }"
+          @click="setActiveCard('card5', sectionData4?.xi2.data)"
         >
           <a href="#">
             <p class="title5">Jamasan Kerisa dan Tombak</p>
@@ -159,9 +167,14 @@
         </div>
         <div
           class="card6"
+          :class="{ active: activeCard === 'card6' }"
           :style="{
             'background-image': `url(${sectionData4?.xi3.data})`,
+            'background-size': 'cover',
+            'border-radius': '20px',
+            'background-color': '#b6b6b6'
           }"
+          @click="setActiveCard('card6', sectionData4?.xi3.data)"
         >
           <a href="#">
             <p class="title6">Siraman Panjat Jimat</p>
@@ -179,6 +192,25 @@
     </div>
   </section>
 
+  <section class="slider" id="slider">
+    <h1 class="berita">Berita Terkini</h1>
+    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }">
+      <div v-for="(slide, index) in slides" :key="index" class="slide">
+        <div class="news-section">
+          <div class="news-image">
+            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`">
+          </div>
+          <div class="news-content">
+            <h2 class="news-title">{{ slide.title }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img class="newsbtn" src="../assets/images/btninfo.png" />
+  </section>
+
+
+  
   <section class="sec-home" id="section6"
   :style="{
     'background-image': `url(${sectionimg1})`,
@@ -255,14 +287,14 @@
 import navbar from "../components/NavBar.vue";
 import bawah from "../components/FooterComp.vue";
 import socket from "src/socket";
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 </script>
 
 <script>
 export default {
-  components : {
+  components: {
     navbar,
-    bawah
+    bawah,
   },
   data() {
     return {
@@ -278,47 +310,65 @@ export default {
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
+      activeCard: null,
+      currentBackground: null,
+      slides: [
+        {
+          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
+          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
+          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+        },
+        {
+          imageUrl: 'https://img.antaranews.com/cache/1200x800/2024/03/11/IMG_20240311_180817.jpg.webp',
+          title: 'Tandai awal Ramadhan, Keraton Kasepuhan Cirebon gelar "Dlugdag"',
+          summary: 'Ringkasan singkat dari berita kedua. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+        },
+        {
+          imageUrl: 'https://akcdn.detik.net.id/community/media/visual/2023/11/13/rombongan-pengunjung-keraton-kasepuhan-cirebon_169.jpeg?w=700&q=90',
+          title: 'Belajar Sejarah di Keraton Kasepuhan Cirebon, Ini Harga Tiketnya',
+          summary: 'Ringkasan singkat dari berita ketiga. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+        }
+      ],
+      currentSlideIndex: 0,
+      sliderInterval: null
     };
   },
   mounted() {
     this.fetchData();
     this.socket();
+    this.startSlider();
   },
   beforeUnmount() {
     socket.disconnect();
+    clearInterval(this.sliderInterval);
   },
   methods: {
     socket() {
@@ -327,71 +377,56 @@ export default {
         this.fetchData();
       });
     },
-
-    toggleAccordion(index) {
-      this.faqs.forEach((faq, idx) => {
-        if (idx !== index) {
-          faq.active = false;
-        }
-      });
-      this.faqs[index].active = !this.faqs[index].active;
-    },
-
     async fetchData() {
       let rawSection = {};
       try {
         const response = await this.$api.get("page/content/1");
         const dataRest = response.data.data[0];
-        // console.log(dataRest.contents[0].context.xi1.data)
-        // dataRest.Contents.map((content) => {
-        //   if (content.sectionOrder === 6) {
-        //     const contextValue = Object.values(content.context);
-        //     contextValue.shift();
-        //     this.faqs = contextValue.map((context, i) => ({
-        //       nomor: String(i + 1).padStart(2, "0"),
-        //       pertanyaan: context.data,
-        //       jawaban: context.sub,
-        //       active: false,
-        //     }));
-        //   }
-        //   rawSection[content.sectionOrder] = {
-        //     name: content.sectionName,
-        //     context: content.context,
-        //   };
-        // });
+        console.log(dataRest.contents[3]);
 
-        //section1
+        // Section data assignments
         this.sectionimg = dataRest.contents[0]?.context?.xi1?.data;
         this.sectionData = dataRest.contents[0].context;
         this.sectionName = dataRest.contents[0].sectionName;
-        //section2
+
         this.sectionimg1 = dataRest.contents[1]?.context?.xi1?.data;
         this.sectionName1 = dataRest.contents[1].sectionName;
         this.sectionData1 = dataRest.contents[1].context;
-        //section3
+
         this.sectionName2 = dataRest.contents[2].sectionName;
         this.sectionimg2 = dataRest.contents[2]?.context?.xi1?.data;
-        //section4
+
         this.sectionName3 = dataRest.contents[3].sectionName;
-        this.sectionData3 = dataRest.contents[3].context; 
-        //section5
+        this.sectionData3 = dataRest.contents[3].context;
+
         this.sectionName4 = dataRest.contents[4].sectionName;
         this.sectionimg4 = dataRest.contents[4].context?.xi1?.data;
         this.sectionData4 = dataRest.contents[4].context;
-        //section6
+
         this.sectionName5 = dataRest.contents[5].sectionName;
         this.sectionData5 = dataRest.contents[5].context;
-        //section
+
         this.sectionName6 = dataRest.contents[6].sectionName;
         this.sectionData6 = dataRest.contents[6].context;
-       
+
+        this.currentBackground = this.sectionimg4;
+
       } catch (err) {
         console.log(err);
       }
     },
-  },
+    startSlider() {
+      this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
+    },
+    nextSlide() {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
+    }
+  }
 };
 </script>
+
+
+
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
@@ -432,18 +467,20 @@ export default {
 
 #section3 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../assets/images/keraton1.jpg");
+  url("../assets/images/keraton2.png");
   background-size: cover;
 }
 
-/* #section4 .container {
+#section4 .container {
   background-image: url("../assets/images/batik.png");
-} */
+}
 
 #section5 .container {
   /* background-image: url("../assets/images/keraton2.png"); */
-  height: 1000px;
+  height: 130vh;
+  /* height: 1000px; */
   background-size: cover;
+  background-position: center
 }
 
 #section5 .container::before {
@@ -473,6 +510,115 @@ export default {
 
 #section8 .container {
   background-image: url("../assets/images/batik.png");
+}
+
+#slider {
+  color: #000000;
+  height: 85vh;
+  padding-top: 5rem;
+}
+
+.slider {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  background-image: url("../assets/images/batik.png"), linear-gradient(0deg, #fff9a021, #ffe96e);
+  background-size: cover;
+  background-position: center;
+}
+
+.slider h2 {
+  text-align: left;
+  margin-bottom: 20px;
+  margin-bottom: 75px;
+  font-weight: 300;
+  font-family: 'Raleway';
+  font-size: 40px;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.9s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.news-section {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  padding: 2rem;
+}
+
+.news-image {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.news-image img {
+  width: 550px;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.news-content {
+  flex: 2;
+  padding-left: 20px;
+}
+
+.news-title {
+  text-align: left;
+  width: 700px;
+  font-weight: 500;
+}
+
+.news-summary {
+  font-size: 16px;
+  color: #555;
+}
+
+.berita{
+  font-family: "Inria Serif";
+  text-align: Center;
+  font-size: 60px;
+  font-weight: 600;
+  margin-top: -5rem;
+}
+
+        @keyframes slide{
+          0% {
+    transform: translateX(0%);
+  }
+  25% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(33.3333%);
+  }
+  75% {
+    transform: translateX(33.3333%);
+  }
+  100% {
+    transform: translateX(66.6667%);
+  }
+
+        }
+
+  .newsbtn {
+  padding: 5px;
+  gap: 10px;
+  position: relative;
+  margin-top: 1rem;
+  cursor: pointer;
+  margin-left: 42vw;
+}
+
+.newsbtn:hover {
+  filter: brightness(70%);
 }
 
 .container {
@@ -830,7 +976,10 @@ export default {
 .card6:hover {
   flex: 200px;
 }
-
+.card4.active, .card5.active, .card6.active {
+  flex: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
 .title4 {
   position: absolute;
   bottom: 8%;
