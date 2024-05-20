@@ -71,7 +71,7 @@ model Order {
   orderType      OrderType?    @relation(fields: [orderTypeId], references: [id])
   orderTypeId    Int?
   orderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
-  orderSubTypeId Int?
+  orderSubTypeId Int
 }
 
 model Category {
@@ -82,10 +82,10 @@ model Category {
 }
 
 model OrderType {
-  id           Int            @id @default(autoincrement())
-  name         String         @unique
-  OrderSubType OrderSubType[]
-  Order        Order[]
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  orderSubTypes OrderSubType[]
+  orders        Order[]
 }
 
 model OrderSubType {
@@ -93,7 +93,7 @@ model OrderSubType {
   name        String    @unique
   orderType   OrderType @relation(fields: [orderTypeId], references: [id])
   orderTypeId Int
-  Order       Order[]
+  orders      Order[]   // Menambah relasi dengan "Order"
 }
 
 model Transaction {
@@ -165,5 +165,5 @@ model Events {
 model EventIteration {
   id     Int      @id @default(autoincrement())
   name   String   @unique
-  events Events[]
+  events Event[]  // Menambah relasi dengan "Event"
 }
