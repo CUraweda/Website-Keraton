@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container" v-cloak>
+  <div id="app" class="container" v-cloak v-if="!isLogin">
     <div class="image">
       <div class="decor">
         <div class="logo">
@@ -53,8 +53,51 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      isLogin: false,
+    };
+  },
+  mounted() {
+    this.verifyToken();
+  },
+  methods: {
+    async verifyToken() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        this.isLogin = false;
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "http://localhost:3000/keraton/auth/auth",
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        const data = await response.json();
+        this.isLogin = true;
+        this.$router.push("/");
+      } catch (error) {
+        console.error("Failed to verify token:", error);
+        localStorage.removeItem("token");
+        this.isLogin = false;
+      }
+    },
+  },
+  components: {},
+};
+</script>
+
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const email = ref('');
 const password = ref('');
@@ -69,7 +112,7 @@ const emailErrorMessage = ref("Please type your email");
 const passwordErrorMessage = ref("Please type your password");
 const passmatchErrorMessage = ref("Password didn't match");
 
-const submitForm = () => {
+const submitForm = async () => {
   emailError.value = !email.value.trim();
   passwordError.value = !password.value.trim();
   nameError.value = !name.value.trim();
@@ -79,10 +122,39 @@ const submitForm = () => {
     return;
   }
 
-  console.log('Email:', email.value);
-  console.log('Password:', password.value);
-  console.log('Nama Lengkap:', name.value);
-  console.log('Konfirmasi Password:', passmatch.value);
+  if (password.value !== passmatch.value) {
+    passmatchError.value = true;
+    console.log('Password and confirmation password do not match');
+    return;
+  }
+
+  const payload = {
+    email: email.value,
+    password: password.value,
+    name: name.value
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/keraton/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log(data)
+    localStorage.setItem("token", data.data);
+    router.push("/");
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
 };
 </script>
 

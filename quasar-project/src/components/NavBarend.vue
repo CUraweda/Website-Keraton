@@ -1,49 +1,77 @@
-<!-- belum login -->
+<!-- belum login
 
 <template>
-  <div class="navbar" >
-   
-      <nav>
-        <div class="container nav-wrapper">
-          <div class="brand">
-            <img src="../assets/images/logo_keraton.png" class="icon">
-            <span  class="app-name" :class="{ 'navbar--white': isWhiteText, 'border': border }"  >KERATON KASEPUHAN CIREBON</span>
-          </div>
-          <div class="navbars">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <ul class="nav-list">
-            <li class="title" :class="{ 'navbar--white': isWhiteText, 'border': border }">
-              <a href="" >Beranda</a>
-            </li>
-            <li class="title">
-              <p :class="{ 'navbar--white': isWhiteText, 'border': border }">Sejarah</p>
-              <ul class="dropdown-list">
-                <li><a href="sejarah">Keraton</a></li>
-                <li><a href="sejarahsilsilah">Silsilah</a></li>
-              </ul>
-            </li>
-            <li class="title">
-              <p :class="{ 'navbar--white': isWhiteText, 'border': border }">Objek Wisata</p>
-              <ul class="dropdown-list">
-                <li><a href="areakeraton">Keraton Kesepuhan</a></li>
-                <li><a href="museum">Museum Pusaka</a></li>
-                <li><a href="agungdalem">Dalem Agung Pakungwati</a></li>
-                <li><a href="lotus">Lotus</a></li>
-              </ul>
-            </li>
-            <li class="title" :class="{ 'navbar--white': isWhiteText, 'border': border }">
-              <a href="signin">Booking</a>
-            </li>
-            <li>
-              <a href="signin"><button style="border-radius: 5px; background-color: #123B32; color: white; padding: 2px 8px; width: 162px; height: 34px; border: none; font-family: 'Raleway'; font-size: 14px; font-weight: 700;">Dapatkan Tiket</button></a>
-            </li>
-          </ul>
+  <div class="navbar">
+    <nav>
+      <div class="container nav-wrapper">
+        <div class="brand">
+          <img src="../assets/images/logo_keraton.png" class="icon" />
+          <span
+            class="app-name"
+            :class="{ 'navbar--white': isWhiteText, border: border }"
+            >KERATON KASEPUHAN CIREBON</span
+          >
         </div>
-      </nav>
-   
+        <div class="navbars">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-list">
+          <li
+            class="title"
+            :class="{ 'navbar--white': isWhiteText, border: border }"
+          >
+            <a href="">Beranda</a>
+          </li>
+          <li class="title">
+            <p :class="{ 'navbar--white': isWhiteText, border: border }">
+              Sejarah
+            </p>
+            <ul class="dropdown-list">
+              <li><a href="sejarah">Keraton</a></li>
+              <li><a href="sejarahsilsilah">Silsilah</a></li>
+            </ul>
+          </li>
+          <li class="title">
+            <p :class="{ 'navbar--white': isWhiteText, border: border }">
+              Objek Wisata
+            </p>
+            <ul class="dropdown-list">
+              <li><a href="areakeraton">Keraton Kesepuhan</a></li>
+              <li><a href="museum">Museum Pusaka</a></li>
+              <li><a href="agungdalem">Dalem Agung Pakungwati</a></li>
+              <li><a href="lotus">Lotus</a></li>
+            </ul>
+          </li>
+          <li
+            class="title"
+            :class="{ 'navbar--white': isWhiteText, border: border }"
+          >
+            <a href="signin">Booking</a>
+          </li>
+          <li>
+            <button
+              @click="getTickets"
+              style="
+                border-radius: 5px;
+                background-color: #123b32;
+                color: white;
+                padding: 2px 8px;
+                width: 162px;
+                height: 34px;
+                border: none;
+                font-family: 'Raleway';
+                font-size: 14px;
+                font-weight: 700;
+              "
+            >
+              Dapatkan Tiket
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -52,48 +80,49 @@ export default {
   props: {
     isWhiteText: {
       type: Boolean,
-      default: false, 
+      default: false,
     },
     border: {
       type: Boolean,
-      default: false, 
+      default: false,
     },
   },
   mounted() {
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       this.addRequiredClass();
     });
     this.addRequiredClass();
   },
   methods: {
+    getTickets() {
+      this.$router.push("/signin");
+    },
     addRequiredClass() {
       if (window.innerWidth < 860) {
-        document.body.classList.add('mobile');
+        document.body.classList.add("mobile");
       } else {
-        document.body.classList.remove('mobile');
+        document.body.classList.remove("mobile");
       }
 
       const currentPage = window.location.pathname;
 
-     
-      if (currentPage === '/sejarah' || currentPage === '/areakeraton' ) {
+      if (currentPage === "/sejarah" || currentPage === "/areakeraton") {
         this.isWhiteText = true;
       } else {
         this.isWhiteText = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  
 }
 
 :root {
@@ -110,7 +139,7 @@ nav {
 }
 
 body {
-  font-family: 'Raleway';
+  font-family: "Raleway";
   color: var(--dark);
 }
 
@@ -146,7 +175,7 @@ body {
 .nav-wrapper ul.nav-list li a {
   color: var(--dark);
   text-decoration: none;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .title:hover {
@@ -157,7 +186,7 @@ nav ul.dropdown-list {
   display: block;
   position: absolute;
   background: white;
-  border: 1px solid #123B32;
+  border: 1px solid #123b32;
   border-radius: 10px;
   padding: 6px 16px;
   position: absolute;
@@ -181,7 +210,7 @@ nav ul.dropdown-list {
 .nav-wrapper ul.nav-list li:hover .dropdown-list {
   opacity: 1;
   pointer-events: auto;
-  animation: moveUp .5s ease-in-out forwards;
+  animation: moveUp 0.5s ease-in-out forwards;
 }
 
 .signout {
@@ -202,7 +231,7 @@ nav ul.dropdown-list {
   }
   100% {
     opacity: 1;
-    transform: translateX(-50%) translateY(20px); 
+    transform: translateX(-50%) translateY(20px);
   }
 }
 
@@ -223,10 +252,11 @@ nav ul.dropdown-list {
   padding-top: 80px;
   opacity: 0;
   pointer-events: none;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
-.navbars, .brand {
+.navbars,
+.brand {
   z-index: 9999;
 }
 
@@ -242,7 +272,7 @@ nav ul.dropdown-list {
 }
 
 .avatar:hover {
-  box-shadow: 0 0 10px 5px rgba(255, 255, 0, 0.5); 
+  box-shadow: 0 0 10px 5px rgba(255, 255, 0, 0.5);
 }
 
 .icon {
@@ -272,4 +302,4 @@ nav ul.dropdown-list {
 .white .app-name {
   color: #ffffff;
 }
-</style>
+</style> -->
