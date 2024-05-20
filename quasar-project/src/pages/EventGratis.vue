@@ -330,20 +330,23 @@ nav ul li button:hover {
 }
 
 .ni {
-  width: 370px;
   height: 90px;
   margin-top: 90px;
-  margin-right: 20px;
   position: relative;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 .container {
   display: flex;
-  margin-left: 131px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 200px 10px;
   /* width: 250px; */
-  height: 450px;
-  overflow-x: auto;
-  width: 85%;
+  /* overflow-x: auto; */
 }
 
 .buttonaji {
