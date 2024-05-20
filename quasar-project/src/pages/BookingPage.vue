@@ -33,7 +33,7 @@
   </div>
 
   <div v-for="(item, index) in paketItems" :key="index">
-    <a class="judul1">Paket {{ paketNameItems[index] }} (minimal 35 orang)</a>
+    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
     <div class="container">
       <div class="ni" v-for="(data, i) in item" :key="i">
         <img class="image" :src="data.image" alt="Gambar" />
