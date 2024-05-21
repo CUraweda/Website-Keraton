@@ -386,7 +386,7 @@ export default {
           image: rowData.image,
           quantity: 1,
           price: rowData.price,
-          type: "TKT"
+          type: "T"
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
