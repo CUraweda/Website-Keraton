@@ -37,12 +37,7 @@
       </div>
       <div class="footer-col-4">
         <h3>Subscribes your email for updates!</h3>
-        <input
-          type="text"
-          v-model="enterEmail"
-          placeholder="Enter Your Email"
-          class="Pencarian"
-        />
+        <button class="button">Enter your email</button>
       </div>
     </div>
     <div class="adress">Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>
@@ -62,30 +57,24 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
-  data() {
-    return {
-      enterEmail: ref(),
-    };
+export default {
+  methods: {
+    async subscribeToKeraton() {
+      try {
+        const response = await this.$api.post("subscribe", {
+          email: this["EMAIL REF HERE"],
+        });
+        if (response.status != 200) throw Error(response.data.message);
+        return;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
-});
+};
 </script>
 
 <style scoped>
-.Pencarian {
-  height: 48px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  background: #123b32;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-}
-.Pencarian::placeholder {
-  color: #999;
-}
 .foto1 {
   width: 68px;
   height: 71px;
