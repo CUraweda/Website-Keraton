@@ -29,7 +29,7 @@
 <script>
 import navbar from "src/components/NavBar.vue";
 import { ref } from "vue";
-import {verifyTokenAdmin} from "../../auth/auth"
+import { verifyTokenAdmin } from "../../auth/auth";
 
 const columns = [
   {
