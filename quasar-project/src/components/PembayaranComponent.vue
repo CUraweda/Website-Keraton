@@ -120,6 +120,7 @@ text-align: left;
 .svg-select {
   margin: auto;
 }
+
 .select {
   background-color: #ffffff;
   /* padding-left: 20px;

@@ -27,7 +27,7 @@ defineExpose({
     <div class="popup-inner">
       <div class="nav-popup">
         <div class="txt-nav-popup">
-          <h5>Pilih Pembayaran</h5>
+          <h6>Pilih Pembayaran</h6>
         </div>
         <div class="icon-close">
           <span @click="closePopup"
@@ -45,7 +45,18 @@ defineExpose({
           /></span>
         </div>
       </div>
-      <div class="transfer">
+      <div class="kredit">
+        <div class="txt-kredit-popup">
+          <h6>Bank BJB</h6>
+        </div>
+        <div class="icon">
+          <img src="../assets/svg/logobank.svg" alt="" class="image" />
+          <span @click="toTransfer"
+            ><img class="image" src="../assets/svg/FrameVector-Right.svg"
+          /></span>
+        </div>
+      </div>
+      <!-- <div class="transfer">
         <div class="txt-bank">
           <h6>Bank Transfer</h6>
         </div>
@@ -58,7 +69,7 @@ defineExpose({
             ><img src="../assets/svg/FrameVector-Right.svg"
           /></span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -81,30 +92,52 @@ defineExpose({
   align-items: center;
   justify-content: center;
 }
+.nav-inner {
+  display: flex;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+}
 
 .popup-inner {
   background: #ffffff;
-  width: 536px;
-  height: 302px;
+  width: 90%;
+  max-width: 536px;
+  height: auto;
   border-radius: 10px;
-}
-
-.popup-inner span:hover {
-  cursor: pointer;
+  margin: 0 auto;
 }
 
 .nav-popup {
   display: flex;
   justify-content: space-between;
-  width: 536px;
+  width: 100%;
   height: 80px;
-  padding: 24px, 30px, 24px, 40px;
+  padding: 24px 30px;
   border-bottom: 1px solid #d0d5dd;
   align-items: center;
 }
 
-.txt-nav-popup {
-  margin-left: 40px;
+@media (max-width: 640px) {
+  .popup-inner {
+    padding: 24px;
+  }
+
+  .nav-popup {
+    padding: 16px;
+  }
+}
+
+.image {
+  margin: auto 0;
+  height: 100%;
+}
+.icon {
+  padding: auto;
+}
+
+.popup-inner span:hover {
+  cursor: pointer;
 }
 
 .txt-nav-popup h5 {
@@ -117,17 +150,16 @@ defineExpose({
 }
 
 .icon-close {
-  margin-right: 30px;
+  justify-content: right;
+  margin: auto 0;
 }
 
 .kredit {
   display: flex;
   justify-content: space-between;
-  width: 454px;
+  width: 100%;
   height: 56px;
-  margin-top: 27px;
-  margin-left: 41px;
-  gap: 244px;
+  padding-inline: 20px;
   border-bottom: 1px solid #d0d5dd;
   align-items: center;
 }
@@ -141,35 +173,45 @@ defineExpose({
   text-align: left;
 }
 
-.transfer .txt-bank {
-  width: 132px;
-  height: 28px;
-  top: 183px;
-  left: 41px;
+.transfer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  padding-inline: 20px;
+  border-bottom: 1px solid #d0d5dd;
+  align-items: center;
+}
+.txt-bank {
+  font-family: "Raleway";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
 }
 
 .transfer .txt-bank h6 {
   font-family: "Raleway";
   font-size: 20px;
   font-weight: 700;
+  display: flex;
+  padding-inline: 20px;
   line-height: -28px;
   letter-spacing: 0em;
   text-align: left;
-  margin-top: 20px;
-  margin-left: 41px;
   width: 132px;
   height: 28px;
 }
 
 .bank {
-  width: 454px;
+  width: 100%;
   height: 49px;
-  margin-top: 7px;
-  margin-left: 41px;
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
   border-bottom: 1px solid #d0d5dd;
-  justify-content: space-between;
+  justify-content: right;
 }
 
 .bank p {

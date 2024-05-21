@@ -47,9 +47,7 @@ const kurang = () => {
 
     <div class="block1">
       <div class="title">
-        <div>
-          <h4>Pesan Tiket Langsung</h4>
-        </div>
+        <div class="header">Pesan Tiket Langsung</div>
         <div class="txt">
           <img src="../assets/svg/Frame.svg" />
           <div>
@@ -194,7 +192,7 @@ const kurang = () => {
 
 .block1 {
   width: 100%;
-  padding: 120px 80px;
+  padding: 120px 90px 0px;
 }
 .custom-radio-btn {
   width: 20px;
@@ -236,7 +234,7 @@ const kurang = () => {
   top: 203px;
   left: 144px;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 28px;
 }
 
@@ -613,9 +611,18 @@ body {
   padding: 20px;
   background-color: #ffffff;
 }
-
+.header {
+  font-size: x-large;
+}
 /* Responsif untuk layar dengan lebar maksimum 640px */
 @media (max-width: 640px) {
+  .header {
+    font-size: large;
+  }
+  .pstikan {
+    font-size: medium;
+  }
+
   #ringkasanBooking {
     position: relative;
     margin: 20px auto;

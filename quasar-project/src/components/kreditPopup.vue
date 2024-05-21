@@ -87,11 +87,12 @@ defineExpose({
 
 .popup-inner {
   background: #ffffff;
-  width: 536px;
-  height: 537px;
-  top: 195px;
-  left: 372px;
-  border-radius: 10px 10px 0px 0px;
+  width: 90%;
+  padding: 30px 0;
+  max-width: 536px;
+  height: fit-content;
+  border-radius: 10px;
+  margin: 0;
 }
 
 .popup-inner span:hover {
@@ -101,16 +102,13 @@ defineExpose({
 .nav-popup {
   background-color: rgb(255, 255, 255);
   display: flex;
+  padding: 30px;
   justify-content: space-between;
-  width: 536px;
-  height: 80px;
+  width: 100%;
+  height: 50px;
   border-bottom: 1px solid #d0d5dd;
   align-items: center;
   border-radius: 10px 10px 0px 0px;
-}
-
-.txt-nav-popup {
-  margin-left: 40px;
 }
 
 .txt-nav-popup h5 {
@@ -122,24 +120,28 @@ defineExpose({
   text-align: left;
 }
 
-.icon-close {
-  margin-right: 30px;
-}
-
 .kredit {
-  /* // background-color: aquamarine; */
-  width: 469px;
+  /* background-color: aquamarine; */
+  width: 100%;
   height: 429px;
-  margin-top: 27px;
-  margin-left: 41px;
+  padding: 10px 30px;
   overflow-y: auto;
 }
 
+@media (max-width: 640px) {
+  .popup-inner {
+    padding: 24px;
+  }
+
+  .nav-popup {
+    padding: 16px;
+  }
+}
 .nav-kredit {
-  /* // background-color: aqua; */
+  /* background-color: aqua; */
   display: flex;
   justify-content: space-between;
-  width: 454px;
+  width: 100%;
   height: 56px;
   /* // margin-top: 27px;
     // margin-left: 28px;
@@ -158,7 +160,7 @@ defineExpose({
   text-align: left;
 }
 input {
-  width: 346px;
+  width: 100%;
   height: 52px;
   padding: 0px 12px 0px 12px;
   border-radius: 6px;
