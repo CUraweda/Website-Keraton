@@ -9,9 +9,11 @@ const { pageSeed } = require("./pages.seeder");
 const { subTypeSeed } = require("./orderSubType.seeder");
 const { typeSeed } = require("./orderType.seeder.");
 const { categorySeed } = require("./category.seeder");
+const { newsSeed } = require("./news.seeder");
 
 async function main() {
   await pageSeed();
+  await newsSeed();
   await nationalitySeed();
   await userSeed();
   await guideData();

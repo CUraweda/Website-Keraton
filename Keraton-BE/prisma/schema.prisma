@@ -48,6 +48,7 @@ model User {
   role          Role
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
+  carts         Json?
   transaction   Transaction[]
   tokens        Tokens[]
 }
@@ -87,12 +88,12 @@ model OrderType {
 }
 
 model OrderSubType {
-  id          Int       @id @default(autoincrement())
-  name        String    @unique
+  id           Int       @id @default(autoincrement())
+  name         String    @unique
   minimumUnits Int?
-  orderType   OrderType @relation(fields: [orderTypeId], references: [id])
-  orderTypeId Int
-  orders      Order[] // Menambah relasi dengan "Order"
+  orderType    OrderType @relation(fields: [orderTypeId], references: [id])
+  orderTypeId  Int
+  orders       Order[] // Menambah relasi dengan "Order"
 }
 
 model Transaction {
