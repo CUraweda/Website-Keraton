@@ -46,7 +46,7 @@
                       <q-item-label>Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/sejarahsilsilah">
+                  <q-item clickable v-ripple to="/sejarah/silsilah">
                     <q-item-section>
                       <q-item-label>Silsilah</q-item-label>
                     </q-item-section>
@@ -73,7 +73,7 @@
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/eventgratis">
+                  <q-item clickable v-ripple to="/booking/events">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
@@ -95,17 +95,17 @@
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
-                  <q-item clickable v-ripple to="/areakeraton">
+                  <q-item clickable v-ripple to="/wisata/keraton">
                     <q-item-section>
                       <q-item-label>Keraton Kesepuhan</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/museum">
+                  <q-item clickable v-ripple to="/wisata/museum">
                     <q-item-section>
                       <q-item-label>Museum Pusaka</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/agungdalem">
+                  <q-item clickable v-ripple to="/wisata/dalemagung">
                     <q-item-section>
                       <q-item-label>Dalem Agung Pangkuwati</q-item-label>
                     </q-item-section>
@@ -132,6 +132,9 @@
                 <q-list>
                   <q-item clickable v-ripple @click="logout">
                     <q-item-section>Logout</q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple @click="keranjang">
+                    <q-item-section>Keranjang</q-item-section>
                   </q-item>
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
@@ -191,6 +194,18 @@ export default {
       localStorage.removeItem("token");
       this.isLogin = false; // Set isLogin ke false saat logout
       this.$router.push("/signin");
+    },
+    // async keranjang() {
+    //   try {
+    //     let url = ``;
+    //     const response = await this.$api.get(url);
+    //     const dataRest = response.data.data;
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
+    keranjang() {
+      console.log("ini keranjang");
     },
     getTickets() {
       this.$router.push("/signin");

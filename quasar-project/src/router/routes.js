@@ -45,12 +45,12 @@ const routes = [
     component: SejarahLP,
   },
   {
-    path: "/areakeraton",
+    path: "/wisata/keraton",
     name: "areakeraton",
     component: AreaKeraton,
   },
   {
-    path: "/museum",
+    path: "/wisata/museum",
     name: "museum",
     component: Museum,
   },
@@ -75,12 +75,12 @@ const routes = [
     component: BeranDa,
   },
   {
-    path: "/historytransaksi",
+    path: "/user/transaction",
     name: "historytransaksi",
     component: HistoryTransaksi,
   },
   {
-    path: "/eventgratis",
+    path: "/booking/events",
     name: "eventgratis",
     component: EventGratis,
   },
@@ -95,12 +95,12 @@ const routes = [
     component: FilterBayar,
   },
   {
-    path: "/agungdalem",
+    path: "/wisata/dalemagung",
     name: "agungdalem",
     component: AgungDalem,
   },
   {
-    path: "/sejarahsilsilah",
+    path: "/sejarah/silsilah",
     name: "sejarahsilsilah",
     component: sejarahSilsilah,
   },

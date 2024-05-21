@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
 const { throwError } = require("../../utils/helper");
 const { success, error } = require("../../utils/response");
-const contentModel = require('../models/contents.models');
+const contentModel = require('../models/contents.models')
 const multer = require("multer");
 const crypto = require('crypto');
 const path = require('path');
 
+<<<<<<< HEAD
 function convertFilesToURL(filePath) {
     const baseURL = "https://botzone.shop:3000";
     return baseURL + filePath.replace('public', '').split(path.sep).join('/');
@@ -14,43 +15,49 @@ function convertFilesToURL(filePath) {
 
 // Start Multer
 const allowedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'];
+=======
+//Start Multer
+const allowedMimeTypes = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp']
+>>>>>>> 1367469d1bf7dfa5823f0fcb63738e71dcacfc1c
 const storage = multer.diskStorage({
     destination: (_req, _file, cb) => {
-        cb(null, 'public/assets/content');
+        cb(null, 'public/assets/content')
     },
     filename: (_req, file, cb) => {
         crypto.pseudoRandomBytes(16, (_err, raw) => {
-            cb(null, raw.toString('hex') + path.extname(file.originalname));
-        });
+            cb(null, raw.toString('hex') + path.extname(file.originalname))
+        })
     }
-});
+})
 
 const upload = multer({
     storage,
     fileFilter(req, file, cb) {
         if (!allowedMimeTypes.includes(file.mimetype)) {
-            req.fileValidationError = 'Only image files are allowed';
-            cb(null, false);
-            return;
+            req.fileValidationError = 'Only image file are allowed'
+            cb(null, false)
+            return
         }
-        cb(null, true);
+        cb(null, true)
     }
-});
-// End Multer
+})
+//End Multer
+
 
 router.get('/:id?', async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.params
     try {
-        const data = id ? await contentModel.getOne(+id) : await contentModel.getAll();
-        return success(res, 'Get Success', data);
+        const data = id ? await contentModel.getOne(+id) : await contentModel.getAll()
+        return success(res, 'Get Success', data)
     } catch (err) {
-        return error(res, err.message);
+        return error(res, err.message)
     }
-});
+})
 
-router.post('/:ident/:id?', upload.array('imageList'), async (req, res) => {
-    let sendedData;
+router.post('/:ident/:id?', upload.array('imageList[]'), async (req, res) => {
+    let sendedData
     try {
+<<<<<<< HEAD
         // Initialize the context object
         let context = {
             textList: [],
@@ -135,9 +142,18 @@ router.post('/:ident/:id?', upload.array('imageList'), async (req, res) => {
             sendedData = await contentModel.createUpdate('create', null, payload);
         }
         return success(res, 'Action success', sendedData);
+=======
+        if (req.files) req.body.imageList = req.files
+        if(req.body.pageId) req.body.pageId = +req.body.pageId
+        if(req.body.sectionOrder) req.body.sectionOrder = +req.body.sectionOrder
+        if (req.params.ident != "create") {
+            sendedData = await contentModel.createUpdate('update', +req.params.id, req.body)
+        } else sendedData = await contentModel.createUpdate('create', null, req.body)
+        return success(res, 'Action success', sendedData)
+>>>>>>> 1367469d1bf7dfa5823f0fcb63738e71dcacfc1c
     } catch (err) {
-        return error(res, err.message);
+        return error(res, err.message)
     }
-});
+})
 
-module.exports = router;
+module.exports = router

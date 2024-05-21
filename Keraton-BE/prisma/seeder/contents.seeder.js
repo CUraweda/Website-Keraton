@@ -95,7 +95,7 @@ const contents = [
                 sub: "Siraman Panjat Jimat"
             },
             xl1: {
-                data: "#/eventgratis"
+                data: "#/booking/event"
             }
         }
     },
@@ -111,7 +111,7 @@ const contents = [
                 data: "Mari mengenal budaya kasepuhan Cirebon. Bersama kita lestarikan dan apresiasikan beragam budaya dan tradisi Indonesia dengan mengunjungi Keraton Kasepuhan Cirebon."
             },
             xl1: {
-                data: "#/areakeraton"
+                data: "#/wisata/keraton"
             }
         }
     },
