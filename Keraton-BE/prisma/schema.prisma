@@ -28,6 +28,12 @@ enum Status {
   MENUNGGU_PEMBAYARAN
 }
 
+enum Action {
+  CREATE
+  UPDATE
+  DELETE
+}
+
 model Guide {
   id          String        @id @default(uuid())
   name        String
@@ -50,13 +56,7 @@ model User {
   nationalityId String?
   carts         Json?
   transaction   Transaction[]
-  tokens        Tokens[]
-}
-
-model Tokens {
-  id     String @id
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  Logs          Logs[]
 }
 
 model Order {
@@ -64,14 +64,14 @@ model Order {
   image          String?
   name           String
   desc           String?
-  posOnly        Boolean       @default(false)
   price          Decimal       @db.Decimal(18, 2)
   createdAt      DateTime      @default(now())
+  posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
   category       Category?     @relation(fields: [categoryId], references: [id])
   categoryId     Int?
   orderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
-  orderSubTypeId Int
+  orderSubTypeId Int?
 }
 
 model Category {
@@ -82,9 +82,9 @@ model Category {
 }
 
 model OrderType {
-  id            Int            @id @default(autoincrement())
-  name          String         @unique
-  orderSubTypes OrderSubType[]
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  orderSubType OrderSubType[]
 }
 
 model OrderSubType {
@@ -105,10 +105,10 @@ model Transaction {
   createdDate   DateTime      @default(now())
   discount      String
   cashback      String
-  user          User?         @relation(fields: [userID], references: [id])
-  userID        String?
-  nationality   Nationality?  @relation(fields: [nationalityID], references: [id])
-  nationalityID String?
+  user          User?         @relation(fields: [userId], references: [id])
+  userId        String?
+  nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
+  nationalityId String?
   detailTrans   DetailTrans[]
 }
 
@@ -116,12 +116,12 @@ model DetailTrans {
   id            String      @id @default(uuid())
   amount        Int
   createdAt     DateTime    @default(now())
-  transaction   Transaction @relation(fields: [transactionID], references: [id])
-  transactionID String
-  order         Order       @relation(fields: [orderID], references: [id])
-  orderID       String
-  guide         Guide?      @relation(fields: [guideID], references: [id])
-  guideID       String?
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId String
+  order         Order       @relation(fields: [orderId], references: [id])
+  orderId       String
+  guide         Guide?      @relation(fields: [guideId], references: [id])
+  guideId       String?
 }
 
 model Nationality {
@@ -165,7 +165,18 @@ model Events {
 model EventIteration {
   id     Int      @id @default(autoincrement())
   name   String   @unique
-  Events Events[]
+  events Events[]
+}
+
+model Logs {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  action    Action
+  activity  String
+  changedAt String
+  status    String
+  createdAt DateTime @default(now())
 }
 
 model News {
