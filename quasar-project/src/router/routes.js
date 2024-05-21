@@ -88,7 +88,7 @@ const routes = [
     component: HistoryTransaksi,
   },
   {
-    path: "/booking/events",
+    path: "/booking/event",
     name: "eventgratis",
     component: EventGratis,
   },
