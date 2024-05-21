@@ -1,74 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import NavBar from "../components/NavBar.vue";
-
-const detail = ref(false);
-const cara = ref(false);
-const selectedStatus = ref("sudahDigunakan");
-const statusSelected = ref(false);
-
-const openDetailTransaksi = () => {
-  detail.value = !detail.value;
-};
-
-const closeDetailTransaksi = () => {
-  detail.value = false;
-};
-
-const openMenungguPembayaran = () => {
-  cara.value = !cara.value;
-};
-
-const closeMenungguPembayaran = () => {
-  cara.value = false;
-};
-
-const transactions = [
-  {
-    status: "sudahDigunakan",
-    label: "Sudah digunakan",
-    class: "sudah__digunakan",
-    cardClass: "card-1",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "dapatDigunakan",
-    label: "Dapat digunakan",
-    class: "dapat__digunakan",
-    cardClass: "card-2",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "expired",
-    label: "Expired",
-    class: "expired",
-    cardClass: "card-3",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "menungguPembayaran",
-    label: "Menunggu pembayaran",
-    class: "menunggu__pembayaran",
-    cardClass: "card-4",
-    actions: [
-      { label: "Lihat detail", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Cara Pembayaran", handler: openMenungguPembayaran },
-    ],
-  },
-];
 </script>
 
 <template>
@@ -82,44 +14,111 @@ const transactions = [
           <h1 class="title">Keranjang</h1>
         </div>
       </div>
-      <div
-        v-for="transaction in transactions"
-        :key="transaction.status"
-        class="tabel"
-      >
-        <div :class="transaction.cardClass">
+      <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
+        <div>
           <div class="tiket">
-            <div class="flex items-center">
-              <img
-                src="../assets/images/Vector.png"
-                alt="icon-tiket"
-                class="icon-tiket"
-              />
-              <p>Tiket</p>
-              <label>17 Agu 2023</label>
-            </div>
             <div class="tiket__content">
-              <img src="../assets/images/img-1.jpg" alt="" />
+              <img :src="cart.image" :alt="i + 1" />
               <div class="tiket__content-details">
-                <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
+                <h6>{{ cart.name }}</h6>
                 <div class="label">
-                  <label class="labelharga">1 tiket x Rp. 10.000</label><br />
-                  <label>+2 tiket lainnya</label>
-                </div>
-                <div class="total">
-                  <div class="info">
-                    <p class="total__belanja">Total belanja</p>
-                    <p class="hrga">Rp. 33.500</p>
-                  </div>
+                  <label class="labelharga"
+                    >{{ cart.quantity }} Ticket x Rp.
+                    {{ formatRupiah(cart.price) }} </label
+                  ><br />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <q-btn> </q-btn>
     </div>
   </div>
 </template>
+
+<script>
+import env from "../stores/environment";
+import carts from "../stores/carts";
+
+const cartClass = new carts();
+export default {
+  data() {
+    return {
+      cartData: undefined,
+      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
+    };
+  },
+  mounted() {
+    this.fetchData();
+  },
+  beforeUnmount() {
+    this.updateToDB();
+  },
+  methods: {
+    async updateToDB() {
+      try {
+        const currentCart = {};
+        for (let cart of cartData) {
+          delete cart.addedQuantity;
+          currentCart[cart.id] = cart;
+        }
+        const response = await this.$api.post(
+          "update",
+          { cart: currentCart },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        if (response.status != 200) throw Error(response.data.message);
+        return;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchData() {
+      try {
+        const rawCart = Object.values(cartClass.getItem());
+        if (rawCart.length < 1) {
+          const response = await this.$api.get("cart");
+          if (response.status != 200) throw Error(response.data.message);
+          rawCart = response.data.data;
+        }
+        this.cartData = rawCart.map((cart) => ({
+          ...cart,
+          addedQuantity: 0,
+        }));
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    removeItem(rowData) {
+      try {
+        return cartClass.removeItem(rowData).updateItem();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    changeQuantity(indicator, rowData) {
+      try {
+        indicator != "min"
+          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
+          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
+        return cartClass.updateItem();
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    formatRupiah(price) {
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
+    },
+  },
+};
+</script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
@@ -221,7 +220,8 @@ img {
   height: fit-content;
   border-radius: 12px;
   box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* Mengatur margin horizontal secara otomatis untuk memusatkan */
+  margin: 0 auto;
+  /* Mengatur margin horizontal secara otomatis untuk memusatkan */
   margin-top: 48px;
   padding: 10px;
   margin-bottom: 23px;
@@ -285,6 +285,7 @@ p.sudah__digunakan {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.dapat__digunakan {
   padding-left: 8px;
   padding-right: 8px;
@@ -296,6 +297,7 @@ p.dapat__digunakan {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.expired {
   padding-left: 8px;
   padding-right: 8px;
@@ -307,6 +309,7 @@ p.expired {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.menunggu__pembayaran {
   padding-left: 8px;
   padding-right: 8px;
@@ -351,22 +354,27 @@ label.labelharga {
 .total {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Mendorong elemen ke tepi kiri dan kanan */
+  justify-content: space-between;
+  /* Mendorong elemen ke tepi kiri dan kanan */
 }
 
 .info {
   padding-top: 25px;
   display: flex;
-  flex-direction: column; /* Menyusun paragraf total belanja dan harga secara vertikal */
-  gap: 0.5rem; /* Jarak antara paragraf */
+  flex-direction: column;
+  /* Menyusun paragraf total belanja dan harga secara vertikal */
+  gap: 0.5rem;
+  /* Jarak antara paragraf */
 }
 
 .actions {
   color: #333;
   padding-top: 45px;
   display: flex;
-  gap: 0.5rem; /* Jarak antara paragraf */
+  gap: 0.5rem;
+  /* Jarak antara paragraf */
 }
+
 .detail {
   color: #daa520;
   text-decoration: none;
@@ -376,6 +384,7 @@ label.labelharga {
 .cara {
   cursor: pointer;
 }
+
 .search-label {
   position: relative;
 }
@@ -383,14 +392,18 @@ label.labelharga {
 .search-icon {
   position: absolute;
   top: 50%;
-  left: 15px; /* Sesuaikan posisi gambar */
+  left: 15px;
+  /* Sesuaikan posisi gambar */
   transform: translateY(-50%);
-  width: 15px; /* Sesuaikan lebar gambar */
-  height: auto; /* Sesuaikan tinggi gambar jika diperlukan */
+  width: 15px;
+  /* Sesuaikan lebar gambar */
+  height: auto;
+  /* Sesuaikan tinggi gambar jika diperlukan */
 }
 
 .Pencarian {
-  padding-left: 30px; /* Sesuaikan padding kiri agar input tidak tumpang tindih dengan gambar */
+  padding-left: 30px;
+  /* Sesuaikan padding kiri agar input tidak tumpang tindih dengan gambar */
 }
 
 .bantuan {
@@ -479,6 +492,7 @@ small.label-card1 {
   display: grid;
   grid-template-columns: 2 200px;
 }
+
 .header {
   box-shadow: 0 1px rgba(0, 0, 0, 0.2);
   background: white;
@@ -489,6 +503,7 @@ small.label-card1 {
   justify-content: space-between;
   padding: 1rem 3.2rem;
 }
+
 .header h1 {
   font-weight: 700;
   z-index: 1000;
@@ -527,6 +542,7 @@ small.label-card1 {
 .detail-tiket {
   align-items: center;
 }
+
 .detail-tiket h6 {
   font-size: 20px;
   font-weight: 700;
@@ -547,12 +563,14 @@ small.label-card1 {
 
 .info-detail-tiket {
   display: flex;
-  flex-direction: column; /* Menyusun elemen dalam satu kolom */
+  flex-direction: column;
+  /* Menyusun elemen dalam satu kolom */
 }
 
 .info-detail-tiket p,
 .info-detail-tiket label {
-  margin-right: auto; /* Memindahkan teks ke pinggir kanan */
+  margin-right: auto;
+  /* Memindahkan teks ke pinggir kanan */
 }
 
 .info-detail-tiket label {
@@ -632,12 +650,14 @@ h6.detailtiket {
   font-size: 20px;
   font-weight: 400;
 }
+
 .pemesan label {
   background-color: #ffffff;
   color: #000000;
   font-size: 14px;
   font-weight: 400;
 }
+
 .pemesan p {
   font-size: 16px;
   font-weight: 700;
@@ -711,6 +731,7 @@ h6.detailtiket {
   display: flex;
   gap: 24.5rem;
 }
+
 .total-biaya h6 {
   font-size: 20px;
   font-weight: 700;
@@ -743,6 +764,7 @@ h6.detailtiket {
 .nva {
   padding-top: 15px;
 }
+
 .nva h6 {
   font-size: 24px;
   font-weight: 400;
@@ -785,6 +807,7 @@ h6.detailtiket {
   font-size: 24px;
   font-weight: 400;
 }
+
 .atm-bjb {
   padding-top: 40px;
   padding-bottom: 10px;

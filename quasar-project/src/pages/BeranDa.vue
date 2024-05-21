@@ -206,7 +206,7 @@
       }"
     >
       <div v-for="(slide, index) in slides" :key="index" class="slide">
-        <div class="news-section">
+        <div class="news-section" :to="slide.link">
           <div class="news-image">
             <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
@@ -362,24 +362,9 @@ export default {
             "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
           title:
             "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
+          link: "https://blue.kumparan.com",
           summary:
             "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
-        },
-        {
-          imageUrl:
-            "https://img.antaranews.com/cache/1200x800/2024/03/11/IMG_20240311_180817.jpg.webp",
-          title:
-            'Tandai awal Ramadhan, Keraton Kasepuhan Cirebon gelar "Dlugdag"',
-          summary:
-            "Ringkasan singkat dari berita kedua. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
-        },
-        {
-          imageUrl:
-            "https://akcdn.detik.net.id/community/media/visual/2023/11/13/rombongan-pengunjung-keraton-kasepuhan-cirebon_169.jpeg?w=700&q=90",
-          title:
-            "Belajar Sejarah di Keraton Kasepuhan Cirebon, Ini Harga Tiketnya",
-          summary:
-            "Ringkasan singkat dari berita ketiga. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
       currentSlideIndex: 0,
@@ -388,6 +373,7 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.fetchNews();
     this.socket();
     this.startSlider();
     window.addEventListener("scroll", this.handleScroll);
@@ -402,6 +388,22 @@ export default {
       socket.on("dashboard", () => {
         this.fetchData();
       });
+    },
+    async fetchNews() {
+      try {
+        const response = await this.$api.get("news");
+        console.log(response.data.data);
+        this.slides = response.data.data.map((news) => ({
+          imageUrl: news.image,
+          link: news.link,
+          title: news.title,
+          summary: news.desc,
+        }));
+
+        console.log(this.slides);
+      } catch (err) {
+        console.log(err);
+      }
     },
     async fetchData() {
       let rawSection = {};

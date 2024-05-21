@@ -1,4 +1,5 @@
 const { throwError } = require("../../utils/helper")
+const { prisma } = require("../../utils/prisma")
 const userModel = require('../models/user.models')
 
 const action = async (actionParam, id, carts) => {
@@ -19,7 +20,14 @@ const action = async (actionParam, id, carts) => {
     } catch (err) {
         throwError(err)
     }
-    
+}
+
+const updateCart = async (id, carts) => {
+    try{
+        return await prisma.user.update({ where: { id }, data: { carts } })
+    }catch(err){
+        throwError(err)
+    }
 }
 
 const validate  = async (id, carts) => {
@@ -33,4 +41,4 @@ const validate  = async (id, carts) => {
     }
 }
 
-module.exports = { action }
+module.exports = { action, updateCart }

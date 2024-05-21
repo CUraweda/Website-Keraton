@@ -5,16 +5,19 @@ const news = [
   {
     title: "Ambatukam maling",
     desc: "Ditemukan jasad 1 orang",
+    link: "https://picsum.photos/200/300",
     image: "https://picsum.photos/200/300"
   },
   {
     title: "Disnut Membeli sayur",
     desc: "Berjalan 1 KM",
+    link: "https://picsum.photos/200/300",
     image: "https://picsum.photos/200/300"
   },
   {
     title: "Kambing beli sayur",
     desc: "Sayur dimakan Kambing",
+    link: "https://picsum.photos/200/300",
     image: "https://picsum.photos/200/300"
   },
 ];
