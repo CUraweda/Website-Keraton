@@ -19,8 +19,8 @@
           Cirebon.
         </p>
         <p class="text-bottom3">
-          Keraton Kasepuhan merupakan salah satu peninggalan sejarah yang penting
-          di Cirebon
+          Keraton Kasepuhan merupakan salah satu peninggalan sejarah yang
+          penting di Cirebon
         </p>
         <a class="arrow-down" @click="scrollToContent"
           ><img src="../assets/images/Frame.svg"
@@ -91,9 +91,9 @@
           <p class="Dalem2">Masjid Agung Kasepuhan</p>
           <p class="Isi-Dalem2">
             Masjid Agung Kasepuhan merupakan salah satu masjid tertua di Cirebon
-            dan merupakan salah satu bangunan bersejarah yang penting di kota ini.
-            Masjid ini dibangun pada tahun 1480 oleh Sunan Gunung Jati, salah satu
-            Wali Songo.
+            dan merupakan salah satu bangunan bersejarah yang penting di kota
+            ini. Masjid ini dibangun pada tahun 1480 oleh Sunan Gunung Jati,
+            salah satu Wali Songo.
           </p>
         </div>
         <img alt="" class="image-Tourist2" src="../assets/images/image34.png" />
@@ -106,12 +106,16 @@
           <p class="Isi-Dalem">
             Museum Pusaka Keraton Kasepuhan menyimpan berbagai koleksi benda
             bersejarah, seperti kereta kencana, gamelan, dan lukisan. Salah satu
-            koleksi yang paling terkenal adalah kereta kencana Singa Barong, yang
-            merupakan kereta kencana Sunan Gunung Jati.
+            koleksi yang paling terkenal adalah kereta kencana Singa Barong,
+            yang merupakan kereta kencana Sunan Gunung Jati.
           </p>
           <a class="Hiasan"><img src="../assets/images/Content.svg" /></a>
         </div>
-        <img alt="" class="image-Tourist3" src="../assets/images/image 35.png" />
+        <img
+          alt=""
+          class="image-Tourist3"
+          src="../assets/images/image 35.png"
+        />
       </div>
 
       <div class="Lokasi-container">
@@ -120,8 +124,8 @@
         </div>
         <div class="Lokasi-samping">
           <p>
-            Dengan luas sekitar 13,5 hektar dan terdiri dari 2 komplek yaitu Dalem
-            Agung Pakungwati dan kompleks Keraton Pakungwati.
+            Dengan luas sekitar 13,5 hektar dan terdiri dari 2 komplek yaitu
+            Dalem Agung Pakungwati dan kompleks Keraton Pakungwati.
           </p>
         </div>
       </div>
@@ -173,7 +177,9 @@
             </p>
           </div>
           <a href="/#/booking">
-            <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button></a
+            <button class="button-Kunjungan">
+              Dapatkan Tiket Sekarang!
+            </button></a
           >
           <a href="/#/booking">
             <div class="Paket">
@@ -238,6 +244,8 @@ export default {
 
 .image {
   width: 100%;
+  display: block;
+  background-size: cover;
   height: auto;
 }
 
