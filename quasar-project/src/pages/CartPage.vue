@@ -4,37 +4,67 @@ import NavBar from "../components/NavBar.vue";
 </script>
 
 <template>
-  <div class="all-content">
-    <div>
-      <nav class="navbar">
-        <NavBar border />
-      </nav>
-      <div class="content">
-        <div>
-          <h1 class="title">Keranjang</h1>
-        </div>
-      </div>
-      <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
-        <div>
-          <div class="tiket">
-            <div class="tiket__content">
-              <img :src="cart.image" :alt="i + 1" />
-              <div class="tiket__content-details">
-                <h6>{{ cart.name }}</h6>
-                <div class="label">
-                  <label class="labelharga"
-                    >{{ cart.quantity }} Ticket x Rp.
-                    {{ formatRupiah(cart.price) }} </label
-                  ><br />
+  <q-layout>
+    <q-page-container>
+      <q-page>
+        <div class="all-content">
+          <div>
+            <nav class="navbar">
+              <NavBar border />
+            </nav>
+            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+              <q-btn fab icon="add" color="accent" />
+            </q-page-sticky>
+            <div class="content">
+              <div>
+                <h1 class="title">Keranjang</h1>
+              </div>
+            </div>
+            <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
+              <div>
+                <div class="tiket">
+                  <div class="tiket__content">
+                    <img :src="cart.image" :alt="i + 1" />
+                    <div class="tiket__content-details">
+                      <h6>{{ cart.name }}</h6>
+                      <div class="label flex items-center justify-between">
+                        <div>
+                          <label class="labelharga">
+                            Rp.
+                            {{ formatRupiah(cart.price) }}
+                          </label>
+                          <br />
+                        </div>
+                        <div class="flex items-center q-gutter-md">
+                          <button
+                            style="width: 1rem"
+                            @click="changeQuantity('plus', cart.quantity)"
+                          >
+                            +
+                          </button>
+                          <div>{{ cart.quantity }}</div>
+                          <button
+                            style="width: 1rem"
+                            @click="changeQuantity('min', cart.quantity)"
+                          >
+                            -
+                          </button>
+                          <q-btn dense>
+                            <q-icon name="delete" />
+                          </q-btn>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <q-btn> </q-btn>
           </div>
         </div>
-      </div>
-      <q-btn> </q-btn>
-    </div>
-  </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
@@ -221,12 +251,11 @@ img {
 }
 
 .tabel {
-  width: 779px;
+  width: fit-content;
   height: fit-content;
   border-radius: 12px;
-  box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 9px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
-  /* Mengatur margin horizontal secara otomatis untuk memusatkan */
   margin-top: 48px;
   padding: 10px;
   margin-bottom: 23px;
