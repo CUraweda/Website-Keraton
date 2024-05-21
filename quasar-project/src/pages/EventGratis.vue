@@ -10,9 +10,7 @@
       <div class="kakaje">
         <ul>
           <a class="text2">
-            <strong
-              ><a class="text2">Tiket Event Upacara Adat Tradisi</a></strong
-            >
+            <strong><a class="text2">Tiket Event Upacara Adat Tradisi</a></strong>
           </a>
         </ul>
       </div>
@@ -23,16 +21,8 @@
       {{ dropdownTitle }} <img src="../assets/images/shape.png" />
     </button>
     <div v-if="isOpen" class="dropdown-menu">
-      <label
-        v-for="(option, index) in options"
-        :key="index"
-        class="checkbox-container"
-      >
-        <input
-          type="checkbox"
-          :value="option.value"
-          v-model="selectedOptions"
-        />
+      <label v-for="(option, index) in options" :key="index" class="checkbox-container">
+        <input type="checkbox" :value="option.value" v-model="selectedOptions" />
         {{ option.label }}
       </label>
     </div>
@@ -41,16 +31,8 @@
         {{ dropdownTitle2 }} <img src="../assets/images/shape.png" />
       </button>
       <div v-if="isOpen2" class="dropdown-menu2">
-        <label
-          v-for="(option2, index2) in options2"
-          :key="index2"
-          class="checkbox-container"
-        >
-          <input
-            type="checkbox"
-            :value="option2.value"
-            v-model="selectedOptions2"
-          />
+        <label v-for="(option2, index2) in options2" :key="index2" class="checkbox-container">
+          <input type="checkbox" :value="option2.value" v-model="selectedOptions2" />
           {{ option2.label }}
         </label>
       </div>
@@ -60,12 +42,13 @@
         <img class="image" :src="item.image" alt="Gambar" />
         <div class="buttonaji">
           <button class="btn-small">{{ item.buttonText1 }}</button>
-          <button class="btn-small">{{ item.buttonText2 }}</button>
+          <button class="btn-small">{{ item.isFree ? "Gratis" : "Bayar" }}</button>
         </div>
         <h2 class="judul-sedang">{{ item.titleBig }}</h2>
         <h1 class="judul-besar">{{ item.titleMedium }}</h1>
+        <h1 class="judul-sedang" v-if="!item.isFree">{{ "Rp. " + formatRupiah(item.price) }}</h1>
         <div class="tengah">
-          <button class="tambah">
+          <button class="tambah" @click="addToCart(item)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
@@ -82,6 +65,7 @@ import footerdesk from "../components/FooterComp.vue";
 
 <script>
 import { ref } from "vue";
+import Carts from "../stores/carts";
 
 export default {
   components: {
@@ -122,6 +106,7 @@ export default {
       isOpen2: false,
       imageUrl: "../assets/trigger.svg",
       options: ref(),
+      cart: new Carts(),
       options2: [
         { label: "Gratis", value: "1" },
         { label: "Bayar", value: "0" },
@@ -148,13 +133,13 @@ export default {
           {
             ...(iterationOptions &&
               iterationOptions.length != 0 && {
-                iterat: Object.values(this.selectedOptions),
-              }),
+              iterat: Object.values(this.selectedOptions),
+            }),
             ...(freeOptions &&
               freeOptions.length < 2 &&
               freeOptions.length != 0 && {
-                free: freeOptions[0] != 0 ? true : false,
-              }),
+              free: freeOptions[0] != 0 ? true : false,
+            }),
           }
         );
         const iterationResponse = await this.$axios.get(
@@ -165,9 +150,10 @@ export default {
         this.events = eventResponse.data.data.map((event) => ({
           image: event.image,
           buttonText1: event.iteration.name,
-          buttonText2: event.isFree ? "Gratis" : "Bayar",
           titleMedium: event.desc,
           titleBig: event.name,
+          isFree: event.isFree,
+          price: event.price
         }));
         this.options = iterationResponse.data.data.map((iterat) => ({
           label: iterat.name,
@@ -189,24 +175,46 @@ export default {
     selectOption2(option) {
       this.selectedOptions2.push(option);
     },
-    applySelection() {
-      // Close dropdowns
-      this.isOpen = false;
-      this.isOpen2 = false;
-      // Filter items based on selected options
-      const filteredItems = this.items.filter((item) => {
-        // Check if item matches selected pelaksanaan option
-        const pelaksanaanMatch =
-          this.selectedOptions.length === 0 ||
-          this.selectedOptions.includes(item.buttonText1.toLowerCase());
-        // Check if item matches selected jenis event option
-        const jenisEventMatch =
-          this.selectedOptions2.length === 0 ||
-          this.selectedOptions2.includes(item.buttonText2.toLowerCase());
-        return pelaksanaanMatch && jenisEventMatch;
-      });
-      console.log("Filtered items:", filteredItems);
+    addToCart(rowData) {
+      try {
+        const storedData = {
+          id: rowData.id,
+          name: rowData.titleBig,
+          image: rowData.image,
+          quantity: 1,
+          price: rowData.price,
+          type: "E"
+        };
+        const cartData = this.cart.addManyItem([storedData]).getItem();
+        if (!cartData) throw Error("Error Occured");
+        return this.cart.updateItem();
+      } catch (err) {
+        console.log(err);
+      }
     },
+    formatRupiah(price) {
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
+    },
+  },
+  applySelection() {
+    // Close dropdowns
+    this.isOpen = false;
+    this.isOpen2 = false;
+    // Filter items based on selected options
+    const filteredItems = this.items.filter((item) => {
+      // Check if item matches selected pelaksanaan option
+      const pelaksanaanMatch =
+        this.selectedOptions.length === 0 ||
+        this.selectedOptions.includes(item.buttonText1.toLowerCase());
+      // Check if item matches selected jenis event option
+      const jenisEventMatch =
+        this.selectedOptions2.length === 0 ||
+        this.selectedOptions2.includes(item.buttonText2.toLowerCase());
+      return pelaksanaanMatch && jenisEventMatch;
+    });
+    console.log("Filtered items:", filteredItems);
   },
 };
 </script>
@@ -220,11 +228,9 @@ export default {
 }
 
 .header {
-  background: linear-gradient(
-    90deg,
-    rgba(218, 165, 32, 0.5) 0%,
-    rgba(18, 59, 50, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(218, 165, 32, 0.5) 0%,
+      rgba(18, 59, 50, 0.5) 100%);
   padding: 20px;
   text-align: center;
   width: 100%;
@@ -350,46 +356,63 @@ nav ul li button:hover {
 }
 
 .buttonaji {
-  display: flex; /* Use flexbox */
-  justify-content: left; /* Center children horizontally */
-  align-items: left; /* Center children vertically */
+  display: flex;
+  /* Use flexbox */
+  justify-content: left;
+  /* Center children horizontally */
+  align-items: left;
+  /* Center children vertically */
   margin-left: -10px;
 }
 
 .tengah {
-  display: flex; /* Use flexbox */
-  justify-content: left; /* Center children horizontally */
-  align-items: left; /* Center children vertically */
+  display: flex;
+  /* Use flexbox */
+  justify-content: left;
+  /* Center children horizontally */
+  align-items: left;
+  /* Center children vertically */
 }
 
 .image {
   width: 325px;
   height: 181px;
   object-fit: cover;
-  border-radius: 10px; /* Adjust the value to change the roundness */
+  border-radius: 10px;
+  /* Adjust the value to change the roundness */
   z-index: 2;
 }
 
 .btn-small {
-  padding: 6px 12px; /* Reduced padding for a more compact button */
-  font-size: 12px; /* Decreased font size */
-  border-radius: 6.29px; /* Updated border-radius */
+  padding: 6px 12px;
+  /* Reduced padding for a more compact button */
+  font-size: 12px;
+  /* Decreased font size */
+  border-radius: 6.29px;
+  /* Updated border-radius */
   background: transparent;
   border: 0.79px solid #49454f1f;
   color: #1d1b20;
-  width: 75.15px; /* Width based on Hug dimension */
-  height: 25.15px; /* Height based on Fixed dimension */
-  font-family: Raleway; /* Corrected the font-family property */
+  width: 75.15px;
+  /* Width based on Hug dimension */
+  height: 25.15px;
+  /* Height based on Fixed dimension */
+  font-family: Raleway;
+  /* Corrected the font-family property */
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  justify-content: center;
+  /* Center the content horizontally */
+  align-items: center;
+  /* Center the content vertically */
   margin-right: 0px;
-  margin-left: 10px; /* Adjusted margin for spacing */
+  margin-left: 10px;
+  /* Adjusted margin for spacing */
   cursor: pointer;
 }
 
 .btn-small:hover {
-  background-color: #49454f1f; /* Darker shade when hovered */
+  background-color: #49454f1f;
+  /* Darker shade when hovered */
 }
 
 .judul-sedang {
@@ -471,7 +494,8 @@ nav ul li button:hover {
 }
 
 .dropdown-toggle img {
-  margin-left: auto; /* Jarak antara teks dan gambar */
+  margin-left: auto;
+  /* Jarak antara teks dan gambar */
   z-index: 1;
 }
 
@@ -497,7 +521,8 @@ nav ul li button:hover {
   width: 100%;
   height: 24px;
   padding: 8px;
-  gap: 8px; /* Jarak antara checkbox dan teks */
+  gap: 8px;
+  /* Jarak antara checkbox dan teks */
   font-family: Lexend;
   font-size: 14px;
   cursor: pointer;
@@ -515,14 +540,16 @@ nav ul li button:hover {
   width: 24px;
   height: 24px;
   fill: none;
-  stroke: black; /* Warna default ikon centang */
+  stroke: black;
+  /* Warna default ikon centang */
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: stroke 0.3s ease; /* Efek transisi untuk perubahan warna */
+  transition: stroke 0.3s ease;
+  /* Efek transisi untuk perubahan warna */
 }
 
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
   background-image: linear-gradient(gold, gold);
   z-index: 1;
 }
@@ -568,7 +595,8 @@ nav ul li button:hover {
 }
 
 .dropdown-toggle2 img {
-  margin-left: auto; /* Jarak antara teks dan gambar */
+  margin-left: auto;
+  /* Jarak antara teks dan gambar */
   z-index: 1;
 }
 </style>

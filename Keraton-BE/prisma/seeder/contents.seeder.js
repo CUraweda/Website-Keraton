@@ -24,7 +24,7 @@ const contents = [
         sectionOrder: 1,
         context: {
             xs1: {
-                data: "Keraton Kesepuham Cirebon",
+                data: "Keraton Kesepuhan Cirebon",
                 textSize: ""
             },
             xs2: {

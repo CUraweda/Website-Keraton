@@ -18,6 +18,7 @@ import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
 import NyobaAdmin from "../pages/nyobaAdmin.vue";
 import Cart from "../pages/CartPage.vue";
+import Template from "../pages/TicketTemplate.vue";
 
 const routes = [
   {
@@ -116,9 +117,14 @@ const routes = [
     component: NyobaAdmin,
   },
   {
-    path: "/keranjang",
+    path: "/user/carts",
     name: "Cart",
     component: Cart,
+  },
+  {
+    path: "/template",
+    name: "Template",
+    component: Template,
   },
 ];
 
