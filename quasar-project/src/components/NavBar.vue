@@ -1,7 +1,14 @@
 <template>
-  <div class="navbar" :class="{ white: isWhiteText, border: border, scrolled: isScrolled }">
+  <div
+    class="navbar"
+    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
+  >
     <div class="navbar-left">
-      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" />
+      <img
+        alt="icon-aplikasi"
+        src="../assets/images/logo_keraton.png"
+        class="app-icon"
+      />
       <span class="app-name">KERATON KASEPUHAN CIREBON</span>
     </div>
     <div class="navbar-right">
@@ -11,7 +18,9 @@
             <q-btn
               flat
               label="Beranda"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
               clickable
@@ -23,7 +32,9 @@
             <q-btn
               flat
               label="Sejarah"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
@@ -48,7 +59,9 @@
             <q-btn
               flat
               label="Booking"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
@@ -73,7 +86,9 @@
             <q-btn
               flat
               label="Objek Wisata"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
@@ -111,7 +126,7 @@
             </q-btn>
             <q-btn v-else round flat dense @click="toggleMenu">
               <q-avatar>
-                <img src="../assets/images/avatar.png" alt="Profile" />
+                <img src="../assets/svg/user.svg" alt="Profile" />
               </q-avatar>
               <q-menu>
                 <q-list>
@@ -120,6 +135,14 @@
                   </q-item>
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
+                  </q-item>
+                  <q-item
+                    v-if="isAdmin"
+                    clickable
+                    v-ripple
+                    @click="adminPage"
+                  >
+                    <q-item-section>Admin Page</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
@@ -132,12 +155,13 @@
 </template>
 
 <script>
-import { verifyTokenBool } from "src/auth/auth";
+import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
 export default {
   data() {
     return {
       isScrolled: false,
       isLogin: false,
+      isAdmin: false,
     };
   },
   props: {
@@ -157,6 +181,7 @@ export default {
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
     this.isLogin = await verifyTokenBool(); // Menggunakan fungsi langsung
+    this.isAdmin = await verifyTokenAdmin();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -175,6 +200,9 @@ export default {
     },
     goToPurchases() {
       this.$router.push("/purchases");
+    },
+    adminPage() {
+      this.$router.push("/admin/home");
     },
     toggleMenu() {
       this.menu = !this.menu;

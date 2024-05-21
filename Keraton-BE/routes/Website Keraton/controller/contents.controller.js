@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const path = require('path');
 
 function convertFilesToURL(filePath) {
-    const baseURL = "http://localhost:3000";
+    const baseURL = "https://botzone.shop:3000";
     return baseURL + filePath.replace('public', '').split(path.sep).join('/');
 }
 
@@ -87,7 +87,6 @@ router.post('/:ident/:id?', upload.array('imageList'), async (req, res) => {
         // Process image inputs (URLs)
         if (req.body.imageList) {
             if (Array.isArray(req.body.imageList)) {
-                // Jika imageList adalah array, proses setiap URL di dalam array
                 req.body.imageList.forEach((url, index) => {
                     if (!context.imageList[index]) {
                         context.imageList[index] = {};
@@ -95,7 +94,6 @@ router.post('/:ident/:id?', upload.array('imageList'), async (req, res) => {
                     context.imageList[index].data = url;
                 });
             } else {
-                // Jika imageList bukan array, anggap itu adalah string tunggal
                 let url = req.body.imageList;
                 if (!context.imageList[0]) {
                     context.imageList[0] = {};
