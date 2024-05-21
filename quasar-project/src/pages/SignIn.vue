@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import cookieHandler from 'src/cookieHandler';
 import env from '../stores/environment'
 export default {
   data() {
@@ -65,8 +66,9 @@ export default {
       try {
         const response = await this.$api.post('/auth/login', payload)
         if (response.status != 200) throw Error(response.data.message)
-        localStorage.setItem(env.TOKEN_STORAGE_NAME, response.data.data.token);
-        localStorage.setItem('name', response.data.data.user.name)
+        const { token, user } = response.data.data
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token)
+        localStorage.setItem("user", user)
         this.$router.go(-1)
       } catch (error) {
         console.error("Error:", error);
