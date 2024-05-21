@@ -8,7 +8,7 @@ const crypto = require('crypto');
 const path = require('path');
 
 function convertFilesToURL(filePath) {
-    const baseURL = "https://botzone.shop:3000";
+    const baseURL = "http://localhost:3000";
     return baseURL + filePath.replace('public', '').split(path.sep).join('/');
 }
 
