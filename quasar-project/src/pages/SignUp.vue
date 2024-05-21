@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { BASE_URL } from 'src/auth/config';
 export default {
   data() {
     return {
@@ -73,7 +74,7 @@ export default {
 
       try {
         const response = await fetch(
-          "http://localhost:3000/keraton/auth/auth",
+          BASE_URL() + "/keraton/auth/auth",
           {
             headers: {
               Authorization: token,
@@ -135,7 +136,7 @@ const submitForm = async () => {
   };
 
   try {
-    const response = await fetch('http://localhost:3000/keraton/auth/register', {
+    const response = await fetch(BASE_URL() + '/keraton/auth/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
