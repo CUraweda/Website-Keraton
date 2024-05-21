@@ -10,7 +10,7 @@ const controlNews = require("../controller/news.controller");
 const controlSubscribe = require("../controller/subscriber.controller");
 const controlCart = require("../controller/carts.controller");
 
-// router.use("/content", controlContent);
+router.use("/content", controlContent);
 router.use("/page", controlPage);
 router.use("/auth", controlAuth);
 router.use("/event", controlEvent);
