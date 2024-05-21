@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar border :isCheckoutPage="true"/>
+    <navbar border :isCheckoutPage="true" />
   </nav>
   <div class="header">
     <div class="text1">
@@ -25,7 +25,7 @@
       <h1 class="judul-besar">{{ item.titleBig }}</h1>
       <div class="tengah">
         <h3 class="judul-kecil">{{ item.price }}</h3>
-        <button class="tambah">
+        <button class="tambah" @click="addToCart(item)">
           Tambah <img class="photo" src="../assets/Frame.svg" />
         </button>
       </div>
@@ -33,7 +33,7 @@
   </div>
 
   <div v-for="(item, index) in paketItems" :key="index">
-    <a class="judul1">Paket {{ paketNameItems[index] }} (minimal 35 orang)</a>
+    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
     <div class="container">
       <div class="ni" v-for="(data, i) in item" :key="i">
         <img class="image" :src="data.image" alt="Gambar" />
@@ -41,8 +41,8 @@
         <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
         <h1 class="judul-besar">{{ data.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">{{ data.price }}</h3>
-          <button class="tambah">
+          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) }}</h3>
+          <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
@@ -106,6 +106,7 @@
 
 <script setup>
 import navbar from "../components/NavBar.vue";
+import Carts from "../stores/carts"
 </script>
 
 <script>
@@ -235,6 +236,7 @@ export default {
           price: "Rp.60.000/orang",
         },
       ],
+      cart: new Carts()
     };
   },
   mounted() {
@@ -244,43 +246,38 @@ export default {
     async fetchData() {
       try {
         const response = await this.$api.get("items/booking");
-        if (response.status != 200) throw Error("Error Occured");
-        console.log(response);
+        if (response.status !== 200) throw Error("Error Occured");
+
         let tikets = [],
           pakets = {};
+
         for (let subType of response.data.data) {
-          switch (subType.typeId) {
+          switch (subType.orderTypeId) {
             case 1:
-              for (let purchasable of subType.Purchasable) {
-                let harga =
-                  purchasable.priceUmum || purchasable.priceMancanegara
-                    ? this.countPrice(
-                        purchasable.price,
-                        purchasable.priceUmum,
-                        purchasable.priceMancanegara
-                      )
-                    : `Rp. ${this.formatRupiah(purchasable.price)}`;
+              for (let order of subType.orders) {
                 tikets.push({
-                  id: purchasable.id,
-                  image: purchasable.image,
-                  titleMedium: purchasable.name,
-                  titleBig: purchasable.desc,
-                  price: `${harga}/${purchasable.unit}`,
+                  id: order.id,
+                  image: order.image,
+                  titleMedium: order.name,
+                  titleBig: order.desc,
+                  quantity: 0,
+                  price: `${order.price}/${order.unit || ""}`,
                 });
               }
               break;
             case 2:
               const subTypeName = subType.name;
-              for (let purchasable of subType.Purchasable) {
+              if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
+              }
+              for (let order of subType.orders) {
                 pakets[subTypeName].push({
-                  id: purchasable.id,
-                  image: purchasable.image,
-                  titleMedium: purchasable.name,
-                  titleBig: purchasable.desc,
-                  price: `Rp. ${this.formatRupiah(purchasable.price)}/${
-                    purchasable.unit
-                  }`,
+                  id: order.id,
+                  image: order.image,
+                  titleMedium: order.name,
+                  titleBig: order.desc,
+                  quantity: 0,
+                  price: order.price,
                 });
               }
               break;
@@ -288,6 +285,7 @@ export default {
               break;
           }
         }
+
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
         this.paketNameItems = Object.keys(pakets);
@@ -351,6 +349,23 @@ export default {
       });
       console.log("Filtered items:", filteredItems);
     },
+    addToCart(rowData){
+      try{
+        const storedData = {
+          id: rowData.id,
+          name: rowData.titleMedium,
+          image: rowData.image,
+          quantity: 1,
+          price: rowData.price
+        }
+        const cartData = this.cart.addManyItem([storedData]).getItem()
+        console.log(cartData)
+        if(!cartData) throw Error('Error Occured')
+        return this.cart.updateItem()
+      }catch(err){
+        console.log(err)
+      }
+    }
   },
 };
 </script>
@@ -485,6 +500,9 @@ nav ul li button:hover {
   position: relative;
 }
 
+.container::-webkit-scrollbar {
+  display: none;
+}
 .container {
   display: flex;
   margin-left: 131px;

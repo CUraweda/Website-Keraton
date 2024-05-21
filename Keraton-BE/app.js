@@ -80,7 +80,7 @@ app.get("/ping", async (req, res) => {
 //? ROUTES
 app.use("/keraton", keratonWebsiteRouter);
 app.use("/keraton-pos", keratonPosRouter);
-app.use("/uploads", express.static("./public/assets/dashboard"));
+app.use("/uploads", express.static("./public/assets/uploads"));
 
 //? RUN DEVELOPMENT SERVER
 server.listen(port, (err) => {

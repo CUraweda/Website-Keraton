@@ -1,26 +1,8 @@
 require("dotenv").config();
 const fs = require("fs");
-const path = require("path");
 const multer = require("multer");
+const qr = require('qr-image');
 
-// Logs Initialization
-const logDirectory = path.join(__dirname, "..", "Keraton Pos", "logs");
-const logFileName = `log-${new Date().toISOString().slice(0, 10)}.txt`;
-const logFilePath = path.join(logDirectory, logFileName);
-
-if (!fs.existsSync(logDirectory)) {
-  console.log(logDirectory);
-  fs.mkdirSync(logDirectory);
-}
-
-const writeLog = (log) => {
-  fs.appendFileSync(logFilePath, log + "\n", (err) => {
-    if (err) {
-      console.error("Gagal menulis log:", err);
-    }
-  });
-};
-// Logs End
 // Multer Initialization
 const allowedMimeTypes = [
   "image/png",
@@ -54,6 +36,25 @@ const upload = multer({
   },
 });
 // Multer End
+
+// QR Start
+const createQr = (data) => {
+  const qrCodes = {};
+  for (let i = 1; i <= data.amount; i++) {
+    const qrData = JSON.stringify({ id: data.id, iteration: i });
+    const qrImage = qr.image(qrData, { type: 'png' });
+    const qrDir = "./public/qrcodes";
+    if (!fs.existsSync(qrDir)) {
+      fs.mkdirSync(qrDir);
+    }
+    const filePath = `${qrDir}/ticket_${data.id}_${i}.png`;
+    qrImage.pipe(fs.createWriteStream(filePath));
+
+    qrCodes[i - 1] = filePath;
+  }
+  return qrCodes;
+};
+// QR End
 
 // Detail Trans Initialization
 const today = new Date();
@@ -204,11 +205,11 @@ function convertFilesToURL(filePath) {
 }
 
 module.exports = {
-  writeLog,
   upload,
   today,
   startDate,
   endDate,
+  createQr,
   generateYearlyCategory,
   generateMonthlyCategory,
   groupedPurchase,

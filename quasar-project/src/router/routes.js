@@ -1,6 +1,6 @@
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
-import SejarahLP from "../pages/SejarahLP.vue";
+import SejarahLP from "../pages/sejarahKeraton.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
@@ -45,12 +45,12 @@ const routes = [
     component: SejarahLP,
   },
   {
-    path: "/areakeraton",
+    path: "/wisata/keraton",
     name: "areakeraton",
     component: AreaKeraton,
   },
   {
-    path: "/museum",
+    path: "/wisata/museum",
     name: "museum",
     component: Museum,
   },
@@ -75,12 +75,12 @@ const routes = [
     component: BeranDa,
   },
   {
-    path: "/historytransaksi",
+    path: "/user/transaction",
     name: "historytransaksi",
     component: HistoryTransaksi,
   },
   {
-    path: "/eventgratis",
+    path: "/booking/events",
     name: "eventgratis",
     component: EventGratis,
   },
@@ -95,12 +95,12 @@ const routes = [
     component: FilterBayar,
   },
   {
-    path: "/agungdalem",
+    path: "/wisata/dalemagung",
     name: "agungdalem",
     component: AgungDalem,
   },
   {
-    path: "/sejarahsilsilah",
+    path: "/sejarah/silsilah",
     name: "sejarahsilsilah",
     component: sejarahSilsilah,
   },

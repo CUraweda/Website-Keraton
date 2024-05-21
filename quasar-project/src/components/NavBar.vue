@@ -1,7 +1,14 @@
 <template>
-  <div class="navbar" :class="{ white: isWhiteText, border: border, scrolled: isScrolled }">
+  <div
+    class="navbar"
+    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
+  >
     <div class="navbar-left">
-      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" />
+      <img
+        alt="icon-aplikasi"
+        src="../assets/images/logo_keraton.png"
+        class="app-icon"
+      />
       <span class="app-name">KERATON KASEPUHAN CIREBON</span>
     </div>
     <div class="navbar-right">
@@ -11,7 +18,9 @@
             <q-btn
               flat
               label="Beranda"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
               clickable
@@ -23,7 +32,9 @@
             <q-btn
               flat
               label="Sejarah"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
@@ -35,7 +46,7 @@
                       <q-item-label>Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/sejarahsilsilah">
+                  <q-item clickable v-ripple to="/sejarah/silsilah">
                     <q-item-section>
                       <q-item-label>Silsilah</q-item-label>
                     </q-item-section>
@@ -48,7 +59,9 @@
             <q-btn
               flat
               label="Booking"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
@@ -60,7 +73,7 @@
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/eventgratis">
+                  <q-item clickable v-ripple to="/booking/events">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
@@ -73,24 +86,26 @@
             <q-btn
               flat
               label="Objek Wisata"
-              :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
               no-caps
               dense
             >
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
-                  <q-item clickable v-ripple to="/areakeraton">
+                  <q-item clickable v-ripple to="/wisata/keraton">
                     <q-item-section>
                       <q-item-label>Keraton Kesepuhan</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/museum">
+                  <q-item clickable v-ripple to="/wisata/museum">
                     <q-item-section>
                       <q-item-label>Museum Pusaka</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/agungdalem">
+                  <q-item clickable v-ripple to="/wisata/dalemagung">
                     <q-item-section>
                       <q-item-label>Dalem Agung Pangkuwati</q-item-label>
                     </q-item-section>
@@ -117,6 +132,9 @@
                 <q-list>
                   <q-item clickable v-ripple @click="logout">
                     <q-item-section>Logout</q-item-section>
+                  </q-item>
+                  <q-item clickable v-ripple @click="keranjang">
+                    <q-item-section>Keranjang</q-item-section>
                   </q-item>
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
@@ -166,6 +184,18 @@ export default {
       localStorage.removeItem("token");
       this.isLogin = false; // Set isLogin ke false saat logout
       this.$router.push("/signin");
+    },
+    // async keranjang() {
+    //   try {
+    //     let url = ``;
+    //     const response = await this.$api.get(url);
+    //     const dataRest = response.data.data;
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
+    keranjang() {
+      console.log("ini keranjang");
     },
     getTickets() {
       this.$router.push("/signin");
