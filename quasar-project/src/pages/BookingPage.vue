@@ -17,7 +17,25 @@
         </div>
       </div>
     </div>
-    <a class="judul1">Tiket Masuk Keraton & Bundling</a>
+  </div>
+  <a class="judul1">Tiket Masuk Keraton & Bundling</a>
+  <div class="container">
+    <div class="ni" v-for="(item, index) in tiketItems" :key="index">
+      <img class="image" :src="item.image" alt="Gambar" />
+      <div class="buttonaji"></div>
+      <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
+      <h1 class="judul-besar">{{ item.titleBig }}</h1>
+      <div class="tengah">
+        <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}</h3>
+        <button class="tambah" @click="addToCart(item)">
+          Tambah <img class="photo" src="../assets/Frame.svg" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div v-for="(item, index) in paketItems" :key="index">
+    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
     <div class="container">
       <div class="ni" v-for="(item, index) in tiketItems" :key="index">
         <img class="image" :src="item.image" alt="Gambar" />
@@ -25,8 +43,8 @@
         <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
         <h1 class="judul-besar">{{ item.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">{{ item.price }}</h3>
-          <button class="tambah" @click="addToCart(item)">
+          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) + `/ ${data.unit}`}}</h3>
+          <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
@@ -271,14 +289,15 @@ export default {
                   titleBig: order.desc,
                   quantity: 0,
                   price: `${order.price}`,
+                  unit: order.units
                 });
               }
               break;
-            case 2:
-              const subTypeName = subType.name;
-              if (!pakets[subTypeName]) {
-                pakets[subTypeName] = [];
-              }
+              case 2:
+                const subTypeName = subType.name;
+                if (!pakets[subTypeName]) {
+                  pakets[subTypeName] = [];
+                }
               for (let order of subType.orders) {
                 pakets[subTypeName].push({
                   id: order.id,
@@ -287,6 +306,7 @@ export default {
                   titleBig: order.desc,
                   quantity: 0,
                   price: order.price,
+                  unit: order.units
                 });
               }
               break;
