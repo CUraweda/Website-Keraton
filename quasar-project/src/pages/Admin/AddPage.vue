@@ -7,112 +7,50 @@
 
     <div style="padding-inline: 300px; margin-top: 120px">
       <div class="col-grow">
-        <q-input
-          filled
-          v-model="sectionName"
-          label="Section Name"
-          color="black"
-          bg-color="gray"
-        />
+        <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" />
       </div>
-      <q-input
-        filled
-        v-model="sectionOrder"
-        type="number"
-        label="Order"
-        color="black"
-        bg-color="gray"
-      />
+      <q-input filled v-model="sectionOrder" type="number" label="Order" color="black" bg-color="gray" />
 
-      <q-btn
-        no-caps
-        @click="addNewInput('text')"
-        label="Tambahkan Text Input"
-      />
-      <q-btn
-        no-caps
-        @click="addNewInput('link')"
-        label="Tambahkan Link Input"
-      />
-      <q-btn
-        no-caps
-        @click="addNewInput('image')"
-        label="Tambahkan Image Input"
-      />
+      <q-btn no-caps @click="addNewInput('text')" label="Tambahkan Text Input" />
+      <q-btn no-caps @click="addNewInput('link')" label="Tambahkan Link Input" />
+      <q-btn no-caps @click="addNewInput('image')" label="Tambahkan Image Input" />
 
-      <div
-        v-for="(item, i) in textInputs"
-        :key="i"
-        class="flex full-width"
-        style="gap: 5px"
-      >
+      <div v-for="(item, i) in textInputs" :key="i" class="flex full-width" style="gap: 5px">
         <div class="col-grow">
-          <q-input
-            filled
-            v-model="item.data"
-            label="Text"
-            color="black"
-            bg-color="gray"
-          />
+          <q-input filled v-model="item.data" label="Text" color="black" bg-color="gray" />
         </div>
-        <q-input
-          filled
-          v-model="item.textSize"
-          label="Size"
-          color="black"
-          bg-color="gray"
-        />
+        <q-input filled v-model="item.textSize" label="Size" color="black" bg-color="gray" />
       </div>
 
-      <div
-        v-for="(link, i) in linkInputs"
-        :key="i"
-        class="flex full-width q-mt-md"
-        style="gap: 5px"
-      >
+      <div v-for="(link, i) in linkInputs" :key="i" class="flex full-width q-mt-md" style="gap: 5px">
         <div class="col-grow">
-          <q-input
-            filled
-            v-model="link.data"
-            label="Link"
-            color="black"
-            bg-color="gray"
-          />
+          <q-input filled v-model="link.data" label="Link" color="black" bg-color="gray" />
         </div>
       </div>
 
       <div v-for="(image, i) in imageInputs" :key="i">
         <q-file
-          filled
-          type="file"
-          v-model="image.data"
-          :name="'imageList'"
-          :label="image.data ? 'Ganti Image' : 'Tambah Image'"
-          color="black"
-          class="q-mt-md"
-          @update:model-value="(file) => handleUpload(file, i)"
-        />
-        <q-img :src="image.preview" v-if="image.preview" />
-        <q-img :src="image.data" v-else />
+        filled
+        type="file"
+        v-model="image.data"
+        :label="image.data ? 'Ganti Image' : 'Tambah Image'"
+        color="black"
+        class="q-mt-md"
+        @update:model-value="handleUpload(image.data)"
+      />
+      <q-img :src="image.data?.data || image.data" v-if="image.data" />
       </div>
 
-      <q-btn
-        no-caps
-        @click="sendUpdate"
-        style="background: #123b32"
-        text-color="white"
-        label="Save and Update"
-        class="full-width q-mt-md"
-      />
+      <q-btn no-caps @click="sendUpdate" style="background: #123b32" text-color="white" label="Save and Update"
+        class="full-width q-mt-md" />
     </div>
   </div>
 </template>
 
 <script>
+import { verifyToken } from "src/auth/auth";
 import socket from "src/socket";
 import { ref } from "vue";
-import {verifyTokenAdmin} from "../../auth/auth"
-
 
 export default {
   setup() {
@@ -128,13 +66,13 @@ export default {
   data() {
     return {
       contentId: this.$route.params.id,
-      isAdmin: false,
+      isAdmin: false
     };
   },
   async mounted() {
     this.fetchData();
+    this.isAdmin = (await verifyToken()).isAdmin
     socket.connect();
-    this.isAdmin = await verifyTokenAdmin.call(this);
   },
   beforeUnmount() {
     socket.disconnect();
@@ -142,115 +80,87 @@ export default {
   methods: {
     async fetchData() {
       try {
-        if (!this.contentId) return this.setUpDefault();
-        const response = await this.$api.get(`/content/${this.contentId}`);
-        if (response.status != 200) throw Error("Error occurred");
+        if (!this.contentId) return this.setUpDefault()
+        const response = await this.$api.get(`/content/${this.contentId}`)
+        if (response.status != 200) throw Error('Error occured')
+        this.sectionName = response.data.data.sectionName
+        this.sectionOrder = response.data.data.sectionOrder
 
-        const { sectionName, sectionOrder, context } = response.data.data;
-        this.sectionName = sectionName;
-        this.sectionOrder = sectionOrder;
-
-        const contextKeys = Object.keys(context);
-        let rawContext = { xs: [], xi: [], xl: [] };
-
-        for (let contextKey of contextKeys) {
-          rawContext[this.takeTwoChars(contextKey)].push({
-            ...context[contextKey],
-          });
-        }
-
-        this.textInputs = rawContext.xs;
-        this.imageInputs = rawContext.xi;
-        this.linkInputs = rawContext.xl;
+        const contextKeys = Object.keys(response.data.data.context)
+        let rawContext = { xs: [], xi: [], xl: [] }
+        console.log(response.data.data.context)
+        for (let context of contextKeys) rawContext[this.takeTwoChars(context)].push({
+          ...response.data.data.context[context]
+        })
+        console.log(rawContext)
+        this.textInputs = rawContext.xs
+        this.imageInputs = rawContext.xi
+        this.linkInputs = rawContext.xl
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     },
     async sendUpdate() {
       try {
-        let formData = new FormData();
-
-        formData.append("pageId", 1);
-        formData.append("sectionName", this.sectionName);
-        formData.append("sectionOrder", this.sectionOrder);
-
-        // Append text inputs
-        this.textInputs.forEach((text, index) => {
-          formData.append(`textList[${index}].data`, text.data);
-          formData.append(`textList[${index}].textSize`, text.textSize);
-        });
-
-        // Append image inputs
-        this.imageInputs.forEach((image, index) => {
-          if (image.data) {
-            formData.append(`imageList`, image.data); // Ensure this matches the backend
+        let textList = [], imageList = [], linkList = []
+        console.log(this.imageInputs)
+        for (let text of this.textInputs) textList.push(text)
+        for (let image of this.imageInputs) {
+          console.log(image)
+          imageList.push(image.data)
+        }
+        for (let link of this.linkInputs) linkList.push(link.data)
+        console.log(this.imageInputs)
+        console.log(this.linkInputs)
+        const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
+        const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
           }
-        });
-
-        // Append link inputs
-        this.linkInputs.forEach((link, index) => {
-          formData.append(`linkList[${index}].data`, link.data);
-        });
-
-        const linkIdentifier = this.contentId
-          ? `edit/${this.contentId}`
-          : "create/";
-        const response = await this.$api.post(
-          `/content/${linkIdentifier}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        if (response.status != 200) throw Error("Error occurred");
-
-        socket.emit("dashboard", {});
+        })
+        if (response.status != 200) throw Error('Error occured')
+        socket.emit('dashboard', {})
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     },
     setUpDefault() {
-      this.sectionName = "";
-      this.sectionOrder = 0;
-      this.addNewInput("text");
-      this.addNewInput("image");
-      this.addNewInput("link");
+      this.sectionName = ""
+      this.sectionOrder = 0
+      this.addNewInput('text')
+      this.addNewInput('image')
+      this.addNewInput('link')
     },
     addNewInput(type) {
       switch (type) {
         case "text":
           this.textInputs.push({
             data: "",
-            textSize: "",
-          });
+            textSize: ""
+          })
           break;
         case "image":
           this.imageInputs.push({
-            data: null,
-            preview: null,
-          });
+            data: ""
+          })
           break;
         case "link":
           this.linkInputs.push({
-            data: "",
-          });
+            data: ""
+          })
           break;
         default:
           break;
       }
     },
-    handleUpload(file, index) {
-      if (file) {
-        this.imageInputs[index].data = file;
-        this.imageInputs[index].preview = URL.createObjectURL(file);
+    handleUpload(image) {
+      if (image) {
+        image.data = URL.createObjectURL(image)
       }
     },
     takeTwoChars(str) {
       return str.slice(0, 2);
     },
-  },
+  }
 };
 </script>

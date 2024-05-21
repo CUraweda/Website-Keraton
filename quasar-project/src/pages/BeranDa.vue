@@ -257,7 +257,7 @@
           v-for="(faq, index) in faqs"
           :key="index"
         >
-          <button class="accordion" @click="toggleAccordion(index)">
+          <button class="accordion" @click="toggleAccordion(faq)">
             <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
             <svg
               width="32"
@@ -434,11 +434,27 @@ export default {
 
         this.sectionName6 = dataRest.contents[6].sectionName;
         this.sectionData6 = dataRest.contents[6].context;
+        const contextValue = Object.values(dataRest.contents[6].context);
+        contextValue.shift();
+        this.faqs = contextValue.map((context, i) => ({
+          nomor: String(i + 1).padStart(2, "0"),
+          pertanyaan: context.data,
+          jawaban: context.sub,
+          active: false,
+        }));
 
         this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
       }
+    },
+    toggleAccordion(index) {
+      this.faqs.forEach((faq, idx) => {
+        if (idx !== index) {
+          faq.active = false;
+        }
+      });
+      this.faqs[index].active = !this.faqs[index].active;
     },
     startSlider() {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
@@ -617,15 +633,19 @@ export default {
   0% {
     transform: translateX(0%);
   }
+
   25% {
     transform: translateX(0%);
   }
+
   50% {
     transform: translateX(33.3333%);
   }
+
   75% {
     transform: translateX(33.3333%);
   }
+
   100% {
     transform: translateX(66.6667%);
   }
@@ -965,6 +985,7 @@ export default {
   justify-content: center;
   height: 427px;
 }
+
 .card4 {
   position: relative;
   height: 427px;
@@ -972,6 +993,7 @@ export default {
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card5 {
   background-size: cover;
   position: relative;
@@ -983,6 +1005,7 @@ export default {
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card6 {
   background-size: cover;
   position: relative;
@@ -994,17 +1017,20 @@ export default {
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card4:hover,
 .card5:hover,
 .card6:hover {
   flex: 200px;
 }
+
 .card4.active,
 .card5.active,
 .card6.active {
   flex: 200px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 .title4 {
   position: absolute;
   bottom: 8%;
@@ -1041,41 +1067,43 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.3
-  ); /* Adjust the opacity (0.3) to your preference */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Adjust the opacity (0.3) to your preference */
   z-index: 1;
   border-radius: 20px;
 }
 
 .title5 {
   position: absolute;
-  bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-  left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+  bottom: 10px;
+  /* Geser ke bawah sejauh 10px dari tepi kartu */
+  left: 26px;
+  /* Geser ke kiri sejauh 10px dari tepi kartu */
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 40px;
   color: #ffffff;
-  text-align: left; /* Teks diatur menjadi rata kiri */
+  text-align: left;
+  /* Teks diatur menjadi rata kiri */
   z-index: 2;
 }
 
 .title6 {
   position: absolute;
-  bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-  left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+  bottom: 10px;
+  /* Geser ke bawah sejauh 10px dari tepi kartu */
+  left: 26px;
+  /* Geser ke kiri sejauh 10px dari tepi kartu */
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 40px;
   color: #ffffff;
-  text-align: left; /* Teks diatur menjadi rata kiri */
+  text-align: left;
+  /* Teks diatur menjadi rata kiri */
 }
 
 .sec5Text {
@@ -1676,6 +1704,7 @@ input::placeholder {
     line-height: 48px;
     color: #ffffff;
   }
+
   /* 
 .card4 img {
   position: absolute;
@@ -1795,6 +1824,7 @@ input::placeholder {
     justify-content: center;
     height: 427px;
   }
+
   .card4 {
     background-image: url("../assets/images/card4.png");
     background-size: cover;
@@ -1808,6 +1838,7 @@ input::placeholder {
     transition: 0.3s all ease;
     /* filter: brightness(70%); */
   }
+
   .card5 {
     background-image: url("../assets/images/card5.png");
     background-size: cover;
@@ -1820,6 +1851,7 @@ input::placeholder {
     flex: 1;
     transition: 0.3s all ease;
   }
+
   .card6 {
     background-image: url("../assets/images/card6.png");
     background-size: cover;
@@ -1832,6 +1864,7 @@ input::placeholder {
     flex: 1;
     transition: 0.3s all ease;
   }
+
   .card4:hover,
   .card5:hover,
   .card6:hover {
@@ -1870,28 +1903,34 @@ input::placeholder {
 
   .title5 {
     position: absolute;
-    bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-    left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+    bottom: 10px;
+    /* Geser ke bawah sejauh 10px dari tepi kartu */
+    left: 26px;
+    /* Geser ke kiri sejauh 10px dari tepi kartu */
     font-family: "Raleway";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     color: #ffffff;
-    text-align: left; /* Teks diatur menjadi rata kiri */
+    text-align: left;
+    /* Teks diatur menjadi rata kiri */
   }
 
   .title6 {
     position: absolute;
-    bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-    left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+    bottom: 10px;
+    /* Geser ke bawah sejauh 10px dari tepi kartu */
+    left: 26px;
+    /* Geser ke kiri sejauh 10px dari tepi kartu */
     font-family: "Raleway";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     color: #ffffff;
-    text-align: left; /* Teks diatur menjadi rata kiri */
+    text-align: left;
+    /* Teks diatur menjadi rata kiri */
   }
 
   .sec5Text {
@@ -1917,6 +1956,7 @@ input::placeholder {
     left: 43%;
     margin-top: 380px;
   }
+
   .btnViewMore:hover {
     filter: brightness(70%);
   }

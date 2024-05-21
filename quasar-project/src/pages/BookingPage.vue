@@ -131,7 +131,6 @@ import Carts from "../stores/carts";
 
 <script>
 import { ref } from "vue";
-import { verifyTokenBool } from "src/auth/auth";
 
 export default {
   props: {

@@ -29,8 +29,9 @@ const logIn = async (body) => {
     if (!match) throw new Error("Password tidak sesuai");
 
     const token = jwt.sign(user, process.env.SECRET_KEY_AUTH);
+    await prisma.token.create({ data: { token, userId: user.id}  })
 
-    return token;
+    return { token, user };
   } catch (err) {
     throwError(err);
   }

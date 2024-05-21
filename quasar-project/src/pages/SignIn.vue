@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container" v-cloak v-if="!isLogin">
+  <div id="app" class="container" v-cloak>
     <div class="image">
       <div class="decor">
         <div class="logo">
@@ -22,11 +22,7 @@
         </div>
         <h3 class="text">Password</h3>
         <div :class="{ box: true, 'error-border': passwordError }">
-          <input
-            type="password"
-            v-model="password"
-            placeholder="6+ Characters"
-          />
+          <input type="password" v-model="password" placeholder="6+ Characters" />
           <h3 class="error-message" v-show="passwordError">
             {{ passwordErrorMessage }}
           </h3>
@@ -46,91 +42,40 @@
 </template>
 
 <script>
-import { BASE_URL } from "src/auth/config";
+import cookieHandler from 'src/cookieHandler';
+import env from '../stores/environment'
 export default {
   data() {
     return {
       isLogin: false,
+      email: '', 
+      password: '', 
+      emailError: '', 
+      passwordError: '', 
+      passwordErrorMessage: '', 
+      emailErrorMessage: ''
     };
   },
-  mounted() {
-    this.verifyToken();
-  },
   methods: {
-    async verifyToken() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        this.isLogin = false;
-        return;
-      }
-
+    async submitForm() {
+      const payload = {
+        email: this.email,
+        password: this.password
+      };
+    
       try {
-        const response = await fetch(
-          BASE_URL() + "/keraton/auth/auth",
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        const data = await response.json();
-        this.isLogin = true;
-        this.$router.push("/");
+        const response = await this.$api.post('/auth/login', payload)
+        if (response.status != 200) throw Error(response.data.message)
+        const { token, user } = response.data.data
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token)
+        localStorage.setItem("user", user)
+        this.$router.go(-1)
       } catch (error) {
-        console.error("Failed to verify token:", error);
-        localStorage.removeItem("token");
-        this.isLogin = false;
+        console.error("Error:", error);
       }
-    },
-  },
-  components: {},
-};
-</script>
 
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-
-const email = ref("");
-const password = ref("");
-const emailError = ref(false);
-const passwordError = ref(false);
-const emailErrorMessage = ref("Please type your email");
-const passwordErrorMessage = ref("Please type your password");
-
-const submitForm = async () => {
-  emailError.value = !email.value.trim();
-  passwordError.value = !password.value.trim();
-
-  if (!email.value.trim() || !password.value.trim()) {
-    return;
-  }
-
-  const payload = {
-    email: email.value,
-    password: password.value,
-  };
-
-  try {
-    const response = await fetch(BASE_URL() + "/keraton/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
     }
-
-    const data = await response.json();
-    localStorage.setItem("token", data.data.token);
-    router.push("/");
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  },
 };
 </script>
 
@@ -146,6 +91,7 @@ const submitForm = async () => {
   .handphone {
     display: none;
   }
+
   .highlight {
     text-decoration: none;
   }
@@ -157,6 +103,7 @@ const submitForm = async () => {
   b {
     font-weight: 1000;
   }
+
   .error {
     color: #ff5656;
     font-size: 12px;
@@ -231,6 +178,7 @@ const submitForm = async () => {
     padding-left: 10px;
     box-sizing: border-box;
   }
+
   .box input::placeholder {
     font-size: 14px;
     font-weight: 400;
@@ -282,6 +230,7 @@ const submitForm = async () => {
     position: relative;
     height: fit-content;
   }
+
   .crop {
     width: 514px;
     height: 836px;
@@ -338,6 +287,7 @@ const submitForm = async () => {
   .handphone {
     display: block;
   }
+
   .highlight {
     text-decoration: none;
   }
@@ -349,6 +299,7 @@ const submitForm = async () => {
   b {
     font-weight: 1000;
   }
+
   .error {
     color: #ff5656;
     font-size: 12px;
@@ -416,7 +367,8 @@ const submitForm = async () => {
     justify-content: center;
     text-align: center;
     align-items: center;
-    margin: auto; /* Center horizontally */
+    margin: auto;
+    /* Center horizontally */
     margin-bottom: 38px;
   }
 
@@ -431,6 +383,7 @@ const submitForm = async () => {
     padding-left: 10px;
     box-sizing: border-box;
   }
+
   .box input::placeholder {
     font-size: 14px;
     font-weight: 400;
@@ -480,23 +433,28 @@ const submitForm = async () => {
   }
 
   .image {
-    display: none; /* This will hide the image on screens below 600px */
+    display: none;
+    /* This will hide the image on screens below 600px */
   }
 
   .image h1 {
-    display: none; /* This will hide the image on screens below 600px */
+    display: none;
+    /* This will hide the image on screens below 600px */
   }
 
   .decor {
-    display: none; /* This will hide the image on screens below 600px */
+    display: none;
+    /* This will hide the image on screens below 600px */
   }
 
   .logo {
-    display: none; /* This will hide the image on screens below 600px */
+    display: none;
+    /* This will hide the image on screens below 600px */
   }
 
   .logo h5 {
-    display: none; /* This will hide the image on screens below 600px */
+    display: none;
+    /* This will hide the image on screens below 600px */
   }
 }
 </style>

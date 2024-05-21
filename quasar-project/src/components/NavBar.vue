@@ -1,43 +1,19 @@
 <template>
-  <div
-    class="navbar"
-    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
-  >
+  <div class="navbar" :class="{ white: isWhiteText, border: border, scrolled: isScrolled }">
     <div class="navbar-left">
-      <img
-        alt="icon-aplikasi"
-        src="../assets/images/logo_keraton.png"
-        class="app-icon"
-      />
+      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" />
       <span class="app-name">KERATON KASEPUHAN CIREBON</span>
     </div>
     <div class="navbar-right">
       <nav>
         <ul>
           <li class="sub">
-            <q-btn
-              flat
-              label="Beranda"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-              clickable
-              v-ripple
-              to="/"
-            ></q-btn>
+            <q-btn flat label="Beranda" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+    " no-caps dense clickable v-ripple to="/"></q-btn>
           </li>
           <li class="sub">
-            <q-btn
-              flat
-              label="Sejarah"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
+            <q-btn flat label="Sejarah" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+    " no-caps dense>
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
@@ -55,25 +31,18 @@
               </q-menu>
             </q-btn>
           </li>
-          <li class="sub">
-            <q-btn
-              flat
-              label="Booking"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
+          <li class="sub" v-if="isLogin">
+            <q-btn flat label="Booking" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+    " no-caps dense>
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
-                  <q-item clickable v-ripple @click="toBooking('/booking')">
+                  <q-item clickable v-ripple to="/booking">
                     <q-item-section>
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple @click="toBooking('/booking/events')">
+                  <q-item clickable v-ripple to="/booking/events">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
@@ -83,15 +52,8 @@
             </q-btn>
           </li>
           <li class="sub">
-            <q-btn
-              flat
-              label="Objek Wisata"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
+            <q-btn flat label="Objek Wisata" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+    " no-caps dense>
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
@@ -115,13 +77,8 @@
             </q-btn>
           </li>
           <li>
-            <q-btn
-              style="background: #123b32; color: white; padding-inline: 30px"
-              no-caps
-              dense
-              v-if="!isLogin"
-              @click="getTickets"
-            >
+            <q-btn style="background: #123b32; color: white; padding-inline: 30px" no-caps dense v-if="!isLogin"
+              @click="getTickets">
               <span class="text-bold">Dapatkan Tiket</span>
             </q-btn>
             <q-btn v-else round flat dense @click="toggleMenu">
@@ -139,12 +96,7 @@
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
                   </q-item>
-                  <q-item
-                    v-if="isAdmin"
-                    clickable
-                    v-ripple
-                    @click="adminPage"
-                  >
+                  <q-item v-if="isAdmin" clickable v-ripple @click="adminPage">
                     <q-item-section>Admin Page</q-item-section>
                   </q-item>
                 </q-list>
@@ -158,7 +110,7 @@
 </template>
 
 <script>
-import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
+import { verifyToken } from "src/auth/auth";
 export default {
   data() {
     return {
@@ -183,8 +135,9 @@ export default {
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
-    this.isLogin = await verifyTokenBool(); // Menggunakan fungsi langsung
-    this.isAdmin = await verifyTokenAdmin();
+    const tokenVerified = await verifyToken()
+    this.isLogin = tokenVerified.isLogin
+    this.isAdmin = tokenVerified.isAdmin
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -193,7 +146,7 @@ export default {
     logout() {
       localStorage.removeItem("token");
       this.isLogin = false; // Set isLogin ke false saat logout
-      this.$router.push("/signin");
+      // this.$router.push("/signin");
     },
     // async keranjang() {
     //   try {
@@ -205,15 +158,10 @@ export default {
     //   }
     // },
     async toBooking(url) {
-      if(await verifyTokenBool()) {
         this.$router.push(url);
-      }
-      else {
-        alert("Anda Harus Login Terlebih Dahulu");
-      }
     },
     keranjang() {
-      console.log("ini keranjang");
+      this.$router.push("/user/carts");
     },
     getTickets() {
       this.$router.push("/signin");
@@ -222,7 +170,7 @@ export default {
       this.isScrolled = window.pageYOffset > 50;
     },
     goToPurchases() {
-      this.$router.push("/purchases");
+      this.$router.push("/user/transaction");
     },
     adminPage() {
       this.$router.push("/admin/home");
@@ -299,6 +247,7 @@ nav ul.dropdown-list li {
     opacity: 0;
     transform: translateX(-50%) translateY(50px);
   }
+
   100% {
     opacity: 1;
     transform: translateX(-50%) translateY(20px);
@@ -308,9 +257,11 @@ nav ul.dropdown-list li {
 .navbar {
   display: flex;
   position: fixed;
-  top: 0; /* Menempatkan navbar di bagian atas layar */
+  top: 0;
+  /* Menempatkan navbar di bagian atas layar */
   left: 0;
-  width: 100%; /* Menggunakan lebar penuh */
+  width: 100%;
+  /* Menggunakan lebar penuh */
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -375,7 +326,8 @@ nav ul li:last-child {
 
 nav ul li a,
 nav ul li button {
-  color: black; /* Default text color: black */
+  color: black;
+  /* Default text color: black */
   text-decoration: none;
   cursor: pointer;
 }
