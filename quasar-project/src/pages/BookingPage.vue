@@ -386,9 +386,9 @@ export default {
           image: rowData.image,
           quantity: 1,
           price: rowData.price,
+          type: "TKT"
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
-        console.log(cartData);
         if (!cartData) throw Error("Error Occured");
         return this.cart.updateItem();
       } catch (err) {

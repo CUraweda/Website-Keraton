@@ -1,3 +1,4 @@
+import { event } from 'quasar'
 import env from './environment'
 // import { decrypt, encrypt } from './encryption'
 
@@ -18,11 +19,11 @@ export default class Carts {
         return this
     }
 
-    addManyItem(listOfData = [{ id, name, image, price, quantity }]) {
+    addManyItem(listOfData = [{ id, name, image, price, quantity, event }]) {
         for (let data of listOfData) {
             const alreadyExist = this.userCart[data.id]
             if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity
-            this.userCart[data.id] = { ...data }
+            this.userCart[`${data.event}|${data.id}`] = { ...data }
         }
         return this
     }
