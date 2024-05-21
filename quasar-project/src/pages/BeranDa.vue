@@ -356,11 +356,12 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.socket();
-    this.startSlider();
+    // this.startSlider();
   },
   beforeUnmount() {
+    console.log('Naha nge unmount wae')
     socket.disconnect();
-    clearInterval(this.sliderInterval);
+    // clearInterval(this.sliderInterval);
   },
   methods: {
     socket() {

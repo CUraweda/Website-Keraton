@@ -140,117 +140,89 @@ export default {
     socket.disconnect();
   },
   methods: {
-    async fetchData() {
-      try {
-        if (!this.contentId) return this.setUpDefault();
-        const response = await this.$api.get(`/content/${this.contentId}`);
-        if (response.status != 200) throw Error("Error occurred");
+    async fetchData(){
+      try{
+        if(!this.contentId) return this.setUpDefault()
+        const response = await this.$api.get(`/content/${this.contentId}`)
+        if(response.status != 200) throw Error('Error occured')
+        this.sectionName = response.data.data.sectionName
+        this.sectionOrder = response.data.data.sectionOrder
 
-        const { sectionName, sectionOrder, context } = response.data.data;
-        this.sectionName = sectionName;
-        this.sectionOrder = sectionOrder;
-
-        const contextKeys = Object.keys(context);
-        let rawContext = { xs: [], xi: [], xl: [] };
-
-        for (let contextKey of contextKeys) {
-          rawContext[this.takeTwoChars(contextKey)].push({
-            ...context[contextKey],
-          });
+        const contextKeys = Object.keys(response.data.data.context)
+        let rawContext = { xs: [], xi: [], xl: [] }
+        console.log(response.data.data.context)
+        for(let context of contextKeys) rawContext[this.takeTwoChars(context)].push({
+          ...response.data.data.context[context]
+        })
+        console.log(rawContext)
+        this.textInputs = rawContext.xs
+        this.imageInputs = rawContext.xi
+        this.linkInputs = rawContext.xl
+      }catch(err){
+        console.log(err)
+      }
+    },
+    async sendUpdate(){
+      try{
+        let textList = [], imageList = [], linkList = []
+        console.log(this.imageInputs)
+        for(let text of this.textInputs) textList.push(text)
+        for(let image of this.imageInputs){
+      console.log(image)
+      imageList.push(image.data)
         }
-
-        this.textInputs = rawContext.xs;
-        this.imageInputs = rawContext.xi;
-        this.linkInputs = rawContext.xl;
-      } catch (err) {
-        console.log(err);
+        for(let link of this.linkInputs) linkList.push(link.data)
+        console.log(this.imageInputs)
+        console.log(this.linkInputs)
+        const linkIdentifier = this.contentId ?  `edit/${this.contentId}` : 'create/'
+        const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
+        headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+        })
+        if(response.status != 200) throw Error('Error occured')
+        socket.emit('dashboard', { })
+      }catch(err){
+        console.log(err)
       }
     },
-    async sendUpdate() {
-      try {
-        let formData = new FormData();
-
-        formData.append("pageId", 1);
-        formData.append("sectionName", this.sectionName);
-        formData.append("sectionOrder", this.sectionOrder);
-
-        // Append text inputs
-        this.textInputs.forEach((text, index) => {
-          formData.append(`textList[${index}].data`, text.data);
-          formData.append(`textList[${index}].textSize`, text.textSize);
-        });
-
-        // Append image inputs
-        this.imageInputs.forEach((image, index) => {
-          if (image.data) {
-            formData.append(`imageList`, image.data); // Ensure this matches the backend
-          }
-        });
-
-        // Append link inputs
-        this.linkInputs.forEach((link, index) => {
-          formData.append(`linkList[${index}].data`, link.data);
-        });
-
-        const linkIdentifier = this.contentId
-          ? `edit/${this.contentId}`
-          : "create/";
-        const response = await this.$api.post(
-          `/content/${linkIdentifier}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        if (response.status != 200) throw Error("Error occurred");
-
-        socket.emit("dashboard", {});
-      } catch (err) {
-        console.log(err);
-      }
+    setUpDefault(){
+      this.sectionName = ""
+      this.sectionOrder = 0
+      this.addNewInput('text')
+      this.addNewInput('image')
+      this.addNewInput('link')
     },
-    setUpDefault() {
-      this.sectionName = "";
-      this.sectionOrder = 0;
-      this.addNewInput("text");
-      this.addNewInput("image");
-      this.addNewInput("link");
-    },
-    addNewInput(type) {
-      switch (type) {
+    addNewInput(type){
+      switch(type){
         case "text":
           this.textInputs.push({
             data: "",
-            textSize: "",
-          });
+            textSize: ""
+          }) 
           break;
         case "image":
           this.imageInputs.push({
-            data: null,
-            preview: null,
-          });
+            data: ""
+          })
           break;
         case "link":
           this.linkInputs.push({
-            data: "",
-          });
+            data: ""
+          })
           break;
         default:
           break;
       }
     },
-    handleUpload(file, index) {
-      if (file) {
-        this.imageInputs[index].data = file;
-        this.imageInputs[index].preview = URL.createObjectURL(file);
+    handleUpload(image) {
+      if (image){
+       image.data = URL.createObjectURL(image)
       }
     },
     takeTwoChars(str) {
       return str.slice(0, 2);
     },
-  },
+  }
 };
 </script>

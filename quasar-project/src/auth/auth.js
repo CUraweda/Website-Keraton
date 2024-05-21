@@ -21,6 +21,7 @@ export async function verifyTokenBool() {
   } catch (error) {
     console.error("Failed to verify token:", error);
     localStorage.removeItem("token");
+    this.$router.push("/")
     return false;
   }
 }
@@ -42,6 +43,7 @@ export async function verifyTokenAdmin() {
       return false;
     }
     const data = await response.json();
+    console.log(data)
     if (data.data.role === "SUPER_ADMIN") return true;
     else {
       // this.$router.push("/");
