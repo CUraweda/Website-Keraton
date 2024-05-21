@@ -120,6 +120,7 @@ text-align: left;
 .svg-select {
   margin: auto;
 }
+
 .select {
   background-color: #ffffff;
   /* padding-left: 20px;
@@ -143,6 +144,17 @@ text-align: left;
   } */
 }
 
+@media (max-width: 640px) {
+  .select {
+    width: 100%;
+  }
+  .danger {
+    margin-inline: 10px;
+  }
+  .svg-select {
+    margin: 0%;
+  }
+}
 .danger {
   margin-inline: 15px;
 }

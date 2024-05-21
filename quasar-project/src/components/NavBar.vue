@@ -254,6 +254,11 @@ nav ul.dropdown-list li {
   }
 }
 
+@media (max-width: 640px) {
+  .navbar-left {
+    display: none;
+  }
+}
 .navbar {
   display: flex;
   position: fixed;

@@ -12,7 +12,6 @@
     'justify-content': 'center',
   }">
     <div class="texthero">
-
       <h5 style="color: #fae084">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
@@ -20,6 +19,9 @@
       <a :href="sectionData?.xl1?.data" v-mod class="btn1">
         <img class="btn1" src="../assets/images/btn1.png" />
       </a>
+      <button id="scrollToTopBtn" @click="scrollToTop" title="Go to top">
+        <img style="width: 60px" src="../assets/images/btn1.png" />
+      </button>
     </div>
   </section>
 
@@ -156,11 +158,16 @@
 
   <section class="slider" id="slider">
     <h1 class="berita">Berita Terkini</h1>
-    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }">
+    <div
+      class="slides"
+      :style="{
+        transform: `translateX(${(currentSlideIndex * -300) / slides.length}%)`,
+      }"
+    >
       <div v-for="(slide, index) in slides" :key="index" class="slide">
         <div class="news-section" :to="slide.link">
           <div class="news-image">
-            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`">
+            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
           <div class="news-content">
             <h2 class="news-title">{{ slide.title }}</h2>
@@ -254,31 +261,36 @@ export default {
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
@@ -286,23 +298,28 @@ export default {
       currentBackground: null,
       slides: [
         {
-          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
-          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
-          link: 'https://blue.kumparan.com',
-          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+          imageUrl:
+            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
+          title:
+            "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
+          link: "https://blue.kumparan.com",
+          summary:
+            "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
       currentSlideIndex: 0,
-      sliderInterval: null
+      sliderInterval: null,
     };
   },
   mounted() {
     this.fetchData();
     this.fetchNews();
     this.socket();
-    this.startSlider();
+    // this.startSlider();
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
+    console.log("Naha nge unmount wae");
     socket.disconnect();
     clearInterval(this.sliderInterval);
   },
@@ -315,14 +332,14 @@ export default {
     },
     async fetchNews() {
       try {
-        const response = await this.$api.get('news')
-        console.log(response.data.data)
-        this.slides = response.data.data.map(news => ({
+        const response = await this.$api.get("news");
+        console.log(response.data.data);
+        this.slides = response.data.data.map((news) => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          summary: news.desc
-        }))
+          summary: news.desc,
+        }));
 
         console.log(this.slides)
 
@@ -371,7 +388,6 @@ export default {
         }));
 
         this.currentBackground = this.sectionimg4;
-
       } catch (err) {
         console.log(err);
       }
@@ -388,14 +404,23 @@ export default {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
     nextSlide() {
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
-    }
-  }
+      this.currentSlideIndex =
+        (this.currentSlideIndex + 1) % this.slides.length;
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    handleScroll() {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    },
+  },
 };
 </script>
-
-
-
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
@@ -422,10 +447,34 @@ export default {
 /* #section1 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("../assets/images/bg1.png");
-  background-size: cover;
+background-size: cover;
   margin-top: -110px;
   z-index: -999;
 } */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+  padding: 0;
+}
+
+#scrollToTopBtn img {
+  width: 40px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#scrollToTopBtn:hover img {
+  background-color: #555;
+  border-radius: 50%;
+}
 
 #section2 .container {
   background-image: linear-gradient(transparent, #fff9a0, #ffe96e);
@@ -449,7 +498,7 @@ export default {
   height: 130vh;
   /* height: 1000px; */
   background-size: cover;
-  background-position: center
+  background-position: center;
 }
 
 #section5 .container::before {
@@ -491,7 +540,8 @@ export default {
   position: relative;
   margin: auto;
   overflow: hidden;
-  background-image: url("../assets/images/batik.png"), linear-gradient(0deg, #fff9a021, #ffe96e);
+  background-image: url("../assets/images/batik.png"),
+    linear-gradient(0deg, #fff9a021, #ffe96e);
   background-size: cover;
   background-position: center;
 }
@@ -501,7 +551,7 @@ export default {
   margin-bottom: 20px;
   margin-bottom: 75px;
   font-weight: 300;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 40px;
 }
 
@@ -578,7 +628,6 @@ export default {
   100% {
     transform: translateX(66.6667%);
   }
-
 }
 
 .newsbtn {
@@ -897,11 +946,11 @@ export default {
   border-radius: 10px;
   flex: 1;
 }
-.card4 img 
-.card5 img 
+.card4 img
+.card5 img
 .card6 img{
   flex: 2;
-  background-color: rgb(207,207,207); 
+  background-color: rgb(207,207,207);
 } */
 .container-card {
   position: absolute;
@@ -951,7 +1000,6 @@ export default {
 .card6:hover {
   flex: 200px;
 }
-
 .card4.active,
 .card5.active,
 .card6.active {

@@ -47,11 +47,9 @@ const kurang = () => {
 
     <div class="block1">
       <div class="title">
-        <div>
-          <h4>Pesan Tiket Langsung</h4>
-        </div>
+        <div class="header">Pesan Tiket Langsung</div>
         <div class="txt">
-          <img src="../assets/svg/Frame.svg" class="image-koin" />
+          <img src="../assets/svg/Frame.svg" />
           <div>
             <h6 class="pstikan">
               pastikan pesanan anda BENAR sebelum checkout ya!
@@ -177,7 +175,7 @@ const kurang = () => {
                 <div class="txt-checkout">
                   <p class="text-center">Checkout</p>
                 </div>
-                <p style="margin-top: auto; margin-bottom: auto">
+                <p style="margin: auto 0">
                   <img src="../assets/svg/arrow-btn-checkout.svg" alt="" />
                 </p>
               </div>
@@ -194,7 +192,7 @@ const kurang = () => {
 
 .block1 {
   width: 100%;
-  padding: 200px 80px;
+  padding: 120px 90px 0px;
 }
 .custom-radio-btn {
   width: 20px;
@@ -232,12 +230,11 @@ const kurang = () => {
 .pstikan {
   font-family: "Raleway";
   color: black;
-  width: 500px;
   height: 28px;
   top: 203px;
   left: 144px;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 28px;
 }
 
@@ -319,12 +316,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .input-tiket2 {
-  margin-left: 3%;
   color: #000000;
   font-family: "Manrope";
   font-weight: 600;
   font-size: 16px;
   line-height: 21.86px;
+  margin: auto;
 }
 
 .hrg {
@@ -374,8 +371,6 @@ fieldset {
 }
 
 .date-tgl {
-  margin-left: 16px;
-  margin-top: 5px;
   border: none;
   font-family: "Roboto";
   background: transparent;
@@ -420,7 +415,7 @@ fieldset {
 }
 
 .umum {
-  margin-left: 20px;
+  margin-left: 27px;
   width: 122px;
   height: 48px;
   top: 133px;
@@ -485,7 +480,10 @@ label {
 .det-profil {
   display: flex;
   align-items: center;
-  width: 1000px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nm-user {
@@ -550,10 +548,8 @@ body {
 }
 
 .image-koin {
-  top: 199px;
-  left: 108px;
-  margin-left: 20px;
   display: flex;
+  margin: auto;
 }
 
 .img-user {
@@ -570,13 +566,12 @@ body {
 
 .content-1 {
   padding-top: 50px;
-  width: 350px;
   /* height: 62px; */
 }
 
 .content-2 {
   margin-top: 37px;
-  width: 476px;
+  /* width: 476px; */
   /* height: 82px; */
 }
 
@@ -591,7 +586,7 @@ body {
 
 /* ...................................................................................... */
 .text {
-  width: 305px;
+  /* width: 305px; */
   height: 40px;
   background-color: yellow;
   top: 14.6%;
@@ -608,17 +603,19 @@ body {
   margin-right: 88px;
   width: 542px;
   height: 348px;
-  top: 405px;
-  left: 850px;
+  top: 255px;
+  left: 950px;
   border-radius: 15px;
   /* padding: 20px, 23px,20px, 23px; */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 20px;
   background-color: #ffffff;
 }
+.header {
+  font-size: x-large;
+}
 
-/* Responsif untuk layar dengan lebar maksimum 640px */
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   #ringkasanBooking {
     position: relative;
     margin: 20px auto;
@@ -632,12 +629,25 @@ body {
     padding: 20px;
     background-color: #ffffff;
   }
+}
+/* Responsif untuk layar dengan lebar maksimum 640px */
+@media (max-width: 640px) {
+  .header {
+    font-size: large;
+  }
+  .pstikan {
+    font-size: small;
+  }
+
   .block1 {
     width: 100%;
     padding: 200px 20px;
   }
   .content-5 {
     width: 100%;
+  }
+  .btn-pilih {
+    display: block;
   }
 }
 
