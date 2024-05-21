@@ -65,11 +65,24 @@
       </div>
       
       </template>
-     <script>
-    
-    </script>
-    
-    
+   <script>
+   export default {
+     methods: {
+      async subscribeToKeraton(){
+         try{
+            const response = await this.$api.post('subscribe', {
+               email: this['EMAIL REF HERE']
+            })
+            if(response.status != 200) throw Error(response.data.message)
+            return 
+         }catch(err){
+            console.log(err)
+         }
+      }
+     }
+   };
+   </script>
+
     <style scoped>
     
       .foto1 {

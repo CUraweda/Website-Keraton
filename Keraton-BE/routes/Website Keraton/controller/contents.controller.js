@@ -52,6 +52,7 @@ router.get('/:id?', async (req, res) => {
 router.post('/:ident/:id?', upload.array('imageList[]'), async (req, res) => {
     let sendedData
     try {
+<<<<<<< HEAD
         // Initialize the context object
         let context = {
             textList: [],
@@ -136,6 +137,15 @@ router.post('/:ident/:id?', upload.array('imageList[]'), async (req, res) => {
             sendedData = await contentModel.createUpdate('create', null, payload);
         }
         return success(res, 'Action success', sendedData);
+=======
+        if (req.files) req.body.imageList = req.files
+        if(req.body.pageId) req.body.pageId = +req.body.pageId
+        if(req.body.sectionOrder) req.body.sectionOrder = +req.body.sectionOrder
+        if (req.params.ident != "create") {
+            sendedData = await contentModel.createUpdate('update', +req.params.id, req.body)
+        } else sendedData = await contentModel.createUpdate('create', null, req.body)
+        return success(res, 'Action success', sendedData)
+>>>>>>> 784dfa1b061c2ade1d08dcab9665d2c172bfa146
     } catch (err) {
         return error(res, err.message)
     }

@@ -270,7 +270,7 @@ export default {
                   titleMedium: order.name,
                   titleBig: order.desc,
                   quantity: 0,
-                  price: `${order.price}/${order.unit || ""}`,
+                  price: `${order.price}`,
                 });
               }
               break;
@@ -515,7 +515,6 @@ nav ul li button:hover {
 .container {
   display: flex;
   margin-left: 131px;
-  width: 1104px; /* Contoh ukuran lebar */
   height: 340px; /* Contoh ukuran tinggi */
   overflow-x: scroll;
   margin-bottom: 72px;
