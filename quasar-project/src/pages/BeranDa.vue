@@ -1,16 +1,19 @@
 <template>
   <navbar isWhiteText />
-  <section id="hero" :style="{
-    'min-height': '100vh',
-    'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-    'background-position': 'center',
-    'display': 'flex',
-    'flex-direction': 'column',
-    'align-items': 'center',
-    'justify-content': 'center',
-  }">
+  <section
+    id="hero"
+    :style="{
+      'min-height': '100vh',
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'background-position': 'center',
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      'justify-content': 'center',
+    }"
+  >
     <div class="texthero">
       <h5 style="color: #fae084">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
@@ -25,12 +28,16 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section2" :style="{
-    'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }">
+  <section
+    class="sec-home"
+    id="section2"
+    :style="{
+      'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
+  >
     <div class="container">
       <div class="hero">
         <p class="aboutText">{{ sectionName1 }}</p>
@@ -42,11 +49,15 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section3" :style="{
-    'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+  <section
+    class="sec-home"
+    id="section3"
+    :style="{
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(../assets/images/Frame.png);`,
-    'background-size': 'cover;',
-  }">
+      'background-size': 'cover;',
+    }"
+  >
     <div class="container">
       <div class="text">
         <a :href="sectionData2?.xl1.data">
@@ -56,12 +67,16 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section4" :style="{
-    'background-image': `url(${sectionimg3})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }">
+  <section
+    class="sec-home"
+    id="section4"
+    :style="{
+      'background-image': `url(${sectionimg3})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
+  >
     <div class="container">
       <div class="text">
         <p class="sej2Text">{{ sectionName3 }}</p>
@@ -84,39 +99,55 @@
         <a href="https://your-link-here.com">
           <img :src="sectionData3?.xi3.data" alt="sejarah3" />
           <div class="caption">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M24 17V26C24 26.5304 23.7893 27.0391 23.4142 27.4142C23.0391 27.7893 22.5304 28 22 28H6C5.46957 28 4.96086 27.7893 4.58579 27.4142C4.21071 27.0391 4 26.5304 4 26V10C4 9.46957 4.21071 8.96086 4.58579 8.58579C4.96086 8.21071 5.46957 8 6 8H15C15.2652 8 15.5196 8.10536 15.7071 8.29289C15.8946 8.48043 16 8.73478 16 9C16 9.26522 15.8946 9.51957 15.7071 9.70711C15.5196 9.89464 15.2652 10 15 10H6V26H22V17C22 16.7348 22.1054 16.4804 22.2929 16.2929C22.4804 16.1054 22.7348 16 23 16C23.2652 16 23.5196 16.1054 23.7071 16.2929C23.8946 16.4804 24 16.7348 24 17ZM28 5C28 4.73478 27.8946 4.48043 27.7071 4.29289C27.5196 4.10536 27.2652 4 27 4H19C18.8021 3.99984 18.6086 4.05841 18.444 4.16828C18.2794 4.27815 18.1511 4.43439 18.0754 4.61721C17.9996 4.80003 17.9798 5.00122 18.0185 5.19531C18.0571 5.38939 18.1525 5.56764 18.2925 5.7075L21.5863 9L16.2925 14.2925C16.1049 14.4801 15.9994 14.7346 15.9994 15C15.9994 15.2654 16.1049 15.5199 16.2925 15.7075C16.4801 15.8951 16.7346 16.0006 17 16.0006C17.2654 16.0006 17.5199 15.8951 17.7075 15.7075L23 10.4138L26.2925 13.7075C26.4324 13.8475 26.6106 13.9429 26.8047 13.9815C26.9988 14.0202 27.2 14.0004 27.3828 13.9246C27.5656 13.8489 27.7218 13.7206 27.8317 13.556C27.9416 13.3914 28.0002 13.1979 28 13V5Z"
-                fill="white" />
+                fill="white"
+              />
             </svg>
           </div>
         </a>
       </div>
 
       <a :href="sectionData3?.xl1.data">
-        <img class="pls" src="../assets/images/btninfo.png" /></a>
+        <img class="pls" src="../assets/images/btninfo.png"
+      /></a>
     </div>
   </section>
 
-  <section id="section5" :style="{
-    'background-image': `url(${currentBackground})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-    'transition': 'background-image 0.5s ease-in-out'
-  }">
+  <section
+    id="section5"
+    :style="{
+      'background-image': `url(${currentBackground})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      transition: 'background-image 0.5s ease-in-out',
+    }"
+  >
     <div class="container">
       <div class="text">
         <p class="eventText">{{ sectionName4 }}</p>
         <p class="ksc5Text">{{ sectionData4?.xs1.data }}</p>
       </div>
       <div class="container-card">
-        <div class="card4" :class="{ active: activeCard === 'card4' }" :style="{
-    'background-image': `url(${sectionData4?.xi1.data})`,
-    'background-size': 'cover',
-    'border-radius': '20px',
-    'background-color': '#b6b6b6'
-  }" @click="setActiveCard('card4', sectionData4?.xi1.data)">
+        <div
+          class="card4"
+          :class="{ active: activeCard === 'card4' }"
+          :style="{
+            'background-image': `url(${sectionData4?.xi1.data})`,
+            'background-size': 'cover',
+            'border-radius': '20px',
+            'background-color': '#b6b6b6',
+          }"
+          @click="setActiveCard('card4', sectionData4?.xi1.data)"
+        >
           <div class="overlay"></div>
           <a href="#">
             <p class="title5" style="filter: brightness(200%)">
@@ -124,22 +155,32 @@
             </p>
           </a>
         </div>
-        <div class="card5" :class="{ active: activeCard === 'card5' }" :style="{
-    'background-image': `url(${sectionData4?.xi2.data})`,
-    'background-size': 'cover',
-    'border-radius': '20px',
-    'background-color': '#b6b6b6'
-  }" @click="setActiveCard('card5', sectionData4?.xi2.data)">
+        <div
+          class="card5"
+          :class="{ active: activeCard === 'card5' }"
+          :style="{
+            'background-image': `url(${sectionData4?.xi2.data})`,
+            'background-size': 'cover',
+            'border-radius': '20px',
+            'background-color': '#b6b6b6',
+          }"
+          @click="setActiveCard('card5', sectionData4?.xi2.data)"
+        >
           <a href="#">
             <p class="title5">Jamasan Kerisa dan Tombak</p>
           </a>
         </div>
-        <div class="card6" :class="{ active: activeCard === 'card6' }" :style="{
-    'background-image': `url(${sectionData4?.xi3.data})`,
-    'background-size': 'cover',
-    'border-radius': '20px',
-    'background-color': '#b6b6b6'
-  }" @click="setActiveCard('card6', sectionData4?.xi3.data)">
+        <div
+          class="card6"
+          :class="{ active: activeCard === 'card6' }"
+          :style="{
+            'background-image': `url(${sectionData4?.xi3.data})`,
+            'background-size': 'cover',
+            'border-radius': '20px',
+            'background-color': '#b6b6b6',
+          }"
+          @click="setActiveCard('card6', sectionData4?.xi3.data)"
+        >
           <a href="#">
             <p class="title6">Siraman Panjat Jimat</p>
           </a>
@@ -170,7 +211,8 @@
             <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
           <div class="news-content">
-            <h2 class="news-title">{{ slide.title }}</h2>
+            <p class="news-title text-h5">{{ slide.title }}</p>
+            <p class="news-summary">{{ slide.desc }}</p>
           </div>
         </div>
       </div>
@@ -178,14 +220,16 @@
     <img class="newsbtn" src="../assets/images/btninfo.png" />
   </section>
 
-
-
-  <section class="sec-home" id="section6" :style="{
-    'background-image': `url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }">
+  <section
+    class="sec-home"
+    id="section6"
+    :style="{
+      'background-image': `url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
+  >
     <div class="container">
       <div class="text">
         <p class="owText">{{ sectionName5 }}</p>
@@ -211,16 +255,33 @@
         <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
       </div>
       <div class="faq">
-        <div style="border-bottom: 1px solid black" v-for="(faq, index) in faqs" :key="index">
+        <div
+          style="border-bottom: 1px solid black"
+          v-for="(faq, index) in faqs"
+          :key="index"
+        >
           <button class="accordion" @click="toggleAccordion(faq)">
             <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
-              :class="{ active: faq.active }">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              :class="{ active: faq.active }"
+            >
               <path
                 d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
-                fill="#D9A520" />
-            </svg></button><svg width="1064" height="1" viewBox="0 0 1064 1" fill="none"
-            xmlns="http://www.w3.org/2000/svg"></svg>
+                fill="#D9A520"
+              />
+            </svg></button
+          ><svg
+            width="1064"
+            height="1"
+            viewBox="0 0 1064 1"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          ></svg>
           <div class="panel" v-show="faq.active">
             <p class="jawaban">{{ faq.jawaban }}</p>
           </div>
@@ -338,13 +399,13 @@ export default {
           imageUrl: news.image,
           link: news.link,
           title: news.title,
+          desc: news.desc,
           summary: news.desc,
         }));
 
-        console.log(this.slides)
-
+        console.log(this.slides);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async fetchData() {
@@ -378,7 +439,7 @@ export default {
 
         this.sectionName6 = dataRest.contents[6].sectionName;
         this.sectionData6 = dataRest.contents[6].context;
-        const contextValue = Object.values(dataRest.contents[6].context)
+        const contextValue = Object.values(dataRest.contents[6].context);
         contextValue.shift();
         this.faqs = contextValue.map((context, i) => ({
           nomor: String(i + 1).padStart(2, "0"),
@@ -406,17 +467,6 @@ export default {
     nextSlide() {
       this.currentSlideIndex =
         (this.currentSlideIndex + 1) % this.slides.length;
-    },
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-    handleScroll() {
-      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-      if (window.scrollY > 20) {
-        scrollToTopBtn.style.display = "block";
-      } else {
-        scrollToTopBtn.style.display = "none";
-      }
     },
   },
 };
@@ -866,9 +916,11 @@ background-size: cover;
 }
 
 .tiket {
-  background: linear-gradient(90deg,
-      rgba(218, 165, 32, 0.5) 0%,
-      rgba(18, 59, 50, 0.5) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(218, 165, 32, 0.5) 0%,
+    rgba(18, 59, 50, 0.5) 100%
+  );
   width: 100%;
   height: 45%;
   position: relative;
@@ -1043,10 +1095,7 @@ background-size: cover;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,
-      0,
-      0,
-      0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   /* Adjust the opacity (0.3) to your preference */
   z-index: 1;
   border-radius: 20px;
@@ -1397,7 +1446,7 @@ input::placeholder {
     backdrop-filter: blur(3px);
   } */
 
-  #section5 .container>.text {
+  #section5 .container > .text {
     position: relative;
     /* z-index: 1; */
     margin-bottom: -2rem;
@@ -1636,9 +1685,11 @@ input::placeholder {
   }
 
   .tiket {
-    background: linear-gradient(90deg,
-        rgba(218, 165, 32, 0.5) 0%,
-        rgba(18, 59, 50, 0.5) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(218, 165, 32, 0.5) 0%,
+      rgba(18, 59, 50, 0.5) 100%
+    );
     width: 100%;
     height: 45%;
     position: relative;
