@@ -616,6 +616,27 @@ body {
   background-color: #ffffff;
 }
 
+/* Responsif untuk layar dengan lebar maksimum 640px */
+@media (max-width: 640px) {
+  #ringkasanBooking {
+    position: relative;
+    margin: 20px auto;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    top: auto;
+    left: auto;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  .block1 {
+    width: 100%;
+    padding: 200px 20px;
+  }
+}
+
 .containerbtn {
   display: flex;
   flex-direction: column;
@@ -624,7 +645,7 @@ body {
 }
 
 .btn {
-  width: 542px;
+  width: 100%;
   top: 295px;
   left: 650px;
   height: fit-content;
@@ -694,7 +715,7 @@ h5 {
 }
 
 .totalHarga {
-  width: 496px;
+  width: 100%;
   height: 24px;
   display: flex;
   justify-content: space-between;
@@ -704,7 +725,7 @@ h5 {
 }
 
 .biaya {
-  width: 496px;
+  width: 100%;
   height: 122px;
   padding: 15px, 0px, 15px, 0px;
 }
