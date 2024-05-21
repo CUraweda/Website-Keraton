@@ -68,12 +68,12 @@
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
-                  <q-item clickable v-ripple to="/booking">
+                  <q-item clickable v-ripple @click="toBooking('/booking')">
                     <q-item-section>
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/booking/events">
+                  <q-item clickable v-ripple @click="toBooking('/booking/events')">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
@@ -204,6 +204,14 @@ export default {
     //     console.error(err);
     //   }
     // },
+    async toBooking(url) {
+      if(await verifyTokenBool()) {
+        this.$router.push(url);
+      }
+      else {
+        alert("Anda Harus Login Terlebih Dahulu");
+      }
+    },
     keranjang() {
       console.log("ini keranjang");
     },

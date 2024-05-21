@@ -29,7 +29,6 @@ export async function verifyTokenAdmin() {
   const token = localStorage.getItem("token");
   if (!token) {
     // this.$router.push("/");
-    console.log("im here 2")
     return false;
   }
 
@@ -40,7 +39,6 @@ export async function verifyTokenAdmin() {
       },
     });
     if (!response.ok) {
-      console.log("im here 1")
       return false;
     }
     const data = await response.json();

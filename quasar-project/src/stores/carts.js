@@ -27,10 +27,10 @@ export default class Carts {
         return this
     }
 
-    decreaseQuantity(itemId, decQty) {
+    changeQuantity(ascDesc, itemId, qty) {
         const cartItem = this.userCart[itemId]
         if (!cartItem) throw Error('Item didnt exist')
-        cartItem.quantity -= decQty
+        cartItem.quantity = ascDesc != "asc" ? cartItem.quantity - qty : cartItem.quantity + qty
         if (cartItem.quantity > 1) this.userCart[this.userCart] = cartItem
         else this.removeItem([{ id: itemId }])
         return this

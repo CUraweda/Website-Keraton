@@ -19,6 +19,8 @@ export default defineComponent({
 
 body {
   font-family: "montserrat", sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 header {
