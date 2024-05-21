@@ -264,6 +264,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .content-5 {
   margin-top: 37px;
+  width: 100%;
 }
 
 .input-tiket1 {
@@ -634,6 +635,9 @@ body {
   .block1 {
     width: 100%;
     padding: 200px 20px;
+  }
+  .content-5 {
+    width: 100%;
   }
 }
 
