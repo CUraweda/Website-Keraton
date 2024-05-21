@@ -4,18 +4,17 @@
     id="hero"
     :style="{
       'min-height': '100vh',
-      'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
       'background-position': 'center',
-      'display': 'flex',
+      display: 'flex',
       'flex-direction': 'column',
       'align-items': 'center',
       'justify-content': 'center',
     }"
   >
     <div class="texthero">
-
       <h5 style="color: #fae084">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
@@ -29,12 +28,12 @@
   <section
     class="sec-home"
     id="section2"
-     :style="{
-    'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }"
+    :style="{
+      'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
   >
     <div class="container">
       <div class="hero">
@@ -47,13 +46,14 @@
     </div>
   </section>
 
-  <section class="sec-home" 
-  id="section3"
-  :style="{
-    'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+  <section
+    class="sec-home"
+    id="section3"
+    :style="{
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(../assets/images/Frame.png);`,
-  'background-size': 'cover;',
-}"
+      'background-size': 'cover;',
+    }"
   >
     <div class="container">
       <div class="text">
@@ -64,13 +64,15 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section4"
-  :style="{
-    'background-image': `url(${sectionimg3})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }"
+  <section
+    class="sec-home"
+    id="section4"
+    :style="{
+      'background-image': `url(${sectionimg3})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
   >
     <div class="container">
       <div class="text">
@@ -123,7 +125,7 @@
       'background-position': 'center',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
-      'transition': 'background-image 0.5s ease-in-out'
+      transition: 'background-image 0.5s ease-in-out',
     }"
   >
     <div class="container">
@@ -139,7 +141,7 @@
             'background-image': `url(${sectionData4?.xi1.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card4', sectionData4?.xi1.data)"
         >
@@ -157,7 +159,7 @@
             'background-image': `url(${sectionData4?.xi2.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card5', sectionData4?.xi2.data)"
         >
@@ -172,7 +174,7 @@
             'background-image': `url(${sectionData4?.xi3.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card6', sectionData4?.xi3.data)"
         >
@@ -194,14 +196,20 @@
 
   <section class="slider" id="slider">
     <h1 class="berita">Berita Terkini</h1>
-    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }">
+    <div
+      class="slides"
+      :style="{
+        transform: `translateX(${(currentSlideIndex * -300) / slides.length}%)`,
+      }"
+    >
       <div v-for="(slide, index) in slides" :key="index" class="slide">
         <div class="news-section" :to="slide.link">
           <div class="news-image">
-            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`">
+            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
           <div class="news-content">
-            <h2 class="news-title">{{ slide.title }}</h2>
+            <p class="news-title text-h5">{{ slide.title }}</p>
+            <p class="news-summary">{{ slide.desc }}</p>
           </div>
         </div>
       </div>
@@ -209,15 +217,16 @@
     <img class="newsbtn" src="../assets/images/btninfo.png" />
   </section>
 
-
-  
-  <section class="sec-home" id="section6"
-  :style="{
-    'background-image': `url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }">
+  <section
+    class="sec-home"
+    id="section6"
+    :style="{
+      'background-image': `url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
+  >
     <div class="container">
       <div class="text">
         <p class="owText">{{ sectionName5 }}</p>
@@ -310,31 +319,36 @@ export default {
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
@@ -342,14 +356,17 @@ export default {
       currentBackground: null,
       slides: [
         {
-          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
-          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
-          link: 'https://blue.kumparan.com',
-          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+          imageUrl:
+            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
+          title:
+            "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
+          link: "https://blue.kumparan.com",
+          summary:
+            "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
       currentSlideIndex: 0,
-      sliderInterval: null
+      sliderInterval: null,
     };
   },
   mounted() {
@@ -369,21 +386,21 @@ export default {
         this.fetchData();
       });
     },
-    async fetchNews(){
-      try{
-        const response = await this.$api.get('news')
-        console.log(response.data.data)
-        this.slides = response.data.data.map(news => ({
+    async fetchNews() {
+      try {
+        const response = await this.$api.get("news");
+        console.log(response.data.data);
+        this.slides = response.data.data.map((news) => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          summary: news.desc
-        }))
+          desc: news.desc,
+          summary: news.desc,
+        }));
 
-        console.log(this.slides)
-      
-      }catch(err){
-        console.log(err)
+        console.log(this.slides);
+      } catch (err) {
+        console.log(err);
       }
     },
     async fetchData() {
@@ -419,7 +436,6 @@ export default {
         this.sectionData6 = dataRest.contents[6].context;
 
         this.currentBackground = this.sectionimg4;
-
       } catch (err) {
         console.log(err);
       }
@@ -428,14 +444,12 @@ export default {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
     nextSlide() {
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
-    }
-  }
+      this.currentSlideIndex =
+        (this.currentSlideIndex + 1) % this.slides.length;
+    },
+  },
 };
 </script>
-
-
-
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
@@ -476,7 +490,7 @@ export default {
 
 #section3 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-  url("../assets/images/keraton2.png");
+    url("../assets/images/keraton2.png");
   background-size: cover;
 }
 
@@ -489,7 +503,7 @@ export default {
   height: 130vh;
   /* height: 1000px; */
   background-size: cover;
-  background-position: center
+  background-position: center;
 }
 
 #section5 .container::before {
@@ -531,7 +545,8 @@ export default {
   position: relative;
   margin: auto;
   overflow: hidden;
-  background-image: url("../assets/images/batik.png"), linear-gradient(0deg, #fff9a021, #ffe96e);
+  background-image: url("../assets/images/batik.png"),
+    linear-gradient(0deg, #fff9a021, #ffe96e);
   background-size: cover;
   background-position: center;
 }
@@ -541,7 +556,7 @@ export default {
   margin-bottom: 20px;
   margin-bottom: 75px;
   font-weight: 300;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 40px;
 }
 
@@ -590,7 +605,7 @@ export default {
   color: #555;
 }
 
-.berita{
+.berita {
   font-family: "Inria Serif";
   text-align: Center;
   font-size: 60px;
@@ -598,8 +613,8 @@ export default {
   margin-top: -5rem;
 }
 
-        @keyframes slide{
-          0% {
+@keyframes slide {
+  0% {
     transform: translateX(0%);
   }
   25% {
@@ -614,10 +629,9 @@ export default {
   100% {
     transform: translateX(66.6667%);
   }
+}
 
-        }
-
-  .newsbtn {
+.newsbtn {
   padding: 5px;
   gap: 10px;
   position: relative;
@@ -985,7 +999,9 @@ export default {
 .card6:hover {
   flex: 200px;
 }
-.card4.active, .card5.active, .card6.active {
+.card4.active,
+.card5.active,
+.card6.active {
   flex: 200px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -1322,7 +1338,7 @@ input::placeholder {
   color: #212121;
 }
 
-.footer{
+.footer {
   background-image: url(../assets/images/batik.png);
   margin-top: -10px;
 }

@@ -82,7 +82,12 @@ export default {
       try {
         const rawCart = Object.values(cartClass.getItem());
         if (rawCart.length < 1) {
-          const response = await this.$api.get("cart");
+          const response = await this.$api.get("cart", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
         }
