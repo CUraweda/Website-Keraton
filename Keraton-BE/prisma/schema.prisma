@@ -54,9 +54,17 @@ model User {
   role          Role
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
-  carts         Json? @default("{}")
+  carts         Json?         @default("{}")
   transaction   Transaction[]
   Logs          Logs[]
+  Token         Token[]
+}
+
+model Token {
+  id     String @id @default(uuid())
+  token String 
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Order {
@@ -191,7 +199,7 @@ model News {
 }
 
 model Subscriber {
-  id Int @id @default(autoincrement())
-  email String
+  id            Int     @id @default(autoincrement())
+  email         String
   stillSubcribe Boolean @default(true)
 }
