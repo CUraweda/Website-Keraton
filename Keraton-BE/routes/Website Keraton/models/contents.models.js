@@ -26,7 +26,7 @@ const createUpdate = async (ident, id, data) => {
     let context = {};
     const { textList, imageList, linkList } = data;
     try {
-        if (ident !== "create") await isExist(id).then(exist => { if (!exist) throw Error('Content ID didn\'t Exist') });
+        if (ident !== "create") await isExist(id).then(exist => { if (!exist) throw Error('Content ID did\'t Exist') });
 
         // Process textList
         if (textList) {

@@ -61,5 +61,14 @@ const signUp = async (data) => {
     throwError(err);
   }
 };
+const update = async (id,data) => {
+  try{
+    const user = await isExist({ id })
+    if(!user) throw Error('User didnt exist')
+    return await prisma.user.update({ where: { id }, data })
+  }catch(err){
+    throwError(err)
+  }
+}
 
-module.exports = { getUser, isExist, logIn, signUp };
+module.exports = { getUser, isExist, logIn, signUp , update};

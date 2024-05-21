@@ -6,11 +6,13 @@ const controlAuth = require('../controller/auth.controller')
 const controlEvent = require('../controller/event.controller')
 const controlOrder = require('./order.controller')
 const controlIteration = require('../controller/eventIterarion.controller')
+const controlNews = require('../controller/news.controller')
 
 router.use('/content', controlContent)
 router.use('/page', controlPage)
 router.use('/auth', controlAuth)
 router.use('/event', controlEvent)
+router.use('/news',  controlNews)
 router.use('/items', controlOrder)
 router.use('/iteration', controlIteration)
 

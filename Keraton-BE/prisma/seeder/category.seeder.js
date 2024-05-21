@@ -11,7 +11,7 @@ const categories = [
     color: "#5855EE",
   },
   {
-  name: "Mancanegara",
+    name: "Mancanegara",
     color: "#7C0428",
   },
 ];
