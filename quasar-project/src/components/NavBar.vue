@@ -133,6 +133,9 @@
                   <q-item clickable v-ripple @click="logout">
                     <q-item-section>Logout</q-item-section>
                   </q-item>
+                  <q-item clickable v-ripple @click="keranjang">
+                    <q-item-section>Keranjang</q-item-section>
+                  </q-item>
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
                   </q-item>
@@ -181,6 +184,18 @@ export default {
       localStorage.removeItem("token");
       this.isLogin = false; // Set isLogin ke false saat logout
       this.$router.push("/signin");
+    },
+    // async keranjang() {
+    //   try {
+    //     let url = ``;
+    //     const response = await this.$api.get(url);
+    //     const dataRest = response.data.data;
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // },
+    keranjang() {
+      console.log("ini keranjang");
     },
     getTickets() {
       this.$router.push("/signin");

@@ -500,6 +500,9 @@ nav ul li button:hover {
   position: relative;
 }
 
+.container::-webkit-scrollbar {
+  display: none;
+}
 .container {
   display: flex;
   margin-left: 131px;
