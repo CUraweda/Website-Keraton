@@ -1,172 +1,201 @@
 <template>
-
-  <nav>
-    <navbar isWhiteText/>
-  </nav>
-  <body>
-
-    <div class="image-container">
-      <img alt="Area Keraton Image" class="image" src="../assets/images/museumPaket.png" />
-      <p class="image-text">MUSEUM PUSAKA</p>
-      <p class="text-bottom1">Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan, Cirebon, Jawa Barat.</p>
-      <p class="text-bottom2">Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja Mochamad Jayadiningrat.</p>
-      <p class="text-bottom3">Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari dua lantai.</p>
-      <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
-    </div>
-
-  <div class="destinasi-container">
-    <div class="Destinasi">
-      <p> <span class="bold">Mengenal</span> sejarah dan budaya Cirebon</p>
-    </div>
-    <p class="bawah-destinasi">Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta kencana, gamelan,
-      dan lukisan.</p>
-  </div>
-
-  <div class="slider" ref="slider">
-    <div
-      v-for="(card, index) in cards"
-      :key="index"
-      :id="'card-' + index"
-      :class="{ cardd: true, active: index === currentIndex }"
-    >
-      {{ card.content }}
-    </div>
-  </div>
-
-  <div class="button-container">
-    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
-    <div
-      class="bulet"
-      v-for="(bulet, index) in bullets"
-      :key="index"
-      :class="{ active: index === currentIndex }"
-    ></div>
-    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
-</div>
-
-
-    <div class="Fasilitas">
-      <p>Fasilitas</p>
-      <p class="Fasilitas-Text">Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang kegiatan wisata dan
-        budaya.</p>
-    </div>
-
-    <div class="Fasilitas-Images">
-      <div class="card">
-        <p class="card-text">Ruang Pameran</p>
+  <div>
+    <nav>
+      <navbar isWhiteText />
+    </nav>
+    <body>
+      <div class="image-container">
+        <img
+          alt="Area Keraton Image"
+          class="image"
+          src="../assets/images/museumPaket.png"
+        />
+        <p class="image-text">MUSEUM PUSAKA</p>
+        <p class="text-bottom1">
+          Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan,
+          Cirebon, Jawa Barat.
+        </p>
+        <p class="text-bottom2">
+          Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja
+          Mochamad Jayadiningrat.
+        </p>
+        <p class="text-bottom3">
+          Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari
+          dua lantai.
+        </p>
+        <a class="arrow-down" @click="scrollToContent"
+          ><img src="../assets/images/Frame.svg"
+        /></a>
       </div>
-      <div class="card2">
-        <p class="card-text2">Ruang Audio Visual</p>
-      </div>
-      <div class="Fasilitas-Images2">
-        <div class="card3">
-          <p class="card-text3">Ruang Kelas</p>
+
+      <div class="destinasi-container">
+        <div class="Destinasi">
+          <p><span class="bold">Mengenal</span> sejarah dan budaya Cirebon</p>
         </div>
-        <div class="card4">
-          <p class="card-text4">Tempat Penjualan Souvenir</p>
+        <p class="bawah-destinasi">
+          Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta
+          kencana, gamelan, dan lukisan.
+        </p>
+      </div>
+
+      <div class="slider" ref="slider">
+        <div
+          v-for="(card, index) in cards"
+          :key="index"
+          :id="'card-' + index"
+          :class="{ cardd: true, active: index === currentIndex }"
+        >
+          {{ card.content }}
         </div>
       </div>
-    </div>
 
-    <div class="Kunjungan">
-      <p>Kunjungan</p>
-      <p class="Kunjungan-Text">Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik.
-      </p>
-      <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button>
-    </div>
+      <div class="button-container">
+        <img
+          class="button-slider"
+          @click="prevCard"
+          src="../assets/svg/ArrowLeft.svg"
+        />
+        <div
+          class="bulet"
+          v-for="(bulet, index) in bullets"
+          :key="index"
+          :class="{ active: index === currentIndex }"
+        ></div>
+        <img
+          class="button-slider"
+          @click="nextCard"
+          src="../assets/svg/ArrrowRight.svg"
+        />
+      </div>
 
-    <a href="/#/booking">
-    <div class="Paket">
-      <p class="bold2">Tiket Masuk Museum Pusaka</p>
-      <div class="teks-kunjungan">
-        <p>Rp. 15.000/orang</p>
+      <div class="Fasilitas">
+        <p>Fasilitas</p>
+        <p class="Fasilitas-Text">
+          Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang
+          kegiatan wisata dan budaya.
+        </p>
       </div>
-      <div class="teks-kunjungan2">
-        <p>Area Museum Pusaka</p>
+
+      <div class="Fasilitas-Images">
+        <div class="card">
+          <p class="card-text">Ruang Pameran</p>
+        </div>
+        <div class="card2">
+          <p class="card-text2">Ruang Audio Visual</p>
+        </div>
+        <div class="Fasilitas-Images2">
+          <div class="card3">
+            <p class="card-text3">Ruang Kelas</p>
+          </div>
+          <div class="card4">
+            <p class="card-text4">Tempat Penjualan Souvenir</p>
+          </div>
+        </div>
       </div>
-      <img class="paket-images" src="../assets/images/museumPaket.png">
-    </div>
-  </a>
-<bawah class="footer"></bawah>
-  </body>
+
+      <div class="Kunjungan">
+        <p>Kunjungan</p>
+        <p class="Kunjungan-Text">
+          Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
+          wisata yang menarik.
+        </p>
+        <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button>
+      </div>
+
+      <q-card class="my-card">
+        <q-card-section> test </q-card-section>
+      </q-card>
+
+      <a href="/#/booking">
+        <div class="Paket">
+          <p class="bold2">Tiket Masuk Museum Pusaka</p>
+          <div class="teks-kunjungan">
+            <p>Rp. 15.000/orang</p>
+          </div>
+          <div class="teks-kunjungan2">
+            <p>Area Museum Pusaka</p>
+          </div>
+          <img class="paket-images" src="../assets/images/museumPaket.png" />
+        </div>
+      </a>
+      <bawah class="footer"></bawah>
+    </body>
+  </div>
 </template>
 
 <script setup>
-import navbar from '../components/NavBar.vue'
-import bawah from '../components/FooterComp.vue'
+import navbar from "../components/NavBar.vue";
+import bawah from "../components/FooterComp.vue";
 </script>
 
 <script>
-
 const scrollToContent = () => {
-  document.querySelector('.Destinasi').scrollIntoView({
-    behavior: 'smooth'
+  document.querySelector(".Destinasi").scrollIntoView({
+    behavior: "smooth",
   });
 };
 
 export default {
-  components : {
+  components: {
     navbar,
-    bawah
+    bawah,
   },
   data() {
     return {
       cards: [
-        { content: '' },
-        { content: '' },
-        { content: '' },
-        { content: '' },
-        { content: '' }
+        { content: "" },
+        { content: "" },
+        { content: "" },
+        { content: "" },
+        { content: "" },
       ],
-      currentIndex: 2
+      currentIndex: 2,
     };
   },
   computed: {
     bullets() {
-      return Array(this.cards.length).fill('');
-    }
+      return Array(this.cards.length).fill("");
+    },
   },
   methods: {
     prevCard() {
-  if (this.currentIndex === 0) {
-    this.currentIndex = this.cards.length - 1;
-  } else {
-    this.currentIndex--;
-  }
-},
-nextCard() {
-  if (this.currentIndex === this.cards.length - 1) {
-    this.currentIndex = 0;
-  } else {
-    this.currentIndex++;
-  }
-},
+      if (this.currentIndex === 0) {
+        this.currentIndex = this.cards.length - 1;
+      } else {
+        this.currentIndex--;
+      }
+    },
+    nextCard() {
+      if (this.currentIndex === this.cards.length - 1) {
+        this.currentIndex = 0;
+      } else {
+        this.currentIndex++;
+      }
+    },
     centerActiveCard() {
       const sliderWidth = this.$refs.slider.offsetWidth;
       const cardWidth = 250;
       const offset = (sliderWidth - cardWidth) / 2;
-      const cardContainer = document.querySelector('.slider');
-      const activeCard = document.querySelector('.cardd.active');
+      const cardContainer = document.querySelector(".slider");
+      const activeCard = document.querySelector(".cardd.active");
 
       if (activeCard && cardContainer) {
         const index = this.currentIndex;
         const newPosition = -index * cardWidth + offset;
         cardContainer.style.transform = translateX`(${newPosition}px)`;
       }
-    }
+    },
   },
   watch: {
-  currentIndex() {
-    this.centerActiveCard();
-  }
-}
+    currentIndex() {
+      this.centerActiveCard();
+    },
+  },
 };
-
-
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
 </style>
 
 <style scoped>
@@ -180,8 +209,7 @@ nav {
 
 body {
   width: fit-content;
-overflow-x: hidden;  
-  
+  overflow-x: hidden;
 }
 
 * {
@@ -197,7 +225,7 @@ overflow-x: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0px 0px 10px ;
+  padding: 0px 0px 10px;
   gap: 109px;
   position: absolute;
   width: 1080px;
@@ -205,7 +233,7 @@ overflow-x: hidden;
   left: 15%;
   top: 3700px;
   margin-top: 86px;
-  border-bottom: 1px solid #D0D5DD;
+  border-bottom: 1px solid #d0d5dd;
 }
 
 .bold2 {
@@ -248,7 +276,6 @@ overflow-x: hidden;
   position: absolute;
 }
 
-
 .paket-images {
   width: 100%;
   height: 207px;
@@ -260,13 +287,13 @@ overflow-x: hidden;
 .image-container {
   position: relative;
   width: 100%;
-  height: auto; 
+  height: auto;
 }
 
 .image {
-  width: 100vw; 
-  height: 120vh; 
-  object-fit: cover; 
+  width: 100vw;
+  height: 120vh;
+  object-fit: cover;
   filter: brightness(60%);
 }
 
@@ -283,10 +310,9 @@ overflow-x: hidden;
   line-height: 72px;
   letter-spacing: 0em;
   text-align: center;
+}
 
-  }
-
-  .text-bottom1 {
+.text-bottom1 {
   position: absolute;
   width: 362px;
   height: 18px;
@@ -295,7 +321,7 @@ overflow-x: hidden;
   color: white;
   left: 5%;
   transform: translateX(-50%);
-  top: 60%; 
+  top: 60%;
   transform: translateY(-50%);
 }
 
@@ -334,32 +360,32 @@ overflow-x: hidden;
   cursor: pointer;
 }
 
-.Fasilitas{
-    width: 542px;
-    height: 72px;
-    top: 1500px;
-    left: 150px;
-    margin-left: 10%;
-    font-family: Raleway;
-    font-size: 64px;
-    font-weight: 400;
-    line-height: 400px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #000000;
+.Fasilitas {
+  width: 542px;
+  height: 72px;
+  top: 1500px;
+  left: 150px;
+  margin-left: 10%;
+  font-family: Raleway;
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 400px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #000000;
 }
 
-.Fasilitas-Text{
+.Fasilitas-Text {
   width: 542px;
-    height: 72px;
-    margin-top: -220px;
-    margin-left: 130%;
-    font-family: Raleway;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 25px;
-    letter-spacing: 0em;
-    text-align: right;
+  height: 72px;
+  margin-top: -220px;
+  margin-left: 130%;
+  font-family: Raleway;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: right;
 }
 
 .Fasilitas-Images {
@@ -368,9 +394,7 @@ overflow-x: hidden;
 
 .Fasilitas-Images2 {
   gap: 20px;
-
 }
-
 
 .card {
   width: 600px;
@@ -398,7 +422,6 @@ overflow-x: hidden;
   background-image: url(../assets/images/card2.png);
 }
 
-
 .card3 {
   width: 600px;
   height: 649px;
@@ -413,14 +436,13 @@ overflow-x: hidden;
 
 .card3 {
   background-image: url(../assets/images/card3.png);
-
 }
 
 .card4 {
   width: 600px;
   height: 649px;
   top: 1773px;
-  left: 660px;/* Menggeser ke kiri sedikit */
+  left: 660px; /* Menggeser ke kiri sedikit */
   margin-top: -1100px;
   margin-left: 52%;
   border-radius: 30px;
@@ -502,8 +524,6 @@ overflow-x: hidden;
   letter-spacing: 0em;
   text-align: left;
   color: #000000;
-
-
 }
 
 .Kunjungan-Text {
@@ -521,13 +541,13 @@ overflow-x: hidden;
 
 .destinasi-container {
   position: relative;
-  width: 100%; 
+  width: 100%;
   height: 100%;
 }
 
 .Destinasi {
   font-family: Raleway;
-  margin-top: 200px; 
+  margin-top: 200px;
   width: 100%;
   height: 64px;
   top: 40%; /* Posisi vertikal di tengah */
@@ -550,9 +570,11 @@ overflow-x: hidden;
   position: absolute;
   left: 50%; /* Posisi horizontal di tengah */
   top: 70%; /* Posisi vertikal di tengah */
-  transform: translate(-50%, -50%); /* Menggeser elemen ke tengah horizontal dan vertikal */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Menggeser elemen ke tengah horizontal dan vertikal */
 }
-
 
 .bold {
   font-family: Raleway;
@@ -562,7 +584,6 @@ overflow-x: hidden;
   line-height: 64px;
   text-align: center;
 }
-
 
 .foto1 {
   width: 68px;
@@ -589,8 +610,8 @@ overflow-x: hidden;
   height: 58px;
   border-radius: 10px;
   border: none;
-  background-color: #123B32;
-  color: #FFFFFF;
+  background-color: #123b32;
+  color: #ffffff;
   text-align: left;
   padding-left: 22px;
   font-size: 20px;
@@ -608,8 +629,8 @@ overflow-x: hidden;
   height: 40px;
   border-radius: 8px;
   border: none;
-  background-color: #123B32;
-  color: #FFFFFF;
+  background-color: #123b32;
+  color: #ffffff;
   text-align: left;
   font-size: 20px;
   font-weight: 800;
@@ -627,29 +648,28 @@ overflow-x: hidden;
 
 .cardd {
   width: 211.86px;
-position: relative;
-height: 341.65px;
-backdrop-filter: blur(20px);
-background-color: #ccc;
-margin: 5px;
-margin-top: 50px;
-border: none;   
-justify-content: center;
-padding-top: 50px;
-text-align: center;
-align-items: center;
-box-sizing: border-box;
-cursor: pointer;
-border-radius: 20px;
-transition: all 0.3s ease-in-out;
-background-size: cover;
-right: 100px;
+  position: relative;
+  height: 341.65px;
+  backdrop-filter: blur(20px);
+  background-color: #ccc;
+  margin: 5px;
+  margin-top: 50px;
+  border: none;
+  justify-content: center;
+  padding-top: 50px;
+  text-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+  background-size: cover;
+  right: 100px;
 }
 
 #card-0 {
   background: url(../assets/images/sliderM1.png);
   background-size: cover;
-
 }
 
 #card-1 {
@@ -660,22 +680,19 @@ right: 100px;
 #card-2 {
   background: url(../assets/images/sliderM3.png);
   background-size: cover;
-
 }
 
 #card-3 {
   background: url(../assets/images/sliderM4.png);
   background-size: cover;
-
 }
 
 #card-4 {
   background: url(../assets/images/sliderM5.png);
   background-size: cover;
-
 }
 
-.cardd.active{
+.cardd.active {
   width: 255.72px;
   height: 414px;
 }
@@ -688,7 +705,7 @@ right: 100px;
   gap: 10px;
 }
 
-.button-slider{
+.button-slider {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.5s ease;
@@ -709,202 +726,201 @@ right: 100px;
   background-color: rgb(0, 0, 0);
 }
 
-.footer{
+.footer {
   margin-top: 700px;
   margin-left: 5%;
 }
-@media screen and (max-width: 1441px){
-  .arrow-down{
-  margin-top: 100px;
+@media screen and (max-width: 1441px) {
+  .arrow-down {
+    margin-top: 100px;
+  }
+
+  .Paket {
+    margin-top: 200px;
+    margin-bottom: -100px;
+  }
 }
 
-.Paket{
-  margin-top: 200px;
-  margin-bottom: -100px;
-}
+@media screen and (max-width: 1024px) {
+  .footer {
+    transform: scale(0.8);
+    margin-left: -140px;
+  }
+
+  .Paket {
+    margin-left: -140px;
+    transform: translate(0.5);
+    margin-top: -250px;
+  }
+
+  .teks-kunjungan,
+  .teks-kunjungan2,
+  .bold2 {
+    margin-left: 30px;
+  }
+
+  img.paket-images {
+    transform: scale(0.6);
+    margin-left: -100px;
+  }
+
+  .Kunjungan {
+    transform: scale(0.8);
+    margin-left: 5px;
+    margin-top: 120px;
+  }
+
+  .card,
+  .card3 {
+    transform: scale(0.73);
+    margin-left: 0px;
+  }
+
+  .card2,
+  .card4 {
+    transform: scale(0.73);
+    margin-left: 447px;
+    margin-bottom: -180px;
+  }
+
+  .Fasilitas {
+    transform: scale(0.8);
+    margin-left: 15px;
+  }
+
+  .Fasilitas-Text {
+    margin-left: 550px;
+  }
+
+  .slider {
+    transform: scale(0.8);
+    margin-left: -45px;
+  }
+
+  .destinasi-container {
+    transform: scale(0.8);
+    margin-left: -40px;
+  }
+
+  .button-container {
+    margin-left: -100px;
+  }
+
+  .image-text {
+    margin-left: -60px;
+  }
+
+  .text-bottom3 {
+    transform: scale(0.8);
+    margin-left: -90px;
+  }
+  .text-bottom2 {
+    transform: scale(0.8);
+    margin-left: -50px;
+  }
+
+  .text-bottom1 {
+    transform: scale(0.8);
+    margin-left: -40px;
+  }
+  .arrow-down {
+    margin-top: 100px;
+  }
 }
 
-@media screen and (max-width: 1024px){
-.footer{
-transform: scale(0.8);
-margin-left: -140px;
-}
+@media screen and (max-width: 769px) {
+  .footer {
+    transform: scale(0.55);
+    margin-left: -235px;
+    margin-bottom: -100px;
+  }
 
-.Paket{
-  margin-left: -140px;
-  transform: translate(0.5);
-  margin-top: -250px;
-}
+  .Paket {
+    margin-left: -235px;
+    transform: translate(0.5);
+    transform: scale(0.7);
+    margin-top: -800px;
+  }
 
-.teks-kunjungan,
-.teks-kunjungan2,
-.bold2{
-  margin-left: 30px;
-}
+  .teks-kunjungan,
+  .teks-kunjungan2,
+  .bold2 {
+    margin-left: 30px;
+  }
 
-img.paket-images{
-  transform: scale(0.6);
-  margin-left: -100px;
-}
+  img.paket-images {
+    transform: scale(0.6);
+    margin-left: -100px;
+  }
 
-.Kunjungan{
-  transform: scale(0.8);
-  margin-left: 5px;
-  margin-top: 120px
-}
+  .Kunjungan {
+    transform: scale(0.6);
+    margin-left: -60px;
+    margin-top: 200px;
+    margin-bottom: -300px;
+  }
 
-.card,
-.card3{
-  transform: scale(0.73);
-  margin-left: 0px;
-}
+  .card,
+  .card3 {
+    transform: scale(0.6);
+    margin-left: -100px;
+  }
 
-.card2,
-.card4{
-  transform: scale(0.73);
-  margin-left: 447px;
-  margin-bottom: -180px;
-}
+  .card2,
+  .card4 {
+    transform: scale(0.6);
+    margin-left: 275px;
+    margin-bottom: -265px;
+  }
 
-.Fasilitas{
-  transform: scale(0.8);
-  margin-left: 15px;
-}
+  .Fasilitas {
+    transform: scale(0.65);
+    margin-left: -50px;
+    margin-bottom: -170px;
+  }
 
-.Fasilitas-Text{
-  margin-left: 550px
-}
+  .Fasilitas-Text {
+    margin-left: 500px;
+  }
 
-.slider{
-  transform: scale(0.8);
-  margin-left: -45px;
-}
+  .slider {
+    transform: scale(0.65);
+    margin-left: -125px;
+  }
 
-.destinasi-container{
-  transform: scale(0.8);
-  margin-left: -40px;
-}
+  .destinasi-container {
+    transform: scale(0.65);
+    margin-left: -125px;
+  }
 
-.button-container{
-  margin-left: -100px;
-}
+  .button-container {
+    margin-left: -250px;
+    margin-top: -30px;
+  }
 
-.image-text{
-  margin-left: -60px;
-}
+  .image-text {
+    transform: scale(1);
+    margin-left: -260px;
+  }
 
-.text-bottom3{
-  transform: scale(0.8);
-  margin-left: -90px;
-}
-.text-bottom2{
-  transform: scale(0.8);
-  margin-left: -50px;
-}
+  .text-bottom3 {
+    transform: scale(0.7);
+    margin-left: -210px;
+    width: 300px;
+  }
+  .text-bottom2 {
+    transform: scale(0.7);
+    margin-left: -120px;
+    width: 300px;
+  }
 
-.text-bottom1{
-  transform: scale(0.8);
-  margin-left: -40px;
+  .text-bottom1 {
+    transform: scale(0.7);
+    margin-left: -60px;
+    width: 300px;
+  }
+  .arrow-down {
+    margin-top: 225px;
+  }
 }
-.arrow-down{
-  margin-top: 100px;
-}
-}
-
-@media screen and (max-width: 769px){
-.footer{
-transform: scale(0.55);
-margin-left: -235px;
-margin-bottom: -100px;
-}
-
-.Paket{
-  margin-left: -235px;
-  transform: translate(0.5);
-  transform: scale(0.7);
-  margin-top: -800px;
-}
-
-.teks-kunjungan,
-.teks-kunjungan2,
-.bold2{
-  margin-left: 30px;
-}
-
-img.paket-images{
-  transform: scale(0.6);
-  margin-left: -100px;
-}
-
-.Kunjungan{
-  transform: scale(0.6);
-  margin-left: -60px;
-  margin-top: 200px;
-  margin-bottom: -300px;
-}
-
-.card,
-.card3{
-  transform: scale(0.6);
-  margin-left: -100px;
-}
-
-.card2,
-.card4{
-  transform: scale(0.6);
-  margin-left: 275px;
-  margin-bottom: -265px;
-}
-
-.Fasilitas{
-  transform: scale(0.65);
-  margin-left: -50px;
-  margin-bottom: -170px;
-}
-
-.Fasilitas-Text{
-  margin-left: 500px
-}
-
-.slider{
-  transform: scale(0.65);
-  margin-left: -125px;
-}
-
-.destinasi-container{
-  transform: scale(0.65);
-  margin-left: -125px;
-}
-
-.button-container{
-  margin-left: -250px;
-  margin-top: -30px
-}
-
-.image-text{
-  transform: scale(1);
-  margin-left: -260px;
-}
-
-.text-bottom3{
-  transform: scale(0.7);
-  margin-left: -210px;
-  width: 300px;
-}
-.text-bottom2{
-  transform: scale(0.7);
-  margin-left: -120px;
-  width: 300px;
-}
-
-.text-bottom1{
-  transform: scale(0.7);
-  margin-left: -60px;
-  width: 300px;
-}
-.arrow-down{
-  margin-top: 225px;
-}
-}
-
 </style>
