@@ -614,15 +614,8 @@ body {
 .header {
   font-size: x-large;
 }
-/* Responsif untuk layar dengan lebar maksimum 640px */
-@media (max-width: 640px) {
-  .header {
-    font-size: large;
-  }
-  .pstikan {
-    font-size: medium;
-  }
 
+@media (max-width: 900px) {
   #ringkasanBooking {
     position: relative;
     margin: 20px auto;
@@ -636,6 +629,16 @@ body {
     padding: 20px;
     background-color: #ffffff;
   }
+}
+/* Responsif untuk layar dengan lebar maksimum 640px */
+@media (max-width: 640px) {
+  .header {
+    font-size: large;
+  }
+  .pstikan {
+    font-size: small;
+  }
+
   .block1 {
     width: 100%;
     padding: 200px 20px;
