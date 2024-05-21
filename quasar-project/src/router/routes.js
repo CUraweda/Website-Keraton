@@ -116,7 +116,7 @@ const routes = [
     component: NyobaAdmin,
   },
   {
-    path: "/keranjang",
+    path: "/user/carts",
     name: "Cart",
     component: Cart,
   },

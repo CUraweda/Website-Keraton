@@ -261,7 +261,7 @@ export default {
                   titleMedium: order.name,
                   titleBig: order.desc,
                   quantity: 0,
-                  price: `${order.price}/${order.unit || ""}`,
+                  price: `${order.price}`,
                 });
               }
               break;
