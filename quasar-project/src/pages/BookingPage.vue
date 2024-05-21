@@ -25,7 +25,7 @@
       <h1 class="judul-besar">{{ item.titleBig }}</h1>
       <div class="tengah">
         <h3 class="judul-kecil">{{ item.price }}</h3>
-        <button class="tambah">
+        <button class="tambah" @click="addToCart(item)">
           Tambah <img class="photo" src="../assets/Frame.svg" />
         </button>
       </div>
@@ -41,8 +41,8 @@
         <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
         <h1 class="judul-besar">{{ data.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">{{ data.price }}</h3>
-          <button class="tambah">
+          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) }}</h3>
+          <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
@@ -106,6 +106,7 @@
 
 <script setup>
 import navbar from "../components/NavBar.vue";
+import Carts from "../stores/carts"
 </script>
 
 <script>
@@ -235,6 +236,7 @@ export default {
           price: "Rp.60.000/orang",
         },
       ],
+      cart: new Carts()
     };
   },
   mounted() {
@@ -253,20 +255,13 @@ export default {
           switch (subType.orderTypeId) {
             case 1:
               for (let order of subType.orders) {
-                let harga =
-                  order.priceUmum || order.priceMancanegara
-                    ? this.countPrice(
-                        order.price,
-                        order.priceUmum,
-                        order.priceMancanegara
-                      )
-                    : `Rp. ${this.formatRupiah(order.price)}`;
                 tikets.push({
                   id: order.id,
                   image: order.image,
                   titleMedium: order.name,
                   titleBig: order.desc,
-                  price: `${harga}/${order.unit || ""}`,
+                  quantity: 0,
+                  price: `${order.price}/${order.unit || ""}`,
                 });
               }
               break;
@@ -281,9 +276,8 @@ export default {
                   image: order.image,
                   titleMedium: order.name,
                   titleBig: order.desc,
-                  price: `Rp. ${this.formatRupiah(order.price)}/${
-                    order.unit || ""
-                  }`,
+                  quantity: 0,
+                  price: order.price,
                 });
               }
               break;
@@ -355,6 +349,23 @@ export default {
       });
       console.log("Filtered items:", filteredItems);
     },
+    addToCart(rowData){
+      try{
+        const storedData = {
+          id: rowData.id,
+          name: rowData.titleMedium,
+          image: rowData.image,
+          quantity: 1,
+          price: rowData.price
+        }
+        const cartData = this.cart.addManyItem([storedData]).getItem()
+        console.log(cartData)
+        if(!cartData) throw Error('Error Occured')
+        return this.cart.updateItem()
+      }catch(err){
+        console.log(err)
+      }
+    }
   },
 };
 </script>
