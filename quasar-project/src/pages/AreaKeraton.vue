@@ -12,16 +12,16 @@
         <h1 class="image-text">BALUARTI KERATON</h1>
         <div class="image-text2">
           <div>
-              Keraton Kasepuhan Cirebon adalah salah satu dari empat keraton di
-              Cirebon, Jawa Barat.
+            Keraton Kasepuhan Cirebon adalah salah satu dari empat keraton di
+            Cirebon, Jawa Barat.
           </div>
           <div>
             Didirikan pada tahun 1430 oleh Pangeran Cakrabuana, pendiri Kerajaan
             Cirebon.
           </div>
           <div>
-            Keraton Kasepuhan merupakan salah satu peninggalan sejarah yang penting
-            di Cirebon
+            Keraton Kasepuhan merupakan salah satu peninggalan sejarah yang
+            penting di Cirebon
           </div>
         </div>
         <a class="arrow-down" @click="scrollToContent"
@@ -43,7 +43,7 @@
           :key="index"
           :id="'card-' + index"
           :class="{ cardd: true, active: index === currentIndex }"
-        >
+        />
       </div>
 
       <div class="button-container">
@@ -53,241 +53,238 @@
           v-for="(bullet, index) in bullets"
           :key="index"
           :class="{ active: index === currentIndex }"
-          ></div>
-          <button class="button-slider" @click="nextCard">&gt;</button>
-        </div>
-        
-        <div class="Tourist">
-          <div class="Tourist2">
-            <div class="top-tourist">
-              <p>Top <span>Tourist</span> attraction</p>
-            </div>
-            <div class="arrow-tourist">
-              <a class="arrow-down2" @click="scrollToContent2"
+        ></div>
+        <button class="button-slider" @click="nextCard">&gt;</button>
+      </div>
+
+      <div class="Tourist">
+        <div class="Tourist2">
+          <div class="top-tourist">
+            <p>Top <span>Tourist</span> attraction</p>
+          </div>
+          <div class="arrow-tourist">
+            <a class="arrow-down2" @click="scrollToContent2"
               ><img src="../assets/images/Frame.svg" class="img-arrow-down"
-              /></a>
-            </div>
+            /></a>
           </div>
         </div>
-        
-        <div class="tourist-attraction">
-      <div class="Tourist-Container Tourist-Container1">
-        <div class="Tourist-content">
-          <a class="Hiasan"><img src="../assets/images/Tagline.svg" class="img-att-top" /></a>
-          <p class="Dalem">Dalem Agung Pakungwati</p>
-          <p class="Isi-Dalem">
-            Dalem Agung Pakungwati merupakan kompleks bangunan utama<br />
-            keraton. Kompleks ini terdiri dari berbagai bangunan, seperti
-            pendopo,<br />
-            masjid, dan museum. Masjid Agung Kasepuhan merupakan salah satu<br />
-            masjid tertua di Cirebon dan merupakan salah satu bangunan
-            bersejarah<br />
-            yang penting di kota ini.
-          </p>
-          <a class="Hiasan"><img src="../assets/images/Content.svg" class="img-att-down"/></a>
-        </div>
-        <img alt="" class="image-Tourist" src="../assets/images/image 21.png" />
       </div>
+
+      <div class="tourist-attraction">
+        <div class="Tourist-Container Tourist-Container1">
+          <div class="Tourist-content">
+            <a class="Hiasan"
+              ><img src="../assets/images/Tagline.svg" class="img-att-top"
+            /></a>
+            <p class="Dalem">Dalem Agung Pakungwati</p>
+            <p class="Isi-Dalem">
+              Dalem Agung Pakungwati merupakan kompleks bangunan utama<br />
+              keraton. Kompleks ini terdiri dari berbagai bangunan, seperti
+              pendopo,<br />
+              masjid, dan museum. Masjid Agung Kasepuhan merupakan salah satu<br />
+              masjid tertua di Cirebon dan merupakan salah satu bangunan
+              bersejarah<br />
+              yang penting di kota ini.
+            </p>
+            <a class="Hiasan"
+              ><img src="../assets/images/Content.svg" class="img-att-down"
+            /></a>
+          </div>
+          <img
+            alt=""
+            class="image-Tourist"
+            src="../assets/images/image 21.png"
+          />
+        </div>
         <div class="Tourist-Container Tourist-Container2">
-          <img alt="" class="image-Tourist2" src="../assets/images/image34.png" />
+          <img
+            alt=""
+            class="image-Tourist2"
+            src="../assets/images/image34.png"
+          />
           <div class="Tourist-content2">
-            <a class="Hiasan"><img src="../assets/images/Tagline2.svg" class="img-att-top"/></a>
+            <a class="Hiasan"
+              ><img src="../assets/images/Tagline2.svg" class="img-att-top"
+            /></a>
             <p class="Dalem">Masjid Agung Kasepuhan</p>
             <p class="Isi-Dalem2">
-              Masjid Agung Kasepuhan merupakan salah satu masjid tertua di Cirebon
-              dan merupakan salah satu bangunan bersejarah yang penting di kota ini.
-              Masjid ini dibangun pada tahun 1480 oleh Sunan Gunung Jati, salah satu
-              Wali Songo.
+              Masjid Agung Kasepuhan merupakan salah satu masjid tertua di
+              Cirebon dan merupakan salah satu bangunan bersejarah yang penting
+              di kota ini. Masjid ini dibangun pada tahun 1480 oleh Sunan Gunung
+              Jati, salah satu Wali Songo.
             </p>
           </div>
         </div>
-  
-        <div class="Tourist-Container Tourist-Container1" id="Tourist-Container3">
+
+        <div
+          class="Tourist-Container Tourist-Container1"
+          id="Tourist-Container3"
+        >
           <div class="Tourist-content3">
-            <a class="Hiasan"><img src="../assets/images/Tagline3.svg" class="img-att-top"/></a>
+            <a class="Hiasan"
+              ><img src="../assets/images/Tagline3.svg" class="img-att-top"
+            /></a>
             <p class="Dalem">Museum Pusaka Kasepuhan</p>
             <p class="Isi-Dalem Isi-dalem3">
               Museum Pusaka Keraton Kasepuhan menyimpan berbagai koleksi benda
-              bersejarah, seperti kereta kencana, gamelan, dan lukisan. Salah satu
-              koleksi yang paling terkenal adalah kereta kencana Singa Barong, yang
-              merupakan kereta kencana Sunan Gunung Jati.
+              bersejarah, seperti kereta kencana, gamelan, dan lukisan. Salah
+              satu koleksi yang paling terkenal adalah kereta kencana Singa
+              Barong, yang merupakan kereta kencana Sunan Gunung Jati.
             </p>
-            <a class="Hiasan"><img src="../assets/images/Content.svg" class="img-att-down" /></a>
+            <a class="Hiasan"
+              ><img src="../assets/images/Content.svg" class="img-att-down"
+            /></a>
           </div>
-          <img alt="" class="image-Tourist3" src="../assets/images/image 35.png" />
+          <img
+            alt=""
+            class="image-Tourist3"
+            src="../assets/images/image 35.png"
+          />
         </div>
       </div>
       <div class="Lokasi-container">
-        <div class="Lokasi">
-          Lokasi
-        </div>
+        <div class="Lokasi">Lokasi</div>
         <div class="Lokasi-samping">
-            Dengan luas sekitar 13,5 hektar dan terdiri dari 2 komplek yaitu Dalem
-            Agung Pakungwati dan kompleks Keraton Pakungwati
+          Dengan luas sekitar 13,5 hektar dan terdiri dari 2 komplek yaitu Dalem
+          Agung Pakungwati dan kompleks Keraton Pakungwati
         </div>
       </div>
 
       <div class="denah-map">
-          <div class="Denah">
-            <img src="../assets/images/Frame 80.png" class="img-denah" />
-          </div>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.3439357079596!2d108.5708669!3d-6.7278234999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ee263eaaaaaab%3A0x20ea18cbfb1df195!2sKeraton%20Kasepuhan!5e0!3m2!1sid!2sid!4v1710081749605!5m2!1sid!2sid"
-              class="iframe"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
+        <div class="Denah">
+          <img src="../assets/images/Frame 80.png" class="img-denah" />
+        </div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.3439357079596!2d108.5708669!3d-6.7278234999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ee263eaaaaaab%3A0x20ea18cbfb1df195!2sKeraton%20Kasepuhan!5e0!3m2!1sid!2sid!4v1710081749605!5m2!1sid!2sid"
+          class="iframe"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </div>
 
       <div class="Lokasi-container" id="">
-        <div class="Lokasi">
-          Fasilitas
-        </div>
+        <div class="Lokasi">Fasilitas</div>
         <div class="Lokasi-samping">
           Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang
           kegiatan wisata dan budaya.
         </div>
       </div>
-        <div class="fasilitas-content1-1">
-          <div class="fasilitas-content1" v-for="(imgFasilitas, index) in imgFasilitass" :key="index">
-            <img :src="imgFasilitas.img" class="img-fasilitas" alt="">
-            <div class="con-txt-img-fasilitas">
-              <div class="txt-img-fasilitas">
-                {{ imgFasilitas.text }}
-              </div>
+      <div class="fasilitas-content1-1">
+        <div
+          class="fasilitas-content1"
+          v-for="(imgFasilitas, index) in imgFasilitass"
+          :key="index"
+        >
+          <img :src="imgFasilitas.img" class="img-fasilitas" alt="" />
+          <div class="con-txt-img-fasilitas">
+            <div class="txt-img-fasilitas">
+              {{ imgFasilitas.text }}
             </div>
           </div>
         </div>
-        <div class="fasilitas-content1-1">
-          <div class="fasilitas-content1" v-for="(imgFasilitas2, index2) in imgFasilitass2" :key="index2">
-            <img :src="imgFasilitas2.img2" class="img-fasilitas" alt="">
-            <div class="con-txt-img-fasilitas">
-              <div class="txt-img-fasilitas">
-                {{ imgFasilitas2.text }}
-              </div>
+      </div>
+      <div class="fasilitas-content1-1">
+        <div
+          class="fasilitas-content1"
+          v-for="(imgFasilitas2, index2) in imgFasilitass2"
+          :key="index2"
+        >
+          <img :src="imgFasilitas2.img2" class="img-fasilitas" alt="" />
+          <div class="con-txt-img-fasilitas">
+            <div class="txt-img-fasilitas">
+              {{ imgFasilitas2.text }}
             </div>
           </div>
-        </div> 
+        </div>
+      </div>
 
-        <div class="container-kunjungan-text">
-          <div class="Lokasi kunjungan-text1">
-            Kunjungan
-          </div>
-          <div class="Lokasi-samping kunjungan-text2">
-            Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik
-          </div>
+      <div class="container-kunjungan-text">
+        <div class="Lokasi kunjungan-text1">Kunjungan</div>
+        <div class="Lokasi-samping kunjungan-text2">
+          Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
+          wisata yang menarik
         </div>
-        <div class="btn-kunjungan-text">
-          <button>Dapatkan Tiket Sekarang!</button>
-        </div>
+      </div>
+      <div class="btn-kunjungan-text">
+        <button>Dapatkan Tiket Sekarang!</button>
+      </div>
 
-        <div class="container-tiket-kunjungan">
-          <div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
-            <div class="text-tiket-kunjungan">
-              <div class="text-tiket">{{element.text1}}</div>
-              <p class="text-harga">{{element.text2}}</p>
-              <p class="text-harga" id="text-area">{{element.text3}}</p>
-            </div>
-            <img class="img-tiket-kunjungan" src="../assets/images/tiketkunjungan.png" alt="">
+      <div class="container-tiket-kunjungan">
+        <div
+          class="tiket-kunjungan"
+          v-for="(element, index) in elementTiketKunjungan"
+          :key="index"
+        >
+          <div class="text-tiket-kunjungan">
+            <div class="text-tiket">{{ element.text1 }}</div>
+            <p class="text-harga">{{ element.text2 }}</p>
+            <p class="text-harga" id="text-area">{{ element.text3 }}</p>
           </div>
+          <img
+            class="img-tiket-kunjungan"
+            src="../assets/images/tiketkunjungan.png"
+            alt=""
+          />
         </div>
+      </div>
 
-        <div class="footer">
-          <div class="logo">
-            <img src="../assets/images/logo_keraton.png" alt="">
-            <p>KERATON <br>KASEPUHAN <br>CIREBON</p>
-          </div>
-          <div class="footer-col">
-            <div class="footer-col-1">
-              <h4 class="quick-links">Quick Links</h4>
-              <ul>
-                <li><a href="#">Beranda</a></li>
-                <li><a href="#">Sejarah</a></li>
-                <li><a href="#">Booking</a></li>
-                <li><a href="#">Objek Wisata</a></li>
-              </ul>
-            </div>
-            <div class="footer-col-2">
-              <h4>Socials</h4>
-              <ul>
-                <li><a href="#">Whatsapp</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Instagram</a></li>
-                <li><a href="#">Threads</a></li>
-              </ul>
-            </div>
-            <div class="footer-col-3">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">Partners</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
-            <div class="footer-col-4">
-              <h4>Subscribes your email for updates!</h4>
-              <button class="button">Enter your email</button>
-            </div>
-          </div>
-          <div class="adress">
-            Jalan Kasepuhan 43
-            Cirebon, Jawa Barat
-            45114
-          </div>
-          <div class="lower">
-            <div class="inlower">
-              <p>
-                @2024 Keraton Kasepuhan Cirebon
-              </p>
-            </div>
-            <div class="footer-kanan">
-              <div class="susun">
-              <p>In collaboration</p>
-              <div class="collab">
-                <img src="../assets/images/logo_keraton.png" alt="" class="foto1">
-                <img src="../assets/images/1 931.svg" alt="" class="foto2">
-                <img src="../assets/images/telkom.svg" alt="" class="foto3">
-                <img src="../assets/images/bjb.svg" alt="" class="foto4">
-              </div>
-            </div>
-            </div>
-          </div>
-        </div>
+      <bawah class="footer"></bawah>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import bawah from "../components/FooterComp.vue";
 
 export default {
   components: {
     NavBar,
+    bawah,
   },
   data() {
     return {
       cards: [
-        { content: '../src/assets/images/objekwisataslider1.png' },
-        { content: '../src/assets/images/objekwisataslider2.png' },
-        { content: '../src/assets/images/objekwisataslider3.png' },
-        { content: '../src/assets/images/objekwisataslider4.png' },
-        { content: '../src/assets/images/objekwisataslider5.png' },
+        { content: "../src/assets/images/objekwisataslider1.png" },
+        { content: "../src/assets/images/objekwisataslider2.png" },
+        { content: "../src/assets/images/objekwisataslider3.png" },
+        { content: "../src/assets/images/objekwisataslider4.png" },
+        { content: "../src/assets/images/objekwisataslider5.png" },
         // Add more cards as needed
       ],
       imgFasilitass: [
-        {img: '../src/assets/images/areaparkir.png', text: 'Area Parkir'},
-        {img: '../src/assets/images/tempatibadah.png', text: 'Tempat Ibadah'}
+        { img: "../src/assets/images/areaparkir.png", text: "Area Parkir" },
+        { img: "../src/assets/images/tempatibadah.png", text: "Tempat Ibadah" },
       ],
       imgFasilitass2: [
-        {img2: '../src/assets/images/toilet.png', text: 'Toilet'},
-        {img2: '../src/assets/images/tempatpenjualan.png', text: 'Tempat Penjualan Souvenir'}
+        { img2: "../src/assets/images/toilet.png", text: "Toilet" },
+        {
+          img2: "../src/assets/images/tempatpenjualan.png",
+          text: "Tempat Penjualan Souvenir",
+        },
       ],
       elementTiketKunjungan: [
-        {text1:'Tiket Masuk Keraton Kasepuhan Cirebon', text2: 'Rp. 10.000/orang', text3: 'Area Keraton'},
-        {text1:'Paket Wisata Silaturahmi', text2: 'Rp. 85.000/orang (minimal 35 orang)', text3: 'Area Keraton - Guide - Snack - Foto bersama Sultan'},
-        {text1:'Paket Wisata Non Silaturahmi', text2: 'Rp. 155.000/orang (minimal 40 orang)', text3: 'Area Keraton - Guide - Snack - Kesenian'},
-        {text1:'Paket Wisata Pelajar', text2: 'Rp. 60.000/orang (minimal 50 orang)', text3: 'Area Keraton - Guide - Nasi Dus - Sejarah & Kesenian'},
+        {
+          text1: "Tiket Masuk Keraton Kasepuhan Cirebon",
+          text2: "Rp. 10.000/orang",
+          text3: "Area Keraton",
+        },
+        {
+          text1: "Paket Wisata Silaturahmi",
+          text2: "Rp. 85.000/orang (minimal 35 orang)",
+          text3: "Area Keraton - Guide - Snack - Foto bersama Sultan",
+        },
+        {
+          text1: "Paket Wisata Non Silaturahmi",
+          text2: "Rp. 155.000/orang (minimal 40 orang)",
+          text3: "Area Keraton - Guide - Snack - Kesenian",
+        },
+        {
+          text1: "Paket Wisata Pelajar",
+          text2: "Rp. 60.000/orang (minimal 50 orang)",
+          text3: "Area Keraton - Guide - Nasi Dus - Sejarah & Kesenian",
+        },
       ],
       currentIndex: 0,
     };
@@ -326,10 +323,13 @@ export default {
   height: auto;
 }
 
-
+.footer {
+  background-image: url(../assets/images/batik.png);
+  margin-top: -10px;
+}
 .image-text {
   position: absolute;
-  top: 33VW;
+  top: 33vw;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
@@ -351,11 +351,11 @@ export default {
   padding-bottom: 10vw;
 }
 
-.image-text2 div{
+.image-text2 div {
   font-size: 1vw;
   font-weight: 600;
   padding: 1vw;
-  text-align: left
+  text-align: left;
 }
 
 .arrow-down {
@@ -378,11 +378,11 @@ export default {
   font-weight: bold;
 }
 
-.bawah-destinasi{
+.bawah-destinasi {
   text-align: center;
   margin: 0 auto;
   width: 67vw;
-  color: #5E5E5E;
+  color: #5e5e5e;
   font-size: 1.6vw;
   margin-top: 2vw;
 }
@@ -443,7 +443,6 @@ export default {
 .img-att-down {
   height: 1vw;
 }
-
 
 .img-arrow-down {
   height: 2.5vw;
@@ -533,7 +532,7 @@ export default {
 .Lokasi-samping {
   flex: 1.8;
   font-size: 1.4vw;
-  color: #5E5E5E;
+  color: #5e5e5e;
 }
 
 .denah-map {
@@ -598,12 +597,12 @@ export default {
   margin: 0 auto;
 }
 
-.btn-kunjungan-text button{
+.btn-kunjungan-text button {
   float: right;
   padding: 0.5vw 1.3vw 0.5vw 1.3vw;
   border-radius: 0.3vw;
   border: 0;
-  background-color: #123B32;
+  background-color: #123b32;
   color: white;
   font-size: 1.2vw;
 }
@@ -630,7 +629,7 @@ export default {
   width: 96%;
   padding-top: 1vw;
   padding-bottom: 0.7vw;
-  border-bottom: 0.1vw solid #D0D5DD;
+  border-bottom: 0.1vw solid #d0d5dd;
 }
 
 .img-tiket-kunjungan {
@@ -644,16 +643,16 @@ export default {
   cursor: pointer;
 }
 
-.text-tiket{
+.text-tiket {
   font-weight: 600;
   font-size: 1.7vw;
   height: min-content;
 }
 
-.text-harga{
+.text-harga {
   font-weight: 400;
   font-size: 1.7vw;
-  color: #5E5E5E;
+  color: #5e5e5e;
   margin-bottom: 0;
 }
 
@@ -746,7 +745,7 @@ h4 {
   height: 5vw;
   width: 100%;
   padding-left: 1vw;
-  background-color: #123B32;
+  background-color: #123b32;
   color: #fff;
   text-align: left;
   border: none;
@@ -780,7 +779,7 @@ h4 {
 .inlower {
   width: 50vw;
 }
-.inlower p{
+.inlower p {
   margin-top: 10vw;
   font-size: 1.3vw;
   padding-left: 1.5vw;
@@ -796,7 +795,9 @@ h4 {
   padding-right: 4vw;
 }
 
-.foto1, .foto2, .foto3 {
+.foto1,
+.foto2,
+.foto3 {
   height: 5vw;
   width: 5vw;
 }
@@ -811,7 +812,7 @@ h4 {
   flex-direction: row;
   gap: 4vw;
   width: 40vw;
-  justify-content: center
+  justify-content: center;
 }
 
 .quick-links {

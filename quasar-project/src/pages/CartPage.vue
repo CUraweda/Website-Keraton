@@ -13,7 +13,12 @@ import NavBar from "../components/NavBar.vue";
               <NavBar border />
             </nav>
             <q-page-sticky position="bottom-right" :offset="[18, 18]">
-              <q-btn fab icon="add" color="accent" />
+              <q-btn
+                no-caps
+                label="Checkout"
+                color="primary"
+                @click="checkout"
+              />
             </q-page-sticky>
             <div class="content">
               <div>
