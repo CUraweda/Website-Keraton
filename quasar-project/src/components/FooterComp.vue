@@ -9,7 +9,7 @@
       <p>KERATON <br />KASEPUHAN <br />CIREBON</p>
     </div>
     <div class="footer-col">
-      <div class="footer-col-1">
+      <div>
         <h3>Quick Links</h3>
         <ul>
           <li><a href="#">Beranda</a></li>
@@ -18,7 +18,7 @@
           <li><a href="#">Objek Wisata</a></li>
         </ul>
       </div>
-      <div class="footer-col-2">
+      <div>
         <h3>Socials</h3>
         <ul>
           <li><a href="#">Whatsapp</a></li>
@@ -27,7 +27,7 @@
           <li><a href="#">Threads</a></li>
         </ul>
       </div>
-      <div class="footer-col-3">
+      <div>
         <h3>Company</h3>
         <ul>
           <li><a href="#">About us</a></li>
@@ -137,38 +137,17 @@ ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  margin: 0 6rem;
 }
 
 .footer-col h3 {
   font-size: 30px;
   font-weight: 40px;
-  display: inline-block;
   margin-bottom: 11px;
   margin-top: 76px;
 }
 .footer-col-1 {
   margin-left: 88px;
-  width: 20vw;
-}
-
-.button {
-  background-color: #123b32;
-
-  color: white;
-  font-family: Raleway;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 28px;
-
-  text-align: left;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-
-  font-weight: bold;
-  cursor: pointer;
-  width: 431px;
-  height: 58px;
 }
 
 .logo {
@@ -187,19 +166,6 @@ ul {
   margin-right: 9px;
 }
 
-.footer-col-2 {
-  margin-left: 60px;
-}
-.footer-col-3 {
-  margin-left: 60px;
-}
-.footer-col-4 {
-  margin-left: 139px;
-  width: 434px;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
 .footer-col li {
   color: #212121;
 }
