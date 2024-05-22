@@ -55,7 +55,9 @@
 <script>
 import cookieHandler from "src/cookieHandler";
 import env from "../stores/environment";
+import Cart from "stores/carts";
 import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
+const cartClass = new Cart();
 
 export default {
   data() {
@@ -82,26 +84,26 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    async verifyToken() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        this.isLogin = false;
-        return;
-      }
+    // async verifyToken() {
+    //   const token = localStorage.getItem("token");
+    //   if (!token) {
+    //     this.isLogin = false;
+    //     return;
+    //   }
 
-      try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        const data = await response.json();
-        this.isLogin = true;
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    },
+    //   try {
+    //     const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     });
+    //     const data = await response.json();
+    //     this.isLogin = true;
+    //     this.$router.push("/");
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //   }
+    // },
     async submitForm() {
       this.emailError = !this.email.trim();
       this.passwordError = !this.password.trim();
@@ -117,26 +119,19 @@ export default {
 
       try {
         const response = await this.$api.post("/auth/login", payload);
-
-        const data = await response.json();
-
         if (response.status != 200) throw Error(response.data.message);
-        localStorage.setItem(env.TOKEN_STORAGE_NAME, response.data.data.token);
-        localStorage.setItem("name", response.data.data.user.name);
         const { token, user } = response.data.data;
-        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
-        localStorage.setItem("user", user);
-        this.$router.go(-1);
+        const cartData = Object.values(user.carts);
+        delete user.carts;
 
         this.showNotif("Login Successfuly", "info");
-        localStorage.setItem("token", data.data.token);
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
-        this.showNotif(
-          "unknown fatal error please contact the developer",
-          "error"
-        );
+        cartClass.setNew(cartData);
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
+        localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
+        this.$router.go(-1);
+      } catch (err) {
+        console.log(err);
+        this.showNotif(err.message, "error");
       }
     },
   },

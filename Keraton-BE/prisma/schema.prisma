@@ -72,7 +72,7 @@ model Order {
   image          String?
   name           String
   desc           String?
-  price          Decimal       @db.Decimal(18, 2) 
+  price          Decimal       @db.Decimal(18, 2)
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
@@ -106,19 +106,20 @@ model OrderSubType {
 }
 
 model Transaction {
-  id            String        @id @default(uuid())
-  total         Decimal       @db.Decimal(18, 2)
-  method        String
-  status        Status
-  plannedDate   DateTime
-  createdDate   DateTime      @default(now())
-  discount      String
-  cashback      String
-  user          User?         @relation(fields: [userId], references: [id])
-  userId        String?
-  nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
-  nationalityId String?
-  detailTrans   DetailTrans[]
+  id                String        @id @default(uuid())
+  total             Decimal       @db.Decimal(18, 2)
+  method            String
+  status            Status
+  plannedDate       DateTime
+  createdDate       DateTime      @default(now())
+  discount          String?
+  cashback          String?
+  uniqueBarCodeData String?       @db.Text
+  user              User?         @relation(fields: [userId], references: [id])
+  userId            String?
+  nationality       Nationality?  @relation(fields: [nationalityId], references: [id])
+  nationalityId     String?
+  detailTrans       DetailTrans[]
 }
 
 model DetailTrans {
@@ -127,8 +128,10 @@ model DetailTrans {
   createdAt     DateTime    @default(now())
   transaction   Transaction @relation(fields: [transactionId], references: [id])
   transactionId String
-  order         Order       @relation(fields: [orderId], references: [id])
-  orderId       String
+  order         Order?      @relation(fields: [orderId], references: [id])
+  orderId       String?
+  event         Events?     @relation(fields: [eventId], references: [id])
+  eventId       Int?
   guide         Guide?      @relation(fields: [guideId], references: [id])
   guideId       String?
 }
@@ -169,6 +172,7 @@ model Events {
   name        String
   desc        String         @db.Text
   image       String
+  DetailTrans DetailTrans[]
 }
 
 model EventIteration {

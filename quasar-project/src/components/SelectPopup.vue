@@ -56,6 +56,16 @@ defineExpose({
           /></span>
         </div>
       </div>
+      <div class="kredit">
+        <div class="txt-kredit-popup">
+          <h6>Cash</h6>
+        </div>
+        <div class="icon">
+          <span @click="toCash"
+            ><img class="image" src="../assets/svg/FrameVector-Right.svg"
+          /></span>
+        </div>
+      </div>
       <!-- <div class="transfer">
         <div class="txt-bank">
           <h6>Bank Transfer</h6>

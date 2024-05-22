@@ -1,7 +1,7 @@
 <template>
-  <div v-if="isLogin">
+  <div>
     <nav>
-      <navbar isWhiteText/>
+      <navbar border :isCheckoutPage="true" />
     </nav>
     <div class="header">
       <div class="text1">
@@ -26,7 +26,9 @@
       <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
       <h1 class="judul-besar">{{ item.titleBig }}</h1>
       <div class="tengah">
-        <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}</h3>
+        <h3 class="judul-kecil">
+          {{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}
+        </h3>
         <button class="tambah" @click="addToCart(item)">
           Tambah <img class="photo" src="../assets/Frame.svg" />
         </button>
@@ -43,7 +45,9 @@
         <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
         <h1 class="judul-besar">{{ item.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}</h3>
+          <h3 class="judul-kecil">
+            {{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}
+          </h3>
           <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
@@ -270,7 +274,7 @@ export default {
                   titleBig: order.desc,
                   quantity: 0,
                   price: order.price,
-                  unit: order.units
+                  unit: order.units,
                 });
               }
               break;
@@ -287,7 +291,7 @@ export default {
                   titleBig: order.desc,
                   quantity: 0,
                   price: order.price,
-                  unit: order.units
+                  unit: order.units,
                 });
               }
               break;
@@ -367,7 +371,7 @@ export default {
           image: rowData.image,
           quantity: 1,
           price: rowData.price,
-          type: "T"
+          type: "T",
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
@@ -385,9 +389,11 @@ export default {
 
 .header {
   margin-top: 93px;
-  background: linear-gradient(90deg,
-      rgba(218, 165, 32, 0.5) 0%,
-      rgba(18, 59, 50, 0.5) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(218, 165, 32, 0.5) 0%,
+    rgba(18, 59, 50, 0.5) 100%
+  );
   padding: 20px;
   text-align: center;
   width: 100%;
@@ -724,7 +730,7 @@ nav ul li button:hover {
   /* Efek transisi untuk perubahan warna */
 }
 
-.container input:checked~.checkmark {
+.container input:checked ~ .checkmark {
   background-image: linear-gradient(gold, gold);
   z-index: 1;
 }

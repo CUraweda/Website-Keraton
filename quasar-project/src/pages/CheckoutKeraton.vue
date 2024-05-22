@@ -113,15 +113,15 @@ const kurang = () => {
                   <small>MM/DD/YYY</small>
                 </div>
               </div>
-              <div>
+              <div v-for="(cart, i) in carts" :key="i">
                 <div class="content-4">
                   <div>
                     <h6 class="tiket-masuk">
-                      Tiket masuk Keraton Kesepuhan Cirebon
+                      {{ cart.name }}
                     </h6>
                   </div>
                   <div>
-                    <h6 class="hrg">Rp. {{ hargaStringTiket }}</h6>
+                    <h6 class="hrg">Rp. {{ cart.price }}</h6>
                   </div>
                 </div>
                 <div class="tmbh-brg">
@@ -129,7 +129,7 @@ const kurang = () => {
                     <button @click="kurang" class="kurang">
                       <img src="../assets/svg/iconKurang.svg" />
                     </button>
-                    <p class="input-tiket2">{{ count }}</p>
+                    <p class="input-tiket2">{{ cart.quantity }}</p>
                     <button @click="tambah" class="tambah">
                       <img src="../assets/svg/iconTambah.svg" />
                     </button>
@@ -187,13 +187,61 @@ const kurang = () => {
   </div>
 </template>
 
+<script>
+import Cart from 'stores/carts'
+const cartModel = new Cart()
+export default {
+  data() {
+    return {
+      carts: ref()
+    }
+  },
+  mounted(){
+    this.setCartData()
+  },
+  methods: {
+    async setCartData() {
+      try {
+        const rawCart = Object.values(cartClass.getItem());
+        if (rawCart.length < 1) {
+          const response = await this.$api.get("cart", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+
+          if (response.status != 200) throw Error(response.data.message);
+          rawCart = response.data.data;
+        }
+        this.cartData = rawCart.map((cart) => ({
+          ...cart,
+        }));
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async checkOut(){
+      try{
+        const response = await this.$api.post('/')
+      }catch(err){
+        console.log(err)
+      }
+    }
+  }
+}
+</script>
+
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+
+
 
 .block1 {
   width: 100%;
   padding: 120px 90px 0px;
 }
+
 .custom-radio-btn {
   width: 20px;
   height: 20px;
@@ -218,7 +266,7 @@ const kurang = () => {
   display: none;
 }
 
-.custom-radio-btn input:checked + .checkmark {
+.custom-radio-btn input:checked+.checkmark {
   display: inline-block;
   opacity: 1;
 }
@@ -310,6 +358,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #ffffff;
   background-color: #000000;
 }
+
 .tambah:hover img,
 .kurang:hover img {
   filter: brightness(0) invert(1);
@@ -611,6 +660,7 @@ body {
   padding: 20px;
   background-color: #ffffff;
 }
+
 .header {
   font-size: x-large;
 }
@@ -630,11 +680,13 @@ body {
     background-color: #ffffff;
   }
 }
+
 /* Responsif untuk layar dengan lebar maksimum 640px */
 @media (max-width: 640px) {
   .header {
     font-size: large;
   }
+
   .pstikan {
     font-size: small;
   }
@@ -643,9 +695,11 @@ body {
     width: 100%;
     padding: 200px 20px;
   }
+
   .content-5 {
     width: 100%;
   }
+
   .btn-pilih {
     display: block;
   }
@@ -683,6 +737,7 @@ body {
   margin: auto;
   height: 100%;
 }
+
 .txt-checkout {
   margin-left: 10px;
   width: 74px;

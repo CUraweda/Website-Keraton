@@ -27,7 +27,7 @@
           <li><a href="#">Threads</a></li>
         </ul>
       </div>
-      <div>
+      <div>ran
         <h3>Company</h3>
         <ul>
           <li><a href="#">About us</a></li>
