@@ -13,12 +13,19 @@ import NavBar from "../components/NavBar.vue";
               <NavBar border />
             </nav>
             <q-page-sticky position="bottom-right" :offset="[18, 18]">
-              <q-btn
-                no-caps
-                label="Checkout"
-                color="primary"
-                @click="checkout"
-              />
+              <q-btn fab color="primary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#e8eaed"
+                >
+                  <path
+                    d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
+                  />
+                </svg>
+              </q-btn>
             </q-page-sticky>
             <div class="content">
               <div>
@@ -43,19 +50,19 @@ import NavBar from "../components/NavBar.vue";
                         <div class="flex items-center q-gutter-md">
                           <button
                             style="width: 1rem"
-                            @click="changeQuantity('plus', cart)"
+                            @click="changeQuantity('plus', cart.quantity)"
                           >
                             +
                           </button>
                           <div>{{ cart.quantity }}</div>
                           <button
                             style="width: 1rem"
-                            @click="changeQuantity('min', cart)"
+                            @click="changeQuantity('min', cart.quantity)"
                           >
                             -
                           </button>
-                          <q-btn dense @click="removeItem(cart)">
-                            <q-icon name="delete"  />
+                          <q-btn dense>
+                            <q-icon name="delete" />
                           </q-btn>
                         </div>
                       </div>
@@ -75,14 +82,13 @@ import NavBar from "../components/NavBar.vue";
 <script>
 import env from "../stores/environment";
 import carts from "../stores/carts";
-import cookieHandler from "src/cookieHandler";
 
 const cartClass = new carts();
 export default {
   data() {
     return {
-      cartData: ref(),
-      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
+      cartData: undefined,
+      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
     };
   },
   mounted() {
@@ -104,7 +110,7 @@ export default {
           { cart: currentCart },
           {
             headers: {
-              Authorization: this.token,
+              Authorization: `Bearer ${this.token}`,
             },
           }
         );
@@ -129,6 +135,7 @@ export default {
         }
         this.cartData = rawCart.map((cart) => ({
           ...cart,
+          addedQuantity: 0,
         }));
       } catch (err) {
         console.log(err);
@@ -136,18 +143,17 @@ export default {
     },
     removeItem(rowData) {
       try {
-        console.log(rowData)
-        cartClass.removeItem([rowData]).updateItem()
-        this.cartData = cartClass.getItem()
+        return cartClass.removeItem(rowData).updateItem();
       } catch (err) {
         console.log(err);
       }
     },
     changeQuantity(indicator, rowData) {
       try {
-        const incDec = indicator != 'min' ? "asc" : "desc"
-        cartClass.changeQuantity(incDec, `${rowData.type}|${rowData.id}`, 1).updateItem()
-        this.cartData = cartClass.getItem()
+        indicator != "min"
+          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
+          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
+        return cartClass.updateItem();
       } catch (err) {
         console.log(err);
       }
