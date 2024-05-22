@@ -5,8 +5,10 @@
         {{ title }}
       </a>
       <svg viewBox="0 0 1030 638" width="10">
-        <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#FFF">
-        </path>
+        <path
+          d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z"
+          fill="#FFF"
+        ></path>
       </svg>
     </div>
     <transition name="fade">
@@ -18,7 +20,7 @@
     </transition>
 
     <button @click="toggleDropdown" class="dropdown-button">
-      {{ selectedOption ? selectedOption.name : '▼' }}
+      {{ selectedOption ? selectedOption.name : "▼" }}
     </button>
     <ul v-if="isOpen" class="dropdown-menu">
       <li v-for="option in options" :key="option.value">
@@ -30,17 +32,17 @@
 
 <script>
 export default {
-  name: 'dropdown',
+  name: "dropdown",
   props: {
     title: String,
     items: Array,
     selectedOption: Object,
-    options: Array
+    options: Array,
   },
   data() {
     return {
-      isOpen: false
-    }
+      isOpen: false,
+    };
   },
   methods: {
     toggleMenu() {
@@ -50,11 +52,11 @@ export default {
       this.isOpen = !this.isOpen;
     },
     selectOption(option) {
-      this.$emit('update:selectedOption', option);
+      this.$emit("update:selectedOption", option);
       this.isOpen = false;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
@@ -75,7 +77,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: all .5s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .fade-enter,
@@ -105,8 +107,8 @@ export default {
   width: auto;
   height: auto;
   top: 50px;
-  background: #FFFFFF;
-  border: 1px solid #123B32;
+  background: #ffffff;
+  border: 1px solid #123b32;
   border-radius: 10px;
 }
 

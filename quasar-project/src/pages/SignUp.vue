@@ -3,68 +3,124 @@
     <div class="image">
       <div class="decor">
         <div class="logo">
-          <img src="../assets/images/logo_keraton.png">
+          <img src="../assets/images/logo_keraton.png" />
           <h5>KERATON KASEPUHAN CIREBON</h5>
         </div>
         <h1>Bersama Lestarikan Keraton Tertua di Kota Cirebon</h1>
       </div>
-      <img src="../assets/images/keraton.png" alt="Gambar">
+      <img src="../assets/images/keraton.png" alt="Gambar" />
     </div>
     <div>
       <form @submit.prevent="submitForm" class="form">
         <h1>Sign Up</h1>
         <div class="boxx">
-        <label class="text">Nama Lengkap</label>
-        <div :class="{ 'box': true, 'error-border': nameError }">
-          <input type="text" v-model="name">
-          <h3 class="error-message" v-show="nameError">{{ nameErrorMessage }}</h3>
+          <label class="text">Nama Lengkap</label>
+          <div :class="{ box: true, 'error-border': nameError }">
+            <input type="text" v-model="name" />
+            <h3 class="error-message" v-show="nameError">
+              {{ nameErrorMessage }}
+            </h3>
+          </div>
         </div>
-      </div>
-      <div class="boxx">
-        <label class="text">Email</label>
-        <div :class="{ 'box': true, 'error-border': emailError }">
-          <input type="email" v-model="email" placeholder="6+ Characters">
-          <h3 class="error-message" v-show="emailError">{{ emailErrorMessage }}</h3>
+        <div class="boxx">
+          <label class="text">Email</label>
+          <div :class="{ box: true, 'error-border': emailError }">
+            <input type="email" v-model="email" placeholder="6+ Characters" />
+            <h3 class="error-message" v-show="emailError">
+              {{ emailErrorMessage }}
+            </h3>
+          </div>
         </div>
-      </div>
         <div class="pass">
-  <div class="pw">
-    <h3 class="text textp">Password</h3>
-    <div :class="{box2: true, 'error-border': passwordError}">
-      <input type="password" v-model="password" placeholder="6+ Characters">
-      <h3 class="error-message" v-show="passwordError">{{ passwordErrorMessage }}</h3>
-    </div>
-  </div>
-  <div class="cpw">
-    <h3 class="text textp">Konfirmasi Password</h3>
-    <div :class="{box2: true, 'error-border': passmatchError}">
-      <input type="password" v-model="passmatch" placeholder="6+ Characters">
-      <h3 class="error-message" v-show="passmatchError">{{ passmatchErrorMessage }}</h3>
-    </div>
-  </div>
-</div>
-<div class="bottom">
-        <button class="button">Buat Akun</button>
-        <h3 class="signup">Sudah buat akun? <router-link to="/signin" class="highlight">Sign In</router-link></h3>
-        <h3 class="terms">Dengan signin ke Keraton Kasepuhan Cirebon, anda setuju dengan <b>Terms</b> dan <b>Privacy Policy</b>.</h3>
-      </div>
+          <div class="pw">
+            <h3 class="text textp">Password</h3>
+            <div :class="{ box2: true, 'error-border': passwordError }">
+              <input
+                type="password"
+                v-model="password"
+                placeholder="6+ Characters"
+              />
+              <h3 class="error-message" v-show="passwordError">
+                {{ passwordErrorMessage }}
+              </h3>
+            </div>
+          </div>
+          <div class="cpw">
+            <h3 class="text textp">Konfirmasi Password</h3>
+            <div :class="{ box2: true, 'error-border': passmatchError }">
+              <input
+                type="password"
+                v-model="passmatch"
+                placeholder="6+ Characters"
+              />
+              <h3 class="error-message" v-show="passmatchError">
+                {{ passmatchErrorMessage }}
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <button class="button">Buat Akun</button>
+          <h3 class="signup">
+            Sudah buat akun?
+            <router-link to="/signin" class="highlight">Sign In</router-link>
+          </h3>
+          <h3 class="terms">
+            Dengan signin ke Keraton Kasepuhan Cirebon, anda setuju dengan
+            <b>Terms</b> dan <b>Privacy Policy</b>.
+          </h3>
+        </div>
       </form>
     </div>
+
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
 <script>
-import { BASE_URL } from 'src/auth/config';
+import { BASE_URL } from "src/auth/config";
+import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
   data() {
     return {
       isLogin: false,
+      email: "",
+      password: "",
+      name: "",
+      passmatch: "",
+      emailError: false,
+      passwordError: false,
+      nameError: false,
+      passmatchError: false,
+      nameErrorMessage: "Please type your name",
+      emailErrorMessage: "Please type your email",
+      passwordErrorMessage: "Please type your password",
+      passmatchErrorMessage: "Password didn't match",
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
   },
   mounted() {
     this.verifyToken();
   },
   methods: {
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
+    },
     async verifyToken() {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -73,14 +129,11 @@ export default {
       }
 
       try {
-        const response = await fetch(
-          BASE_URL() + "/keraton/auth/auth",
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+          headers: {
+            Authorization: token,
+          },
+        });
         const data = await response.json();
         this.isLogin = true;
         this.$router.push("/");
@@ -90,89 +143,99 @@ export default {
         this.isLogin = false;
       }
     },
+    async submitForm() {
+      this.emailError = !this.email.trim();
+      this.passwordError = !this.password.trim();
+      this.nameError = !this.name.trim();
+      this.passmatchError = !this.passmatch.trim();
+
+      if (
+        this.emailError ||
+        this.passwordError ||
+        this.nameError ||
+        this.passmatchError
+      ) {
+        this.showNotif("fill in all fields please", "error");
+        return;
+      }
+
+      if (this.password !== this.passmatch) {
+        this.passmatchError = true;
+        this.showNotif("password didn't match", "error");
+        return;
+      }
+
+      const payload = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+      };
+
+      try {
+        const response = await fetch(BASE_URL() + "/keraton/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 500) {
+            this.showNotif(
+              "there is an error in the server, try again later",
+              "error"
+            );
+          } else if (
+            response.status === 404 &&
+            data.message.includes("constraint")
+          ) {
+            this.showNotif(
+              "email has been used please use another email",
+              "error"
+            );
+          } else {
+            this.showNotif(
+              "unknown error please contact the developer",
+              "error"
+            );
+          }
+          return;
+        }
+
+        this.showNotif("Register Successfuly", "info");
+        localStorage.setItem("token", data.data);
+        this.$router.push("/");
+      } catch (error) {
+        console.error("Error:", error);
+        this.showNotif(
+          "unknown fatal error please contact the developer",
+          "error"
+        );
+      }
+    },
   },
-  components: {},
-};
-</script>
-
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from "vue-router";
-const router = useRouter();
-
-const email = ref('');
-const password = ref('');
-const name = ref('');
-const passmatch = ref('');
-const emailError = ref(false);
-const passwordError = ref(false);
-const nameError = ref(false);
-const passmatchError = ref(false);
-const nameErrorMessage = ref("Please type your name");
-const emailErrorMessage = ref("Please type your email");
-const passwordErrorMessage = ref("Please type your password");
-const passmatchErrorMessage = ref("Password didn't match");
-
-const submitForm = async () => {
-  emailError.value = !email.value.trim();
-  passwordError.value = !password.value.trim();
-  nameError.value = !name.value.trim();
-  passmatchError.value = !passmatch.value.trim();
-
-  if (!email.value.trim() || !password.value.trim() || !name.value.trim() || !passmatch.value.trim()) {
-    return;
-  }
-
-  if (password.value !== passmatch.value) {
-    passmatchError.value = true;
-    console.log('Password and confirmation password do not match');
-    return;
-  }
-
-  const payload = {
-    email: email.value,
-    password: password.value,
-    name: name.value
-  };
-
-  try {
-    const response = await fetch(BASE_URL() + '/keraton/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    console.log(data)
-    localStorage.setItem("token", data.data);
-    router.push("/");
-
-  } catch (error) {
-    console.error('Error:', error);
-  }
+  components: {
+    Notification,
+  },
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-body{
+body {
   justify-content: center;
   align-items: center;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   width: fit-content;
   height: fit-content;
   top: 622px;
   left: 970px;
 }
-.highlight{
+.highlight {
   text-decoration: none;
 }
 
@@ -181,17 +244,17 @@ h1 {
 }
 
 .error {
-  color: #FF5656;
+  color: #ff5656;
   font-size: 12px;
   margin-top: 5px;
 }
 
 .error-border {
-  border: 2px solid #FF5656;
+  border: 2px solid #ff5656;
 }
 
 .error-message {
-  color: #FF5656;
+  color: #ff5656;
   font-size: 12px;
   margin-top: -13px;
   font-weight: 700;
@@ -206,7 +269,7 @@ h1 {
   font-size: 40px;
   font-weight: 700;
   text-align: center;
-  font-family: 'Raleway';
+  font-family: "Raleway";
 }
 
 .form {
@@ -220,7 +283,7 @@ h1 {
   font-size: 16px;
   font-weight: 700;
   text-align: left;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   margin-bottom: -10px;
 }
 
@@ -266,7 +329,7 @@ h1 {
 }
 
 .button {
-  background-color: #123B32;
+  background-color: #123b32;
   color: white;
   border-radius: 8px;
   cursor: pointer;
@@ -274,7 +337,7 @@ h1 {
   height: 40px;
   font-weight: 500;
   font-size: 14px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   margin-top: 20px;
 }
 
@@ -284,12 +347,12 @@ h1 {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 38px;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 14px;
 }
 
 .highlight {
-  color: #4F3CC9;
+  color: #4f3cc9;
   cursor: pointer;
 }
 
@@ -298,8 +361,8 @@ h1 {
   text-align: center;
   font-size: 14px;
   font-weight: 400;
-  color: #AFAFAF;
-  font-family: 'Inter';
+  color: #afafaf;
+  font-family: "Inter";
   margin-top: -40px;
   line-height: 20px;
 }
@@ -317,7 +380,7 @@ b {
 
 .image h1 {
   font-size: 30px;
-  color: #FAE084;
+  color: #fae084;
   font-weight: 700;
   line-height: 40px;
   position: absolute;
@@ -348,7 +411,7 @@ b {
 }
 
 .logo h5 {
-  color: #FAE084;
+  color: #fae084;
   font-size: 14px;
   line-height: 20px;
   width: 98px;
@@ -372,7 +435,7 @@ b {
   body {
     justify-content: center;
     align-items: center;
-    font-family: 'Raleway';
+    font-family: "Raleway";
     width: fit-content;
     height: fit-content;
     top: 622px;
@@ -392,17 +455,17 @@ b {
   }
 
   .error {
-    color: #FF5656;
+    color: #ff5656;
     font-size: 12px;
     margin-top: 5px;
   }
 
   .error-border {
-    border: 2px solid #FF5656;
+    border: 2px solid #ff5656;
   }
 
   .error-message {
-    color: #FF5656;
+    color: #ff5656;
     font-size: 12px;
     margin-top: 8px;
     font-weight: 700;
@@ -418,7 +481,7 @@ b {
     font-size: 40px;
     font-weight: 700;
     text-align: center;
-    font-family: 'Raleway';
+    font-family: "Raleway";
   }
 
   .form {
@@ -434,15 +497,15 @@ b {
   .text {
     font-size: 16px;
     font-weight: 700;
-    font-family: 'Raleway';
+    font-family: "Raleway";
     margin-bottom: 4px;
   }
 
-  .textp{
+  .textp {
     margin-left: 45px;
   }
 
-  .boxx{
+  .boxx {
     width: 328px;
     margin-left: 45px;
     text-align: left;
@@ -474,44 +537,44 @@ b {
   }
 
   .button {
-    background-color: #123B32;
+    background-color: #123b32;
     color: white;
     border-radius: 8px;
     cursor: pointer;
-    width: 328px; 
+    width: 328px;
     height: 40px;
     font-weight: 500;
     font-size: 14px;
-    font-family: 'Raleway';
+    font-family: "Raleway";
     justify-content: center;
     margin-top: 20px;
   }
 
   .signup {
     font-weight: 400;
-    width: 100%; 
+    width: 100%;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 38px;
-    font-family: 'Raleway';
+    font-family: "Raleway";
   }
 
   .highlight {
-    color: #4F3CC9;
+    color: #4f3cc9;
     cursor: pointer;
   }
 
   .terms {
-    font-family: 'Inter';
+    font-family: "Inter";
     text-align: center;
     font-size: 14px;
     font-weight: 400;
-    color: #AFAFAF;
+    color: #afafaf;
     justify-content: center;
-    width: 100%; 
+    width: 100%;
     margin: auto;
     margin-top: -40px;
-  line-height: 20px;
+    line-height: 20px;
   }
 
   .image {
@@ -551,11 +614,8 @@ b {
     margin-left: 45px;
   }
 
-  .bottom{
+  .bottom {
     margin-top: 140px;
   }
 }
-
-
-
 </style>
