@@ -22,6 +22,9 @@
       <a :href="sectionData?.xl1?.data" v-mod class="btn1">
         <img class="btn1" src="../assets/images/btn1.png" />
       </a>
+      <button id="scrollToTopBtn" @click="scrollToTop" title="Go to top">
+        <img style="width: 60px" src="../assets/images/btn1.png" />
+      </button>
     </div>
   </section>
 
@@ -373,9 +376,11 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.socket();
-    this.startSlider();
+    // this.startSlider();
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
+    console.log("Naha nge unmount wae");
     socket.disconnect();
     clearInterval(this.sliderInterval);
   },
@@ -394,7 +399,6 @@ export default {
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          desc: news.desc,
           summary: news.desc,
         }));
 
@@ -463,6 +467,17 @@ export default {
       this.currentSlideIndex =
         (this.currentSlideIndex + 1) % this.slides.length;
     },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    handleScroll() {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    },
   },
 };
 </script>
@@ -492,10 +507,34 @@ export default {
 /* #section1 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("../assets/images/bg1.png");
-  background-size: cover;
+background-size: cover;
   margin-top: -110px;
   z-index: -999;
 } */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+  padding: 0;
+}
+
+#scrollToTopBtn img {
+  width: 40px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#scrollToTopBtn:hover img {
+  background-color: #555;
+  border-radius: 50%;
+}
 
 #section2 .container {
   background-image: linear-gradient(transparent, #fff9a0, #ffe96e);
@@ -969,11 +1008,11 @@ export default {
   border-radius: 10px;
   flex: 1;
 }
-.card4 img 
-.card5 img 
+.card4 img
+.card5 img
 .card6 img{
   flex: 2;
-  background-color: rgb(207,207,207); 
+  background-color: rgb(207,207,207);
 } */
 .container-card {
   position: absolute;
@@ -1023,7 +1062,6 @@ export default {
 .card6:hover {
   flex: 200px;
 }
-
 .card4.active,
 .card5.active,
 .card6.active {
