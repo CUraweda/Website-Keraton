@@ -399,6 +399,7 @@ export default {
           imageUrl: news.image,
           link: news.link,
           title: news.title,
+          desc: news.desc,
           summary: news.desc,
         }));
 
@@ -466,17 +467,6 @@ export default {
     nextSlide() {
       this.currentSlideIndex =
         (this.currentSlideIndex + 1) % this.slides.length;
-    },
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-    handleScroll() {
-      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
-      if (window.scrollY > 20) {
-        scrollToTopBtn.style.display = "block";
-      } else {
-        scrollToTopBtn.style.display = "none";
-      }
     },
   },
 };
