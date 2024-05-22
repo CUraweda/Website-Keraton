@@ -70,7 +70,7 @@ const kurang = () => {
             </div>
           </div>
           <div class="content-2">
-            <div class="txt3">
+            <!-- <div class="txt3">
               <img src="../assets/svg/Framecard.svg" />
               <p class="pil-kategori">Pilih Kategori</p>
             </div>
@@ -96,7 +96,7 @@ const kurang = () => {
                 </label>
                 <label for="mancanegara">Mancanegara</label>
               </div>
-            </div>
+            </div> -->
             <div class="content-3">
               <div class="txt4">
                 <img src="../assets/svg/det-tiket.svg" class="img-det-tiket" />
