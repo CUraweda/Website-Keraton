@@ -339,7 +339,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .tiket-masuk {
   color: #000000;
   font-weight: 400;
-  font-size: 20px;
+  font-size: large;
   line-height: 28px;
 }
 
@@ -633,10 +633,10 @@ body {
 /* Responsif untuk layar dengan lebar maksimum 640px */
 @media (max-width: 640px) {
   .header {
-    font-size: large;
+    font-size: x-large;
   }
   .pstikan {
-    font-size: small;
+    font-size: medium;
   }
 
   .block1 {

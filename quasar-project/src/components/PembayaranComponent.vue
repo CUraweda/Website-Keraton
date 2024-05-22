@@ -144,7 +144,7 @@ text-align: left;
   } */
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .select {
     width: 100%;
   }
