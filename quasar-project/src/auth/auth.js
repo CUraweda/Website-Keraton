@@ -9,7 +9,7 @@ export async function verifyToken() {
   try {
     const response = await fetch(env.BASE_URL + "/keraton/auth/auth", {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     });
     if (response.status != 200) throw Error(responseData.message)

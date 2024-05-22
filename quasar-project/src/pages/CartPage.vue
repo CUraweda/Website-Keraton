@@ -43,19 +43,19 @@ import NavBar from "../components/NavBar.vue";
                         <div class="flex items-center q-gutter-md">
                           <button
                             style="width: 1rem"
-                            @click="changeQuantity('plus', cart.quantity)"
+                            @click="changeQuantity('plus', cart)"
                           >
                             +
                           </button>
                           <div>{{ cart.quantity }}</div>
                           <button
                             style="width: 1rem"
-                            @click="changeQuantity('min', cart.quantity)"
+                            @click="changeQuantity('min', cart)"
                           >
                             -
                           </button>
-                          <q-btn dense>
-                            <q-icon name="delete" />
+                          <q-btn dense @click="removeItem(cart)">
+                            <q-icon name="delete"  />
                           </q-btn>
                         </div>
                       </div>
@@ -75,13 +75,14 @@ import NavBar from "../components/NavBar.vue";
 <script>
 import env from "../stores/environment";
 import carts from "../stores/carts";
+import cookieHandler from "src/cookieHandler";
 
 const cartClass = new carts();
 export default {
   data() {
     return {
-      cartData: undefined,
-      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
+      cartData: ref(),
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
     };
   },
   mounted() {
@@ -103,7 +104,7 @@ export default {
           { cart: currentCart },
           {
             headers: {
-              Authorization: `Bearer ${this.token}`,
+              Authorization: this.token,
             },
           }
         );
@@ -128,7 +129,6 @@ export default {
         }
         this.cartData = rawCart.map((cart) => ({
           ...cart,
-          addedQuantity: 0,
         }));
       } catch (err) {
         console.log(err);
@@ -136,17 +136,18 @@ export default {
     },
     removeItem(rowData) {
       try {
-        return cartClass.removeItem(rowData).updateItem();
+        console.log(rowData)
+        cartClass.removeItem([rowData]).updateItem()
+        this.cartData = cartClass.getItem()
       } catch (err) {
         console.log(err);
       }
     },
     changeQuantity(indicator, rowData) {
       try {
-        indicator != "min"
-          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
-          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
-        return cartClass.updateItem();
+        const incDec = indicator != 'min' ? "asc" : "desc"
+        cartClass.changeQuantity(incDec, `${rowData.type}|${rowData.id}`, 1).updateItem()
+        this.cartData = cartClass.getItem()
       } catch (err) {
         console.log(err);
       }
