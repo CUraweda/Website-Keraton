@@ -27,9 +27,9 @@
 </template>
 
 <script>
+import { verifyToken } from "src/auth/auth";
 import navbar from "src/components/NavBar.vue";
 import { ref } from "vue";
-import { verifyTokenAdmin } from "../../auth/auth";
 
 const columns = [
   {
@@ -87,7 +87,7 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.isAdmin = await verifyTokenAdmin.call(this);
+    this.isAdmin = (await verifyToken()).isAdmin
   },
   methods: {
     async fetchData() {

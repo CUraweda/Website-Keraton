@@ -13,7 +13,7 @@ const getUser = async (name) => {
 const isExist = async (id) => {
   try {
     return await prisma.user.findFirst({
-      where: { id: id },
+      where: { id: id }
     });
   } catch (err) {
     throwError(err);

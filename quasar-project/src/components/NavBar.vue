@@ -42,7 +42,7 @@
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/booking/events">
+                  <q-item clickable v-ripple to="/booking/event">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
+import { verifyToken } from "src/auth/auth";
 export default {
   data() {
     return {
@@ -135,8 +135,9 @@ export default {
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
-    this.isLogin = await verifyTokenBool(); // Menggunakan fungsi langsung
-    this.isAdmin = await verifyTokenAdmin();
+    const tokenVerified = await verifyToken()
+    this.isLogin = tokenVerified.isLogin
+    this.isAdmin = tokenVerified.isAdmin
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -169,7 +170,7 @@ export default {
       this.isScrolled = window.pageYOffset > 50;
     },
     goToPurchases() {
-      this.$router.push("/purchases");
+      this.$router.push("/user/transaction");
     },
     adminPage() {
       this.$router.push("/admin/home");

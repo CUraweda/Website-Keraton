@@ -1,58 +1,25 @@
-import { BASE_URL } from "./config";
+import cookieHandler from 'src/cookieHandler';
+import env from '../stores/environment'
+import axios from 'src/boot/axios';
 
-export async function verifyTokenBool() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    return false;
-  }
-
+export async function verifyToken() {
+  let data = { isLogin: false, isAdmin: false }
+  const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+  if (!token) return data
   try {
-    const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+    const response = await fetch(env.BASE_URL + "/keraton/auth/auth", {
       headers: {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
     });
-    const data = await response.json();
-    if (!response.ok) {
-      localStorage.removeItem("token");
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error("Failed to verify token:", error);
-    localStorage.removeItem("token");
-    this.$router.push("/")
-    return false;
-  }
-}
-
-export async function verifyTokenAdmin() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    // this.$router.push("/");
-    return false;
-  }
-
-  try {
-    const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
-      headers: {
-        Authorization: token,
-      },
-    });
-    if (!response.ok) {
-      return false;
-    }
-    const data = await response.json();
-    console.log(data)
-    if (data.data.role === "SUPER_ADMIN") return true;
-    else {
-      // this.$router.push("/");
-      return false;
-    }
-  } catch (error) {
-    console.error("Failed to verify token:", error);
-    localStorage.removeItem("token");
-    this.$router.push("/");
-    return false;
+    if (response.status != 200) throw Error(responseData.message)
+    const responseData = await response.json()
+    data.isLogin = true
+    if (responseData.data.role === "ADMIN" || responseData.data.role === "SUPER_ADMIN") data.isAdmin = true
+    return data
+  } catch (err) {
+    console.log(err)
+    // cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
+    return data
   }
 }

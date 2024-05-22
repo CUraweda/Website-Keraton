@@ -1,6 +1,7 @@
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
 import SejarahLP from "../pages/sejarahKeraton.vue";
+import AdminEventPage from "pages/Admin/EventPage.vue"
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
@@ -30,6 +31,11 @@ const routes = [
     path: "/admin/add/:id",
     name: "AdminAddPage",
     component: AdminAddPage,
+  },
+  {
+    path: "/admin/event",
+    name: "AdminEventPage",
+    component: AdminEventPage,
   },
   {
     path: "/signin",
@@ -82,7 +88,7 @@ const routes = [
     component: HistoryTransaksi,
   },
   {
-    path: "/booking/events",
+    path: "/booking/event",
     name: "eventgratis",
     component: EventGratis,
   },

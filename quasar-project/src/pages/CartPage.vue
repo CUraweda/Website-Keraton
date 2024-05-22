@@ -4,49 +4,80 @@ import NavBar from "../components/NavBar.vue";
 </script>
 
 <template>
-  <div class="all-content">
-    <div>
-      <nav class="navbar">
-        <NavBar border />
-      </nav>
-      <div class="content">
-        <div>
-          <h1 class="title">Keranjang</h1>
-        </div>
-      </div>
-      <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
-        <div>
-          <div class="tiket">
-            <div class="tiket__content">
-              <img :src="cart.image" :alt="i + 1" />
-              <div class="tiket__content-details">
-                <h6>{{ cart.name }}</h6>
-                <div class="label">
-                  <label class="labelharga"
-                    >{{ cart.quantity }} Ticket x Rp.
-                    {{ formatRupiah(cart.price) }} </label
-                  ><br />
+  <q-layout>
+    <q-page-container>
+      <q-page>
+        <div class="all-content">
+          <div>
+            <nav class="navbar">
+              <NavBar border />
+            </nav>
+            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+              <q-btn fab icon="add" color="accent" />
+            </q-page-sticky>
+            <div class="content">
+              <div>
+                <h1 class="title">Keranjang</h1>
+              </div>
+            </div>
+            <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
+              <div>
+                <div class="tiket">
+                  <div class="tiket__content">
+                    <img :src="cart.image" :alt="i + 1" />
+                    <div class="tiket__content-details">
+                      <h6>{{ cart.name }}</h6>
+                      <div class="label flex items-center justify-between">
+                        <div>
+                          <label class="labelharga">
+                            Rp.
+                            {{ formatRupiah(cart.price) }}
+                          </label>
+                          <br />
+                        </div>
+                        <div class="flex items-center q-gutter-md">
+                          <button
+                            style="width: 1rem"
+                            @click="changeQuantity('plus', cart)"
+                          >
+                            +
+                          </button>
+                          <div>{{ cart.quantity }}</div>
+                          <button
+                            style="width: 1rem"
+                            @click="changeQuantity('min', cart)"
+                          >
+                            -
+                          </button>
+                          <q-btn dense @click="removeItem(cart)">
+                            <q-icon name="delete"  />
+                          </q-btn>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <q-btn> </q-btn>
           </div>
         </div>
-      </div>
-      <q-btn> </q-btn>
-    </div>
-  </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
 import env from "../stores/environment";
 import carts from "../stores/carts";
+import cookieHandler from "src/cookieHandler";
 
 const cartClass = new carts();
 export default {
   data() {
     return {
-      cartData: undefined,
-      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
+      cartData: ref(),
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
     };
   },
   mounted() {
@@ -68,7 +99,7 @@ export default {
           { cart: currentCart },
           {
             headers: {
-              Authorization: `Bearer ${this.token}`,
+              Authorization: this.token,
             },
           }
         );
@@ -82,13 +113,17 @@ export default {
       try {
         const rawCart = Object.values(cartClass.getItem());
         if (rawCart.length < 1) {
-          const response = await this.$api.get("cart");
+          const response = await this.$api.get("cart", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
         }
         this.cartData = rawCart.map((cart) => ({
           ...cart,
-          addedQuantity: 0,
         }));
       } catch (err) {
         console.log(err);
@@ -96,17 +131,18 @@ export default {
     },
     removeItem(rowData) {
       try {
-        return cartClass.removeItem(rowData).updateItem();
+        console.log(rowData)
+        cartClass.removeItem([rowData]).updateItem()
+        this.cartData = cartClass.getItem()
       } catch (err) {
         console.log(err);
       }
     },
     changeQuantity(indicator, rowData) {
       try {
-        indicator != "min"
-          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
-          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
-        return cartClass.updateItem();
+        const incDec = indicator != 'min' ? "asc" : "desc"
+        cartClass.changeQuantity(incDec, `${rowData.type}|${rowData.id}`, 1).updateItem()
+        this.cartData = cartClass.getItem()
       } catch (err) {
         console.log(err);
       }
@@ -216,12 +252,11 @@ img {
 }
 
 .tabel {
-  width: 779px;
+  width: fit-content;
   height: fit-content;
   border-radius: 12px;
-  box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 9px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
-  /* Mengatur margin horizontal secara otomatis untuk memusatkan */
   margin-top: 48px;
   padding: 10px;
   margin-bottom: 23px;

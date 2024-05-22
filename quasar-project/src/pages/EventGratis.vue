@@ -148,6 +148,7 @@ export default {
         if (eventResponse.status != 200) throw Error("Error occured");
         if (iterationResponse.status != 200) throw Error("Error occured");
         this.events = eventResponse.data.data.map((event) => ({
+          id: event.id,
           image: event.image,
           buttonText1: event.iteration.name,
           titleMedium: event.desc,

@@ -23,7 +23,7 @@ export default class Carts {
         for (let data of listOfData) {
             const alreadyExist = this.userCart[data.id]
             if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity
-            this.userCart[`${data.event}|${data.id}`] = { ...data }
+            this.userCart[`${data.type}|${data.id}`] = { ...data }
         }
         return this
     }
@@ -32,14 +32,16 @@ export default class Carts {
         const cartItem = this.userCart[itemId]
         if (!cartItem) throw Error('Item didnt exist')
         cartItem.quantity = ascDesc != "asc" ? cartItem.quantity - qty : cartItem.quantity + qty
-        if (cartItem.quantity > 1) this.userCart[this.userCart] = cartItem
-        else this.removeItem([{ id: itemId }])
+        if (cartItem.quantity > 1){ this.userCart[itemId] = cartItem
+        } else this.removeItem([{ id: itemId }])
         return this
     }
 
     removeItem(listOfData = [{ id }]) {
         if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
-        for (let data of listOfData) delete this.userCart[data.id]
+        
+        for (let data of listOfData) delete this.userCart[`${data.type}|${data.id}`]
+        console.log(this, listOfData)
         return this
     }
 }
