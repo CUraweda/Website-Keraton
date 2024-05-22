@@ -30,7 +30,8 @@ const logIn = async (body) => {
 
     const token = jwt.sign(user, process.env.SECRET_KEY_AUTH);
     await prisma.token.create({ data: { token, userId: user.id}  })
-
+    delete user.password
+    delete user.id
     return { token, user };
   } catch (err) {
     throwError(err);
@@ -72,4 +73,14 @@ const update = async (id,data) => {
   }
 }
 
-module.exports = { getUser, isExist, logIn, signUp , update};
+const logOUt = async (token) => {
+  try{
+    const isExist = await prisma.token.findFirst({ where: { token } })
+    if (!isExist) throw Error('Token didnt exist in db')
+    return await prisma.token.delete({where: { id: isExist.id } })
+  }catch(err){
+    throwError(err)
+  }
+}
+
+module.exports = { getUser, isExist, logIn, signUp , update, logOUt};

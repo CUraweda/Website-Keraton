@@ -12,8 +12,8 @@ export async function verifyToken() {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (response.status != 200) throw Error(responseData.message)
     const responseData = await response.json()
+    if (response.status != 200) throw Error(responseData.message)
     data.isLogin = true
     if (responseData.data.role === "ADMIN" || responseData.data.role === "SUPER_ADMIN") data.isAdmin = true
     return data

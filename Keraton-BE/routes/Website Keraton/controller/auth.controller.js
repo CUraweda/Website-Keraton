@@ -24,6 +24,15 @@ expressRouter.post("/register", async (req, res) => {
   }
 });
 
+expressRouter.get('/logout', auth([]), async (req, res) => {
+  try{
+    const deletedToken = await userModel.logOUt(req.user.id, req.token)
+    return success(res, 'Log Out Success', deletedToken)
+  }catch(err){
+    return error(res, err.message)
+  }
+})
+
 expressRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
 

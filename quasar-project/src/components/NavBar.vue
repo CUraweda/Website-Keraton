@@ -111,12 +111,15 @@
 
 <script>
 import { verifyToken } from "src/auth/auth";
+import cookieHandler from "src/cookieHandler";
+import env from 'stores/environment'
+import { ref } from "vue";
 export default {
   data() {
     return {
       isScrolled: false,
-      isLogin: false,
-      isAdmin: false,
+      isLogin: ref(false),
+      isAdmin: ref(false),
     };
   },
   props: {
@@ -143,10 +146,22 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    logout() {
-      localStorage.removeItem("token");
-      this.isLogin = false; // Set isLogin ke false saat logout
-      // this.$router.push("/signin");
+    async logout() {
+      try {
+        const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+        const response = await this.$api.get('auth/logout', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        if (response.status != 200) throw Error(response.data.message)
+        // this.$router.push("/signin");
+      } catch (err) {
+        console.log(err)
+      }
+      localStorage.removeItem(env.USER_STORAGE_NAME)
+      cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
+      return this.isLogin = false; // Set isLogin ke false saat logout
     },
     // async keranjang() {
     //   try {
@@ -158,7 +173,7 @@ export default {
     //   }
     // },
     async toBooking(url) {
-        this.$router.push(url);
+      this.$router.push(url);
     },
     keranjang() {
       this.$router.push("/user/carts");
@@ -259,6 +274,7 @@ nav ul.dropdown-list li {
     display: none;
   }
 }
+
 .navbar {
   display: flex;
   position: fixed;

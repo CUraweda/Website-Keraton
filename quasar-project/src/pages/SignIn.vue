@@ -23,11 +23,7 @@
           </div>
           <h3 class="text">Password</h3>
           <div :class="{ box: true, 'error-border': passwordError }">
-            <input
-              type="password"
-              v-model="password"
-              placeholder="6+ Characters"
-            />
+            <input type="password" v-model="password" placeholder="6+ Characters" />
             <h3 class="error-message" v-show="passwordError">
               {{ passwordErrorMessage }}
             </h3>
@@ -44,18 +40,16 @@
         </form>
       </div>
     </div>
-    <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
+    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
   </div>
 </template>
 
 <script>
 import cookieHandler from "src/cookieHandler";
 import env from "../stores/environment";
+import Cart from "stores/carts"
 import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
+const cartClass = new Cart()
 
 export default {
   data() {
@@ -82,26 +76,26 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    async verifyToken() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        this.isLogin = false;
-        return;
-      }
+    // async verifyToken() {
+    //   const token = localStorage.getItem("token");
+    //   if (!token) {
+    //     this.isLogin = false;
+    //     return;
+    //   }
 
-      try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        const data = await response.json();
-        this.isLogin = true;
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    },
+    //   try {
+    //     const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     });
+    //     const data = await response.json();
+    //     this.isLogin = true;
+    //     this.$router.push("/");
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //   }
+    // },
     async submitForm() {
       this.emailError = !this.email.trim();
       this.passwordError = !this.password.trim();
@@ -116,44 +110,20 @@ export default {
       };
 
       try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
-
-        if (!response.ok) {
-          if (response.status === 500) {
-            this.showNotif(
-              "there is an error in the server, try again later",
-              "error"
-            );
-          } else if (
-            response.status === 404 &&
-            data.message.includes("Username")
-          ) {
-            this.showNotif("incorrect email or password", "error");
-          } else {
-            this.showNotif(
-              "unknown error please contact the developer",
-              "error"
-            );
-          }
-          return;
-        }
-
+        const response = await this.$api.post('/auth/login', payload)
+        if (response.status != 200) throw Error(response.data.message)
+        const { token, user } = response.data.data
+        const cartData = Object.values(user.carts)
+        delete user.carts
+        
         this.showNotif("Login Successfuly", "info");
-        localStorage.setItem("token", data.data.token);
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
-        this.showNotif(
-          "unknown fatal error please contact the developer",
-          "error"
-        );
+        cartClass.setNew(cartData)
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token)
+        localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
+        this.$router.go(-1);
+      } catch (err) {
+        console.log(err);
+        this.showNotif(err.message, "error");
       }
     },
   },
