@@ -42,7 +42,7 @@
                       <q-item-label>Paket Keraton</q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item clickable v-ripple to="/booking/events">
+                  <q-item clickable v-ripple to="/booking/event">
                     <q-item-section>
                       <q-item-label>Tiket Event</q-item-label>
                     </q-item-section>
