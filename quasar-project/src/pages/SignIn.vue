@@ -116,34 +116,17 @@ export default {
       };
 
       try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
+        const response = await this.$api.post("/auth/login", payload);
+
         const data = await response.json();
 
-        if (!response.ok) {
-          if (response.status === 500) {
-            this.showNotif(
-              "there is an error in the server, try again later",
-              "error"
-            );
-          } else if (
-            response.status === 404 &&
-            data.message.includes("Username")
-          ) {
-            this.showNotif("incorrect email or password", "error");
-          } else {
-            this.showNotif(
-              "unknown error please contact the developer",
-              "error"
-            );
-          }
-          return;
-        }
+        if (response.status != 200) throw Error(response.data.message);
+        localStorage.setItem(env.TOKEN_STORAGE_NAME, response.data.data.token);
+        localStorage.setItem("name", response.data.data.user.name);
+        const { token, user } = response.data.data;
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
+        localStorage.setItem("user", user);
+        this.$router.go(-1);
 
         this.showNotif("Login Successfuly", "info");
         localStorage.setItem("token", data.data.token);

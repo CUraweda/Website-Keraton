@@ -1,19 +1,43 @@
 <template>
-  <div class="navbar" :class="{ white: isWhiteText, border: border, scrolled: isScrolled }">
+  <div
+    class="navbar"
+    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
+  >
     <div class="navbar-left">
-      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" />
+      <img
+        alt="icon-aplikasi"
+        src="../assets/images/logo_keraton.png"
+        class="app-icon"
+      />
       <span class="app-name">KERATON KASEPUHAN CIREBON</span>
     </div>
     <div class="navbar-right">
       <nav>
         <ul>
           <li class="sub">
-            <q-btn flat label="Beranda" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-    " no-caps dense clickable v-ripple to="/"></q-btn>
+            <q-btn
+              flat
+              label="Beranda"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
+              no-caps
+              dense
+              clickable
+              v-ripple
+              to="/"
+            ></q-btn>
           </li>
           <li class="sub">
-            <q-btn flat label="Sejarah" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-    " no-caps dense>
+            <q-btn
+              flat
+              label="Sejarah"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
+              no-caps
+              dense
+            >
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
@@ -32,8 +56,15 @@
             </q-btn>
           </li>
           <li class="sub" v-if="isLogin">
-            <q-btn flat label="Booking" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-    " no-caps dense>
+            <q-btn
+              flat
+              label="Booking"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
+              no-caps
+              dense
+            >
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
@@ -52,8 +83,15 @@
             </q-btn>
           </li>
           <li class="sub">
-            <q-btn flat label="Objek Wisata" :text-color="isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-    " no-caps dense>
+            <q-btn
+              flat
+              label="Objek Wisata"
+              :text-color="
+                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
+              "
+              no-caps
+              dense
+            >
               <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
               <q-menu>
                 <q-list>
@@ -77,8 +115,13 @@
             </q-btn>
           </li>
           <li>
-            <q-btn style="background: #123b32; color: white; padding-inline: 30px" no-caps dense v-if="!isLogin"
-              @click="getTickets">
+            <q-btn
+              style="background: #123b32; color: white; padding-inline: 30px"
+              no-caps
+              dense
+              v-if="!isLogin"
+              @click="getTickets"
+            >
               <span class="text-bold">Dapatkan Tiket</span>
             </q-btn>
             <q-btn v-else round flat dense @click="toggleMenu">
@@ -92,6 +135,7 @@
                   </q-item>
                   <q-item clickable v-ripple @click="keranjang">
                     <q-item-section>Keranjang</q-item-section>
+                    <q-badge color="red" floating>4</q-badge>
                   </q-item>
                   <q-item clickable v-ripple @click="goToPurchases">
                     <q-item-section>Pembelian</q-item-section>
@@ -135,9 +179,9 @@ export default {
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
-    const tokenVerified = await verifyToken()
-    this.isLogin = tokenVerified.isLogin
-    this.isAdmin = tokenVerified.isAdmin
+    const tokenVerified = await verifyToken();
+    this.isLogin = tokenVerified.isLogin;
+    this.isAdmin = tokenVerified.isAdmin;
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -158,7 +202,7 @@ export default {
     //   }
     // },
     async toBooking(url) {
-        this.$router.push(url);
+      this.$router.push(url);
     },
     keranjang() {
       this.$router.push("/user/carts");
