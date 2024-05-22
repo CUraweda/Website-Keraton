@@ -1,62 +1,89 @@
 <template>
-  <div id="app" class="container" v-cloak v-if="!isLogin">
-    <div class="image">
-      <div class="decor">
-        <div class="logo">
-          <img src="../assets/images/logo_keraton.png" />
-          <h5>KERATON KASEPUHAN CIREBON</h5>
+  <div>
+    <div id="app" class="container" v-cloak v-if="!isLogin">
+      <div class="image">
+        <div class="decor">
+          <div class="logo">
+            <img src="../assets/images/logo_keraton.png" />
+            <h5>KERATON KASEPUHAN CIREBON</h5>
+          </div>
+          <h1>Bersama Lestarikan Keraton Tertua di Kota Cirebon</h1>
         </div>
-        <h1>Bersama Lestarikan Keraton Tertua di Kota Cirebon</h1>
+        <img src="../assets/images/keraton.png" alt="Gambar" class="crop" />
       </div>
-      <img src="../assets/images/keraton.png" alt="Gambar" class="crop" />
-    </div>
-    <div>
-      <form @submit.prevent="submitForm" class="form">
-        <h1>Sign In</h1>
-        <h3 class="text">Email</h3>
-        <div :class="{ box: true, 'error-border': emailError }">
-          <input type="email" v-model="email" />
-          <h3 class="error-message" v-show="emailError">
-            {{ emailErrorMessage }}
+      <div>
+        <form @submit.prevent="submitForm" class="form">
+          <h1>Sign In</h1>
+          <h3 class="text">Email</h3>
+          <div :class="{ box: true, 'error-border': emailError }">
+            <input type="email" v-model="email" />
+            <h3 class="error-message" v-show="emailError">
+              {{ emailErrorMessage }}
+            </h3>
+          </div>
+          <h3 class="text">Password</h3>
+          <div :class="{ box: true, 'error-border': passwordError }">
+            <input
+              type="password"
+              v-model="password"
+              placeholder="6+ Characters"
+            />
+            <h3 class="error-message" v-show="passwordError">
+              {{ passwordErrorMessage }}
+            </h3>
+          </div>
+          <button class="button">Sign In</button>
+          <h3 class="signup">
+            Belum buat akun?
+            <router-link to="/signup" class="highlight">Sign Up</router-link>
           </h3>
-        </div>
-        <h3 class="text">Password</h3>
-        <div :class="{ box: true, 'error-border': passwordError }">
-          <input
-            type="password"
-            v-model="password"
-            placeholder="6+ Characters"
-          />
-          <h3 class="error-message" v-show="passwordError">
-            {{ passwordErrorMessage }}
+          <h3 class="terms">
+            Dengan signin ke Keraton Kasepuhan Cirebon, anda setuju dengan
+            <b>Terms</b> dan <b>Privacy Policy</b>.
           </h3>
-        </div>
-        <button class="button">Sign In</button>
-        <h3 class="signup">
-          Belum buat akun?
-          <router-link to="/signup" class="highlight">Sign Up</router-link>
-        </h3>
-        <h3 class="terms">
-          Dengan signin ke Keraton Kasepuhan Cirebon, anda setuju dengan
-          <b>Terms</b> dan <b>Privacy Policy</b>.
-        </h3>
-      </form>
+        </form>
+      </div>
     </div>
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
 <script>
 import { BASE_URL } from "src/auth/config";
+import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
+
 export default {
   data() {
     return {
       isLogin: false,
+      email: "",
+      password: "",
+      emailError: false,
+      passwordError: false,
+      emailErrorMessage: "Please type your email",
+      passwordErrorMessage: "Please type your password",
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
   },
   mounted() {
     this.verifyToken();
   },
   methods: {
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
+    },
     async verifyToken() {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -65,14 +92,11 @@ export default {
       }
 
       try {
-        const response = await fetch(
-          BASE_URL() + "/keraton/auth/auth",
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
+        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+          headers: {
+            Authorization: token,
+          },
+        });
         const data = await response.json();
         this.isLogin = true;
         this.$router.push("/");
@@ -82,55 +106,64 @@ export default {
         this.isLogin = false;
       }
     },
+    async submitForm() {
+      this.emailError = !this.email.trim();
+      this.passwordError = !this.password.trim();
+
+      if (this.emailError || this.passwordError) {
+        return;
+      }
+
+      const payload = {
+        email: this.email,
+        password: this.password,
+      };
+
+      try {
+        const response = await fetch(BASE_URL() + "/keraton/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+
+        if (!response.ok) {
+          if (response.status === 500) {
+            this.showNotif(
+              "there is an error in the server, try again later",
+              "error"
+            );
+          } else if (
+            response.status === 404 &&
+            data.message.includes("Username")
+          ) {
+            this.showNotif("incorrect email or password", "error");
+          } else {
+            this.showNotif(
+              "unknown error please contact the developer",
+              "error"
+            );
+          }
+          return;
+        }
+
+        this.showNotif("Login Successfuly", "info");
+        localStorage.setItem("token", data.data.token);
+        this.$router.push("/");
+      } catch (error) {
+        console.error("Error:", error);
+        this.showNotif(
+          "unknown fatal error please contact the developer",
+          "error"
+        );
+      }
+    },
   },
-  components: {},
-};
-</script>
-
-<script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-const router = useRouter();
-
-const email = ref("");
-const password = ref("");
-const emailError = ref(false);
-const passwordError = ref(false);
-const emailErrorMessage = ref("Please type your email");
-const passwordErrorMessage = ref("Please type your password");
-
-const submitForm = async () => {
-  emailError.value = !email.value.trim();
-  passwordError.value = !password.value.trim();
-
-  if (!email.value.trim() || !password.value.trim()) {
-    return;
-  }
-
-  const payload = {
-    email: email.value,
-    password: password.value,
-  };
-
-  try {
-    const response = await fetch(BASE_URL() + "/keraton/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    localStorage.setItem("token", data.data.token);
-    router.push("/");
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  components: {
+    Notification,
+  },
 };
 </script>
 
