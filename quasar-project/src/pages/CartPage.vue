@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import NavBar from "../components/NavBar.vue";
-
 </script>
 
 <template>
@@ -16,95 +15,100 @@ import NavBar from "../components/NavBar.vue";
         </div>
       </div>
       <div v-for="(cart, i) in cartData" :key="cart.id" class="tabel">
-        <div >
+        <div>
           <div class="tiket">
             <div class="tiket__content">
               <img :src="cart.image" :alt="i + 1" />
               <div class="tiket__content-details">
                 <h6>{{ cart.name }}</h6>
                 <div class="label">
-                  <label class="labelharga">{{  cart.quantity }} Ticket x Rp. {{ formatRupiah(cart.price) }} </label><br />
+                  <label class="labelharga"
+                    >{{ cart.quantity }} Ticket x Rp.
+                    {{ formatRupiah(cart.price) }} </label
+                  ><br />
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <q-btn>
-        
-      </q-btn>
+      <q-btn> </q-btn>
     </div>
   </div>
 </template>
 
-
 <script>
-import env from '../stores/environment'
-import carts from '../stores/carts'
+import env from "../stores/environment";
+import carts from "../stores/carts";
 
-const cartClass = new carts()
+const cartClass = new carts();
 export default {
-  data(){
-    return{
+  data() {
+    return {
       cartData: undefined,
-      token: localStorage.getItem(env.TOKEN_STORAGE_NAME)
-    }
+      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
+    };
   },
-  mounted(){
-    this.fetchData()
+  mounted() {
+    this.fetchData();
   },
-  beforeUnmount(){
-    this.updateToDB()
+  beforeUnmount() {
+    this.updateToDB();
   },
   methods: {
-    async updateToDB(){
-      try{
-        const currentCart = {}
-        for(let cart of cartData){
-          delete cart.addedQuantity
-          currentCart[cart.id] = cart
+    async updateToDB() {
+      try {
+        const currentCart = {};
+        for (let cart of cartData) {
+          delete cart.addedQuantity;
+          currentCart[cart.id] = cart;
         }
-        const response = await this.$api.post('update', { cart: currentCart }, {
-          headers: {
-            'Authorization': `Bearer ${this.token}`
+        const response = await this.$api.post(
+          "update",
+          { cart: currentCart },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
           }
-        })
-        if(response.status != 200) throw Error(response.data.message)
-        return
-      }catch(err){
-        console.log(err)
+        );
+        if (response.status != 200) throw Error(response.data.message);
+        return;
+      } catch (err) {
+        console.log(err);
       }
     },
-    async fetchData(){
-      try{
-        const rawCart = Object.values(cartClass.getItem())
-        if(rawCart.length < 1) {
-          const response = await this.$api.get('cart')
-          if(response.status != 200) throw Error(response.data.message)
-          rawCart = response.data.data
+    async fetchData() {
+      try {
+        const rawCart = Object.values(cartClass.getItem());
+        if (rawCart.length < 1) {
+          const response = await this.$api.get("cart");
+          if (response.status != 200) throw Error(response.data.message);
+          rawCart = response.data.data;
         }
-        this.cartData = rawCart.map(cart => ({
+        this.cartData = rawCart.map((cart) => ({
           ...cart,
-          addedQuantity: 0
-        }))
-
-      }catch(err){
-        console.log(err)
+          addedQuantity: 0,
+        }));
+      } catch (err) {
+        console.log(err);
       }
     },
     removeItem(rowData) {
-      try{
-        return cartClass.removeItem(rowData).updateItem()
-      }catch(err){
-        console.log(err)
+      try {
+        return cartClass.removeItem(rowData).updateItem();
+      } catch (err) {
+        console.log(err);
       }
     },
     changeQuantity(indicator, rowData) {
-      try{
-        indicator != "min" ? cartClass.changeQuantity('asc', rowData.id, rowData.addedQuantity) : cartClass.changeQuantity('desc', rowData.id, rowData.addedQuantity)
-        return cartClass.updateItem()
-      }catch(err){
-        console.log(err)
+      try {
+        indicator != "min"
+          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
+          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
+        return cartClass.updateItem();
+      } catch (err) {
+        console.log(err);
       }
     },
     formatRupiah(price) {
@@ -112,7 +116,7 @@ export default {
         minimumFractionDigits: 3,
       });
     },
-  }
+  },
 };
 </script>
 
@@ -519,7 +523,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container>div {
+.flex-container > div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -714,11 +718,13 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(to right,
-      #d9d9d9,
-      #d9d9d9 7px,
-      transparent 5px,
-      transparent 10px);
+  background-image: repeating-linear-gradient(
+    to right,
+    #d9d9d9,
+    #d9d9d9 7px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
 .total-biaya {
