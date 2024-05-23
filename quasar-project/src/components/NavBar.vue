@@ -1,170 +1,214 @@
 <template>
-  <div
-    class="navbar"
-    :class="{ white: isWhiteText, border: border, scrolled: isScrolled }"
-  >
+  <q-layout view="hHh lpR fFf" style="background: transparent;">
+    <q-header elevated="false">
+      <q-toolbar :class="{ scrolled: isScrolled }">
+        <div class="navbar-left">
+          <div class="content-navbar-left">
+          <img
+            alt="icon-aplikasi"
+            src="../assets/images/logo_keraton.png"
+            class="app-icon"
+            style="margin-left: 1vw;"
+          />
+          </div>
+          <div class="content-navbar-right">
+            <q-btn
+            flat
+            dense
+            round
+            icon="menu"
+            @click="drawerOpen = !drawerOpen"
+            class="menu-button"
+          ></q-btn>
+          </div>
+          <span class="app-name" :class="{ 'text-white': !isScrolled, 'text-black': isScrolled }">
+            KERATON KASEPUHAN CIREBON
+          </span>
+        </div>
+        <q-space></q-space>
+        <div class="navbar-right desktop-menu">
+          <q-btn
+            flat
+            label="Beranda"
+            :color="isScrolled ? 'black' : 'white'"
+            to="/"
+          ></q-btn>
+          <q-btn
+            flat
+            label="Sejarah"
+            :color="isScrolled ? 'black' : 'white'"
+          >
+            <q-menu>
+              <q-list>
+                <q-item clickable to="/sejarah">
+                  <q-item-section>Keraton</q-item-section>
+                </q-item>
+                <q-item clickable to="/sejarah/silsilah">
+                  <q-item-section>Silsilah</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+          <q-btn
+            flat
+            label="Booking"
+            :color="isScrolled ? 'black' : 'white'"
+          >
+            <q-menu>
+              <q-list>
+                <q-item clickable @click="toBooking('/booking')">
+                  <q-item-section>Paket Keraton</q-item-section>
+                </q-item>
+                <q-item clickable @click="toBooking('/booking/events')">
+                  <q-item-section>Tiket Event</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+          <q-btn
+            flat
+            label="Objek Wisata"
+            :color="isScrolled ? 'black' : 'white'"
+          >
+            <q-menu>
+              <q-list>
+                <q-item clickable to="/wisata/keraton">
+                  <q-item-section>Keraton Kesepuhan</q-item-section>
+                </q-item>
+                <q-item clickable to="/wisata/museum">
+                  <q-item-section>Museum Pusaka</q-item-section>
+                </q-item>
+                <q-item clickable to="/wisata/dalemagung">
+                  <q-item-section>Dalem Agung Pangkuwati</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+          <q-btn
+            style="background: #123b32; color: white; padding-inline: 30px;"
+            v-if="!isLogin"
+            @click="getTickets"
+          >
+            <span class="text-bold">Dapatkan Tiket</span>
+          </q-btn>
+          <q-btn v-else round flat @click="toggleMenu">
+            <q-avatar>
+              <img src="../assets/svg/user.svg" alt="Profile" />
+            </q-avatar>
+            <q-menu>
+              <q-list>
+                <q-item clickable @click="logout">
+                  <q-item-section>Logout</q-item-section>
+                </q-item>
+                <q-item clickable @click="keranjang">
+                  <q-item-section>Keranjang</q-item-section>
+                </q-item>
+                <q-item clickable @click="goToPurchases">
+                  <q-item-section>Pembelian</q-item-section>
+                </q-item>
+                <q-item v-if="isAdmin" clickable @click="adminPage">
+                  <q-item-section>Admin Page</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
+      </q-toolbar>
+    </q-header>
+   <q-drawer v-model="drawerOpen" side="right" overlay class="sidebar" style="background: #123b32; color: white;">
     <div class="navbar-left">
-      <img
-        alt="icon-aplikasi"
-        src="../assets/images/logo_keraton.png"
-        class="app-icon"
-      />
-      <span class="app-name">KERATON KASEPUHAN CIREBON</span>
+      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" style="margin: 1vw;" />
+      <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
+      <q-btn flat dense round icon="close" @click="toggleRightDrawer" class="close-btn" />
     </div>
-    <div class="navbar-right">
-      <nav>
-        <ul>
-          <li class="sub">
-            <q-btn
-              flat
-              label="Beranda"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-              clickable
-              v-ripple
-              to="/"
-            ></q-btn>
-          </li>
-          <li class="sub">
-            <q-btn
-              flat
-              label="Sejarah"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
-              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
-              <q-menu>
-                <q-list>
-                  <q-item clickable v-ripple to="/sejarah">
-                    <q-item-section>
-                      <q-item-label>Keraton</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple to="/sejarah/silsilah">
-                    <q-item-section>
-                      <q-item-label>Silsilah</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </li>
-          <li class="sub">
-            <q-btn
-              flat
-              label="Booking"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
-              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
-              <q-menu>
-                <q-list>
-                  <q-item clickable v-ripple @click="toBooking('/booking')">
-                    <q-item-section>
-                      <q-item-label>Paket Keraton</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple @click="toBooking('/booking/events')">
-                    <q-item-section>
-                      <q-item-label>Tiket Event</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </li>
-          <li class="sub">
-            <q-btn
-              flat
-              label="Objek Wisata"
-              :text-color="
-                isCheckoutPage ? 'black' : isScrolled ? 'black' : 'white'
-              "
-              no-caps
-              dense
-            >
-              <q-icon name="keyboard_arrow_down" class="q-ml-sm"></q-icon>
-              <q-menu>
-                <q-list>
-                  <q-item clickable v-ripple to="/wisata/keraton">
-                    <q-item-section>
-                      <q-item-label>Keraton Kesepuhan</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple to="/wisata/museum">
-                    <q-item-section>
-                      <q-item-label>Museum Pusaka</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple to="/wisata/dalemagung">
-                    <q-item-section>
-                      <q-item-label>Dalem Agung Pangkuwati</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </li>
-          <li>
-            <q-btn
-              style="background: #123b32; color: white; padding-inline: 30px"
-              no-caps
-              dense
-              v-if="!isLogin"
-              @click="getTickets"
-            >
-              <span class="text-bold">Dapatkan Tiket</span>
-            </q-btn>
-            <q-btn v-else round flat dense @click="toggleMenu">
-              <q-avatar>
-                <img src="../assets/svg/user.svg" alt="Profile" />
-              </q-avatar>
-              <q-menu>
-                <q-list>
-                  <q-item clickable v-ripple @click="logout">
-                    <q-item-section>Logout</q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple @click="keranjang">
-                    <q-item-section>Keranjang</q-item-section>
-                  </q-item>
-                  <q-item clickable v-ripple @click="goToPurchases">
-                    <q-item-section>Pembelian</q-item-section>
-                  </q-item>
-                  <q-item
-                    v-if="isAdmin"
-                    clickable
-                    v-ripple
-                    @click="adminPage"
-                  >
-                    <q-item-section>Admin Page</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <Notification
+    <q-list>
+      <q-item clickable to="/">
+        <q-item-section>Beranda</q-item-section>
+      </q-item>
+
+      <q-expansion-item v-if="!isLogin" label="Sign In / Sign Up" clickable @click="toggleWisata">
+        <q-list class="submenu">
+          <q-item clickable to="/wisata/keraton">
+            <q-item-section>Sign In</q-item-section>
+          </q-item>
+          <q-item clickable to="/wisata/museum">
+            <q-item-section>Sign Up</q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+
+      <q-expansion-item v-if="isLogin" label="Account" clickable @click="toggleSejarah" expand-separator>
+          <q-list class="submenu">
+            <q-item clickable @click="logout">
+              <q-item-section>Logout</q-item-section>
+            </q-item>
+            <q-item clickable @click="keranjang">
+              <q-item-section>Keranjang</q-item-section>
+            </q-item>
+            <q-item clickable @click="goToPurchases">
+              <q-item-section>Pembelian</q-item-section>
+            </q-item>
+            <q-item v-if="isAdmin" clickable @click="adminPage">
+              <q-item-section>Admin Page</q-item-section>
+            </q-item>
+          </q-list>
+      </q-expansion-item>
+
+      <q-expansion-item label="Sejarah" clickable @click="toggleSejarah" expand-separator>
+        <q-list class="submenu">
+          <q-item clickable to="/sejarah">
+            <q-item-section>Keraton</q-item-section>
+          </q-item>
+          <q-item clickable to="/sejarah/silsilah">
+            <q-item-section>Silsilah</q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+
+      <q-expansion-item v-if="isLogin" label="Booking" clickable @click="toggleBooking" expand-separator>
+        <q-list class="submenu">
+          <q-item @click="toBooking('/booking')">
+            <q-item-section>Paket Keraton</q-item-section>
+          </q-item>
+          <q-item @click="toBooking('/booking/events')">
+            <q-item-section>Tiket Event</q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+
+      <q-expansion-item label="Objek Wisata" clickable @click="toggleWisata">
+        <q-list class="submenu">
+          <q-item clickable to="/wisata/keraton">
+            <q-item-section>Keraton Kesepuhan</q-item-section>
+          </q-item>
+          <q-item clickable to="/wisata/museum">
+            <q-item-section>Museum Pusaka</q-item-section>
+          </q-item>
+          <q-item clickable to="/wisata/dalemagung">
+            <q-item-section>Dalem Agung Pangkuwati</q-item-section>
+          </q-item>
+        </q-list>
+      </q-expansion-item>
+
+      <!-- <q-item clickable @click="getTickets">
+        <q-item-section>Dapatkan Tiket</q-item-section>
+        <q-item-section side>
+          <q-icon name="arrow_forward" style="font-size: 16px; color: white;"/>
+        </q-item-section>
+      </q-item> -->
+    </q-list>
+  </q-drawer>
+  <Notification
       v-if="notification.message"
       :message="notification.message"
       :type="notification.type"
     />
-  </div>
+  </q-layout>
 </template>
 
 <script>
 import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
-import Notification from "../components/NotificationAlert.vue";
+import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
 
 export default {
   data() {
@@ -172,25 +216,15 @@ export default {
       isScrolled: false,
       isLogin: false,
       isAdmin: false,
+      drawerOpen: false,
+      sejarahOpen: false,
+      bookingOpen: false,
+      wisataOpen: false,
       notification: {
         message: "",
         type: "info",
       },
     };
-  },
-  props: {
-    border: {
-      type: Boolean,
-      default: false,
-    },
-    isWhiteText: {
-      type: Boolean,
-      default: false,
-    },
-    isCheckoutPage: {
-      type: Boolean,
-      default: false,
-    },
   },
   components: {
     Notification,
@@ -204,6 +238,11 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    logout() {
+      localStorage.removeItem("token");
+      this.isLogin = false; // Set isLogin ke false saat logout
+      this.$router.push("/signin");
+    },
     showNotif(mes, type) {
       this.notification.message = mes;
       this.notification.type = type;
@@ -212,30 +251,12 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    logout() {
-      localStorage.removeItem("token");
-      this.isLogin = false; // Set isLogin ke false saat logout
-      this.$router.push("/signin");
-    },
-    // async keranjang() {
-    //   try {
-    //     let url = ``;
-    //     const response = await this.$api.get(url);
-    //     const dataRest = response.data.data;
-    //   } catch (err) {
-    //     console.error(err);
-    //   }
-    // },
     async toBooking(url) {
-      if(await verifyTokenBool()) {
+      if (await verifyTokenBool()) {
         this.$router.push(url);
+      } else {
+        this.showNotif("You need to log in first", "error")
       }
-      else {
-        this.showNotif("You must be logged in to access this page", "error");
-      }
-    },
-    keranjang() {
-      console.log("ini keranjang");
     },
     getTickets() {
       this.$router.push("/signin");
@@ -249,9 +270,18 @@ export default {
     adminPage() {
       this.$router.push("/admin/home");
     },
-    toggleMenu() {
-      this.menu = !this.menu;
+    toggleSejarah() {
+      this.sejarahOpen = !this.sejarahOpen;
     },
+    toggleBooking() {
+      this.bookingOpen = !this.bookingOpen;
+    },
+    toggleWisata() {
+      this.wisataOpen = !this.wisataOpen;
+    },
+    toggleRightDrawer() {
+      this.drawerOpen = !this.drawerOpen;
+    }
   },
 };
 </script>
@@ -259,80 +289,31 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-.sub {
-  padding-top: 10px;
+.q-layout {
+  min-height: auto !important;  /* Or set to desired value */
+  background: transparent !important;
 }
 
-.sub a {
-  color: white;
-}
-
-.sub:hover {
-  text-decoration: underline;
-}
-
-nav ul .dropdown-list {
-  margin-top: -1rem;
-  list-style-type: none;
-  display: block;
-  position: absolute;
-  background: #ffffff;
-  border: 1px solid #123b32;
-  border-radius: 10px;
-  padding: 6px 16px;
-  width: max-content;
-  opacity: 0;
-  pointer-events: none;
-}
-
-nav ul.dropdown-list li {
-  margin-left: 0;
-  padding: 5px 0;
-}
-
-.sub:hover .dropdown-list {
-  opacity: 1;
-  pointer-events: auto;
-  animation: moveUp 0.5s ease-in-out forwards;
-}
-
-.white {
-  color: white;
-}
-
-/* , .scrolled .nav-right nav ul .sub */
-.scrolled a {
-  background-color: white;
-  color: black;
-}
-
-.white {
-  color: white;
-}
-
-/* , .scrolled .nav-right nav ul .sub */
-.scrolled {
-  background-color: white;
-  color: black;
-}
-
-@keyframes moveUp {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(20px);
-  }
-}
-
-.navbar {
+.q-header {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
+  height: auto;
   display: flex;
-  position: fixed;
-  top: 0; /* Menempatkan navbar di bagian atas layar */
-  left: 0;
-  width: 100%; /* Menggunakan lebar penuh */
+  width: 100%;
+  z-index: 1000;
+}
+.layout-content {
+  background-color: transparent !important; /* Set the background to transparent */
+}
+.navbar {
+  background-color: transparent !important; /* Make navbar background transparent */
+  transition: background-color 0.3s, color 0.3s;
+  top: 0;
+  margin: 0;
+  display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -340,80 +321,109 @@ nav ul.dropdown-list li {
   z-index: 1000;
 }
 
-.border {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.scrolled {
+  background-color: white;
+}
+
+.navbar .text-white {
+  color: white;
+}
+
+.navbar .text-black {
+  color: black;
 }
 
 .navbar-left {
   display: flex;
   align-items: center;
-  max-width: 90%;
-  margin: 0 auto;
-  margin-left: 68px;
+  width: 100%;
+  font-size: 1vw;
 }
 
-.navbar ul.navbar-right li {
-  margin-left: 30px;
-  padding: 20px 0;
-  position: relative;
-  justify-content: center;
+.content-navbar-left {
+  flex: 10;
+  margin-left: 3vw;
 }
-
-.app-icon {
-  width: 68px;
-  height: 70.62px;
-  left: 88px;
-  top: 16.69px;
-}
-
-.app-name {
-  font-size: 12px;
-  width: 100px;
-  /* color: #fff; */
-  margin-left: 16px;
+.content-navbar-right {
+  flex: 10;
 }
 
 .navbar-right {
-  flex-grow: 1;
-}
-
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  width: 100%;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  margin-right: 88px;
 }
 
-nav ul li {
-  margin-right: 20px;
+.menu-button {
+  display: none;
+  background: #123b32;
+  border-radius: 5px;
+  align-items: center;
+  padding-top: 0.7vw;
+  float: right;
+}
+.desktop-menu {
+  display: flex;
 }
 
-nav ul li:last-child {
-  margin-right: 0;
-}
-
-nav ul li a,
-nav ul li button {
-  color: black; /* Default text color: black */
+.sub a {
+  color: inherit;
   text-decoration: none;
-  cursor: pointer;
+  transition: color 0.3s;
 }
 
-@media screen and (max-width: 600px) {
-  .navbar {
-    flex-direction: column;
-    padding: 10px;
-  }
+.q-btn {
+  transition: color 0.3s;
+}
 
-  .navbar-right {
-    width: 100%;
-  }
+.app-name {
+  display: flex;
+  width: 2vw;
+  margin-right: 100%;
+  margin-left: 1vw;
+}
 
-  nav ul {
-    justify-content: center;
+.q-btn {
+  font-size: 1vw;
+  margin: 0.2vw;
+}
+
+.sidebar-app-name {
+  font-size: 15px !important; /* Fixed font size for sidebar */
+  color: white !important;
+  width: 50vw;
+  margin: 1vw;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1vw;
+  right: 1vw;
+  color: white;
+}
+
+@media (max-width: 800px) {
+  .q-btn {
+    font-size: 1.5vw;
+  }
+  .app-name {
+    font-size: 1.5vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .q-btn {
+    font-size: 3vw;
+  }
+  .menu-button {
+    display: block;
+  }
+  .desktop-menu {
+    display: none;
+  }
+  .navbar-left .app-name {
+    display: none;
+    margin-top: 1vw;
   }
 }
 </style>

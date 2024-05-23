@@ -128,18 +128,30 @@ export default {
   data() {
     return {
       contentId: this.$route.params.id,
-      isAdmin: false,
+      isAdmin: null,
     };
   },
   async mounted() {
     this.fetchData();
+    this.verifyAdmin();
     socket.connect();
-    this.isAdmin = await verifyTokenAdmin.call(this);
   },
   beforeUnmount() {
     socket.disconnect();
   },
   methods: {
+    async verifyAdmin() {
+      try {
+        this.isAdmin = await verifyTokenAdmin.call(this);
+
+        if (!this.isAdmin) {
+          return this.$router.replace("/");
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async fetchData() {
       try {
         if (!this.contentId) return this.setUpDefault();
