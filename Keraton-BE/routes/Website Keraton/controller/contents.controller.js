@@ -145,3 +145,5 @@ router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
     return error(res, err.message);
   }
 });
+
+module.exports = router

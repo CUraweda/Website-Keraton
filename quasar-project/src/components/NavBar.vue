@@ -154,17 +154,28 @@
         </ul>
       </nav>
     </div>
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
 <script>
 import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
+import Notification from "../components/NotificationAlert.vue";
+
 export default {
   data() {
     return {
       isScrolled: false,
       isLogin: false,
       isAdmin: false,
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
   },
   props: {
@@ -181,6 +192,9 @@ export default {
       default: false,
     },
   },
+  components: {
+    Notification,
+  },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
     this.isLogin = await verifyTokenBool(); // Menggunakan fungsi langsung
@@ -190,6 +204,14 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
+    },
     logout() {
       localStorage.removeItem("token");
       this.isLogin = false; // Set isLogin ke false saat logout
@@ -209,7 +231,7 @@ export default {
         this.$router.push(url);
       }
       else {
-        alert("Anda Harus Login Terlebih Dahulu");
+        this.showNotif("You must be logged in to access this page", "error");
       }
     },
     keranjang() {
