@@ -27,7 +27,8 @@
           <li><a href="#">Threads</a></li>
         </ul>
       </div>
-      <div>ran
+      <div>
+        ran
         <h3>Company</h3>
         <ul>
           <li><a href="#">About us</a></li>
@@ -37,37 +38,39 @@
       </div>
       <div class="footer-col-4">
         <h3>Subscribes your email for updates!</h3>
-        <input
-          type="text"
-          v-model="enterEmail"
-          placeholder="Enter Your Email"
-          style="
-            width: 20rem;
-            height: 48px;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-          "
-        />
+        <form @submit.prevent="subscribeToKeraton">
+          <input
+            type="text"
+            v-model="enterEmail"
+            placeholder="Enter Your Email"
+            style="
+              width: 20rem;
+              height: 48px;
+              padding: 12px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              box-sizing: border-box;
+              margin-bottom: 10px;
+            "
+          />
 
-        <input
-          type="text"
-          v-model="enterMessage"
-          placeholder="Enter Your Message"
-          style="
-            width: 20rem;
-            height: 48px;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-          "
-        />
+          <input
+            type="text"
+            v-model="enterMessage"
+            placeholder="Enter Your Message"
+            style="
+              width: 20rem;
+              height: 48px;
+              padding: 12px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              box-sizing: border-box;
+              margin-bottom: 10px;
+            "
+          />
 
-        <q-btn no-caps color="blue" label="Submit" />
+          <q-btn no-caps color="blue" label="Submit" type="submit" />
+        </form>
       </div>
     </div>
     <div class="adress">Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>

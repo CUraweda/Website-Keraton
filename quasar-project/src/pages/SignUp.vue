@@ -36,12 +36,20 @@
         <div class="pass">
           <div class="pw">
             <div class="text textp">Password</div>
-            <div :class="{ box2: true, 'error-border': passwordError }">
+            <div
+              :class="{ box2: true, 'error-border': passwordError }"
+              class="input-container"
+            >
               <input
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 v-model="password"
                 placeholder="6+ Karakter"
               />
+              <i
+                :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
+                @click="togglePasswordVisibility"
+                class="toggle-password"
+              ></i>
               <div class="error-messagee" v-show="passwordError">
                 {{ passwordErrorMessage }}
               </div>
@@ -49,12 +57,20 @@
           </div>
           <div class="cpw">
             <div class="text textp">Konfirmasi Password</div>
-            <div :class="{ box2: true, 'error-border': passmatchError }">
+            <div
+              :class="{ box2: true, 'error-border': passmatchError }"
+              class="input-container"
+            >
               <input
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 v-model="passmatch"
                 placeholder="6+ Karakter"
               />
+              <i
+                :class="showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
+                @click="togglePasswordVisibility"
+                class="toggle-password"
+              ></i>
               <div class="error-messagee" v-show="passmatchError">
                 {{ passmatchErrorMessage }}
               </div>
@@ -95,10 +111,10 @@ export default {
       email: "",
       password: "",
       name: "",
-      passmatch: "",
       emailError: false,
       passwordError: false,
       nameError: false,
+      passmatch: ref(""),
       passmatchError: false,
       nameErrorMessage: "Please type your name",
       emailErrorMessage: "Please type your email",
@@ -108,12 +124,16 @@ export default {
         message: "",
         type: "info",
       },
+      showPassword: false, // state for showing password
     };
   },
   mounted() {
     this.verifyToken();
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     showNotif(mes, type) {
       this.notification.message = mes;
       this.notification.type = type;
@@ -166,7 +186,11 @@ export default {
         return;
       }
 
-      if (this.password.length < 6) return this.showNotif("password must be more than 6 characters or more", "error")
+      if (this.password.length < 6)
+        return this.showNotif(
+          "password must be more than 6 characters or more",
+          "error"
+        );
 
       const payload = {
         email: this.email,
@@ -228,6 +252,23 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input-container input {
+  flex: 1;
+  padding-right: 30px; /* Make space for the icon */
+}
+
+.input-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}
 
 .highlight {
   text-decoration: none;
