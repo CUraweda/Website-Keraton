@@ -148,7 +148,7 @@ defineExpose({
                 dropdown-icon="arrow_drop_down"
               >
                 <div>
-                  <q-date v-model="datelabel" color="golden" />
+                  <q-date v-model="datelabel" />
                 </div>
               </q-btn-dropdown>
               <div>
