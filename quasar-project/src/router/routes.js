@@ -26,16 +26,25 @@ const routes = [
     path: "/admin/home",
     name: "AdminHomePage",
     component: AdminHomePage,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/admin/add/:id",
     name: "AdminAddPage",
     component: AdminAddPage,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/admin/event",
     name: "AdminEventPage",
     component: AdminEventPage,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/signin",
@@ -86,16 +95,25 @@ const routes = [
     path: "/user/transaction",
     name: "historytransaksi",
     component: HistoryTransaksi,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/booking/event",
     name: "eventgratis",
     component: EventGratis,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/booking",
     name: "booking",
     component: Booking,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/filterbayar",
@@ -126,6 +144,9 @@ const routes = [
     path: "/user/carts",
     name: "Cart",
     component: Cart,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/template",

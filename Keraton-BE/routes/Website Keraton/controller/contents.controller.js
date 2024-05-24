@@ -53,15 +53,7 @@ router.get("/:id?", async (req, res) => {
 router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
   let sendedData;
   try {
-    if (req.files && req.files.length > 0) {
-      req.files.forEach((file) => {
-        context.imageList.push({ data: convertFilesToURL(file.path) });
-      });
-      // Log the path of each uploaded file
-      req.files.forEach((file) => {
-        console.log(`File uploaded: ${file.path}`);
-      });
-    }
+    if (req.files) req.body.imageList = req.files;
     if (req.body.pageId) req.body.pageId = +req.body.pageId;
     if (req.body.sectionOrder) req.body.sectionOrder = +req.body.sectionOrder;
     if (req.params.ident != "create") {
@@ -77,9 +69,5 @@ router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
     return error(res, err.message);
   }
 });
-
-module.exports = router;
-
-module.exports = router;
 
 module.exports = router;

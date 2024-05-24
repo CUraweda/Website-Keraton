@@ -111,6 +111,7 @@
 </template>
 
 <script setup>
+import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
 import Carts from "../stores/carts";
 </script>
@@ -248,7 +249,7 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.isLogin = await verifyTokenBool();
+    this.isLogin = (await verifyToken()).isLogin
 
     if (!this.isLogin) {
       this.$router.push("/");

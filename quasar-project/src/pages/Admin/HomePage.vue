@@ -74,7 +74,7 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.verifyAdmin();
+    this.isAdmin = (await verifyToken()).isAdmin;
   },
   methods: {
     async fetchData() {
@@ -94,7 +94,7 @@ export default {
     },
     async verifyAdmin() {
       try {
-        this.isAdmin = await verifyTokenAdmin.call(this);
+        this.isAdmin = (await verifyToken()).isAdmin;
 
         if (!this.isAdmin) {
           return this.$router.replace("/");

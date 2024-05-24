@@ -242,15 +242,17 @@
 </template>
 
 <script>
-import { verifyTokenBool, verifyTokenAdmin } from "src/auth/auth";
+// import { verifyTokenBool } from "src/auth/auth";
 import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
-
+import cookieHandler from "src/cookieHandler";
+import env from "stores/environment";
+import { ref } from "vue";
 export default {
   data() {
     return {
       isScrolled: false,
-      isLogin: false,
-      isAdmin: false,
+      isLogin: ref(false),
+      isAdmin: ref(false),
       drawerOpen: false,
       sejarahOpen: false,
       bookingOpen: false,
@@ -264,6 +266,20 @@ export default {
   components: {
     Notification,
   },
+  props: {
+    border: {
+      type: Boolean,
+      default: false,
+    },
+    isWhiteText: {
+      type: Boolean,
+      default: false,
+    },
+    isCheckoutPage: {
+      type: Boolean,
+      default: false,
+    },
+  },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
     const tokenVerified = await verifyToken();
@@ -274,10 +290,22 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
-    logout() {
-      localStorage.removeItem("token");
-      this.isLogin = false; // Set isLogin ke false saat logout
-      this.$router.push("/signin");
+    async logout() {
+      try {
+        const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
+        const response = await this.$api.get("auth/logout", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.status != 200) throw Error(response.data.message);
+        // this.$router.push("/signin");
+      } catch (err) {
+        console.log(err);
+      }
+      localStorage.removeItem(env.USER_STORAGE_NAME);
+      cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
+      return (this.isLogin = false); // Set isLogin ke false saat logout
     },
     showNotif(mes, type) {
       this.notification.message = mes;
@@ -288,11 +316,14 @@ export default {
       }, 4000);
     },
     async toBooking(url) {
-      if (await verifyTokenBool()) {
+      if (this.isLogin) {
         this.$router.push(url);
       } else {
         this.showNotif("You need to log in first", "error");
       }
+    },
+    keranjang() {
+      this.$router.push("/user/carts");
     },
     getTickets() {
       this.$router.push("/signin");
