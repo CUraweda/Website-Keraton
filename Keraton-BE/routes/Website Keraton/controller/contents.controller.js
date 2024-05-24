@@ -50,7 +50,8 @@ router.get("/:id?", async (req, res) => {
   }
 });
 
-router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
+// Note : Tolong Jangan ubah imageList jadi imageList[] (unknown field)
+router.post("/:ident/:id?", upload.array("imageList"), async (req, res) => {
   let sendedData;
   try {
     // Initialize the context object

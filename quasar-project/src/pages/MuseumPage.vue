@@ -1,161 +1,143 @@
 <template>
-  <div>
-    <nav>
-      <navbar isWhiteText />
-    </nav>
-    <body>
-      <div class="image-container">
-        <img
-          alt="Area Keraton Image"
-          class="image"
-          src="../assets/images/museumPaket.png"
-        />
-        <p class="image-text">MUSEUM PUSAKA</p>
-        <p class="text-bottom1">
-          Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan,
-          Cirebon, Jawa Barat.
-        </p>
-        <p class="text-bottom2">
-          Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja
-          Mochamad Jayadiningrat.
-        </p>
-        <p class="text-bottom3">
-          Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari
-          dua lantai.
-        </p>
-        <a class="arrow-down" @click="scrollToContent"
-          ><img src="../assets/images/Frame.svg"
-        /></a>
+  <div><nav>
+    <navbar isWhiteText />
+  </nav>
+  <div class="container-title-top">
+    <img src="../assets/images/museumPusakaa.png" class="img-title" alt="">
+    <div class="container-title-text">
+      <div class="texttitle-img">MUSEUM PUSAKA</div>
+      <div class="container-subtitle">
+        <p>Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan, Cirebon, Jawa Barat.</p>
+        <p>Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja Mochamad Jayadiningrat.</p>
+        <p>Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari dua lantai.</p>
       </div>
-
-      <div class="destinasi-container">
-        <div class="Destinasi">
-          <p><span class="bold">Mengenal</span> sejarah dan budaya Cirebon</p>
-        </div>
-        <p class="bawah-destinasi">
-          Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta
-          kencana, gamelan, dan lukisan.
-        </p>
+      <div class="container-arrowdown">
+        <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"
+            class="img-arrow-down" /></a>
       </div>
-
-      <div class="slider" ref="slider">
-        <div
-          v-for="(card, index) in cards"
-          :key="index"
-          :id="'card-' + index"
-          :class="{ cardd: true, active: index === currentIndex }"
-        >
-          {{ card.content }}
-        </div>
-      </div>
-
-      <div class="button-container">
-        <img
-          class="button-slider"
-          @click="prevCard"
-          src="../assets/svg/ArrowLeft.svg"
-        />
-        <div
-          class="bulet"
-          v-for="(bulet, index) in bullets"
-          :key="index"
-          :class="{ active: index === currentIndex }"
-        ></div>
-        <img
-          class="button-slider"
-          @click="nextCard"
-          src="../assets/svg/ArrrowRight.svg"
-        />
-      </div>
-
-      <div class="Fasilitas">
-        <p>Fasilitas</p>
-        <p class="Fasilitas-Text">
-          Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang
-          kegiatan wisata dan budaya.
-        </p>
-      </div>
-
-      <div class="Fasilitas-Images">
-        <div class="card">
-          <p class="card-text">Ruang Pameran</p>
-        </div>
-        <div class="card2">
-          <p class="card-text2">Ruang Audio Visual</p>
-        </div>
-        <div class="Fasilitas-Images2">
-          <div class="card3">
-            <p class="card-text3">Ruang Kelas</p>
-          </div>
-          <div class="card4">
-            <p class="card-text4">Tempat Penjualan Souvenir</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="Kunjungan">
-        <p>Kunjungan</p>
-        <p class="Kunjungan-Text">
-          Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
-          wisata yang menarik.
-        </p>
-        <button class="button-Kunjungan">Dapatkan Tiket Sekarang!</button>
-      </div>
-
-      <q-card class="my-card">
-        <q-card-section> test </q-card-section>
-      </q-card>
-
-      <a href="/#/booking">
-        <div class="Paket">
-          <p class="bold2">Tiket Masuk Museum Pusaka</p>
-          <div class="teks-kunjungan">
-            <p>Rp. 15.000/orang</p>
-          </div>
-          <div class="teks-kunjungan2">
-            <p>Area Museum Pusaka</p>
-          </div>
-          <img class="paket-images" src="../assets/images/museumPaket.png" />
-        </div>
-      </a>
-      <bawah class="footer"></bawah>
-    </body>
+    </div>
   </div>
+
+  <div class="container-title2">
+    <div>
+      <span>Mengenal</span> sejarah dan budaya Cirebon
+    </div>
+    <p class="bawah-title2">
+      Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta kencana, gamelan, dan lukisan.
+    </p>
+    <div class="slider" ref="slider">
+      <img v-for="(card, index) in cards" :src="card.content" :key="index" :id="'card-' + index"
+        :class="{ cardd: true, active: index === currentIndex }">
+    </div>
+
+    <div class="button-container">
+      <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+      <div class="bulet" v-for="(bulet, index) in bullets" :key="index" :class="{ active: index === currentIndex }">
+      </div>
+      <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
+    </div>
+  </div>
+
+  <div class="container-fasilitas">
+    <div class="fasilitas-text">
+      <div>
+        Fasilitas
+      </div>
+      <div>
+        Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang kegiatan wisata dan
+        budaya.
+      </div>
+    </div>
+    <div class="fasilitas-img1">
+      <div v-for="(elemen, index) in fasilitaselement" :key="index">
+        <img :src="elemen.img1" alt="">
+        <div class="text-fasilitas">
+          {{ elemen.text1 }}
+        </div>
+      </div>
+    </div>
+    <div class="fasilitas-img1 fasilitas-img2">
+      <div v-for="(elemen, index) in fasilitaselement" :key="index">
+        <img :src="elemen.img2" alt="">
+        <div class="text-fasilitas">
+          {{ elemen.text2 }}
+        </div>
+      </div>
+    </div>
+    <div>
+
+      <div class="fasilitas-text kunjungan-text">
+        <div>
+          Kunjungan
+        </div>
+        <div>
+          Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik.
+        </div>
+      </div>
+      <div class="btn-kunjungan-text">
+        <button>Dapatkan Tiket Sekarang!</button>
+      </div>
+
+      <div class="container-tiket-kunjungan">
+        <div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
+          <div class="text-tiket-kunjungan">
+            <div class="text-tiket">{{ element.text1 }}</div>
+            <p class="text-harga">{{ element.text2 }}</p>
+            <p class="text-harga" id="text-area">{{ element.text3 }}</p>
+          </div>
+          <img class="img-tiket-kunjungan" :src="element.img" alt="">
+        </div>
+        <div class="foterr">
+          <footerDesktop/>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  
 </template>
 
 <script setup>
-import navbar from "../components/NavBar.vue";
-import bawah from "../components/FooterComp.vue";
+import navbar from '../components/NavBar.vue'
+import footerDesktop from '../components/footerDesktop.vue';
 </script>
 
 <script>
+
 const scrollToContent = () => {
-  document.querySelector(".Destinasi").scrollIntoView({
-    behavior: "smooth",
+  document.querySelector('.container-title2').scrollIntoView({
+    behavior: 'smooth'
   });
 };
 
 export default {
   components: {
     navbar,
-    bawah,
+    footerDesktop,
   },
   data() {
     return {
       cards: [
-        { content: "" },
-        { content: "" },
-        { content: "" },
-        { content: "" },
-        { content: "" },
+        { content: '../src/assets/images/sejarahslider1.png' },
+        { content: '../src/assets/images/sejarahslider2.png' },
+        { content: '../src/assets/images/sejarahslider3.png' },
+        { content: '../src/assets/images/sejarahslider4.png' },
+        { content: '../src/assets/images/sejarahslider5.png' },
+        // Add more cards as needed
       ],
-      currentIndex: 2,
+      fasilitaselement: [
+        { img1: '../src/assets/images/image33.png', img2: '../src/assets/images/card2.png', text1: 'Ruang Pameran', text2: 'Ruang Audio Visual' },
+        { img1: '../src/assets/images/card3.png', img2: '../src/assets/images/card4Museum.png', text1: 'Ruang Kelas', text2: 'Tempat Penjualan Souvenir' }
+      ],
+      elementTiketKunjungan: [
+        { img: '../src/assets/images/museumPaket.png', text1: 'Tiket Masuk Museum Pusaka', text2: 'Rp. 15.000/orang', text3: 'Area Museum Pusaka' },
+      ],
+      currentIndex: 2
     };
   },
   computed: {
     bullets() {
-      return Array(this.cards.length).fill("");
-    },
+      return Array(this.cards.length).fill('');
+    }
   },
   methods: {
     prevCard() {
@@ -176,520 +158,115 @@ export default {
       const sliderWidth = this.$refs.slider.offsetWidth;
       const cardWidth = 250;
       const offset = (sliderWidth - cardWidth) / 2;
-      const cardContainer = document.querySelector(".slider");
-      const activeCard = document.querySelector(".cardd.active");
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
 
       if (activeCard && cardContainer) {
         const index = this.currentIndex;
         const newPosition = -index * cardWidth + offset;
-        cardContainer.style.transform = translateX`(${newPosition}px)`;
+        cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
-    },
+    }
   },
   watch: {
     currentIndex() {
       this.centerActiveCard();
-    },
+    }
   },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
 
 <style scoped>
-nav {
-  position: relative;
-  z-index: 1000;
+.img-title {
   width: 100%;
-  max-width: 1280px;
-  margin-left: -50px;
+  height: 120%;
+  background-size: cover;
+  position: relative;
+  filter: brightness(70%);
 }
 
-body {
+.texttitle-img {
   width: fit-content;
-  overflow-x: hidden;
+  font-size: 4vw;
+  font-weight: 600;
+  margin: 0 auto;
+  padding-top: 1vw;
+  position: relative;
 }
 
-* {
-  margin: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 0;
-}
-
-.Paket {
-  box-sizing: border-box;
+.container-subtitle {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px 0px 10px;
-  gap: 109px;
-  position: absolute;
-  width: 1080px;
-  height: 207px;
-  left: 15%;
-  top: 3700px;
-  margin-top: 86px;
-  border-bottom: 1px solid #d0d5dd;
-}
-
-.bold2 {
-  width: 900px;
-  height: 120px;
-  top: 32px;
-  font-family: Raleway;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 30px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-
-.teks-kunjungan {
-  width: 600px;
-  height: 200px;
-  top: 32px;
-  font-family: Raleway;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 100px;
-  letter-spacing: 0em;
-  color: #5e5e5e;
-  text-align: left;
-  position: absolute;
-}
-
-.teks-kunjungan2 {
-  width: 600px;
-  height: 20px;
-  top: 130px;
-  font-family: Raleway;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 100px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #5e5e5e;
-  position: absolute;
-}
-
-.paket-images {
-  width: 100%;
-  height: 207px;
-  left: 100px;
-  top: 3715px;
-  object-fit: cover;
-}
-
-.image-container {
+  width: 90%;
+  margin: 0 auto;
+  font-weight: 600;
+  padding-top: 15vw;
+  font-size: 1vw;
   position: relative;
-  width: 100%;
-  height: auto;
 }
 
-.image {
-  width: 100vw;
-  height: 120vh;
-  object-fit: cover;
-  filter: brightness(60%);
-}
-
-.image-text {
-  font-family: Raleway;
-  position: absolute;
-  min-width: 100vw;
-  height: 72px;
-  top: 40%;
-  transform: translateY(-50%);
-  color: white;
-  font-size: 64px;
-  font-weight: 700;
-  line-height: 72px;
-  letter-spacing: 0em;
-  text-align: center;
-}
-
-.text-bottom1 {
-  position: absolute;
-  width: 362px;
-  height: 18px;
-  font-size: 16px;
-  line-height: 24px;
-  color: white;
-  left: 5%;
-  transform: translateX(-50%);
-  top: 60%;
-  transform: translateY(-50%);
-}
-
-.text-bottom2 {
-  position: absolute;
-  width: 362px;
-  height: 18px;
-  font-size: 16px;
-  line-height: 24px;
-  color: white;
-  left: 37%;
-  top: 60%;
-  transform: translateX(-50%);
-  transform: translateY(-50%);
-}
-
-.text-bottom3 {
-  position: absolute;
-  width: 362px;
-  height: 18px;
-  font-size: 16px;
-  line-height: 24px;
-  color: white;
-  left: 70%;
-  transform: translateX(-50%);
-  top: 60%;
-  transform: translateY(-50%);
-}
-
-.arrow-down {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  top: 50vw;
-  left: 50vw;
-  cursor: pointer;
-}
-
-.Fasilitas {
-  width: 542px;
-  height: 72px;
-  top: 1500px;
-  left: 150px;
-  margin-left: 10%;
-  font-family: Raleway;
-  font-size: 64px;
-  font-weight: 400;
-  line-height: 400px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #000000;
-}
-
-.Fasilitas-Text {
-  width: 542px;
-  height: 72px;
-  margin-top: -220px;
-  margin-left: 130%;
-  font-family: Raleway;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 25px;
-  letter-spacing: 0em;
-  text-align: right;
-}
-
-.Fasilitas-Images {
-  gap: 20px;
-}
-
-.Fasilitas-Images2 {
-  gap: 20px;
-}
-
-.card {
-  width: 600px;
-  height: 649px;
-  top: 1773px;
-  left: 30px; /* Menggeser ke kanan sedikit */
-  margin-top: 200px;
-  margin-left: 10%;
-  border-radius: 30px;
-  filter: opacity(70%);
-  background-size: cover;
-  background-image: url(../assets/images/image33.png);
-}
-
-.card2 {
-  width: 600px;
-  height: 649px;
-  top: 1773px;
-  left: 660px;
-  margin-top: -650px;
-  margin-left: 52%;
-  border-radius: 30px;
-  filter: opacity(70%);
-  background-size: cover;
-  background-image: url(../assets/images/card2.png);
-}
-
-.card3 {
-  width: 600px;
-  height: 649px;
-  top: 1773px;
-  left: 30px; /* Menggeser ke kanan sedikit */
-  margin-top: 10px;
-  margin-left: 10%;
-  border-radius: 30px;
-  filter: opacity(70%);
-  background-size: cover;
-}
-
-.card3 {
-  background-image: url(../assets/images/card3.png);
-}
-
-.card4 {
-  width: 600px;
-  height: 649px;
-  top: 1773px;
-  left: 660px; /* Menggeser ke kiri sedikit */
-  margin-top: -1100px;
-  margin-left: 52%;
-  border-radius: 30px;
-  filter: opacity(70%);
-  background-size: cover;
-  background-image: url(../assets/images/card4Museum.png);
-}
-
-.card-text {
-  width: 1000px;
-  height: 48px;
-  top: 662px;
-  left: 242px;
-  font-family: Raleway;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 1000px;
-  margin-left: -170px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #ffffff;
-}
-
-.card-text2 {
-  width: 500px;
-  height: 48px;
-  top: 662px;
-  left: 242px;
-  font-family: Raleway;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 1000px;
-  margin-left: 60px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #ffffff;
-}
-
-.card-text3 {
-  width: 1000px;
-  height: 48px;
-  top: 662px;
-  left: 242px;
-  font-family: Raleway;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 1000px;
-  margin-left: -170px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #ffffff;
-}
-
-.card-text4 {
-  padding-top: 460px;
-  width: 500px;
-  height: 18px;
-  left: 242px;
-  font-family: Raleway;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 50px;
-  margin-top: 450px;
-  margin-left: 60px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #ffffff;
-}
-
-.Kunjungan {
-  width: 542px;
-  height: 72px;
-  top: 3400px;
-  margin-left: 14%;
-  font-family: Raleway;
-  font-size: 64px;
-  font-weight: 400;
-  line-height: 400px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #000000;
-}
-
-.Kunjungan-Text {
-  width: 542px;
-  height: 72px;
-  margin-top: -220px;
-  margin-left: 550px;
-  font-family: Raleway;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 25px;
-  letter-spacing: 0em;
-  text-align: right;
-}
-
-.destinasi-container {
+.container-subtitle p {
+  margin-bottom: 0;
+  flex: 1;
+  padding: 2vw;
+  font-weight: 500;
   position: relative;
-  width: 100%;
-  height: 100%;
 }
 
-.Destinasi {
-  font-family: Raleway;
-  margin-top: 200px;
-  width: 100%;
-  height: 64px;
-  top: 40%; /* Posisi vertikal di tengah */
-  transform: translateY(-150%); /* Menggeser elemen ke tengah vertikal */
-  color: #000000;
-  font-size: 56px;
-  font-weight: 400;
-  line-height: 64px;
-  text-align: center;
+.container-title-text {
+  margin-top: -38vw;
+  color: white;
 }
 
-.bawah-destinasi {
-  width: 886px;
-  height: 68px;
-  font-family: Raleway;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 30px;
-  text-align: center;
-  position: absolute;
-  left: 50%; /* Posisi horizontal di tengah */
-  top: 70%; /* Posisi vertikal di tengah */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* Menggeser elemen ke tengah horizontal dan vertikal */
-}
-
-.bold {
-  font-family: Raleway;
+.container-title2 div span {
   font-weight: bold;
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 64px;
+}
+
+.container-title2 div:first-child {
+  font-size: 3.6vw;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+
+.bawah-title2 {
   text-align: center;
-}
-
-.foto1 {
-  width: 68px;
-  height: 71px;
-}
-
-.foto2 {
-  width: 69px;
-  height: 74px;
-}
-
-.foto3 {
-  width: 53px;
-  height: 71px;
-}
-
-.foto4 {
-  width: 100px;
-  height: 49px;
-}
-
-.button {
-  width: 431px;
-  height: 58px;
-  border-radius: 10px;
-  border: none;
-  background-color: #123b32;
-  color: #ffffff;
-  text-align: left;
-  padding-left: 22px;
-  font-size: 20px;
-  font-weight: 800;
-  margin-top: 22px;
-  line-height: 28px;
-  font-family: Raleway;
-}
-
-.button-Kunjungan {
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  width: 300px;
-  height: 40px;
-  border-radius: 8px;
-  border: none;
-  background-color: #123b32;
-  color: #ffffff;
-  text-align: left;
-  font-size: 20px;
-  font-weight: 800;
-  margin-left: 800px;
-  font-family: Raleway;
-  line-height: 22px;
+  margin: 0 auto;
+  width: 67vw;
+  color: #5E5E5E;
+  font-size: 1.6vw;
+  margin-top: 2vw;
 }
 
 .slider {
   display: flex;
-  justify-content: center;
+  transition: transform 0.3s ease;
   align-items: center;
-  width: 100%;
+  margin-left: 70px;
+}
+
+.slider img {
+  object-fit: cover;
 }
 
 .cardd {
   width: 211.86px;
   position: relative;
   height: 341.65px;
-  backdrop-filter: blur(20px);
   background-color: #ccc;
   margin: 5px;
   margin-top: 50px;
   border: none;
   justify-content: center;
-  padding-top: 50px;
-  text-align: center;
-  align-items: center;
   box-sizing: border-box;
   cursor: pointer;
   border-radius: 20px;
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   background-size: cover;
-  right: 100px;
-}
-
-#card-0 {
-  background: url(../assets/images/sliderM1.png);
-  background-size: cover;
-}
-
-#card-1 {
-  background: url(../assets/images/sliderM2.png);
-  background-size: cover;
-}
-
-#card-2 {
-  background: url(../assets/images/sliderM3.png);
-  background-size: cover;
-}
-
-#card-3 {
-  background: url(../assets/images/sliderM4.png);
-  background-size: cover;
-}
-
-#card-4 {
-  background: url(../assets/images/sliderM5.png);
-  background-size: cover;
+  transition: transform 0.3s ease;
 }
 
 .cardd.active {
@@ -726,201 +303,304 @@ body {
   background-color: rgb(0, 0, 0);
 }
 
-.footer {
-  margin-top: 700px;
-  margin-left: 5%;
+.container-arrowdown {
+  margin-top: 3vw;
+  display: flex;
+  justify-content: center;
 }
-@media screen and (max-width: 1441px) {
-  .arrow-down {
-    margin-top: 100px;
+
+.arrow-down {
+  height: 2.5vw;
+}
+
+.img-arrow-down {
+  position: relative;
+  height: 2.5vw;
+  cursor: pointer;
+}
+
+.container-title2 div:last-child {
+  width: 67vw;
+  text-align: center;
+  font-size: 1.5vw;
+  margin: 0 auto;
+  color: #5E5E5E;
+  margin-top: 1vw
+}
+
+.container-title2 {
+  margin-top: 10vw;
+}
+
+.img-pagination {
+  width: 100%;
+  height: 20vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-fasilitas {
+  margin-top: 15vw;
+}
+
+.fasilitas-text {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 4vw;
+}
+
+.fasilitas-text div:first-child {
+  flex: 1;
+  font-size: 4vw;
+}
+
+.fasilitas-text div:last-child {
+  flex: 0.8;
+  font-size: 1.4vw;
+  text-align: right;
+  color: #5E5E5E;
+}
+
+.fasilitas-img1 {
+  display: flex;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.fasilitas-img2 {
+  margin-top: 9vw;
+}
+
+.fasilitas-img1 img {
+  width: 100%;
+  object-fit: cover;
+  height: 50vw;
+  border-radius: 3vw;
+  opacity: 75%;
+  position: relative;
+}
+
+.fasilitas-img1>div {
+  flex: 1;
+  padding: 0.5vw;
+}
+
+.fasilitas-img1 div div {
+  margin: -13vw auto 0 auto;
+  width: 30vw;
+  color: white;
+  font-size: 2.5vw;
+  font-weight: 600;
+  text-align: center;
+}
+
+.text-fasilitas {
+  position: relative;
+}
+
+.kunjungan-text {
+  margin-top: 20vw;
+  padding-bottom: 0;
+}
+
+.kunjungan-text div:last-child {
+  height: fit-content;
+}
+
+.btn-kunjungan-text {
+  width: 90%;
+  margin: -1vw auto 0 auto;
+}
+
+.btn-kunjungan-text button {
+  float: right;
+  padding: 0.5vw 1.3vw 0.5vw 1.3vw;
+  border-radius: 5px;
+  border: 0;
+  background-color: #123B32;
+  color: white;
+  font-size: 1.2vw;
+}
+
+.container-tiket-kunjungan {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 10vw;
+}
+
+.tiket-kunjungan {
+  float: right;
+  justify-content: flex-end;
+  display: flex;
+  width: 96%;
+  padding-top: 1vw;
+  padding-bottom: 0.7vw;
+  border-bottom: 0.1vw solid #D0D5DD;
+}
+
+.text-tiket-kunjungan {
+  width: 100%;
+  padding-top: 2vw;
+  cursor: pointer;
+}
+
+.text-tiket {
+  font-weight: 600;
+  font-size: 1.7vw;
+  height: min-content;
+}
+
+.text-harga {
+  font-weight: 400;
+  font-size: 1.7vw;
+  color: #5E5E5E;
+  margin-bottom: 0;
+}
+
+#text-area {
+  font-size: 1.5vw;
+  padding-top: 1vw;
+  margin-top: 2vw;
+}
+
+.img-tiket-kunjungan {
+  height: 15vw;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 1.6vw;
+  font-weight: 400;
+  display: flex;
+  margin-left: 1vw;
+}
+
+.logo img {
+  height: 7vw;
+  margin-right: 1vw;
+}
+
+li a {
+  font-size: 1.4vw;
+}
+
+li {
+  margin-bottom: 0.6vw !important;
+  height: fit-content;
+  width: fit-content;
+}
+
+ul {
+  margin-top: 1vw;
+  line-height: 2vw;
+}
+
+h4 {
+  font-size: 2.3vw;
+  line-height: 2.8vw;
+}
+
+.foterr{
+  margin-top: 42vw;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .img-title {
+    width: 300%;
+    margin-left: -100vw;
   }
 
-  .Paket {
+  .container-title-top {
+    overflow: hidden;
+  }
+
+  .texttitle-img {
+    font-size: 7vw;
+    text-align: center;
+    margin-top: -110vw;
+  }
+
+  .container-subtitle p:first-child {
+    padding-top: 33vw;
+    font-size: 4vw;
+  }
+
+  .container-subtitle p:not(:first-child) {
+    display: none;
+  }
+
+  /* .fasilitas-img1 .fasilitas-img2 {
+    display: flex;
     margin-top: 200px;
-    margin-bottom: -100px;
-  }
-}
+} */
 
-@media screen and (max-width: 1024px) {
-  .footer {
-    transform: scale(0.8);
-    margin-left: -140px;
+  .arrow-down,
+  .img-arrow-down {
+    height: 8vw;
   }
 
-  .Paket {
-    margin-left: -140px;
-    transform: translate(0.5);
-    margin-top: -250px;
+  .container-title2 div:first-child,
+  .container-title2 div:last-child {
+    width: 70vw;
+    text-align: center;
   }
 
-  .teks-kunjungan,
-  .teks-kunjungan2,
-  .bold2 {
-    margin-left: 30px;
+  .container-title2 div:first-child {
+    margin: 23vw auto 5vw auto;
+    font-size: 7vw;
   }
 
-  img.paket-images {
-    transform: scale(0.6);
-    margin-left: -100px;
+  .container-title2 div:last-child,
+  .btn-kunjungan-text button {
+    font-size: 3.5vw;
   }
 
-  .Kunjungan {
-    transform: scale(0.8);
-    margin-left: 5px;
-    margin-top: 120px;
+  .fasilitas-text,
+  .fasilitas-text div:last-child {
+    display: block;
+    text-align: center;
   }
 
-  .card,
-  .card3 {
-    transform: scale(0.73);
-    margin-left: 0px;
+  .fasilitas-text div:first-child,
+  .fasilitas-img1 div div {
+    font-size: 5vw;
   }
 
-  .card2,
-  .card4 {
-    transform: scale(0.73);
-    margin-left: 447px;
-    margin-bottom: -180px;
+  .fasilitas-text div:last-child {
+    font-size: 4vw;
+    width: 70vw;
+    margin: 5vw auto 10vw auto;
   }
 
-  .Fasilitas {
-    transform: scale(0.8);
-    margin-left: 15px;
+  .fasilitas-img1 {
+    display: flex;
+    flex-direction: column;
+    gap: 5vw;
   }
 
-  .Fasilitas-Text {
-    margin-left: 550px;
+  .fasilitas-img2 {
+    margin-top: 5vw;
   }
 
-  .slider {
-    transform: scale(0.8);
-    margin-left: -45px;
+  .fasilitas-img1 div div {
+    margin: -25vw auto 12vw auto;
+    width: 55vw;
   }
 
-  .destinasi-container {
-    transform: scale(0.8);
-    margin-left: -40px;
+  .btn-kunjungan-text {
+    width: fit-content;
   }
 
-  .button-container {
-    margin-left: -100px;
+  .kunjungan-text div:last-child {
+    margin-bottom: 3vw;
   }
 
-  .image-text {
-    margin-left: -60px;
-  }
-
-  .text-bottom3 {
-    transform: scale(0.8);
-    margin-left: -90px;
-  }
-  .text-bottom2 {
-    transform: scale(0.8);
-    margin-left: -50px;
-  }
-
-  .text-bottom1 {
-    transform: scale(0.8);
-    margin-left: -40px;
-  }
-  .arrow-down {
-    margin-top: 100px;
-  }
-}
-
-@media screen and (max-width: 769px) {
-  .footer {
-    transform: scale(0.55);
-    margin-left: -235px;
-    margin-bottom: -100px;
-  }
-
-  .Paket {
-    margin-left: -235px;
-    transform: translate(0.5);
-    transform: scale(0.7);
-    margin-top: -800px;
-  }
-
-  .teks-kunjungan,
-  .teks-kunjungan2,
-  .bold2 {
-    margin-left: 30px;
-  }
-
-  img.paket-images {
-    transform: scale(0.6);
-    margin-left: -100px;
-  }
-
-  .Kunjungan {
-    transform: scale(0.6);
-    margin-left: -60px;
-    margin-top: 200px;
-    margin-bottom: -300px;
-  }
-
-  .card,
-  .card3 {
-    transform: scale(0.6);
-    margin-left: -100px;
-  }
-
-  .card2,
-  .card4 {
-    transform: scale(0.6);
-    margin-left: 275px;
-    margin-bottom: -265px;
-  }
-
-  .Fasilitas {
-    transform: scale(0.65);
-    margin-left: -50px;
-    margin-bottom: -170px;
-  }
-
-  .Fasilitas-Text {
-    margin-left: 500px;
-  }
-
-  .slider {
-    transform: scale(0.65);
-    margin-left: -125px;
-  }
-
-  .destinasi-container {
-    transform: scale(0.65);
-    margin-left: -125px;
-  }
-
-  .button-container {
-    margin-left: -250px;
-    margin-top: -30px;
-  }
-
-  .image-text {
-    transform: scale(1);
-    margin-left: -260px;
-  }
-
-  .text-bottom3 {
-    transform: scale(0.7);
-    margin-left: -210px;
-    width: 300px;
-  }
-  .text-bottom2 {
-    transform: scale(0.7);
-    margin-left: -120px;
-    width: 300px;
-  }
-
-  .text-bottom1 {
-    transform: scale(0.7);
-    margin-left: -60px;
-    width: 300px;
-  }
-  .arrow-down {
-    margin-top: 225px;
+  .btn-kunjungan-text button {
+    padding: 1vw 4vw 1vw 4vw;
   }
 }
 </style>

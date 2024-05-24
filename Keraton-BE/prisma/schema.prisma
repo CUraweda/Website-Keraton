@@ -54,7 +54,6 @@ model User {
   role          Role
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
-  carts         Json? @default("{}")
   transaction   Transaction[]
   Logs          Logs[]
 }
@@ -68,11 +67,10 @@ model Order {
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
-  units          String        @default("orang")
-  category       Category?     @relation(fields: [categoryId], references: [id])
-  categoryId     Int?
-  orderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
-  orderSubTypeId Int?
+  category       Category     @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  orderSubType   OrderSubType @relation(fields: [orderSubTypeId], references: [id])
+  orderSubTypeId Int
 }
 
 model Category {
@@ -94,20 +92,23 @@ model OrderSubType {
   minimumUnits Int?
   orderType    OrderType @relation(fields: [orderTypeId], references: [id])
   orderTypeId  Int
-  orders       Order[] // Menambah relasi dengan "Order"
+  order        Order[]
 }
 
 model Transaction {
   id            String        @id @default(uuid())
+  custName      String?
+  custEmail     String?
+  custNumber    String?
   total         Decimal       @db.Decimal(18, 2)
   method        String
   status        Status
   plannedDate   DateTime
   createdDate   DateTime      @default(now())
-  discount      String
-  cashback      String
-  user          User?         @relation(fields: [userId], references: [id])
-  userId        String?
+  discount      String?
+  cashback      String?
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
   detailTrans   DetailTrans[]
@@ -183,15 +184,8 @@ model Logs {
 model News {
   id        Int      @id @default(autoincrement())
   title     String
-  link      String   @db.Text
   desc      String   @db.Text
   image     String
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
-}
-
-model Subscriber {
-  id Int @id @default(autoincrement())
-  email String
-  stillSubcribe Boolean @default(true)
 }

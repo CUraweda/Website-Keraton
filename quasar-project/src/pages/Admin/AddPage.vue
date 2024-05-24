@@ -105,6 +105,11 @@
         class="full-width q-mt-md"
       />
     </div>
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
@@ -112,7 +117,7 @@
 import socket from "src/socket";
 import { ref } from "vue";
 import {verifyTokenAdmin} from "../../auth/auth"
-
+import Notification from "../../components/NotificationAlert.vue"; // Make sure to adjust the path
 
 export default {
   setup() {
@@ -129,7 +134,14 @@ export default {
     return {
       contentId: this.$route.params.id,
       isAdmin: null,
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
+  },
+  components: {
+    Notification,
   },
   async mounted() {
     this.fetchData();
@@ -140,6 +152,14 @@ export default {
     socket.disconnect();
   },
   methods: {
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
+    },
     async verifyAdmin() {
       try {
         this.isAdmin = await verifyTokenAdmin.call(this);
@@ -217,10 +237,17 @@ export default {
           }
         );
 
-        if (response.status != 200) throw Error("Error occurred");
+        if (response.status === 200) {
+          this.showNotif("successfully changed the page", "info")
+        } else if (response.status === 404) {
+          this.showNotif("unknown error please contact the developer", "error")
+        } else {
+          this.showNotif("unknown error code please contact the developer", "error")
+        }
 
         socket.emit("dashboard", {});
       } catch (err) {
+        this.showNotif("fatal error please contact the developer immediately", "error")
         console.log(err);
       }
     },
