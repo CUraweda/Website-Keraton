@@ -1,5 +1,5 @@
 <template>
-  <navbar isWhiteText />
+  <navbar initialColor="transparent" />
   <section
     id="hero"
     :style="{

@@ -16,6 +16,10 @@ expressRouter.post("/register", async (req, res) => {
     );
   }
 
+  if (password.length < 6) {
+    return error(res, "password must be more than 6 characters or more")
+  }
+
   try {
     const token = await userModel.signUp(req.body);
     return success(res, "Register akun berhasil", await token);
@@ -38,6 +42,10 @@ expressRouter.post("/login", async (req, res) => {
 
   if (!email || !password) {
     return error(res, "Name and password are required.");
+  }
+
+  if (password.length < 6) {
+    return error(res, "password must be more than 6 characters or more")
   }
 
   try {

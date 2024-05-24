@@ -1,25 +1,17 @@
 <template>
-  <div v-if="isAdmin">
-    <navbar is-checkout-page="true" />
+  <div>
+    <navbar />
     <div style="margin-top: 150px" class="q-px-xl">
       <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
       <div>Ubah dan atur konten di halaman beranda web</div>
-      <q-table
-        :rows="rows"
-        :columns="columns"
-        row-key="name"
-        class="q-mt-xl"
-        selection="single"
-      >
-        <template v-slot:body-selection="scope">
-          <div :key="scope.row.id" style="margin-bottom: 10px">
-            <q-btn
-              color="positive"
-              :label="'Edit ' + scope.row.id"
-              :href="'#/admin/add/' + scope.row.id"
-              @click="scope.selected = scope.row.id"
-            />
-          </div>
+      <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-xl">
+        <template v-slot:body-cell-Action="scope">
+          <q-btn
+            color="positive"
+            :label="'Edit '"
+            :href="'#/admin/add/' + scope.row.id"
+            @click="scope.selected = scope.row.id"
+          />
         </template>
       </q-table>
     </div>
@@ -64,11 +56,6 @@ const columns = [
     align: "center",
     label: "Action",
     field: "action",
-    format: (val, row) => {
-      return `
-        <q-btn @click="handleButtonClick('${row.id}')">Klik di sini</q-btn>
-      `;
-    },
   },
 ];
 
@@ -82,12 +69,12 @@ export default {
   },
   data() {
     return {
-      isAdmin: false,
+      isAdmin: null,
     };
   },
   async mounted() {
     this.fetchData();
-    this.isAdmin = (await verifyToken()).isAdmin
+    this.verifyAdmin();
   },
   methods: {
     async fetchData() {
@@ -103,6 +90,17 @@ export default {
         }));
       } catch (err) {
         console.log(err);
+      }
+    },
+    async verifyAdmin() {
+      try {
+        this.isAdmin = await verifyTokenAdmin.call(this);
+
+        if (!this.isAdmin) {
+          return this.$router.replace("/");
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     convertISOToReadableDate(isoDate) {
