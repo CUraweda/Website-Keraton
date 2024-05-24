@@ -6,11 +6,13 @@
           <img src="../assets/images/logo_keraton.png" />
           <h5>KERATON KASEPUHAN CIREBON</h5>
         </div>
-        <h1>Bersama Lestarikan Keraton Tertua di Kota Cirebon</h1>
+        <div class="text-left">
+          Bersama Lestarikan Keraton Tertua di Kota Cirebon
+        </div>
       </div>
-      <img src="../assets/images/keraton.png" alt="Gambar" />
+      <img src="../assets/images/keraton.png" alt="Gambar" class="crop" />
     </div>
-    <div>
+    <div class="form-container">
       <form @submit.prevent="submitForm" class="form">
         <h1>Sign Up</h1>
         <div class="boxx">
@@ -25,7 +27,7 @@
         <div class="boxx">
           <label class="text">Email</label>
           <div :class="{ box: true, 'error-border': emailError }">
-            <input type="email" v-model="email" placeholder="6+ Characters" />
+            <input type="email" v-model="email" placeholder="" />
             <h3 class="error-message" v-show="emailError">
               {{ emailErrorMessage }}
             </h3>
@@ -33,46 +35,45 @@
         </div>
         <div class="pass">
           <div class="pw">
-            <h3 class="text textp">Password</h3>
+            <div class="text textp">Password</div>
             <div :class="{ box2: true, 'error-border': passwordError }">
               <input
                 type="password"
                 v-model="password"
-                placeholder="6+ Characters"
+                placeholder="6+ Karakter"
               />
-              <h3 class="error-message" v-show="passwordError">
+              <div class="error-messagee" v-show="passwordError">
                 {{ passwordErrorMessage }}
-              </h3>
+              </div>
             </div>
           </div>
           <div class="cpw">
-            <h3 class="text textp">Konfirmasi Password</h3>
+            <div class="text textp">Konfirmasi Password</div>
             <div :class="{ box2: true, 'error-border': passmatchError }">
               <input
                 type="password"
                 v-model="passmatch"
-                placeholder="6+ Characters"
+                placeholder="6+ Karakter"
               />
-              <h3 class="error-message" v-show="passmatchError">
+              <div class="error-messagee" v-show="passmatchError">
                 {{ passmatchErrorMessage }}
-              </h3>
+              </div>
             </div>
           </div>
         </div>
         <div class="bottom">
           <button class="button">Buat Akun</button>
-          <h3 class="signup">
+          <div class="signup">
             Sudah buat akun?
             <router-link to="/signin" class="highlight">Sign In</router-link>
-          </h3>
-          <h3 class="terms">
+          </div>
+          <div class="terms">
             Dengan signin ke Keraton Kasepuhan Cirebon, anda setuju dengan
             <b>Terms</b> dan <b>Privacy Policy</b>.
-          </h3>
+          </div>
         </div>
       </form>
     </div>
-
     <Notification
       v-if="notification.message"
       :message="notification.message"
@@ -165,6 +166,8 @@ export default {
         return;
       }
 
+      if (this.password.length < 6) return this.showNotif("password must be more than 6 characters or more", "error")
+
       const payload = {
         email: this.email,
         password: this.password,
@@ -226,27 +229,17 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-body {
-  justify-content: center;
-  align-items: center;
-  font-family: "Raleway";
-  width: fit-content;
-  height: fit-content;
-  top: 622px;
-  left: 970px;
-}
 .highlight {
   text-decoration: none;
 }
 
 h1 {
-  margin-bottom: 73px;
+  margin-bottom: 1vw;
 }
 
 .error {
   color: #ff5656;
-  font-size: 12px;
-  margin-top: 5px;
+  margin-top: 0.5vw;
 }
 
 .error-border {
@@ -255,100 +248,120 @@ h1 {
 
 .error-message {
   color: #ff5656;
-  font-size: 12px;
-  margin-top: -13px;
+  font-size: 1vw;
+  margin-top: 4vw;
   font-weight: 700;
+  width: 20vw;
+  margin-left: -7vw;
+}
+
+.error-messagee {
+  color: #ff5656;
+  font-size: 0.9vw;
+  margin-top: 2.7vw;
+  font-weight: 700;
+  width: 20vw;
+  margin-left: 0vw;
 }
 
 .container {
   display: grid;
   grid-template-columns: auto 1fr;
+  height: 100vh;
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 3vw;
   font-weight: 700;
   text-align: center;
   font-family: "Raleway";
 }
 
 .form {
-  height: 354px;
-  width: 418px;
+  width: 28vw;
   margin: auto;
-  margin-top: 169px;
+  margin-top: 7vw;
+  margin-left: 50vw;
+}
+
+.form-container {
+  height: 100vh;
+  position: relative;
 }
 
 .text {
-  font-size: 16px;
+  font-size: 1.2vw;
   font-weight: 700;
   text-align: left;
   font-family: "Raleway";
-  margin-bottom: -10px;
 }
 
 .box {
   background-color: #f0f0f0;
-  border-radius: 8px;
-  width: 416px;
-  height: 40px;
-  margin-bottom: 38px;
-  margin-top: 4px;
+  border-radius: 0.5vw;
+  width: 28vw;
+  height: 2.7vw;
+  margin-bottom: 2vw;
+  padding-top: 0.5vw;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .box2 {
   background-color: #f0f0f0;
-  border-radius: 8px;
-  width: 200px;
-  height: 40px;
-  margin-bottom: 38px;
+  border-radius: 0.5vw;
+  width: 13.5vw;
+  height: 2.7vw;
+  margin-bottom: 2vw;
 }
 
 .box2 input {
   border: none;
   outline: none;
   background: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  font-size: 16px;
-  padding-left: 10px;
+  width: 13.5vw;
+  height: 2.7vw;
+  font-size: 1.2vw;
+  padding: 0.5vw 0.7vw 0.7vw;
   box-sizing: border-box;
+  position: absolute;
 }
 
 .box input {
   border: none;
   outline: none;
   background: none;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  font-size: 16px;
-  padding-left: 10px;
+  width: 28vw;
+  height: 2.7vw;
+  font-size: 1.2vw;
+  padding: 0.2vw 0.7vw 0.7vw;
   box-sizing: border-box;
+  position: absolute;
 }
 
 .button {
   background-color: #123b32;
   color: white;
-  border-radius: 8px;
+  border-radius: 0.5vw;
   cursor: pointer;
-  width: 416px;
-  height: 40px;
+  width: 28vw;
+  height: 2.7vw;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 1.2vw;
   font-family: "Raleway";
-  margin-top: 20px;
+  margin-top: 2vw;
 }
 
 .signup {
   font-weight: 400;
-  width: 418px;
+  font-size: 1.2vw;
+  width: 28vw;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 38px;
+  margin-top: 1vw;
+  margin-bottom: 3vw;
   font-family: "Raleway";
-  font-size: 14px;
+  text-decoration: none;
 }
 
 .highlight {
@@ -357,44 +370,35 @@ h1 {
 }
 
 .terms {
-  font-family: inter;
+  font-family: "Inter";
   text-align: center;
-  font-size: 14px;
+  font-size: 1vw;
   font-weight: 400;
   color: #afafaf;
-  font-family: "Inter";
-  margin-top: -40px;
-  line-height: 20px;
+  margin-top: -2vw;
+  line-height: 1.2vw;
 }
 
 b {
   font-weight: 1000;
 }
 
-.image {
-  width: 514px;
-  height: 913px;
-  position: relative;
-  height: fit-content;
-}
-
-.image h1 {
-  font-size: 30px;
+.image .text-left {
+  font-size: 2vw;
   color: #fae084;
-  font-weight: 700;
-  line-height: 40px;
+  font-weight: 600;
   position: absolute;
-  width: 313px;
-  height: 120px;
+  width: 27vw;
+  height: 11vw;
   text-align: left;
+  margin-top: -4vw;
 }
 
 .decor {
-  padding: 64px, 137.16px, 30px, 64px;
-  width: 514px;
-  height: 304px;
-  margin-left: 64px;
-  margin-top: 64px;
+  width: 20vw;
+  height: 20vh;
+  margin-left: 4vw;
+  margin-top: 1.5vw;
   position: absolute;
   z-index: 1;
 }
@@ -402,52 +406,49 @@ b {
 .logo {
   display: grid;
   grid-template-columns: auto auto;
-  width: 152px;
-  height: 59px;
-  padding: 0px, 0px, 0px, 0px;
+  width: 20vw;
+  height: 10vw;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 31px;
+  gap: 0.5vw;
+  margin-bottom: 2vw;
 }
 
 .logo h5 {
   color: #fae084;
-  font-size: 14px;
-  line-height: 20px;
-  width: 98px;
-  height: 59px;
+  font-size: 1.1vw;
+  line-height: 1.5vw;
+  width: 7.2vw;
+  margin-left: -8vw;
+}
+
+.logo img {
+  width: 4vw;
+  height: 4vw;
 }
 
 .pass {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 416px; /* Adjust the width as needed */
-  height: 69px;
-  gap: 16px;
 }
 
-.pass > div {
-  width: calc(50% - 8px); /* Adjust the width of each password container */
+.crop {
+  width: 32vw;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 600px) {
-  body {
-    justify-content: center;
-    align-items: center;
-    font-family: "Raleway";
-    width: fit-content;
-    height: fit-content;
-    top: 622px;
-    left: 970px;
-  }
-
   .highlight {
     text-decoration: none;
   }
 
   h1 {
-    margin-bottom: 73px;
+    margin-top: -30vw;
+    margin-bottom: 1vw;
+    margin-left: 32vw;
+    width: 30vw;
   }
 
   b {
@@ -456,8 +457,7 @@ b {
 
   .error {
     color: #ff5656;
-    font-size: 12px;
-    margin-top: 5px;
+    margin-top: 0.5vw;
   }
 
   .error-border {
@@ -466,97 +466,102 @@ b {
 
   .error-message {
     color: #ff5656;
-    font-size: 12px;
-    margin-top: 8px;
+    font-size: 3vw;
+    margin: 0vw 0vw -15vw;
     font-weight: 700;
-    text-align: left;
+    width: 50vw;
+    margin-left: -29vw;
   }
-
-  .container {
-    display: grid;
-    grid-template-columns: auto 1fr;
+  .error-messagee {
+    color: #ff5656;
+    font-size: 3vw;
+    margin: 0vw 0vw -15vw;
+    font-weight: 700;
+    width: 50vw;
+    margin-left: -29vw;
   }
 
   h1 {
-    font-size: 40px;
+    font-size: 8vw;
     font-weight: 700;
     text-align: center;
     font-family: "Raleway";
   }
 
   .form {
-    height: 354px;
-    width: 418px;
+    width: 28vw;
     margin: auto;
-    margin-top: 93px;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
+    margin-top: 30vw;
+    margin-left: 4vw;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
   }
 
   .text {
-    font-size: 16px;
+    font-size: 4vw;
     font-weight: 700;
+    text-align: left;
     font-family: "Raleway";
-    margin-bottom: 4px;
-  }
-
-  .textp {
-    margin-left: 45px;
   }
 
   .boxx {
-    width: 328px;
-    margin-left: 45px;
+    width: 80vw;
+    margin-left: 7vw;
     text-align: left;
   }
 
-  .box {
+  .box,
+  .box2 {
     background-color: #f0f0f0;
-    border-radius: 8px;
-    width: 328px;
-    height: 40px;
-    margin-bottom: 38px;
+    border-radius: 2vw;
+    width: 80vw;
+    height: 10vw;
+    margin-bottom: 5vw;
+    padding-top: 0.5vw;
     justify-content: center;
-    text-align: center;
+    display: flex;
     align-items: center;
-    margin-bottom: 38px;
-    margin-top: 10px;
   }
 
-  .box input {
+  .box input,
+  .box2 input {
     border: none;
     outline: none;
     background: none;
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
-    font-size: 16px;
-    padding-left: 10px;
+    width: 80vw;
+    height: 5vw;
+    font-size: 4vw;
+    padding: 0.2vw 0.7vw 0.7vw;
     box-sizing: border-box;
+    position: absolute;
   }
 
   .button {
     background-color: #123b32;
     color: white;
-    border-radius: 8px;
+    border-radius: 2vw;
     cursor: pointer;
-    width: 328px;
-    height: 40px;
+    width: 80vw;
+    height: 10vw;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 4vw;
     font-family: "Raleway";
-    justify-content: center;
-    margin-top: 20px;
+    margin-top: 1vw;
+    margin-left: 7vw;
   }
 
   .signup {
     font-weight: 400;
-    width: 100%;
+    font-size: 3.5vw;
+    width: 50vw;
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 38px;
+    margin: 2vw 3vw 5vw 22vw;
     font-family: "Raleway";
+    text-decoration: none;
   }
 
   .highlight {
@@ -567,14 +572,13 @@ b {
   .terms {
     font-family: "Inter";
     text-align: center;
-    font-size: 14px;
+    font-size: 3.5vw;
     font-weight: 400;
     color: #afafaf;
-    justify-content: center;
-    width: 100%;
-    margin: auto;
-    margin-top: -40px;
-    line-height: 20px;
+    margin-top: -2vw;
+    line-height: 5vw;
+    width: 80vw;
+    margin-left: 7vw;
   }
 
   .image {
@@ -600,22 +604,7 @@ b {
   /* CSS untuk mengatur tata letak elemen pw dan cpw pada tampilan responsif */
   .pass {
     flex-direction: column; /* Mengubah arah tata letak menjadi kolom */
-  }
-
-  .pass > div {
-    width: 100%; /* Menjadikan lebar masing-masing div 100% */
-    margin-bottom: 20px; /* Menambahkan margin antar elemen */
-  }
-
-  .box2 {
-    width: 328px;
-    height: 40px;
-    margin-bottom: 10px;
-    margin-left: 45px;
-  }
-
-  .bottom {
-    margin-top: 140px;
+    margin-left: 47vw;
   }
 }
 </style>

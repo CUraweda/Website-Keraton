@@ -34,7 +34,7 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from , next) => {
     if(to.meta.preventToken){
       const token = alreadyHasToken()
-      if(token) next(from.path)
+      if(!token) next(from.path)
     }
     next()
   })
