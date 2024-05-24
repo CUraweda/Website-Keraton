@@ -25,7 +25,7 @@ export default {
     applyAnimation() {
       this.$nextTick(() => {
         gsap.fromTo(
-          this.$el, // Elanimasiemen target 
+          this.$el, // Elanimasiemen target
           { x: 20, opacity: 0 }, // Properti awal
           { x: 0, opacity: 1, duration: 0.5, ease: "power2.inOut" } // Properti akhir
         );

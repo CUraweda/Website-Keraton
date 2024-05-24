@@ -260,7 +260,7 @@
           v-for="(faq, index) in faqs"
           :key="index"
         >
-          <button class="accordion" @click="toggleAccordion(faq, index)">
+          <button class="accordion" @click="toggleAccordion(index)">
             <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
             <svg
               width="32"
@@ -387,9 +387,9 @@ export default {
     clearInterval(this.sliderInterval);
   },
   methods: {
-    toggleAccordion(data, condition) {
-      this.faqs[condition].active = !this.faqs[condition].active;
-    },
+    // toggleAccordion(data, condition) {
+    //   this.faqs[condition].active = !this.faqs[condition].active;
+    // },
     socket() {
       socket.connect();
       socket.on("dashboard", () => {
@@ -1734,7 +1734,7 @@ input::placeholder {
     color: #ffffff;
   }
 
-  /* 
+  /*
 .card4 img {
   position: absolute;
   width: 26%;

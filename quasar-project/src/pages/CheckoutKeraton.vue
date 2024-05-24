@@ -2,17 +2,33 @@
 import { ref, computed } from "vue";
 import navbar from "../components/NavBar.vue";
 import Payment from "../components/PembayaranComponent.vue";
+import KreditPopup from "../components/kreditPopup.vue";
+
 const count = ref(1);
 const layanan = 2500;
 const jasaApp = 1000;
 const harga = ref(10000);
+const showPopup = ref(false);
+import SelectPopup from "../components/SelectPopup.vue";
 
-const tanggalSekarang = new Date().toISOString().substr(0, 10);
+const selectPopup = ref(null);
+
+const focusinput = () => {
+  const input = document.getElementById("showPopup");
+  input.focus();
+  input.click();
+};
+
+const showPopup1 = () => {
+  showPopup.value = true;
+};
 
 const hargaTiket = harga.value.toLocaleString("id-ID", {
   maximumFractionDigits: 2,
   minimumFractionDigits: 2,
 });
+const tanggalSekarang = new Date().toISOString().substr(0, 10);
+const datelabel = ref(tanggalSekarang);
 
 const hargaStringTiket = ref(hargaTiket);
 
@@ -35,6 +51,24 @@ const kurang = () => {
     harga.value = 10000 * count.value;
   }
 };
+
+const kreditPopup = ref(null);
+
+const showSelectPopup = () => {
+  showPopup.value = true;
+};
+
+const closePopup = () => {
+  showPopup.value = false;
+};
+
+const showkreditPopup = () => {
+  kreditPopup.value.showKreditPopup();
+};
+
+defineExpose({
+  showSelectPopup,
+});
 </script>
 
 <style lang="css"></style>
@@ -70,7 +104,7 @@ const kurang = () => {
             </div>
           </div>
           <div class="content-2">
-            <div class="txt3">
+            <!-- <div class="txt3">
               <img src="../assets/svg/Framecard.svg" />
               <p class="pil-kategori">Pilih Kategori</p>
             </div>
@@ -96,24 +130,28 @@ const kurang = () => {
                 </label>
                 <label for="mancanegara">Mancanegara</label>
               </div>
-            </div>
+            </div> -->
             <div class="content-3">
               <div class="txt4">
                 <img src="../assets/svg/det-tiket.svg" class="img-det-tiket" />
                 <p class="det-tiket">Detail Tiket</p>
               </div>
-              <div class="date">
-                <form>
-                  <fieldset>
-                    <legend class="tgl-pemesan">Tanggal Pemesanan</legend>
-                    <input type="date" class="date-tgl" />
-                  </fieldset>
-                </form>
-                <div class="mm-dd-yyy">
-                  <small>MM/DD/YYY</small>
+              <q-btn-dropdown
+                flat
+                outlined
+                rounded
+                class="text-capitalize dropdown-date rounded-btn q-pa-sm"
+                :label="datelabel"
+                icon="event"
+                color
+                style="border: 2px goldenrod solid; color: #daa520"
+                dropdown-icon="arrow_drop_down"
+              >
+                <div>
+                  <q-date v-model="datelabel" />
                 </div>
-              </div>
-              <div v-for="(cart, i) in carts" :key="i">
+              </q-btn-dropdown>
+              <div>
                 <div class="content-4">
                   <div>
                     <h6 class="tiket-masuk">
@@ -137,7 +175,109 @@ const kurang = () => {
                 </div>
               </div>
               <div class="content-5">
-                <payment />
+                <!-- <payment /> -->
+                <div class="payment">
+                  <div class="atas">
+                    <div class="icon">
+                      <img src="../assets/svg/Framewallet.svg" alt="" />
+                    </div>
+                    <div class="txt-group17">
+                      <p>Pilih Pembayaran</p>
+                    </div>
+                  </div>
+                  <div class="select" @click.stop="focusinput">
+                    <div class="svg-select">
+                      <svg
+                        class="danger"
+                        width="13"
+                        height="12"
+                        viewBox="0 0 13 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.79688 6.45313V3.28125C5.79688 3.16108 5.84462 3.04582 5.9296 2.96085C6.01457 2.87587 6.12983 2.82813 6.25 2.82813C6.37018 2.82813 6.48544 2.87587 6.57041 2.96085C6.65539 3.04582 6.70313 3.16108 6.70313 3.28125V6.45313C6.70313 6.57331 6.65539 6.68856 6.57041 6.77354C6.48544 6.85851 6.37018 6.90625 6.25 6.90625C6.12983 6.90625 6.01457 6.85851 5.9296 6.77354C5.84462 6.68856 5.79688 6.57331 5.79688 6.45313ZM12.1406 3.93545V8.06455C12.141 8.18361 12.1177 8.30155 12.0721 8.41152C12.0265 8.5215 11.9595 8.62131 11.875 8.70516L8.95516 11.625C8.87131 11.7095 8.7715 11.7765 8.66152 11.8221C8.55155 11.8677 8.43361 11.891 8.31455 11.8906H4.18545C4.0664 11.891 3.94846 11.8677 3.83848 11.8221C3.72851 11.7765 3.6287 11.7095 3.54485 11.625L0.625024 8.70516C0.540505 8.62131 0.473495 8.5215 0.427892 8.41152C0.382288 8.30155 0.358999 8.18361 0.35938 8.06455V3.93545C0.358999 3.8164 0.382288 3.69846 0.427892 3.58848C0.473495 3.47851 0.540505 3.3787 0.625024 3.29485L3.54485 0.375024C3.6287 0.290505 3.72851 0.223495 3.83848 0.177892C3.94846 0.132288 4.0664 0.108999 4.18545 0.10938H8.31455C8.43361 0.108999 8.55155 0.132288 8.66152 0.177892C8.7715 0.223495 8.87131 0.290505 8.95516 0.375024L11.875 3.29485C11.9595 3.3787 12.0265 3.47851 12.0721 3.58848C12.1177 3.69846 12.141 3.8164 12.1406 3.93545ZM11.2344 3.93545L8.31455 1.01563H4.18545L1.26563 3.93545V8.06455L4.18545 10.9844H8.31455L11.2344 8.06455V3.93545ZM6.25 7.8125C6.11557 7.8125 5.98416 7.85237 5.87239 7.92705C5.76062 8.00174 5.6735 8.10789 5.62206 8.23209C5.57061 8.35628 5.55715 8.49294 5.58338 8.62479C5.6096 8.75664 5.67434 8.87775 5.76939 8.9728C5.86445 9.06786 5.98556 9.13259 6.1174 9.15882C6.24925 9.18504 6.38591 9.17158 6.51011 9.12014C6.63431 9.0687 6.74046 8.98158 6.81514 8.86981C6.88983 8.75803 6.92969 8.62662 6.92969 8.49219C6.92969 8.31193 6.85808 8.13905 6.73062 8.01158C6.60315 7.88411 6.43027 7.8125 6.25 7.8125Z"
+                          fill="#E32626"
+                        />
+                      </svg>
+                    </div>
+
+                    <div class="label-select">
+                      <label for="">Anda belum memilih metode pembayaran</label>
+                    </div>
+
+                    <div @click="showPopup1" id="showPopup">
+                      <svg
+                        width="13"
+                        height="8"
+                        class="svg"
+                        viewBox="0 0 13 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12.8354 1.5855L7.21055 7.21031C7.15831 7.26261 7.09628 7.30409 7.02799 7.3324C6.95971 7.36071 6.88652 7.37528 6.8126 7.37528C6.73868 7.37528 6.66548 7.36071 6.5972 7.3324C6.52892 7.30409 6.46688 7.26261 6.41464 7.21031L0.789838 1.5855C0.684294 1.47996 0.625 1.33681 0.625 1.18755C0.625 1.03829 0.684294 0.895138 0.789838 0.789594C0.895382 0.68405 1.03853 0.624756 1.18779 0.624756C1.33706 0.624756 1.4802 0.68405 1.58575 0.789594L6.8126 6.01715L12.0394 0.789594C12.0917 0.737334 12.1537 0.695879 12.222 0.667596C12.2903 0.639313 12.3635 0.624756 12.4374 0.624756C12.5113 0.624756 12.5845 0.639313 12.6528 0.667596C12.7211 0.695879 12.7831 0.737334 12.8354 0.789594C12.8876 0.841854 12.9291 0.903896 12.9574 0.972177C12.9856 1.04046 13.0002 1.11364 13.0002 1.18755C13.0002 1.26146 12.9856 1.33464 12.9574 1.40292C12.9291 1.4712 12.8876 1.53324 12.8354 1.5855Z"
+                          fill="black"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <!-- <SelectPopup ref="selectPopup" /> -->
+                <div v-if="showPopup" class="popup">
+                  <div class="popup-inner">
+                    <div class="nav-popup">
+                      <div class="txt-nav-popup">
+                        <h6>Pilih Pembayaran</h6>
+                      </div>
+                      <div class="icon-close">
+                        <span @click="closePopup"
+                          ><img src="../assets/svg/Frameclose.svg"
+                        /></span>
+                      </div>
+                    </div>
+                    <div class="kredit">
+                      <div class="txt-kredit-popup">
+                        <h6>Kartu Kredit/Debit</h6>
+                      </div>
+                      <div class="icon-kredit">
+                        <span @click="showkreditPopup"
+                          ><img src="../assets/svg/FrameVector-Right.svg"
+                        /></span>
+                      </div>
+                    </div>
+                    <div class="kredit">
+                      <div class="txt-kredit-popup">
+                        <h6>Bank BJB</h6>
+                      </div>
+                      <div class="icon">
+                        <img
+                          src="../assets/svg/logobank.svg"
+                          alt=""
+                          class="image"
+                        />
+                        <span @click="toTransfer"
+                          ><img
+                            class="image"
+                            src="../assets/svg/FrameVector-Right.svg"
+                        /></span>
+                      </div>
+                    </div>
+                    <div class="kredit">
+                      <div class="txt-kredit-popup">
+                        <h6>Cash</h6>
+                      </div>
+                      <div class="icon">
+                        <span @click="toCash"
+                          ><img
+                            class="image"
+                            src="../assets/svg/FrameVector-Right.svg"
+                        /></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <KreditPopup ref="kreditPopup" />
               </div>
             </div>
           </div>
@@ -188,16 +328,16 @@ const kurang = () => {
 </template>
 
 <script>
-import Cart from 'stores/carts'
-const cartModel = new Cart()
+import Cart from "stores/carts";
+const cartModel = new Cart();
 export default {
   data() {
     return {
-      carts: ref()
-    }
+      carts: ref(),
+    };
   },
-  mounted(){
-    this.setCartData()
+  mounted() {
+    this.setCartData();
   },
   methods: {
     async setCartData() {
@@ -217,25 +357,22 @@ export default {
           ...cart,
         }));
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
-    async checkOut(){
-      try{
-        const response = await this.$api.post('/')
-      }catch(err){
-        console.log(err)
+    async checkOut() {
+      try {
+        const response = await this.$api.post("/");
+      } catch (err) {
+        console.log(err);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
-
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
-
-
 
 .block1 {
   width: 100%;
@@ -266,7 +403,7 @@ export default {
   display: none;
 }
 
-.custom-radio-btn input:checked+.checkmark {
+.custom-radio-btn input:checked + .checkmark {
   display: inline-block;
   opacity: 1;
 }
@@ -388,7 +525,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .tiket-masuk {
   color: #000000;
   font-weight: 400;
-  font-size: 20px;
+  font-size: large;
   line-height: 28px;
 }
 
@@ -684,11 +821,11 @@ body {
 /* Responsif untuk layar dengan lebar maksimum 640px */
 @media (max-width: 640px) {
   .header {
-    font-size: large;
+    font-size: x-large;
   }
 
   .pstikan {
-    font-size: small;
+    font-size: medium;
   }
 
   .block1 {
@@ -813,5 +950,243 @@ hr {
   #ringkasanBooking {
     margin-left: 100px;
   }
+}
+
+#showPopup {
+  /* background-color: rebeccapurple; */
+  align-items: center;
+}
+
+#showPopup .svg {
+  text-align: right;
+}
+
+.atas {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+}
+
+.txt-group17 {
+  font-family: "Raleway";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.txt-group17 p {
+  width: 135px;
+  height: 24px;
+  left: 38px;
+  color: #5e5e5e;
+}
+
+.svg-select {
+  margin: auto;
+}
+
+.select {
+  background-color: #ffffff;
+  /* padding-left: 20px;
+  padding-bottom: 17.75px;
+  padding-right: 20px;
+  padding-top: 17.75px; */
+  width: fit-content;
+  height: 44.75px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
+  border: 0px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* .danger{
+    align-items: center;
+    margin: 7px;
+  } */
+}
+
+@media (max-width: 900px) {
+  .select {
+    width: 100%;
+  }
+  .danger {
+    margin-inline: 10px;
+  }
+  .svg-select {
+    margin: 0%;
+  }
+}
+.danger {
+  margin-inline: 15px;
+}
+
+svg {
+  margin-top: 1px;
+}
+
+label {
+  font-size: 14px;
+}
+
+.svg {
+  margin-inline: 15px;
+}
+
+/* selectpopup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 25%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-inner {
+  display: flex;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+
+.popup-inner {
+  background: #ffffff;
+  width: 90%;
+  max-width: 536px;
+  height: auto;
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.nav-popup {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 80px;
+  padding: 24px 30px;
+  border-bottom: 1px solid #d0d5dd;
+  align-items: center;
+}
+
+@media (max-width: 640px) {
+  .popup-inner {
+    padding: 24px;
+  }
+
+  .nav-popup {
+    padding: 16px;
+  }
+}
+
+.image {
+  margin: auto 0;
+  height: 100%;
+}
+.icon {
+  padding: auto;
+}
+
+.popup-inner span:hover {
+  cursor: pointer;
+}
+
+.txt-nav-popup h5 {
+  font-family: Raleway;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.icon-close {
+  justify-content: right;
+  margin: auto 0;
+}
+
+.kredit {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  padding-inline: 20px;
+  border-bottom: 1px solid #d0d5dd;
+  align-items: center;
+}
+
+.txt-kredit-popup h6 {
+  font-family: "Raleway";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.transfer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 56px;
+  padding-inline: 20px;
+  border-bottom: 1px solid #d0d5dd;
+  align-items: center;
+}
+.txt-bank {
+  font-family: "Raleway";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.transfer .txt-bank h6 {
+  font-family: "Raleway";
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  padding-inline: 20px;
+  line-height: -28px;
+  letter-spacing: 0em;
+  text-align: left;
+  width: 132px;
+  height: 28px;
+}
+
+.bank {
+  width: 100%;
+  height: 49px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d0d5dd;
+  justify-content: right;
+}
+
+.bank p {
+  font-family: "Inter";
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-left: 9px;
+}
+
+.bank .logo-bank {
+  display: flex;
+}
+
+.bank .logo-bank .logo-bjb {
+  margin-left: 8px;
 }
 </style>
