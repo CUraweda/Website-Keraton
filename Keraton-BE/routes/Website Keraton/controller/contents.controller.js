@@ -50,19 +50,24 @@ router.get("/:id?", async (req, res) => {
   }
 });
 
-router.post('/:ident/:id?', upload.array('imageList[]'), async (req, res) => {
-    let sendedData
-    try {
-        if (req.files) req.body.imageList = req.files
-        if(req.body.pageId) req.body.pageId = +req.body.pageId
-        if(req.body.sectionOrder) req.body.sectionOrder = +req.body.sectionOrder
-        if (req.params.ident != "create") {
-            sendedData = await contentModel.createUpdate('update', +req.params.id, req.body)
-        } else sendedData = await contentModel.createUpdate('create', null, req.body)
-        return success(res, 'Action success', sendedData)
-    } catch (err) {
-        return error(res, err.message)
-    }
-})
+router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
+  let sendedData;
+  try {
+    if (req.files) req.body.imageList = req.files;
+    if (req.body.pageId) req.body.pageId = +req.body.pageId;
+    if (req.body.sectionOrder) req.body.sectionOrder = +req.body.sectionOrder;
+    if (req.params.ident != "create") {
+      sendedData = await contentModel.createUpdate(
+        "update",
+        +req.params.id,
+        req.body
+      );
+    } else
+      sendedData = await contentModel.createUpdate("create", null, req.body);
+    return success(res, "Action success", sendedData);
+  } catch (err) {
+    return error(res, err.message);
+  }
+});
 
-module.exports = router
+module.exports = router;

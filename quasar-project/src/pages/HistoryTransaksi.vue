@@ -120,6 +120,11 @@ const transactions = [
               <img src="../assets/images/img-1.jpg" alt="" />
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
+                <div class="flex items-center q-gutter-xs">
+                  <q-badge rounded color="blue">Cirebon</q-badge>
+                  <q-badge rounded color="orange">Museum</q-badge>
+                  <q-badge rounded color="green">Agung Dalem</q-badge>
+                </div>
                 <div class="label">
                   <label class="labelharga">1 tiket x Rp. 10.000</label><br />
                   <label>+2 tiket lainnya</label>

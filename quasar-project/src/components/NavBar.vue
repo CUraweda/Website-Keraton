@@ -1,27 +1,30 @@
 <template>
-  <q-layout view="hHh lpR fFf" style="background: transparent;">
+  <q-layout view="hHh lpR fFf" style="background: transparent">
     <q-header elevated="false">
       <q-toolbar :class="{ scrolled: isScrolled }">
         <div class="navbar-left">
           <div class="content-navbar-left">
-          <img
-            alt="icon-aplikasi"
-            src="../assets/images/logo_keraton.png"
-            class="app-icon"
-            style="margin-left: 1vw;"
-          />
+            <img
+              alt="icon-aplikasi"
+              src="../assets/images/logo_keraton.png"
+              class="app-icon"
+              style="margin-left: 1vw"
+            />
           </div>
           <div class="content-navbar-right">
             <q-btn
-            flat
-            dense
-            round
-            icon="menu"
-            @click="drawerOpen = !drawerOpen"
-            class="menu-button"
-          ></q-btn>
+              flat
+              dense
+              round
+              icon="menu"
+              @click="drawerOpen = !drawerOpen"
+              class="menu-button"
+            ></q-btn>
           </div>
-          <span class="app-name" :class="{ 'text-white': !isScrolled, 'text-black': isScrolled }">
+          <span
+            class="app-name"
+            :class="{ 'text-white': !isScrolled, 'text-black': isScrolled }"
+          >
             KERATON KASEPUHAN CIREBON
           </span>
         </div>
@@ -33,11 +36,7 @@
             :color="isScrolled ? 'black' : 'white'"
             to="/"
           ></q-btn>
-          <q-btn
-            flat
-            label="Sejarah"
-            :color="isScrolled ? 'black' : 'white'"
-          >
+          <q-btn flat label="Sejarah" :color="isScrolled ? 'black' : 'white'">
             <q-menu>
               <q-list>
                 <q-item clickable to="/sejarah">
@@ -49,11 +48,7 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn
-            flat
-            label="Booking"
-            :color="isScrolled ? 'black' : 'white'"
-          >
+          <q-btn flat label="Booking" :color="isScrolled ? 'black' : 'white'">
             <q-menu>
               <q-list>
                 <q-item clickable @click="toBooking('/booking')">
@@ -85,7 +80,7 @@
             </q-menu>
           </q-btn>
           <q-btn
-            style="background: #123b32; color: white; padding-inline: 30px;"
+            style="background: #123b32; color: white; padding-inline: 30px"
             v-if="!isLogin"
             @click="getTickets"
           >
@@ -115,29 +110,58 @@
         </div>
       </q-toolbar>
     </q-header>
-   <q-drawer v-model="drawerOpen" side="right" overlay class="sidebar" style="background: #123b32; color: white;">
-    <div class="navbar-left">
-      <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" style="margin: 1vw;" />
-      <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
-      <q-btn flat dense round icon="close" @click="toggleRightDrawer" class="close-btn" />
-    </div>
-    <q-list>
-      <q-item clickable to="/">
-        <q-item-section>Beranda</q-item-section>
-      </q-item>
+    <q-drawer
+      v-model="drawerOpen"
+      side="right"
+      overlay
+      class="sidebar"
+      style="background: #123b32; color: white"
+    >
+      <div class="navbar-left">
+        <img
+          alt="icon-aplikasi"
+          src="../assets/images/logo_keraton.png"
+          class="app-icon"
+          style="margin: 1vw"
+        />
+        <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
+        <q-btn
+          flat
+          dense
+          round
+          icon="close"
+          @click="toggleRightDrawer"
+          class="close-btn"
+        />
+      </div>
+      <q-list>
+        <q-item clickable to="/">
+          <q-item-section>Beranda</q-item-section>
+        </q-item>
 
-      <q-expansion-item v-if="!isLogin" label="Sign In / Sign Up" clickable @click="toggleWisata">
-        <q-list class="submenu">
-          <q-item clickable to="/wisata/keraton">
-            <q-item-section>Sign In</q-item-section>
-          </q-item>
-          <q-item clickable to="/wisata/museum">
-            <q-item-section>Sign Up</q-item-section>
-          </q-item>
-        </q-list>
-      </q-expansion-item>
+        <q-expansion-item
+          v-if="!isLogin"
+          label="Sign In / Sign Up"
+          clickable
+          @click="toggleWisata"
+        >
+          <q-list class="submenu">
+            <q-item clickable to="/wisata/keraton">
+              <q-item-section>Sign In</q-item-section>
+            </q-item>
+            <q-item clickable to="/wisata/museum">
+              <q-item-section>Sign Up</q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
 
-      <q-expansion-item v-if="isLogin" label="Account" clickable @click="toggleSejarah" expand-separator>
+        <q-expansion-item
+          v-if="isLogin"
+          label="Account"
+          clickable
+          @click="toggleSejarah"
+          expand-separator
+        >
           <q-list class="submenu">
             <q-item clickable @click="logout">
               <q-item-section>Logout</q-item-section>
@@ -152,53 +176,64 @@
               <q-item-section>Admin Page</q-item-section>
             </q-item>
           </q-list>
-      </q-expansion-item>
+        </q-expansion-item>
 
-      <q-expansion-item label="Sejarah" clickable @click="toggleSejarah" expand-separator>
-        <q-list class="submenu">
-          <q-item clickable to="/sejarah">
-            <q-item-section>Keraton</q-item-section>
-          </q-item>
-          <q-item clickable to="/sejarah/silsilah">
-            <q-item-section>Silsilah</q-item-section>
-          </q-item>
-        </q-list>
-      </q-expansion-item>
+        <q-expansion-item
+          label="Sejarah"
+          clickable
+          @click="toggleSejarah"
+          expand-separator
+        >
+          <q-list class="submenu">
+            <q-item clickable to="/sejarah">
+              <q-item-section>Keraton</q-item-section>
+            </q-item>
+            <q-item clickable to="/sejarah/silsilah">
+              <q-item-section>Silsilah</q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
 
-      <q-expansion-item v-if="isLogin" label="Booking" clickable @click="toggleBooking" expand-separator>
-        <q-list class="submenu">
-          <q-item @click="toBooking('/booking')">
-            <q-item-section>Paket Keraton</q-item-section>
-          </q-item>
-          <q-item @click="toBooking('/booking/events')">
-            <q-item-section>Tiket Event</q-item-section>
-          </q-item>
-        </q-list>
-      </q-expansion-item>
+        <q-expansion-item
+          v-if="isLogin"
+          label="Booking"
+          clickable
+          @click="toggleBooking"
+          expand-separator
+        >
+          <q-list class="submenu">
+            <q-item @click="toBooking('/booking')">
+              <q-item-section>Paket Keraton</q-item-section>
+            </q-item>
+            <q-item @click="toBooking('/booking/events')">
+              <q-item-section>Tiket Event</q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
 
-      <q-expansion-item label="Objek Wisata" clickable @click="toggleWisata">
-        <q-list class="submenu">
-          <q-item clickable to="/wisata/keraton">
-            <q-item-section>Keraton Kesepuhan</q-item-section>
-          </q-item>
-          <q-item clickable to="/wisata/museum">
-            <q-item-section>Museum Pusaka</q-item-section>
-          </q-item>
-          <q-item clickable to="/wisata/dalemagung">
-            <q-item-section>Dalem Agung Pangkuwati</q-item-section>
-          </q-item>
-        </q-list>
-      </q-expansion-item>
+        <q-expansion-item label="Objek Wisata" clickable @click="toggleWisata">
+          <q-list class="submenu">
+            <q-item clickable to="/wisata/keraton">
+              <q-item-section>Keraton Kesepuhan</q-item-section>
+            </q-item>
+            <q-item clickable to="/wisata/museum">
+              <q-item-section>Museum Pusaka</q-item-section>
+            </q-item>
+            <q-item clickable to="/wisata/dalemagung">
+              <q-item-section>Dalem Agung Pangkuwati</q-item-section>
+            </q-item>
+          </q-list>
+        </q-expansion-item>
 
-      <!-- <q-item clickable @click="getTickets">
+        <!-- <q-item clickable @click="getTickets">
         <q-item-section>Dapatkan Tiket</q-item-section>
         <q-item-section side>
           <q-icon name="arrow_forward" style="font-size: 16px; color: white;"/>
         </q-item-section>
       </q-item> -->
-    </q-list>
-  </q-drawer>
-  <Notification
+      </q-list>
+    </q-drawer>
+    <Notification
       v-if="notification.message"
       :message="notification.message"
       :type="notification.type"
@@ -211,7 +246,7 @@ import { verifyToken } from "src/auth/auth";
 // import { verifyTokenBool } from "src/auth/auth";
 import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
 import cookieHandler from "src/cookieHandler";
-import env from 'stores/environment'
+import env from "stores/environment";
 import { ref } from "vue";
 export default {
   data() {
@@ -248,9 +283,9 @@ export default {
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
-    const tokenVerified = await verifyToken()
-    this.isLogin = tokenVerified.isLogin
-    this.isAdmin = tokenVerified.isAdmin
+    const tokenVerified = await verifyToken();
+    this.isLogin = tokenVerified.isLogin;
+    this.isAdmin = tokenVerified.isAdmin;
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -258,20 +293,20 @@ export default {
   methods: {
     async logout() {
       try {
-        const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
-        const response = await this.$api.get('auth/logout', {
+        const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
+        const response = await this.$api.get("auth/logout", {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-        if (response.status != 200) throw Error(response.data.message)
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.status != 200) throw Error(response.data.message);
         // this.$router.push("/signin");
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-      localStorage.removeItem(env.USER_STORAGE_NAME)
-      cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
-      return this.isLogin = false; // Set isLogin ke false saat logout
+      localStorage.removeItem(env.USER_STORAGE_NAME);
+      cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
+      return (this.isLogin = false); // Set isLogin ke false saat logout
     },
     showNotif(mes, type) {
       this.notification.message = mes;
@@ -285,7 +320,7 @@ export default {
       if (this.isLogin) {
         this.$router.push(url);
       } else {
-        this.showNotif("You need to log in first", "error")
+        this.showNotif("You need to log in first", "error");
       }
     },
     keranjang() {
@@ -314,7 +349,7 @@ export default {
     },
     toggleRightDrawer() {
       this.drawerOpen = !this.drawerOpen;
-    }
+    },
   },
 };
 </script>
@@ -323,7 +358,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 .q-layout {
-  min-height: auto !important;  /* Or set to desired value */
+  min-height: auto !important; /* Or set to desired value */
   background: transparent !important;
 }
 

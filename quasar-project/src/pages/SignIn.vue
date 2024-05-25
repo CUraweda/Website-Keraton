@@ -40,16 +40,20 @@
         </div>
       </form>
     </div>
-    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
 <script>
 import cookieHandler from "src/cookieHandler";
 import env from "../stores/environment";
-import Cart from "stores/carts"
+import Cart from "stores/carts";
 import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
-const cartClass = new Cart()
+const cartClass = new Cart();
 
 export default {
   data() {
@@ -116,15 +120,15 @@ export default {
       };
 
       try {
-        const response = await this.$api.post('/auth/login', payload)
-        if (response.status != 200) throw Error(response.data.message)
-        const { token, user } = response.data.data
-        const cartData = Object.values(user.carts)
-        delete user.carts
-        
+        const response = await this.$api.post("/auth/login", payload);
+        if (response.status != 200) throw Error(response.data.message);
+        const { token, user } = response.data.data;
+        const cartData = Object.values(user.carts);
+        delete user.carts;
+
         this.showNotif("Login Successfuly", "info");
-        cartClass.setNew(cartData)
-        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token)
+        cartClass.setNew(cartData);
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
         this.$router.go(-1);
       } catch (err) {

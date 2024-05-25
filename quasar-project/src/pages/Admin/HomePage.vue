@@ -1,27 +1,22 @@
 <template>
-  <div><navbar/>
-  <div style="margin-top: 150px" class="q-px-xl">
-    <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
-    <div>Ubah dan atur konten di halaman beranda web</div>
-    <q-table
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      class="q-mt-xl"
-    > 
-      <template v-slot:body-cell-Action="scope">
-        <q-btn 
-          color="positive" 
-          :label="'Edit '" 
-          :href="'#/admin/add/' + scope.row.id" 
-          @click="scope.selected = scope.row.id"
-        />
-      </template>
-    </q-table>
-  </div></div>
-  
+  <div>
+    <navbar />
+    <div style="margin-top: 150px" class="q-px-xl">
+      <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
+      <div>Ubah dan atur konten di halaman beranda web</div>
+      <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-xl">
+        <template v-slot:body-cell-Action="scope">
+          <q-btn
+            color="positive"
+            :label="'Edit '"
+            :href="'#/admin/add/' + scope.row.id"
+            @click="scope.selected = scope.row.id"
+          />
+        </template>
+      </q-table>
+    </div>
+  </div>
 </template>
-
 
 <script>
 import { verifyToken } from "src/auth/auth";
@@ -79,7 +74,7 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.isAdmin = (await verifyToken()).isAdmin
+    this.isAdmin = (await verifyToken()).isAdmin;
   },
   methods: {
     async fetchData() {
@@ -104,9 +99,8 @@ export default {
         if (!this.isAdmin) {
           return this.$router.replace("/");
         }
-        
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     convertISOToReadableDate(isoDate) {

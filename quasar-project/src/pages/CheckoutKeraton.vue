@@ -3,13 +3,13 @@ import { ref, computed } from "vue";
 import navbar from "../components/NavBar.vue";
 import Payment from "../components/PembayaranComponent.vue";
 import KreditPopup from "../components/kreditPopup.vue";
+import SelectPopup from "../components/SelectPopup.vue";
 
 const count = ref(1);
 const layanan = 2500;
 const jasaApp = 1000;
 const harga = ref(10000);
 const showPopup = ref(false);
-import SelectPopup from "../components/SelectPopup.vue";
 
 const selectPopup = ref(null);
 
@@ -362,7 +362,7 @@ export default {
           ...cart,
         }));
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     async validateCartData() {
@@ -397,11 +397,8 @@ export default {
 }
 </script>
 
-
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
-
-
 
 .block1 {
   width: 100%;
@@ -432,7 +429,7 @@ export default {
   display: none;
 }
 
-.custom-radio-btn input:checked+.checkmark {
+.custom-radio-btn input:checked + .checkmark {
   display: inline-block;
   opacity: 1;
 }
