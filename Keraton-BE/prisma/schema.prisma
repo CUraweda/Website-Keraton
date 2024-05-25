@@ -106,20 +106,24 @@ model OrderSubType {
 }
 
 model Transaction {
-  id                String        @id @default(uuid())
-  total             Decimal       @db.Decimal(18, 2)
-  method            String
-  status            Status
-  plannedDate       DateTime
-  createdDate       DateTime      @default(now())
-  discount          String?
-  cashback          String?
-  uniqueBarCodeData String?       @db.Text
-  user              User?         @relation(fields: [userId], references: [id])
-  userId            String?
-  nationality       Nationality?  @relation(fields: [nationalityId], references: [id])
-  nationalityId     String?
-  detailTrans       DetailTrans[]
+  id            String        @id @default(uuid())
+  custName      String?
+  custEmail     String?
+  custNumber    String?
+  total         Decimal       @db.Decimal(18, 2)
+  method        String
+  status        Status        @default(MENUNGGU_PEMBAYARAN)
+  plannedDate   DateTime
+  createdDate   DateTime      @default(now())
+  discount      String?
+  cashback      String?
+  barcode       BarcodeUsage? @relation(fields: [barcodeUID], references: [id])
+  barcodeUID    String?
+  user          User?         @relation(fields: [userId], references: [id])
+  userId        String?
+  nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
+  nationalityId String?
+  detailTrans   DetailTrans[]
 }
 
 model DetailTrans {
@@ -134,6 +138,14 @@ model DetailTrans {
   eventId       Int?
   guide         Guide?      @relation(fields: [guideId], references: [id])
   guideId       String?
+}
+
+model BarcodeUsage {
+  id            String        @id @default(uuid())
+  remainingUses Int
+  expiredAt     DateTime
+  createdAt     DateTime      @default(now())
+  Transaction   Transaction[]
 }
 
 model Nationality {

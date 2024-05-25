@@ -9,12 +9,14 @@ const controlIteration = require("../controller/eventIterarion.controller");
 const controlNews = require("../controller/news.controller");
 const controlSubscribe = require("../controller/subscriber.controller");
 const controlCart = require("../controller/carts.controller");
+const controlTransaction = require('../controller/transaction.controller')
 
 router.use("/content", controlContent);
 router.use("/page", controlPage);
 router.use("/auth", controlAuth);
 router.use("/event", controlEvent);
 router.use("/news", controlNews);
+router.use('/trans', controlTransaction)
 router.use("/items", controlOrder);
 router.use("/cart", controlCart);
 router.use("/subscribe", controlSubscribe);

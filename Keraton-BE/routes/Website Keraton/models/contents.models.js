@@ -32,7 +32,7 @@ const createUpdate = async (ident, id, data) => {
                 context[`xs${textIndex + 1}`] = {
                     data: textList[textIndex].data,
                     textSize: textList[textIndex].textSize,
-                    sub: textList[textSize].sub
+                    sub: textList[textIndex].sub
                 }
             }
             delete data.textList
@@ -40,6 +40,7 @@ const createUpdate = async (ident, id, data) => {
         }
         if (imageList) {
             for (let imgIndex = 0; imgIndex < imageList.length; imgIndex++) {
+                console.log(imageList[imgIndex])
                 context[`xi${imgIndex + 1}`] = {
                     data:  imageList[imgIndex]?.path ? convertFilesToURL(imageList[imgIndex].path) : imageList[imgIndex],
                     sub: imageList[imgIndex]?.sub
@@ -50,6 +51,7 @@ const createUpdate = async (ident, id, data) => {
         }
         if (linkList) {
             for (let linkIndex = 0; linkIndex < linkList.length; linkIndex++) {
+                console.log(linkList[linkIndex])
                 context[`xl${linkIndex + 1}`] = {
                     data: linkList[linkIndex].data,
                     sub: linkList[linkIndex].sub
