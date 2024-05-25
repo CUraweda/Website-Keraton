@@ -65,6 +65,7 @@ const createNew = async (data) => {
                 ...cart.typeData
             })
         }
+        console.log(payloads)
         const detailData = createManyDetail(payloads)
         return { createdTransacation, detailData }
     } catch (err) {
@@ -74,7 +75,7 @@ const createNew = async (data) => {
 
 const createManyDetail = async (datas = [{ amount, transactionId, orderId, eventId, guideId }]) => {
     try {
-        return await prisma.detailTrans.createMany(datas)
+        return await prisma.detailTrans.createMany({ data: datas })
     } catch (err) {
         throwError(err)
     }

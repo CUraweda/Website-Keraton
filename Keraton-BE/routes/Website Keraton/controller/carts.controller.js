@@ -26,7 +26,7 @@ router.get('/', auth([]), async (req, res) => {
 router.post('/update', auth([]), async (req, res) => {
     try{
         const data = await cartModel.updateCart(req.user.id, req.body.cart)
-        return data
+        return success(res, 'Update Successfully', data)
     }catch(err){
         return error(res, err.message)
     }

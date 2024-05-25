@@ -10,7 +10,7 @@ const controlNews = require("../controller/news.controller");
 const controlSubscribe = require("../controller/subscriber.controller");
 const controlCart = require("../controller/carts.controller");
 const controlTransaction = require('../controller/transaction.controller')
-
+const controlParam = require('../controller/params.controller')
 router.use("/content", controlContent);
 router.use("/page", controlPage);
 router.use("/auth", controlAuth);
@@ -21,5 +21,6 @@ router.use("/items", controlOrder);
 router.use("/cart", controlCart);
 router.use("/subscribe", controlSubscribe);
 router.use("/iteration", controlIteration);
+router.use('/param', controlParam)
 
 module.exports = router;

@@ -26,6 +26,7 @@ router.get('/', auth(), async (req, res) => {
 router.post('/', auth(), async(req, res) => {
     const { carts, plannedDate, method } = req.body
     try{
+        console.log(req.body)
         const payload = {
             user: req.user,
             carts: Object.values(carts),

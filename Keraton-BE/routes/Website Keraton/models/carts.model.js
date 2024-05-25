@@ -1,6 +1,8 @@
 const { throwError } = require("../../utils/helper")
 const { prisma } = require("../../utils/prisma")
 const userModel = require('../models/user.models')
+const eventModel = require('../models/events.models')
+const orderModel = require('../models/order.models')
 
 const action = async (actionParam, id, carts) => {
     try {
@@ -12,7 +14,7 @@ const action = async (actionParam, id, carts) => {
                 break;
             case "break":
                 for (let cart of carts) delete rawUserCarts[cart.id]
-                break
+                brea
             default:
                 break
         }
@@ -71,10 +73,12 @@ const updateCartData = async (carts)  => {
     }
 }
 
-const countTotal = async (carts) => {
+const countTotal = (carts) => {
     try{
         let total = 0
-        for(let cart of carts) total += cart.price
+        console.log(carts)
+        for(let cart of carts) total = total + cart.price
+        console.log(total)
         return total
     }catch(err){
         throwError(err)
