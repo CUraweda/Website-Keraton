@@ -6,10 +6,10 @@ export default class Carts {
     // static cartName = env.CART_STORAGE_NAME;
 
     constructor() {
-        try{
+        try {
             const cartData = localStorage.getItem(env.CART_STORAGE_NAME)
             this.userCart = cartData ? JSON.parse(cartData) : {}
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -37,9 +37,8 @@ export default class Carts {
     }
 
     setNew(listOfData = [{ id, name, image, price, quantity, event }]) {
-        console.log(listOfData)
         if (listOfData.length < 1) return this
-        this.userCart = listOfData
+        for(let data of listOfData) this.userCart[`${data.type}|${data.id}`] = { ...data }
         return this.updateItem()
     }
 
@@ -52,10 +51,10 @@ export default class Carts {
         return this
     }
 
-    changeQuantity(ascDesc, itemId, qty) {
+    changeQuantity(itemId, qty) {
         const cartItem = this.userCart[itemId]
         if (!cartItem) throw Error('Item didnt exist')
-        cartItem.quantity = ascDesc != "asc" ? cartItem.quantity - qty : cartItem.quantity + qty
+        cartItem.quantity = qty
         if (cartItem.quantity > 1) {
             this.userCart[itemId] = cartItem
         } else this.removeItem([{ id: itemId }])
@@ -64,9 +63,13 @@ export default class Carts {
 
     removeItem(listOfData = [{ id }]) {
         if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
-
-        for (let data of listOfData) delete this.userCart[`${data.type}|${data.id}`]
-        console.log(this, listOfData)
+        console.log(listOfData)
+    console.log(this.userCart)
+        for (let data of listOfData) {
+            const propertyId = `${data.type}|${data.id}`
+            if (this.userCart.hasOwnProperty(propertyId)) delete this.userCart[propertyId];
+        }
+        console.log(this.userCart)
         return this
     }
 }

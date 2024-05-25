@@ -39,16 +39,16 @@
   <div v-for="(item, index) in paketItems" :key="index">
     <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
     <div class="container">
-      <div class="ni" v-for="(item, index) in tiketItems" :key="index">
-        <img class="image" :src="item.image" alt="Gambar" />
+      <div class="ni" v-for="(paket, index) in item" :key="index">
+        <img class="image" :src="paket.image" alt="Gambar" />
         <div class="buttonaji"></div>
-        <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
-        <h1 class="judul-besar">{{ item.titleBig }}</h1>
+        <h2 class="judul-sedang">{{ paket.titleMedium }}</h2>
+        <h1 class="judul-besar">{{ paket.titleBig }}</h1>
         <div class="tengah">
           <h3 class="judul-kecil">
-            {{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}
+            {{ "Rp. " + formatRupiah(paket.price) + `/ ${paket.unit}` }}
           </h3>
-          <button class="tambah" @click="addToCart(data)">
+          <button class="tambah" @click="addToCart(paket)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
@@ -108,18 +108,28 @@
       </div>
     </div>
   </div>
+  <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
 </template>
 
 <script setup>
 import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
 import Carts from "../stores/carts";
+import Notification from "components/NotificationAlert.vue"
+
 </script>
 
 <script>
 import { ref } from "vue";
 
 export default {
+  components: {
+    Notification,
+  },
   props: {
     disabled: {
       type: Boolean,
@@ -146,104 +156,108 @@ export default {
       ],
       selectedOptions: [],
       selectedOptions2: [],
-      items: [
-        {
-          id: 1,
-          image: "src/assets/images/imageArea.png",
-          titleMedium: "Tiket Masuk Keraton",
-          titleBig:
-            "Menikmati area Keraton. Jam operasional dari 08.00 - 17.00 WIB.",
-          price: "Rp. 10.000-20.000/orang",
-        },
-        {
-          id: 2,
-          image: "/src/assets/images/museum.png",
-          titleMedium: "Tiket Masuk Museum",
-          titleBig:
-            "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-          price: "Rp.15.000/orang",
-        },
-        {
-          id: 3,
-          image: "src/assets/images/museum.png",
-          titleMedium: "Tiket Masuk Keraton + Museum",
-          titleBig:
-            "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-          price: "Rp.20.000/orang",
-        },
-        {
-          id: 4,
-          image: "src/assets/images/keraton.png",
-          titleMedium: "Tadarus di langgar alit",
-          titleBig:
-            "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-          price: "Rp.20.000/orang",
-        },
-        {
-          id: 5,
-          image: "src/assets/images/isra.png",
-          titleMedium: "Paket Wisata Silatuhrahmi I",
-          titleBig:
-            "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan",
-          price: "Rp.85.000/orang",
-        },
-        {
-          id: 6,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Silatuhrahmi II",
-          titleBig:
-            "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-          price: "Rp.135.000/orang",
-        },
-        {
-          id: 7,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Silatuhrahmi III",
-          titleBig:
-            "Menikmati Keraton dengan guide + makan (masakan nasional) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-          price: "Rp.200.000/orang",
-        },
-        {
-          id: 8,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Silatuhrahmi IV",
-          titleBig:
-            "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-          price: "Rp.200.000/orang",
-        },
-        {
-          id: 9,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Non Silatuhrahmi I",
-          titleBig:
-            "Menikmati Keraton dengan guide + snack khas cirebon + kesenian",
-          price: "Rp.115.000/orang",
-        },
-        {
-          id: 10,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Non Silatuhrahmi II",
-          titleBig:
-            "Menikmati Keraton dengan guide + makan (masakan nasional) + kesenian",
-          price: "Rp.175.000/orang",
-        },
-        {
-          id: 11,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Non Silatuhrahmi III",
-          titleBig:
-            "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + kesenian",
-          price: "Rp.175.000/orang",
-        },
-        {
-          id: 12,
-          image: "src/assets/images/sholat.png",
-          titleMedium: "Paket Wisata Pelajar",
-          titleBig:
-            "Menikmati Keraton dengan guide + makan (nasi dus) + belajar sejarah dan kesenian",
-          price: "Rp.60.000/orang",
-        },
-      ],
+      notification: {
+        message: "",
+        type: "info",
+      },
+      // items: [
+      //   {
+      //     id: 1,
+      //     image: "src/assets/images/imageArea.png",
+      //     titleMedium: "Tiket Masuk Keraton",
+      //     titleBig:
+      //       "Menikmati area Keraton. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp. 10.000-20.000/orang",
+      //   },
+      //   {
+      //     id: 2,
+      //     image: "/src/assets/images/museum.png",
+      //     titleMedium: "Tiket Masuk Museum",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.15.000/orang",
+      //   },
+      //   {
+      //     id: 3,
+      //     image: "src/assets/images/museum.png",
+      //     titleMedium: "Tiket Masuk Keraton + Museum",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.20.000/orang",
+      //   },
+      //   {
+      //     id: 4,
+      //     image: "src/assets/images/keraton.png",
+      //     titleMedium: "Tadarus di langgar alit",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.20.000/orang",
+      //   },
+      //   {
+      //     id: 5,
+      //     image: "src/assets/images/isra.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi I",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan",
+      //     price: "Rp.85.000/orang",
+      //   },
+      //   {
+      //     id: 6,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi II",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.135.000/orang",
+      //   },
+      //   {
+      //     id: 7,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi III",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.200.000/orang",
+      //   },
+      //   {
+      //     id: 8,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi IV",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.200.000/orang",
+      //   },
+      //   {
+      //     id: 9,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi I",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + kesenian",
+      //     price: "Rp.115.000/orang",
+      //   },
+      //   {
+      //     id: 10,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi II",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + kesenian",
+      //     price: "Rp.175.000/orang",
+      //   },
+      //   {
+      //     id: 11,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi III",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + kesenian",
+      //     price: "Rp.175.000/orang",
+      //   },
+      //   {
+      //     id: 12,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Pelajar",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (nasi dus) + belajar sejarah dan kesenian",
+      //     price: "Rp.60.000/orang",
+      //   },
+      // ],
       cart: new Carts(),
     };
   },
@@ -266,7 +280,7 @@ export default {
 
         for (let subType of response.data.data) {
           switch (subType.orderTypeId) {
-            case 1:
+            case 1: //Tiket Type
               for (let order of subType.orders) {
                 tikets.push({
                   id: order.id,
@@ -279,11 +293,12 @@ export default {
                 });
               }
               break;
-            case 2:
+            case 2: //Paket Type
               const subTypeName = subType.name;
               if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
               }
+              
               for (let order of subType.orders) {
                 pakets[subTypeName].push({
                   id: order.id,
@@ -296,15 +311,13 @@ export default {
                 });
               }
               break;
-            default:
-              break;
           }
+
         }
 
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
         this.paketNameItems = Object.keys(pakets);
-        console.log(this.paketNameItems);
       } catch (err) {
         console.log(err);
       }
@@ -376,10 +389,20 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info")
         return this.cart.updateItem();
       } catch (err) {
+        this.showNotif(err.message, "error")
         console.log(err);
       }
+    },
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
     },
   },
 };

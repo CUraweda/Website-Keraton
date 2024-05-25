@@ -13,17 +13,11 @@ import NavBar from "../components/NavBar.vue";
               <NavBar border />
             </nav>
             <q-page-sticky position="bottom-right" :offset="[18, 18]">
-              <q-btn fab color="primary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="#e8eaed"
-                >
+              <q-btn fab color="primary" to="/user/checkout">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="#e8eaed">
                   <path
-                    d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
-                  />
+                    d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
                 </svg>
               </q-btn>
             </q-page-sticky>
@@ -48,20 +42,14 @@ import NavBar from "../components/NavBar.vue";
                           <br />
                         </div>
                         <div class="flex items-center q-gutter-md">
-                          <button
-                            style="width: 1rem"
-                            @click="changeQuantity('plus', cart.quantity)"
-                          >
+                          <button style="width: 1rem" @click="changeQuantity('plus', cart, i)">
                             +
                           </button>
                           <div>{{ cart.quantity }}</div>
-                          <button
-                            style="width: 1rem"
-                            @click="changeQuantity('min', cart.quantity)"
-                          >
+                          <button style="width: 1rem" @click="changeQuantity('min', cart, i)">
                             -
                           </button>
-                          <q-btn dense>
+                          <q-btn dense @click="removeItem(cart)">
                             <q-icon name="delete" />
                           </q-btn>
                         </div>
@@ -71,7 +59,6 @@ import NavBar from "../components/NavBar.vue";
                 </div>
               </div>
             </div>
-            <q-btn> </q-btn>
           </div>
         </div>
       </q-page>
@@ -82,13 +69,14 @@ import NavBar from "../components/NavBar.vue";
 <script>
 import env from "../stores/environment";
 import carts from "../stores/carts";
+import cookieHandler from "src/cookieHandler";
 
 const cartClass = new carts();
 export default {
   data() {
     return {
-      cartData: undefined,
-      token: localStorage.getItem(env.TOKEN_STORAGE_NAME),
+      cartData: ref([]),
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
     };
   },
   mounted() {
@@ -101,12 +89,11 @@ export default {
     async updateToDB() {
       try {
         const currentCart = {};
-        for (let cart of cartData) {
-          delete cart.addedQuantity;
+        for (let cart of this.cartData) {
           currentCart[cart.id] = cart;
         }
         const response = await this.$api.post(
-          "update",
+          "cart/update",
           { cart: currentCart },
           {
             headers: {
@@ -135,7 +122,6 @@ export default {
         }
         this.cartData = rawCart.map((cart) => ({
           ...cart,
-          addedQuantity: 0,
         }));
       } catch (err) {
         console.log(err);
@@ -143,16 +129,20 @@ export default {
     },
     removeItem(rowData) {
       try {
-        return cartClass.removeItem(rowData).updateItem();
+        this.cartData = cartClass.removeItem([rowData]).userCart
+        return cartClass.updateItem()
       } catch (err) {
         console.log(err);
       }
     },
-    changeQuantity(indicator, rowData) {
+    changeQuantity(indicator, rowData, indexData) {
+      this.cartData[indexData].quantity = indicator != 'min' ? rowData.quantity + 1 : rowData.quantity - 1
+      return this.changeStorageQuantity(this.cartData[indexData])
+    },
+    changeStorageQuantity(rowData) {
       try {
-        indicator != "min"
-          ? cartClass.changeQuantity("asc", rowData.id, rowData.addedQuantity)
-          : cartClass.changeQuantity("desc", rowData.id, rowData.addedQuantity);
+        const itemId = `${rowData.type}|${rowData.id}`
+        this.cartData = cartClass.changeQuantity(itemId, rowData.quantity).userCart
         return cartClass.updateItem();
       } catch (err) {
         console.log(err);
@@ -569,7 +559,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container > div {
+.flex-container>div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -764,13 +754,11 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(
-    to right,
-    #d9d9d9,
-    #d9d9d9 7px,
-    transparent 5px,
-    transparent 10px
-  );
+  background-image: repeating-linear-gradient(to right,
+      #d9d9d9,
+      #d9d9d9 7px,
+      transparent 5px,
+      transparent 10px);
 }
 
 .total-biaya {

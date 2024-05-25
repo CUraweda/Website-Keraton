@@ -327,7 +327,7 @@ export default {
           active: false,
         },
         {
-          nomor: "04",
+        nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
           jawaban:
             "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
