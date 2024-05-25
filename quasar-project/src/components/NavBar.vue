@@ -207,6 +207,7 @@
 </template>
 
 <script>
+import { verifyToken } from "src/auth/auth";
 // import { verifyTokenBool } from "src/auth/auth";
 import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
 import cookieHandler from "src/cookieHandler";

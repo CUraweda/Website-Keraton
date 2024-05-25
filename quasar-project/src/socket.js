@@ -27,6 +27,7 @@ export default {
   },
 
   on(event, callback) {
+    console.log(event)
     socket.on(event, callback);
   },
 

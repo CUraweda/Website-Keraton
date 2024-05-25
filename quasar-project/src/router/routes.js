@@ -6,7 +6,6 @@ import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
 import CheckoutKeraton from "../pages/CheckoutKeraton.vue";
-import Checkout from "../pages/CheckOut.vue";
 import PilihanPaket from "../pages/PilihanPaket.vue";
 import BeranDa from "../pages/BeranDa.vue";
 import EventGratis from "../pages/EventGratis.vue";
@@ -39,7 +38,7 @@ const routes = [
     }
   },
   {
-    path: "/admin/event",
+  path: "/admin/event",
     name: "AdminEventPage",
     component: AdminEventPage,
     meta: {
@@ -72,19 +71,17 @@ const routes = [
     component: Museum,
   },
   {
-    path: "/checkoutkeraton",
-    name: "checkoutkeraton",
+    path: "/user/checkout",
+    name: "checkout",
     component: CheckoutKeraton,
+    // meta: {
+    //   preventToken: true
+    // }
   },
   {
     path: "/pilihanpaket",
     name: "pilihanpaket",
     component: PilihanPaket,
-  },
-  {
-    path: "/checkout",
-    name: "checkout",
-    component: Checkout,
   },
   {
     path: "/",
@@ -95,9 +92,9 @@ const routes = [
     path: "/user/transaction",
     name: "historytransaksi",
     component: HistoryTransaksi,
-    meta: {
-      preventToken: true
-    }
+    // meta: {
+    //   preventToken: true
+    // }
   },
   {
     path: "/booking/event",
@@ -153,6 +150,10 @@ const routes = [
     name: "Template",
     component: Template,
   },
+  {
+    path: '/:catchAll(.*)*',
+    component: () => import('pages/PageNotFound.vue')
+  }
 ];
 
 export default routes;

@@ -71,7 +71,6 @@
     class="sec-home"
     id="section4"
     :style="{
-      'background-image': `url(${sectionimg3})`,
       'background-position': 'center',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
@@ -98,20 +97,6 @@
       <div class="card3">
         <a href="https://your-link-here.com">
           <img :src="sectionData3?.xi3.data" alt="sejarah3" />
-          <div class="caption">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M24 17V26C24 26.5304 23.7893 27.0391 23.4142 27.4142C23.0391 27.7893 22.5304 28 22 28H6C5.46957 28 4.96086 27.7893 4.58579 27.4142C4.21071 27.0391 4 26.5304 4 26V10C4 9.46957 4.21071 8.96086 4.58579 8.58579C4.96086 8.21071 5.46957 8 6 8H15C15.2652 8 15.5196 8.10536 15.7071 8.29289C15.8946 8.48043 16 8.73478 16 9C16 9.26522 15.8946 9.51957 15.7071 9.70711C15.5196 9.89464 15.2652 10 15 10H6V26H22V17C22 16.7348 22.1054 16.4804 22.2929 16.2929C22.4804 16.1054 22.7348 16 23 16C23.2652 16 23.5196 16.1054 23.7071 16.2929C23.8946 16.4804 24 16.7348 24 17ZM28 5C28 4.73478 27.8946 4.48043 27.7071 4.29289C27.5196 4.10536 27.2652 4 27 4H19C18.8021 3.99984 18.6086 4.05841 18.444 4.16828C18.2794 4.27815 18.1511 4.43439 18.0754 4.61721C17.9996 4.80003 17.9798 5.00122 18.0185 5.19531C18.0571 5.38939 18.1525 5.56764 18.2925 5.7075L21.5863 9L16.2925 14.2925C16.1049 14.4801 15.9994 14.7346 15.9994 15C15.9994 15.2654 16.1049 15.5199 16.2925 15.7075C16.4801 15.8951 16.7346 16.0006 17 16.0006C17.2654 16.0006 17.5199 15.8951 17.7075 15.7075L23 10.4138L26.2925 13.7075C26.4324 13.8475 26.6106 13.9429 26.8047 13.9815C26.9988 14.0202 27.2 14.0004 27.3828 13.9246C27.5656 13.8489 27.7218 13.7206 27.8317 13.556C27.9416 13.3914 28.0002 13.1979 28 13V5Z"
-                fill="white"
-              />
-            </svg>
-          </div>
         </a>
       </div>
 
@@ -311,7 +296,6 @@ export default {
   },
   data() {
     return {
-      sectionData: ref(),
       linkYoutube: ref(),
       title1: ref(""),
       subTitle1: ref(""),
@@ -358,7 +342,7 @@ export default {
         },
       ],
       activeCard: null,
-      currentBackground: null,
+      currentBackground: ref(),
       slides: [
         {
           imageUrl:
@@ -370,6 +354,23 @@ export default {
             "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
+      sectionimg: ref(),
+      sectionData: ref(),
+sectionName: ref(),
+sectionimg1: ref(),
+sectionName1: ref(),
+sectionData1: ref(),
+sectionName2: ref(),
+sectionimg2: ref(),
+sectionName3: ref(),
+sectionData3: ref(),
+sectionName4: ref(),
+sectionimg4: ref(),
+sectionData4: ref(),
+sectionName5: ref(),
+sectionData5: ref(),
+sectionName6: ref(),
+sectionData6: ref(),     
       currentSlideIndex: 0,
       sliderInterval: null,
     };
@@ -387,9 +388,9 @@ export default {
     clearInterval(this.sliderInterval);
   },
   methods: {
-    toggleAccordion(data, condition) {
-      this.faqs[condition].active = !this.faqs[condition].active;
-    },
+    // toggleAccordion(data, condition) {
+    //   this.faqs[condition].active = !this.faqs[condition].active;
+    // },
     socket() {
       socket.connect();
       socket.on("dashboard", () => {
@@ -1734,7 +1735,7 @@ input::placeholder {
     color: #ffffff;
   }
 
-  /* 
+  /*
 .card4 img {
   position: absolute;
   width: 26%;

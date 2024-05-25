@@ -109,9 +109,7 @@ export default {
           console.log(image)
           imageList.push(image.data)
         }
-        for (let link of this.linkInputs) linkList.push(link.data)
-        console.log(this.imageInputs)
-        console.log(this.linkInputs)
+        for (let link of this.linkInputs) linkList.push({ data: link.data, sub: "" })
         const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
         const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
           headers: {

@@ -110,9 +110,6 @@ export default {
       },
     };
   },
-  mounted() {
-    this.verifyToken();
-  },
   methods: {
     showNotif(mes, type) {
       this.notification.message = mes;
@@ -121,28 +118,6 @@ export default {
         this.notification.message = "";
         this.notification.type = "";
       }, 4000);
-    },
-    async verifyToken() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        this.isLogin = false;
-        return;
-      }
-
-      try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        const data = await response.json();
-        this.isLogin = true;
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Failed to verify token:", error);
-        localStorage.removeItem("token");
-        this.isLogin = false;
-      }
     },
     async submitForm() {
       this.emailError = !this.email.trim();

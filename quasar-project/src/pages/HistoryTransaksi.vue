@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import NavBar from "../components/NavBar.vue";
+import cookieHandler from "src/cookieHandler";
+import env from 'stores/environment'
 
 const detail = ref(false);
 const cara = ref(false);
@@ -86,33 +88,16 @@ const transactions = [
             <div class="search">
               <label for="search" class="search-label">
                 <img src="../assets/svg/search.svg" class="search-icon" />
-                <input
-                  type="search"
-                  v-model="searchQuery"
-                  id="search"
-                  name="search"
-                  placeholder="Cari transaksi"
-                  class="Pencarian"
-                />
+                <input type="search" v-model="searchQuery" id="search" name="search" placeholder="Cari transaksi"
+                  class="Pencarian" />
               </label>
             </div>
             <div class="date">
-              <input
-                value="Pilih tanggal"
-                type="date"
-                class="tanggal"
-                placeholder="Pilih tanggal"
-              />
+              <input value="Pilih tanggal" type="date" class="tanggal" placeholder="Pilih tanggal" />
             </div>
             <div class="status">
-              <select
-                name="Status"
-                placeholder="status"
-                value="Status"
-                v-model="selectedStatus"
-                @change="statusSelected = true"
-                class="custom-select"
-              >
+              <select name="Status" placeholder="status" value="Status" v-model="selectedStatus"
+                @change="statusSelected = true" class="custom-select">
                 <option value="sudahDigunakan">Sudah digunakan</option>
                 <option value="dapatDigunakan">Dapat digunakan</option>
                 <option value="expired">Expired</option>
@@ -122,19 +107,11 @@ const transactions = [
           </div>
         </div>
       </div>
-      <div
-        v-for="transaction in transactions"
-        :key="transaction.status"
-        class="tabel"
-      >
+      <div v-for="transaction in transactions" :key="transaction.status" class="tabel">
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
-              <img
-                src="../assets/images/Vector.png"
-                alt="icon-tiket"
-                class="icon-tiket"
-              />
+              <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
               <p>Tiket</p>
               <label>17 Agu 2023</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
@@ -153,19 +130,11 @@ const transactions = [
                     <p class="hrga">Rp. 33.500</p>
                   </div>
                   <div class="actions">
-                    <a
-                      v-for="(action, index) in transaction.actions"
-                      :key="index"
-                      @click="action.handler"
-                      class="detail"
-                    >
+                    <a v-for="(action, index) in transaction.actions" :key="index" @click="action.handler"
+                      class="detail">
                       <p class="bantu">{{ action.label }}</p>
                     </a>
-                    <a
-                      href=""
-                      class="bantuan"
-                      v-if="transaction.status !== 'menungguPembayaran'"
-                    ></a>
+                    <a href="" class="bantuan" v-if="transaction.status !== 'menungguPembayaran'"></a>
                   </div>
                 </div>
               </div>
@@ -180,9 +149,8 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <h1 class="p">Detail Transaksi</h1>
-              <span class="close" @click="closeDetailTransaksi"
-                ><img src="../assets/images/close.png" class="Icon"
-              /></span>
+              <span class="close" @click="closeDetailTransaksi"><img src="../assets/images/close.png"
+                  class="Icon" /></span>
             </div>
             <div class="isi">
               <small class="label-card1">Sudah digunakan</small>
@@ -207,10 +175,8 @@ const transactions = [
                   </div>
                 </div>
                 <div class="all-tiket">
-                  <small
-                    >Lihat semua tiket
-                    <img src="../assets/svg/panahBawah.svg" alt=""
-                  /></small>
+                  <small>Lihat semua tiket
+                    <img src="../assets/svg/panahBawah.svg" alt="" /></small>
                 </div>
                 <h6 class="info-pembayaran">Info pembayaran</h6>
                 <div class="status-pembayaran">
@@ -249,9 +215,8 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <h1 class="p">Cara Pembayaran</h1>
-              <span class="close" @click="closeMenungguPembayaran"
-                ><img src="../assets/images/close.png" class="Icon"
-              /></span>
+              <span class="close" @click="closeMenungguPembayaran"><img src="../assets/images/close.png"
+                  class="Icon" /></span>
             </div>
             <div class="isi">
               <div class="bjb">
@@ -301,6 +266,91 @@ const transactions = [
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
+      historyDatas: ref([]),
+      rawHistoryDatas: ref({})
+    }
+  },
+  mounted() {
+    this.fetchData()
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const response = await this.$api.get('trans', {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        })
+        if (response.status != 200) throw Error(response.data.message)
+        for (let transaction of response.data.data) {
+          this.rawHistoryDatas[trans.id] = trans.detailTrans
+          this.historyDatas.push({
+            ...this.simplifyStatus(transaction.status),
+            total: transaction.total,
+            actions: [
+              { label: "Lihat detail", handler: openDetailTransaksi },
+              { label: "|" },
+              { label: "Cara Pembayaran", handler: openMenungguPembayaran },
+            ]
+          })
+        }
+        this.historyDatas = transactionDatas.map((transaction) => ({
+
+
+        }))
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    openDetailTransaksi(row) {
+      detail.value = !detail.value;
+    },
+    simplifyDetail(detail){
+      // let default = {
+    
+      // }
+    },
+    simplifyStatus(status) {
+      let dataToReturn = {}
+      switch (status) {
+        case "SUDAH_DIGUNAKAN":
+          dataToReturn['status'] = "sudahDigunakan"
+          dataToReturn['label'] = "Sudah Digunakan"
+          dataToReturn['class'] = "sudah__digunakan"
+          dataToReturn['cardClass'] = "card-1"
+          break;
+        case "DAPAT_DIGUNAKAN":
+          dataToReturn['status'] = "dapatDigunakan"
+          dataToReturn['label'] = "Dapat Digunakan"
+          dataToReturn['class'] = "dapat__digunakan"
+          dataToReturn['cardClass'] = "card-2"
+          break;
+        case "EXPIRED":
+          dataToReturn['status'] = "expired"
+          dataToReturn['label'] = "Expired"
+          dataToReturn['class'] = "expired"
+          dataToReturn['cardClass'] = "card-3"
+          break;
+        case "MENUNGGU_PEMBAYARAN":
+          dataToReturn['status'] = "menungguPembayaran"
+          dataToReturn['label'] = "Menunggu Pembayaran"
+          dataToReturn['class'] = "menunggu__pembayaran"
+          dataToReturn['cardClass'] = "card-4"
+          break;
+        default:
+          break;
+      }
+      return dataToReturn
+    }
+  }
+}
+</script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
@@ -402,7 +452,8 @@ img {
   height: fit-content;
   border-radius: 12px;
   box-shadow: 0 9px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto; /* Mengatur margin horizontal secara otomatis untuk memusatkan */
+  margin: 0 auto;
+  /* Mengatur margin horizontal secara otomatis untuk memusatkan */
   margin-top: 48px;
   padding: 10px;
   margin-bottom: 23px;
@@ -466,6 +517,7 @@ p.sudah__digunakan {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.dapat__digunakan {
   padding-left: 8px;
   padding-right: 8px;
@@ -477,6 +529,7 @@ p.dapat__digunakan {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.expired {
   padding-left: 8px;
   padding-right: 8px;
@@ -488,6 +541,7 @@ p.expired {
   font-size: 12px;
   font-weight: 700;
 }
+
 p.menunggu__pembayaran {
   padding-left: 8px;
   padding-right: 8px;
@@ -532,22 +586,27 @@ label.labelharga {
 .total {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Mendorong elemen ke tepi kiri dan kanan */
+  justify-content: space-between;
+  /* Mendorong elemen ke tepi kiri dan kanan */
 }
 
 .info {
   padding-top: 25px;
   display: flex;
-  flex-direction: column; /* Menyusun paragraf total belanja dan harga secara vertikal */
-  gap: 0.5rem; /* Jarak antara paragraf */
+  flex-direction: column;
+  /* Menyusun paragraf total belanja dan harga secara vertikal */
+  gap: 0.5rem;
+  /* Jarak antara paragraf */
 }
 
 .actions {
   color: #333;
   padding-top: 45px;
   display: flex;
-  gap: 0.5rem; /* Jarak antara paragraf */
+  gap: 0.5rem;
+  /* Jarak antara paragraf */
 }
+
 .detail {
   color: #daa520;
   text-decoration: none;
@@ -557,6 +616,7 @@ label.labelharga {
 .cara {
   cursor: pointer;
 }
+
 .search-label {
   position: relative;
 }
@@ -564,14 +624,18 @@ label.labelharga {
 .search-icon {
   position: absolute;
   top: 50%;
-  left: 15px; /* Sesuaikan posisi gambar */
+  left: 15px;
+  /* Sesuaikan posisi gambar */
   transform: translateY(-50%);
-  width: 15px; /* Sesuaikan lebar gambar */
-  height: auto; /* Sesuaikan tinggi gambar jika diperlukan */
+  width: 15px;
+  /* Sesuaikan lebar gambar */
+  height: auto;
+  /* Sesuaikan tinggi gambar jika diperlukan */
 }
 
 .Pencarian {
-  padding-left: 30px; /* Sesuaikan padding kiri agar input tidak tumpang tindih dengan gambar */
+  padding-left: 30px;
+  /* Sesuaikan padding kiri agar input tidak tumpang tindih dengan gambar */
 }
 
 .bantuan {
@@ -660,6 +724,7 @@ small.label-card1 {
   display: grid;
   grid-template-columns: 2 200px;
 }
+
 .header {
   box-shadow: 0 1px rgba(0, 0, 0, 0.2);
   background: white;
@@ -670,6 +735,7 @@ small.label-card1 {
   justify-content: space-between;
   padding: 1rem 3.2rem;
 }
+
 .header h1 {
   font-weight: 700;
   z-index: 1000;
@@ -689,7 +755,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container > div {
+.flex-container>div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -708,6 +774,7 @@ small.label-card1 {
 .detail-tiket {
   align-items: center;
 }
+
 .detail-tiket h6 {
   font-size: 20px;
   font-weight: 700;
@@ -728,12 +795,14 @@ small.label-card1 {
 
 .info-detail-tiket {
   display: flex;
-  flex-direction: column; /* Menyusun elemen dalam satu kolom */
+  flex-direction: column;
+  /* Menyusun elemen dalam satu kolom */
 }
 
 .info-detail-tiket p,
 .info-detail-tiket label {
-  margin-right: auto; /* Memindahkan teks ke pinggir kanan */
+  margin-right: auto;
+  /* Memindahkan teks ke pinggir kanan */
 }
 
 .info-detail-tiket label {
@@ -813,12 +882,14 @@ h6.detailtiket {
   font-size: 20px;
   font-weight: 400;
 }
+
 .pemesan label {
   background-color: #ffffff;
   color: #000000;
   font-size: 14px;
   font-weight: 400;
 }
+
 .pemesan p {
   font-size: 16px;
   font-weight: 700;
@@ -879,19 +950,18 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(
-    to right,
-    #d9d9d9,
-    #d9d9d9 7px,
-    transparent 5px,
-    transparent 10px
-  );
+  background-image: repeating-linear-gradient(to right,
+      #d9d9d9,
+      #d9d9d9 7px,
+      transparent 5px,
+      transparent 10px);
 }
 
 .total-biaya {
   display: flex;
   gap: 24.5rem;
 }
+
 .total-biaya h6 {
   font-size: 20px;
   font-weight: 700;
@@ -924,6 +994,7 @@ h6.detailtiket {
 .nva {
   padding-top: 15px;
 }
+
 .nva h6 {
   font-size: 24px;
   font-weight: 400;
@@ -966,6 +1037,7 @@ h6.detailtiket {
   font-size: 24px;
   font-weight: 400;
 }
+
 .atm-bjb {
   padding-top: 40px;
   padding-bottom: 10px;
