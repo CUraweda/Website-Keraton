@@ -483,7 +483,6 @@
         for (let clear of listToClear) {
           this[clear] = "";
         }
-  
         this.event = {
           name: "",
           desc: "",

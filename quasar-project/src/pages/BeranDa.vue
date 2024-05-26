@@ -254,8 +254,9 @@
           style="border-bottom: 1px solid black"
           v-for="(faq, index) in faqs"
           :key="index"
+          @click="toggleAccordion(index)"
         >
-          <button class="accordion" @click="toggleAccordion(index)">
+          <button class="accordion" >
             <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
             <svg
               width="32"
@@ -469,14 +470,14 @@ export default {
         console.log(err);
       }
     },
-    // toggleAccordion(index) {
-    //   this.faqs.forEach((faq, idx) => {
-    //     if (idx !== index) {
-    //       faq.active = false;
-    //     }
-    //   });
-    //   this.faqs[index].active = !this.faqs[index].active;
-    // },
+    toggleAccordion(index) {
+      this.faqs.forEach((faq, idx) => {
+        if (idx !== index) {
+          faq.active = false;
+        }
+      });
+      this.faqs[index].active = !this.faqs[index].active;
+    },
     startSlider() {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
