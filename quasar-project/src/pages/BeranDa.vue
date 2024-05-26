@@ -255,6 +255,7 @@
           style="border-bottom: 1px solid black"
           v-for="(faq, index) in faqs"
           :key="index"
+          @click="toggleAccordion(index)"
         >
           <button class="accordion" @click="toggleAccordion(index)">
             <span class="nomor">{{ faq.nomor }}</span>

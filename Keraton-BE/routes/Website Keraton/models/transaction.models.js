@@ -44,7 +44,6 @@ const createNew = async (data) => {
             if(user.number) args.custNumber = user.number
         }
         args.total = cartModel.countTotal(carts)
-        console.log(args)
         const createdTransacation = await prisma.transaction.create({ data: { ...args } })
         for (let cart of carts) {
             if (cart.quantity < 1) continue
@@ -68,7 +67,6 @@ const createNew = async (data) => {
                 ...cart.typeData
             })
         }
-        console.log(payloads)
         const detailData = createManyDetail(payloads)
         return { createdTransacation, detailData }
     } catch (err) {

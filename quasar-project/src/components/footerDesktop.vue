@@ -45,12 +45,6 @@
             class="email-input"
             v-model="email"
           />
-          <input
-            type="text"
-            placeholder="Enter your message"
-            class="email-input"
-            v-model="message"
-          />
 
           <q-btn
             no-caps
@@ -120,7 +114,7 @@ export default {
     async subscribeToKeraton() {
       try {
         const response = await this.$api.post("subscribe", {
-          email: this.emIl,
+          email: this.email,
         });
         if (response.status != 200) throw Error(response.data.message);
         return;
