@@ -416,11 +416,9 @@ export default {
       }
     },
     async checkOut() {
-      let cartData = {}
       try {
-        for (let cart of this.carts) cartData[`${cart.type}|${cart.id}`] = cart
         const response = await this.$api.post('trans', {
-          carts: cartData,
+          carts: this.carts,
           plannedDate: this.dateLabel,
           method: this.paymentMethod
         }, {

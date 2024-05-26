@@ -107,13 +107,13 @@ const transactions = [
           </div>
         </div>
       </div>
-      <div v-for="transaction in transactions" :key="transaction.status" class="tabel">
+      <div v-for="transaction in historyDatas" :key="transaction.status" class="tabel">
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
               <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
               <p>Tiket</p>
-              <label>17 Agu 2023</label>
+              <label>{{ transaction.date }}</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
             </div>
             <div class="tiket__content">
@@ -121,18 +121,16 @@ const transactions = [
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
                 <div class="flex items-center q-gutter-xs">
-                  <q-badge rounded color="blue">Cirebon</q-badge>
-                  <q-badge rounded color="orange">Museum</q-badge>
-                  <q-badge rounded color="green">Agung Dalem</q-badge>
+                  <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data" :key="i">{{ badge.name }}</q-badge>
                 </div>
                 <div class="label">
-                  <label class="labelharga">1 tiket x Rp. 10.000</label><br />
-                  <label>+2 tiket lainnya</label>
+                  <label class="labelharga">{{ `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`  }}</label><br />
+                  <label>{{ `+${transaction.detailDatas.length - 1} tiket lainnya` }}</label>
                 </div>
                 <div class="total">
                   <div class="info">
                     <p class="total__belanja">Total belanja</p>
-                    <p class="hrga">Rp. 33.500</p>
+                    <p class="hrga">Rp. {{  transaction.total }}</p>
                   </div>
                   <div class="actions">
                     <a v-for="(action, index) in transaction.actions" :key="index" @click="action.handler"
@@ -278,7 +276,7 @@ export default {
     return {
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       historyDatas: ref([]),
-      rawHistoryDatas: ref({})
+      rawHistoryDatas: ref({}),
     }
   },
   mounted() {
@@ -294,21 +292,22 @@ export default {
         })
         if (response.status != 200) throw Error(response.data.message)
         for (let transaction of response.data.data) {
-          this.rawHistoryDatas[trans.id] = trans.detailTrans
+          let planDate = new Date(transaction.plannedDate)
+          planDate = new Intl.DateTimeFormat('en-GB',  { day: '2-digit', month: 'short', year: 'numeric' }).format(planDate);
+
+          this.rawHistoryDatas[transaction.id] = transaction.detailTrans
           this.historyDatas.push({
+            ...this.simplifyDetail(transaction.detailTrans),
             ...this.simplifyStatus(transaction.status),
+            date: planDate,
             total: transaction.total,
-            actions: [
-              { label: "Lihat detail", handler: openDetailTransaksi },
-              { label: "|" },
-              { label: "Cara Pembayaran", handler: openMenungguPembayaran },
-            ]
+            // actions: [
+            //   { label: "Lihat detail", handler:() },
+            //   { label: "|" },
+            //   { label: "Cara Pembayaran", handler: openMenungguPembayaran() },
+            // ]
           })
         }
-        this.historyDatas = transactionDatas.map((transaction) => ({
-
-
-        }))
       } catch (err) {
         console.log(err)
       }
@@ -317,9 +316,29 @@ export default {
       detail.value = !detail.value;
     },
     simplifyDetail(detail){
-      // let default = {
-    
-      // }
+      let detailDatas = {
+        length: 0,
+        data: []
+      }
+      for (let detailData of detail){
+        let contentToPush = {}
+        if(detailData.order){
+          const orderData = detailData.order
+          contentToPush['price'] = orderData.price,
+          contentToPush['quantity'] = detailData.amount
+          contentToPush['name'] = orderData.name
+          contentToPush['badgeColor'] = orderData.orderSubTypeId ? 'blue' : 'orange'
+        }else {
+          const eventData = detailData.event
+          contentToPush['price'] = eventData.price,
+          contentToPush['quantity'] = detailData.amount
+          contentToPush['name'] = eventData.name
+          contentToPush['badgeColor'] = 'green'
+        }
+        detailDatas.data.push(contentToPush)
+      }
+      detailDatas.length = detail.length
+      return { detailDatas }
     },
     simplifyStatus(status) {
       let dataToReturn = {}
@@ -353,7 +372,13 @@ export default {
       }
       return dataToReturn
     }
-  }
+  },
+  formatRupiah(price) {
+      if (price === 0) return "Free"
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
+    },
 }
 </script>
 
