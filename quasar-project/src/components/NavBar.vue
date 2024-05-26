@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf" style="background: transparent">
+  <q-layout style="background: transparent">
     <q-header elevated="false">
       <q-toolbar
         :class="[{ scrolled: isScrolled }, isTransparent ? 'transparent' : '']"
@@ -11,7 +11,6 @@
               alt="icon-aplikasi"
               src="../assets/images/logo_keraton.png"
               class="app-icon"
-              style="margin-left: 1vw"
             />
           </div>
           <q-space />
@@ -83,6 +82,7 @@
             no-caps
             label="Objek Wisata"
             :color="isTransparent ? 'white' : 'black'"
+            class="col-grow"
           >
             <q-menu>
               <q-list>
@@ -427,8 +427,6 @@ export default {
   top: 0;
   margin: 0;
   display: flex;
-  width: 100%;
-  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   font-family: "Raleway";
@@ -455,7 +453,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
 }
 
 .menu-button {
