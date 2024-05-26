@@ -283,7 +283,7 @@
 
 <script setup>
 import navbar from "../components/NavBar.vue";
-import bawah from "../components/FooterComp.vue";
+import bawah from "../components/footerDesktop.vue";
 import socket from "src/socket";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 </script>
