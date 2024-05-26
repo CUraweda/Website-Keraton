@@ -237,6 +237,7 @@
     <div
       style="
         background-size: cover;
+        height: 50vh;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -560,7 +561,7 @@ background-size: cover;
 }
 
 #section5 .container {
-  /* background-image: url("../assets/images/keraton2.png"); */
+  background-image: url("../assets/images/keraton2.png");
   height: 130vh;
   /* height: 1000px; */
   background-size: cover;
@@ -585,14 +586,16 @@ background-size: cover;
 
 #section6 .container {
   background-image: url("../assets/images/batik.png");
+  background-size: cover;
 }
 
 #section7 {
   background-image: url("../assets/images/batik.png");
+  background-size: cover;
 }
 
 #section8 .container {
-  background-image: url("../assets/images/batik.png");
+  /* background-image: url("../assets/images/batik.png"); */
 }
 
 #slider {
@@ -1407,7 +1410,6 @@ input::placeholder {
 
 .footer {
   background-image: url(../assets/images/batik.png);
-  margin-top: 20vh;
 }
 
 @media screen and (max-width: 600px) {
@@ -1469,7 +1471,7 @@ input::placeholder {
 
   #section7 .container {
     background-image: url("../assets/images/batik.png");
-    display: fixed;
+    background-size: cover;
   }
 
   #section8 {

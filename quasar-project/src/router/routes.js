@@ -38,7 +38,7 @@ const routes = [
     }
   },
   {
-  path: "/admin/event",
+    path: "/admin/event",
     name: "AdminEventPage",
     component: AdminEventPage,
     meta: {
@@ -75,7 +75,7 @@ const routes = [
     name: "checkout",
     component: CheckoutKeraton,
     meta: {
-      preventToken: true
+      // preventToken: true
     }
   },
   {

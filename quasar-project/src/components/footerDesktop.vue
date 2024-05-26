@@ -142,7 +142,7 @@ export default {
   border-radius: 10px;
   background-color: #123b32;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   text-align: left;
   margin-left: 4vw;
 }
@@ -152,7 +152,8 @@ export default {
   font-weight: 600; /* Full opacity for the placeholder text */
 }
 .container-footer {
-  width: 90%;
+  width: 100%;
+  padding: 80px;
   margin: 0 auto;
 }
 
@@ -184,7 +185,7 @@ export default {
   flex: 2;
 }
 .container-link div:first-child {
-  font-size: 2.4vw;
+  font-size: 1.4vw;
 }
 
 .container-link a {
@@ -213,7 +214,7 @@ export default {
 .container-linbig,
 a,
 .container-collaboration2 div {
-  font-size: 1.6vw !important;
+  font-size: 1.2vw !important;
 }
 
 #container-linbig2 {
@@ -274,7 +275,7 @@ a,
   #container-linbig2 button {
     margin: 3vw auto;
     text-align: center;
-    font-size: 6vw;
+    font-size: 5vw;
     width: 80vw;
     border-radius: 2vw;
   }
@@ -282,7 +283,7 @@ a,
   .container-link a,
   .container-footer-img div,
   .container-alamat {
-    font-size: 5vw !important;
+    font-size: 4vw !important;
   }
   #container-linbig2 button {
     padding: 3vw 0;
@@ -293,7 +294,7 @@ a,
     margin: 1.5vw auto;
   }
   .container-link div {
-    font-size: 7vw !important;
+    font-size: 6vw !important;
   }
   .container-link {
     margin-top: 10vw;
@@ -308,7 +309,7 @@ a,
   }
   .kesepuhan-cirebon {
     order: 2;
-    font-size: 3vw !important;
+    font-size: 2vw !important;
     margin: auto;
     padding-top: 20vw;
   }
@@ -316,7 +317,7 @@ a,
     order: 1;
   }
   .container-collaboration2 div {
-    font-size: 4vw !important;
+    font-size: 3vw !important;
   }
   .container-collaboration2 img {
     height: 13vw;
