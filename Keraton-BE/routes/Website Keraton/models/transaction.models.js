@@ -14,9 +14,10 @@ const isExist = async (id) => {
 
 const getAll = async (userId) => {
     try{
+        console.log(userId)
         return await prisma.transaction.findMany({ ...(userId && {
             where: { userId }
-        }), include: { detailTrans: true }})
+        }), include: { detailTrans: { include: { order: true, event: true } } }})
     }catch(err){
         throwError(err)
     }
@@ -39,9 +40,11 @@ const createNew = async (data) => {
         if(user){
             args.custName = user.name
             args.custEmail =user.email
+            args.userId = user.id
             if(user.number) args.custNumber = user.number
         }
         args.total = cartModel.countTotal(carts)
+        console.log(args)
         const createdTransacation = await prisma.transaction.create({ data: { ...args } })
         for (let cart of carts) {
             if (cart.quantity < 1) continue

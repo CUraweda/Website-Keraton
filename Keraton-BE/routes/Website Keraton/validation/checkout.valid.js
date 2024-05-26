@@ -8,7 +8,9 @@ const validateCheckout = validate({
     method: z.string({
         required_error: "Transaction Method is required",
     }),
-    carts: z.object({}).required(),
+    carts: z.any({
+        required_error: "Carts is required"
+    })
 })
 
 module.exports = { validateCheckout }
