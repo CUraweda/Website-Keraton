@@ -1,14 +1,17 @@
 <template>
   <q-layout view="hHh lpR fFf" style="background: transparent">
     <q-header elevated="false">
-      <q-toolbar :class="[{ scrolled: isScrolled }, isTransparent ? 'transparent' : '']" class="navbar">
+      <q-toolbar
+        :class="[{ scrolled: isScrolled }, isTransparent ? 'transparent' : '']"
+        class="navbar"
+      >
         <div class="navbar-left">
           <div class="content-navbar-left">
             <img
               alt="icon-aplikasi"
               src="../assets/images/logo_keraton.png"
               class="app-icon"
-              style="margin-left: 1vw;"
+              style="margin-left: 1vw"
             />
           </div>
           <div class="content-navbar-right">
@@ -21,7 +24,13 @@
               class="menu-button"
             ></q-btn>
           </div>
-          <span class="app-name" :class="{ 'text-white': isTransparent, 'text-black': !isTransparent }">
+          <span
+            class="app-name"
+            :class="{
+              'text-white': isTransparent,
+              'text-black': !isTransparent,
+            }"
+          >
             KERATON KASEPUHAN CIREBON
           </span>
         </div>
@@ -29,6 +38,7 @@
         <div class="navbar-right desktop-menu">
           <q-btn
             flat
+            no-caps
             label="Beranda"
             :color="isTransparent ? 'white' : 'black'"
             to="/"
@@ -36,6 +46,7 @@
           <q-btn
             flat
             label="Sejarah"
+            no-caps
             :color="isTransparent ? 'white' : 'black'"
           >
             <q-menu>
@@ -51,6 +62,7 @@
           </q-btn>
           <q-btn
             flat
+            no-caps
             label="Booking"
             :color="isTransparent ? 'white' : 'black'"
           >
@@ -67,6 +79,7 @@
           </q-btn>
           <q-btn
             flat
+            no-caps
             label="Objek Wisata"
             :color="isTransparent ? 'white' : 'black'"
           >
@@ -85,6 +98,7 @@
             </q-menu>
           </q-btn>
           <q-btn
+            no-caps
             style="background: #123b32; color: white; padding-inline: 30px"
             v-if="!isLogin"
             @click="getTickets"
@@ -115,18 +129,6 @@
         </div>
       </q-toolbar>
     </q-header>
-    <q-drawer v-model="drawerOpen" side="right" overlay class="sidebar" style="background: #123b32; color: white;">
-      <div class="navbar-left">
-        <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" style="margin: 1vw;" />
-        <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
-        <q-btn flat dense round icon="close" @click="toggleRightDrawer" class="close-btn" />
-      </div>
-      <q-list>
-        <q-item clickable to="/">
-          <q-item-section>Beranda</q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
     <q-drawer
       v-model="drawerOpen"
       side="right"
@@ -155,6 +157,37 @@
         <q-item clickable to="/">
           <q-item-section>Beranda</q-item-section>
         </q-item>
+      </q-list>
+    </q-drawer>
+    <q-drawer
+      v-model="drawerOpen"
+      side="right"
+      overlay
+      class="sidebar"
+      style="background: #123b32; color: white"
+    >
+      <div class="navbar-left">
+        <img
+          alt="icon-aplikasi"
+          src="../assets/images/logo_keraton.png"
+          class="app-icon"
+          style="margin: 1vw"
+        />
+        <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
+        <q-btn
+          flat
+          dense
+          no-caps
+          round
+          icon="close"
+          @click="toggleRightDrawer"
+          class="close-btn"
+        />
+      </div>
+      <q-list>
+        <q-item clickable to="/">
+          <q-item-section>Beranda</q-item-section>
+        </q-item>
 
         <q-expansion-item
           v-if="!isLogin"
@@ -162,7 +195,7 @@
           clickable
           @click="toggleWisata"
         >
-          <q-list class="submenu">
+          <q-list>
             <q-item clickable to="/wisata/keraton">
               <q-item-section>Sign In</q-item-section>
             </q-item>
@@ -172,25 +205,36 @@
           </q-list>
         </q-expansion-item>
 
-        <q-expansion-item v-if="isLogin" label="Account" clickable @click="toggleAccount" expand-separator>
-            <q-list class="submenu">
-              <q-item clickable @click="logout">
-                <q-item-section>Logout</q-item-section>
-              </q-item>
-              <q-item clickable @click="keranjang">
-                <q-item-section>Keranjang</q-item-section>
-              </q-item>
-              <q-item clickable @click="goToPurchases">
-                <q-item-section>Pembelian</q-item-section>
-              </q-item>
-              <q-item v-if="isAdmin" clickable @click="adminPage">
-                <q-item-section>Admin Page</q-item-section>
-              </q-item>
-            </q-list>
+        <q-expansion-item
+          v-if="isLogin"
+          label="Account"
+          clickable
+          @click="toggleAccount"
+          expand-separator
+        >
+          <q-list>
+            <q-item clickable @click="logout">
+              <q-item-section>Logout</q-item-section>
+            </q-item>
+            <q-item clickable @click="keranjang">
+              <q-item-section>Keranjang</q-item-section>
+            </q-item>
+            <q-item clickable @click="goToPurchases">
+              <q-item-section>Pembelian</q-item-section>
+            </q-item>
+            <q-item v-if="isAdmin" clickable @click="adminPage">
+              <q-item-section>Admin Page</q-item-section>
+            </q-item>
+          </q-list>
         </q-expansion-item>
 
-        <q-expansion-item v-if="isLogin" label="Booking" clickable @click="toggleBooking">
-          <q-list class="submenu">
+        <q-expansion-item
+          v-if="isLogin"
+          label="Booking"
+          clickable
+          @click="toggleBooking"
+        >
+          <q-list>
             <q-item clickable to="/booking">
               <q-item-section>Paket Keraton</q-item-section>
             </q-item>
@@ -201,7 +245,7 @@
         </q-expansion-item>
 
         <q-expansion-item label="Sejarah" clickable @click="toggleSejarah">
-          <q-list class="submenu">
+          <q-list>
             <q-item clickable to="/sejarah">
               <q-item-section>Keraton</q-item-section>
             </q-item>
@@ -212,7 +256,7 @@
         </q-expansion-item>
 
         <q-expansion-item label="Objek Wisata" clickable @click="toggleWisata">
-          <q-list class="submenu">
+          <q-list>
             <q-item clickable to="/wisata/keraton">
               <q-item-section>Keraton Kesepuhan</q-item-section>
             </q-item>
@@ -233,7 +277,6 @@
     />
   </q-layout>
 </template>
-
 
 <script>
 import { verifyToken } from "src/auth/auth";
@@ -258,7 +301,12 @@ export default {
         message: "",
         type: "info",
       },
-      transparentRoutes: ['/','/wisata/keraton', '/wisata/museum', '/wisata/dalemagung'], // Add routes where navbar should be transparent
+      transparentRoutes: [
+        "/",
+        "/wisata/keraton",
+        "/wisata/museum",
+        "/wisata/dalemagung",
+      ], // Add routes where navbar should be transparent
     };
   },
   components: {
@@ -266,13 +314,15 @@ export default {
   },
   computed: {
     isTransparent() {
-      return this.transparentRoutes.includes(this.$route.path) && !this.isScrolled;
-    }
+      return (
+        this.transparentRoutes.includes(this.$route.path) && !this.isScrolled
+      );
+    },
   },
   watch: {
     $route(to, from) {
       this.handleScroll(); // Check scroll status on route change
-    }
+    },
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
@@ -351,7 +401,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
@@ -404,22 +453,7 @@ export default {
 .navbar-left {
   display: flex;
   align-items: center;
-  width: 100%;
-  font-size: 1vw;
-}
-
-.content-navbar-left {
-  flex: 10;
-  margin-left: 3vw;
-}
-.content-navbar-right {
-  flex: 10;
-}
-
-.navbar-right {
-  width: 100%;
-  display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .menu-button {
