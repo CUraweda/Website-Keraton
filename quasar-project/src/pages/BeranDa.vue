@@ -202,7 +202,7 @@
         </div>
       </div>
     </div>
-    <img class="newsbtn" src="../assets/images/btninfo.png" />
+    <!-- <img class="newsbtn" src="../assets/images/btninfo.png" /> -->
   </section>
 
   <section
