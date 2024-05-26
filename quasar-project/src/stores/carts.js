@@ -26,7 +26,11 @@ export default class Carts {
     async updateToDB() {
         const token = localStorage.getItem(env.TOKEN_STORAGE_NAME)
         if (!token) throw Error('Token didnt exist, please Log In')
-        const response = await fetch(env.BASE_URL + "/keraton/auth/auth", {
+        const response = await fetch(env.BASE_URL + "/keraton/cart/update", {
+            method: "POST",
+            body: {
+                cart: this.userCart
+            },
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -44,7 +48,8 @@ export default class Carts {
 
     addManyItem(listOfData = [{ id, name, image, price, quantity, event }]) {
         for (let data of listOfData) {
-            const alreadyExist = this.userCart[data.id]
+            const alreadyExist = this.userCart[`${data.type}|${data.id}`]
+            console.log(alreadyExist)
             if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity
             this.userCart[`${data.type}|${data.id}`] = { ...data }
         }
@@ -61,15 +66,17 @@ export default class Carts {
         return this
     }
 
+    clearCart(){
+        this.userCart = {}
+        return this
+    }
+
     removeItem(listOfData = [{ id }]) {
         if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
-        console.log(listOfData)
-    console.log(this.userCart)
         for (let data of listOfData) {
             const propertyId = `${data.type}|${data.id}`
             if (this.userCart.hasOwnProperty(propertyId)) delete this.userCart[propertyId];
         }
-        console.log(this.userCart)
         return this
     }
 }

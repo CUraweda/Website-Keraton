@@ -1,5 +1,5 @@
 const { z } = require('zod');
-const { error } = require('../utils/response.js');
+const { error } = require('../../utils/response');
 
 function validate(schema) {
   return async (req, res, next) => {

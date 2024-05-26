@@ -239,7 +239,7 @@
             <q-item clickable to="/booking">
               <q-item-section>Paket Keraton</q-item-section>
             </q-item>
-            <q-item clickable to="/booking/events">
+            <q-item clickable to="/booking/event">
               <q-item-section>Tiket Event</q-item-section>
             </q-item>
           </q-list>

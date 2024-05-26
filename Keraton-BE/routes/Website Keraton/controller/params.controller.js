@@ -7,9 +7,7 @@ const { throwError } = require("../../utils/helper");
 
 router.get('/checkout', auth([]), async(req, res) =>  {
     try{
-        console.log("kesini")
         const data = await paramModel.getOne({ identifier: "KeratonAppTax"  })
-        console.log(data)
         delete data.identifier
         delete data.id
         return success(res, 'Success', data)

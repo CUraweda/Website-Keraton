@@ -119,7 +119,13 @@ export default {
   mounted() {
     this.fetchData();
   },
+  beforeUnmount(){
+    this.storeCartToDatabase()
+  },
   methods: {
+    async storeCartToDatabase(){
+      this.cart.updateToDB()
+    },
     async fetchData() {
       let freeOptions, iterationOptions;
       try {

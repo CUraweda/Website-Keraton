@@ -28,8 +28,8 @@
           alt="Gambar"
         />
         <div class="buttonaji"></div>
-        <h2 class="judul-sedang">{{ paket.titleMedium }}</h2>
-        <h1 class="judul-besar">{{ paket.titleBig }}</h1>
+        <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
+        <h1 class="judul-besar">{{ item.titleBig }}</h1>
         <div class="tengah">
           <h3 class="judul-kecil">
             {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
@@ -224,12 +224,17 @@ export default {
   async mounted() {
     this.fetchData();
     this.isLogin = (await verifyToken()).isLogin
-
     if (!this.isLogin) {
       this.$router.push("/");
     }
   },
+  beforeUnmount(){
+    this.storeCartToDatabase()
+  },
   methods: {
+    async storeCartToDatabase(){
+      this.cart.updateToDB()
+    },
     async fetchData() {
       try {
         const response = await this.$api.get("items/booking");
@@ -272,12 +277,13 @@ export default {
               }
               break;
           }
-
         }
+
 
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
         this.paketNameItems = Object.keys(pakets);
+
       } catch (err) {
         console.log(err);
       }

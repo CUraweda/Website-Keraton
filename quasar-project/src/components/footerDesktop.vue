@@ -155,6 +155,7 @@ export default {
   width: 90%;
   margin: 0 auto;
 }
+
 .container-footer-img {
   display: flex;
 }
@@ -166,13 +167,16 @@ export default {
   font-size: 1.6vw;
   width: 5vw;
 }
+
 .container-footer-link {
   display: flex;
   margin-top: 5vw;
 }
+
 .container-linkmedium {
   flex: 1.2;
 }
+
 .container-linksmall {
   flex: 0.8;
 }
@@ -182,6 +186,7 @@ export default {
 .container-link div:first-child {
   font-size: 2.4vw;
 }
+
 .container-link a {
   display: block;
   padding-top: 1vw;
@@ -194,6 +199,7 @@ export default {
   width: 35vw;
   margin-left: 4vw;
 }
+
 .container-linbig button {
   text-align: left;
   padding: 0.5vw;
@@ -209,13 +215,16 @@ a,
 .container-collaboration2 div {
   font-size: 1.6vw !important;
 }
+
 #container-linbig2 {
   display: none;
 }
+
 .container-alamat {
   width: 20vw;
   margin-top: 5vw;
 }
+
 .container-collaboration {
   display: flex;
 }
@@ -227,6 +236,7 @@ a,
 .container-collaboration div:last-child {
   flex: 1;
 }
+
 .img-collab {
   height: 5vw;
 }

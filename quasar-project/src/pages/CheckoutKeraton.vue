@@ -22,8 +22,6 @@ const hargaTiket = harga.value.toLocaleString("id-ID", {
   maximumFractionDigits: 2,
   minimumFractionDigits: 2,
 });
-const tanggalSekarang = new Date().toISOString()
-const datelabel = ref(tanggalSekarang);
 
 const hargaStringTiket = ref(hargaTiket);
 
@@ -132,7 +130,7 @@ defineExpose({
                 <p class="det-tiket">Detail Tiket</p>
               </div>
               <q-btn-dropdown flat outlined rounded class="text-capitalize dropdown-date rounded-btn q-pa-sm"
-                :label="datelabel" icon="event" color style="border: 2px goldenrod solid; color: #daa520"
+                :label="dateInputLabel" icon="event" color style="border: 2px goldenrod solid; color: #daa520"
                 dropdown-icon="arrow_drop_down">
                 <div>
                   <q-date v-model="datelabel" />
@@ -146,7 +144,7 @@ defineExpose({
                     </h6>
                   </div>
                   <div>
-                    <h6 class="hrg">Rp. {{ cart.price }}</h6>
+                    <h6 class="hrg">{{ (cart.price != 0 ? "Rp. " : "") + formatRupiah(cart.price) }}</h6>
                   </div>
                 </div>
                 <div class="tmbh-brg">
@@ -245,8 +243,8 @@ defineExpose({
           <div class="totalPemesanan">
             <h6 class="ringkasan">Total Pemesanan</h6>
             <div class="totalHarga">
-              <p>Total Harga ({{ checkoutTotal }} Tiket)</p>
-              <p class="harga">Rp.{{ hargaString }}</p>
+              <p>Total Harga ({{ ticketTotal }} Tiket)</p>
+              <p class="harga">Rp. {{ formatRupiah(checkoutTotal) }}</p>
             </div>
           </div>
           <div class="biaya">
@@ -254,14 +252,14 @@ defineExpose({
               <h6 class="ringkasan">Biaya Transaksi</h6>
               <div class="totalHarga" v-for="(tax, i) in taxes" :key="i">
                 <p>{{ tax.label }}</p>
-                <p class="harga">Rp.{{ tax.price }}</p>
+                <p class="harga">Rp. {{ formatRupiah(tax.price) }}</p>
               </div>
             </div>
           </div>
           <hr />
           <div class="totalTagihan">
             <h5 class="txt-total-tagihan">Total Tagihan</h5>
-            <h6 class="ringkasan">Rp.{{ totalTagihan }}</h6>
+            <h6 class="ringkasan">Rp. {{ formatRupiah(totalTagihan) }}</h6>
           </div>
           <div class="containerbtn" @click="checkOut">
             <button class="btn">
@@ -278,6 +276,7 @@ defineExpose({
         </div>
       </div>
     </div>
+    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
   </div>
 </template>
 
@@ -285,8 +284,13 @@ defineExpose({
 import Cart from 'stores/carts'
 import cookieHandler from "src/cookieHandler";
 import env from 'stores/environment'
+import Notification from "components/NotificationAlert.vue";
 const cartClass = new Cart()
+
 export default {
+  components: {
+    Notification
+  },
   data() {
     return {
       carts: ref([]),
@@ -294,10 +298,16 @@ export default {
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
       showPopup: ref(false),
       taxes: ref([]),
-      dateLabel: ref(),
+      dateInputLabel: ref(),
+      dateLabel: ref(new Date().toISOString()),
       paymentMethod: ref(),
+      ticketTotal: ref(0),
       checkoutTotal: ref(0),
-      totalTagihan: ref(0)
+      totalTagihan: ref(0),
+      notification: {
+        message: "",
+        type: "info",
+      },
     }
   },
   mounted() {
@@ -305,17 +315,32 @@ export default {
       this.validateCartData()
       this.countTagihan()
     })
+    this.setDate()
+  },
+  watch: {
+    dateLabel: {
+      handler(val) {
+        console.log(val)
+        this.dateInputLabel = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(val))
+      }
+    }
+  },
+  beforeUnmount() {
+    this.storeCartToDatabase()
   },
   methods: {
+    async storeCartToDatabase() {
+      cartClass.updateToDB()
+    },
     async setCartData() {
       try {
-        const rawCart = Object.values(cartClass.getItem());
-        if (rawCart.length < 1) {
-          const response = await this.$api.get("cart", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
+      const rawCart = Object.values(cartClass.getItem());
+      if (rawCart.length < 1) {
+        const response = await this.$api.get("cart", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
 
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
@@ -328,6 +353,7 @@ export default {
         if (paramResponse.status === 200) this.taxes = Object.values(paramResponse.data.data.data)
 
         this.carts = rawCart.map((cart) => {
+          this.ticketTotal += cart.quantity
           this.checkoutTotal += cart.price * cart.quantity
           return cart
         });
@@ -346,6 +372,10 @@ export default {
         console.log(err)
       }
     },
+    setDate() {
+      const date = new Date().toISOString()
+      this.dateLabel = date
+    },
     payWith(indicator) {
       switch (indicator) {
         case "CASH":
@@ -358,6 +388,14 @@ export default {
     },
     handlePaymentMethodPopUp() {
       this.showPopup = !this.showPopup
+    },
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
     },
     changeQuantity(indicator, rowData, indexData) {
       if (indicator != "min") {
@@ -379,9 +417,9 @@ export default {
     },
     async checkOut() {
       try {
-        const response = await this.$api.post('trans/', {
+        const response = await this.$api.post('trans', {
           carts: this.carts,
-          plannedDate: "2024-05-25T03:30:12Z",
+          plannedDate: this.dateLabel,
           method: this.paymentMethod
         }, {
           headers: {
@@ -389,8 +427,11 @@ export default {
           }
         })
         if (response.status != 200) throw Error(response.data.message)
+        this.showNotif('Transaksi Sukses', 'info')
+        cartClass.clearCart().updateItem()
         this.$router.go(-1)
       } catch (err) {
+        this.showNotif(err, 'info')
         console.log(err)
       }
     },
@@ -401,6 +442,7 @@ export default {
 
     },
     formatRupiah(price) {
+      if (price === 0) return "Free"
       return (price / 1000).toLocaleString("en-US", {
         minimumFractionDigits: 3,
       });
