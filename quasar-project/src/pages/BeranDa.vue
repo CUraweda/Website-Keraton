@@ -233,8 +233,18 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section7">
-    <div class="container">
+  <section id="section7">
+    <div
+      style="
+        background-size: cover;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        background-position: center;
+        color: white;
+        font-family: Raleway, sans-serif;
+      "
+    >
       <div class="text">
         <p class="faqText">{{ sectionName6 }}</p>
         <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
@@ -577,9 +587,8 @@ background-size: cover;
   background-image: url("../assets/images/batik.png");
 }
 
-#section7 .container {
+#section7 {
   background-image: url("../assets/images/batik.png");
-  display: fixed;
 }
 
 #section8 .container {
@@ -1398,7 +1407,7 @@ input::placeholder {
 
 .footer {
   background-image: url(../assets/images/batik.png);
-  margin-top: -10px;
+  margin-top: 20vh;
 }
 
 @media screen and (max-width: 600px) {
@@ -1463,7 +1472,7 @@ input::placeholder {
     display: fixed;
   }
 
-  #section8 .container {
+  #section8 {
     background-image: url("../assets/images/batik.png");
   }
 
@@ -1992,10 +2001,8 @@ input::placeholder {
   }
 
   .faqText {
-    position: absolute;
     font-family: "Inria Serif";
     font-size: 25px;
-    top: 2vw;
     text-align: center;
     color: #d9a520;
   }
@@ -2012,7 +2019,6 @@ input::placeholder {
 
   .faq {
     position: relative;
-    top: 1vw;
   }
 
   .accordion {

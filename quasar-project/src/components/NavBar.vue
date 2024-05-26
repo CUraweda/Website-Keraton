@@ -14,6 +14,7 @@
               style="margin-left: 1vw"
             />
           </div>
+          <q-space />
           <div class="content-navbar-right">
             <q-btn
               flat
@@ -454,6 +455,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .menu-button {
@@ -462,7 +464,6 @@ export default {
   border-radius: 5px;
   align-items: center;
   padding-top: 0.7vw;
-  float: right;
 }
 .desktop-menu {
   display: flex;
