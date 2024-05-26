@@ -97,33 +97,6 @@ defineExpose({
             </div>
           </div>
           <div class="content-2">
-            <div class="txt3">
-              <img src="../assets/svg/Framecard.svg" />
-              <p class="pil-kategori">Pilih Kategori</p>
-            </div>
-            <div class="btn-pilih">
-              <div class="umum">
-                <label class="custom-radio-btn">
-                  <input type="radio" name="pilih-kategori" id="umum" />
-                  <span class="checkmark"></span>
-                </label>
-                <label for="umum">Umum</label>
-              </div>
-              <div class="pelajar">
-                <label class="custom-radio-btn">
-                  <input type="radio" name="pilih-kategori" id="pelajar" />
-                  <span class="checkmark"></span>
-                </label>
-                <label for="pelajar">Pelajar</label>
-              </div>
-              <div class="mancanegara">
-                <label class="custom-radio-btn">
-                  <input type="radio" name="pilih-kategori" id="mancanegara" />
-                  <span class="checkmark"></span>
-                </label>
-                <label for="mancanegara">Mancanegara</label>
-              </div>
-            </div>
             <div class="content-3">
               <div class="txt4">
                 <img src="../assets/svg/det-tiket.svg" class="img-det-tiket" />
