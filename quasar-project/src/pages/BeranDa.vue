@@ -252,12 +252,13 @@
       </div>
       <div class="faq">
         <div
-          style="border-bottom: 1px solid black"
+          style="border-bottom: 1px solid black; text-transform: uppercase"
           v-for="(faq, index) in faqs"
           :key="index"
         >
           <button class="accordion" @click="toggleAccordion(index)">
-            <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
+            <span class="nomor">{{ faq.nomor }}</span>
+            <span style="text-transform: uppercase">{{ faq.pertanyaan }}</span>
             <svg
               width="32"
               height="32"
@@ -470,14 +471,25 @@ export default {
         console.log(err);
       }
     },
-    // toggleAccordion(index) {
-    //   this.faqs.forEach((faq, idx) => {
-    //     if (idx !== index) {
-    //       faq.active = false;
-    //     }
-    //   });
-    //   this.faqs[index].active = !this.faqs[index].active;
-    // },
+    toggleAccordion(index) {
+      this.faqs.forEach((faq, idx) => {
+        if (idx !== index) {
+          faq.active = false;
+        }
+      });
+      this.faqs[index].active = !this.faqs[index].active;
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    handleScroll() {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    },
     startSlider() {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
@@ -1177,6 +1189,7 @@ background-size: cover;
 .faqText {
   font-family: "Inria Serif";
   font-size: 25px;
+
   text-align: center;
   color: #d9a520;
 }

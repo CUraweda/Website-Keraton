@@ -75,7 +75,7 @@ const routes = [
     name: "checkout",
     component: CheckoutKeraton,
     meta: {
-      // preventToken: true
+      preventToken: true
     }
   },
   {
