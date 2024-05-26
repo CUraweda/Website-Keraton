@@ -957,7 +957,9 @@ background-size: cover;
 
 @media (max-width: 700px) {
   .text2 {
+    left: 60px;
     width: 60%;
+    font-size: 1rem;
   }
   .ksc6Text {
     font-size: 30px;
