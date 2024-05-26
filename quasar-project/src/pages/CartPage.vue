@@ -71,10 +71,10 @@ import env from "../stores/environment";
 import carts from "../stores/carts";
 import cookieHandler from "src/cookieHandler";
 
-const cartClass = new carts();
 export default {
   data() {
     return {
+      cartClass: new carts(),
       cartData: ref([]),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
     };
@@ -109,7 +109,7 @@ export default {
     },
     async fetchData() {
       try {
-        const rawCart = Object.values(cartClass.getItem());
+        const rawCart = Object.values(this.cartClass.getItem());
         if (rawCart.length < 1) {
           const response = await this.$api.get("cart", {
             headers: {
@@ -120,17 +120,19 @@ export default {
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
         }
+        console.log(this.cartData)
         this.cartData = rawCart.map((cart) => ({
           ...cart,
         }));
+        console.log(this.cartData)
       } catch (err) {
         console.log(err);
       }
     },
     removeItem(rowData) {
       try {
-        this.cartData = cartClass.removeItem([rowData]).userCart
-        return cartClass.updateItem()
+        this.cartData = this.cartClass.removeItem([rowData]).userCart
+        return this.cartClass.updateItem()
       } catch (err) {
         console.log(err);
       }
@@ -142,8 +144,8 @@ export default {
     changeStorageQuantity(rowData) {
       try {
         const itemId = `${rowData.type}|${rowData.id}`
-        this.cartData = cartClass.changeQuantity(itemId, rowData.quantity).userCart
-        return cartClass.updateItem();
+        this.cartData = this.cartClass.changeQuantity(itemId, rowData.quantity).userCart
+        return this.cartClass.updateItem();
       } catch (err) {
         console.log(err);
       }

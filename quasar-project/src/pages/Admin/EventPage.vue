@@ -61,6 +61,7 @@
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
   
+
         <q-card-section class="flex q-gutter-md">
           <div>
             <div class="flex">

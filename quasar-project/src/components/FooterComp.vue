@@ -53,23 +53,7 @@
               margin-bottom: 10px;
             "
           />
-
-          <input
-            type="text"
-            v-model="enterMessage"
-            placeholder="Enter Your Message"
-            style="
-              width: 20rem;
-              height: 48px;
-              padding: 12px;
-              border: 1px solid #ddd;
-              border-radius: 5px;
-              box-sizing: border-box;
-              margin-bottom: 10px;
-            "
-          />
-
-          <q-btn no-caps color="blue" label="Submit" type="submit" />
+          <q-btn hidden no-caps color="blue" label="Submit" type="submit" />
         </form>
       </div>
     </div>
@@ -95,7 +79,7 @@ export default {
     async subscribeToKeraton() {
       try {
         const response = await this.$api.post("subscribe", {
-          email: this["EMAIL REF HERE"],
+          email: this.enterEmail,
         });
         if (response.status != 200) throw Error(response.data.message);
         return;

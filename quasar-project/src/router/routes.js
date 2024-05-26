@@ -74,9 +74,9 @@ const routes = [
     path: "/user/checkout",
     name: "checkout",
     component: CheckoutKeraton,
-    // meta: {
-    //   preventToken: true
-    // }
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/pilihanpaket",
@@ -92,9 +92,9 @@ const routes = [
     path: "/user/transaction",
     name: "historytransaksi",
     component: HistoryTransaksi,
-    // meta: {
-    //   preventToken: true
-    // }
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/booking/event",
