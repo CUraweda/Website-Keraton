@@ -252,13 +252,13 @@
       </div>
       <div class="faq">
         <div
-          style="border-bottom: 1px solid black; text-transform: uppercase"
+          style="border-bottom: 1px solid black"
           v-for="(faq, index) in faqs"
           :key="index"
         >
           <button class="accordion" @click="toggleAccordion(index)">
             <span class="nomor">{{ faq.nomor }}</span>
-            <span style="text-transform: uppercase">{{ faq.pertanyaan }}</span>
+            <span>{{ faq.pertanyaan }}</span>
             <svg
               width="32"
               height="32"
@@ -593,7 +593,7 @@ background-size: cover;
 
 #section5 .container .text {
   position: absolute;
-  margin-top: 12rem;
+  margin-top: 5rem;
 }
 
 #section6 .container {
@@ -685,7 +685,7 @@ background-size: cover;
   text-align: Center;
   font-size: 60px;
   font-weight: 600;
-  margin-top: -5rem;
+  margin-top: 5rem;
 }
 
 @keyframes slide {
@@ -792,7 +792,7 @@ background-size: cover;
   width: 33%;
   left: 34%;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 1.2vw !important;
   line-height: 28px;
   color: #212121;
 }
@@ -826,36 +826,22 @@ background-size: cover;
 }
 
 .owText {
-  font-size: 25px;
-  font-family: "Inria Serif";
   color: #daa520;
-  position: absolute;
-  width: 35%;
-  left: 32%;
-  top: 12%;
-  line-height: 30px;
+  width: 90%;
+  margin: 2px auto;
+  font-family: "Inria Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
 }
-
 .ksc6Text {
-  position: absolute;
-  width: 33%;
-  left: 33%;
-  top: 15%;
+  width: 90%;
+  margin: auto;
   font-family: "Inria Serif";
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
   color: #212121;
-}
-
-.sej3Text {
-  position: absolute;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
-  color: #000000;
-  text-align: left;
 }
 
 .btn2 {
@@ -864,9 +850,6 @@ background-size: cover;
   align-items: left;
   padding: 5px;
   gap: 10px;
-  position: absolute;
-  top: 150px;
-  left: -5px;
 }
 
 .btn2:hover {
@@ -954,22 +937,31 @@ background-size: cover;
   width: 100%;
   height: 45%;
   position: relative;
-  margin-top: 158px;
+  margin-top: 100px;
 }
 
 .text2 {
   position: absolute;
   font-family: "Raleway";
   font-style: normal;
-  width: 557px;
-  height: 112px;
-  left: 93px;
+  width: 50%;
+  height: 900px;
+  left: 100px;
+  text-align: justify;
   top: 80px;
   justify-content: left;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 1.7rem;
   color: #000000;
+}
+
+@media (max-width: 700px) {
+  .text2 {
+    width: 60%;
+  }
+  .ksc6Text {
+    font-size: 30px;
+  }
 }
 
 .eventText {
@@ -1188,8 +1180,8 @@ background-size: cover;
 
 .faqText {
   font-family: "Inria Serif";
-  font-size: 25px;
-
+  font-size: 30px;
+  margin: 10px 0;
   text-align: center;
   color: #d9a520;
 }
@@ -1207,6 +1199,7 @@ background-size: cover;
 .faq {
   position: relative;
   top: 1vw;
+  width: 80%;
 }
 
 .accordion {
@@ -1229,7 +1222,7 @@ background-size: cover;
 
 .accordion svg {
   position: absolute;
-  left: 1000px;
+  right: 10px;
 }
 
 .accordion svg.active {
@@ -1478,10 +1471,6 @@ input::placeholder {
     margin-bottom: -2rem;
   }
 
-  #section6 .container {
-    background-image: url("../assets/images/batik.png");
-  }
-
   #section7 .container {
     background-image: url("../assets/images/batik.png");
     background-size: cover;
@@ -1498,7 +1487,7 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 120vh;
+    height: 100vh;
     flex-direction: column;
     background-position: center;
     color: white;
@@ -1608,42 +1597,16 @@ input::placeholder {
     line-height: 30px;
   }
 
-  .ksc6Text {
+  /* .sej3Text {
     position: absolute;
-    width: 100%;
-    left: 0%;
-    top: 15%;
-    font-family: "Inria Serif";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 35px;
-    color: #212121;
-  }
-
-  .sej3Text {
-    position: absolute;
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
     color: #000000;
-    text-align: left;
-  }
-
-  .btn2 {
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    padding: 5px;
-    gap: 10px;
-    position: absolute;
-    top: 150px;
-    left: -5px;
-  }
-
-  .btn2:hover {
-    filter: brightness(70%);
-  }
+    font-weight: 400;
+    font-size: 1.6vw;
+    text-align: justify;
+  } */
 
   .card1:hover img,
   .card2:hover img,
@@ -1710,24 +1673,13 @@ input::placeholder {
     filter: brightness(70%);
   }
 
-  .tiket {
-    background: linear-gradient(
-      90deg,
-      rgba(218, 165, 32, 0.5) 0%,
-      rgba(18, 59, 50, 0.5) 100%
-    );
-    width: 100%;
-    height: 50%;
-    position: relative;
-    margin-top: 158px;
-  }
-
+  /*
   .text2 {
     position: absolute;
     font-family: "Raleway";
     font-style: normal;
-    width: 557px;
-    height: 112px;
+    width: 50%;
+    height: 1012px;
     left: 93px;
     top: 80px;
     justify-content: left;
@@ -1735,7 +1687,7 @@ input::placeholder {
     font-size: 20px;
     line-height: 28px;
     color: #000000;
-  }
+  } */
 
   .eventText {
     position: absolute;
@@ -2013,27 +1965,6 @@ input::placeholder {
 
   .btnViewMore:hover {
     filter: brightness(70%);
-  }
-
-  .faqText {
-    font-family: "Inria Serif";
-    font-size: 25px;
-    text-align: center;
-    color: #d9a520;
-  }
-
-  .tanyaText {
-    width: 21%;
-    font-family: "Inria Serif";
-    font-style: normal;
-    font-size: 25px;
-    text-align: center;
-    font-weight: 700;
-    color: #212121;
-  }
-
-  .faq {
-    position: relative;
   }
 
   .accordion {
