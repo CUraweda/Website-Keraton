@@ -1,14 +1,14 @@
 <template>
   <q-layout view="hHh lpR fFf" style="background: transparent">
     <q-header elevated="false">
-      <q-toolbar :class="{ scrolled: isScrolled }">
+      <q-toolbar :class="[{ scrolled: isScrolled }, isTransparent ? 'transparent' : '']" class="navbar">
         <div class="navbar-left">
           <div class="content-navbar-left">
             <img
               alt="icon-aplikasi"
               src="../assets/images/logo_keraton.png"
               class="app-icon"
-              style="margin-left: 1vw"
+              style="margin-left: 1vw;"
             />
           </div>
           <div class="content-navbar-right">
@@ -21,10 +21,7 @@
               class="menu-button"
             ></q-btn>
           </div>
-          <span
-            class="app-name"
-            :class="{ 'text-white': !isScrolled, 'text-black': isScrolled }"
-          >
+          <span class="app-name" :class="{ 'text-white': isTransparent, 'text-black': !isTransparent }">
             KERATON KASEPUHAN CIREBON
           </span>
         </div>
@@ -33,10 +30,14 @@
           <q-btn
             flat
             label="Beranda"
-            :color="isScrolled ? 'black' : 'white'"
+            :color="isTransparent ? 'white' : 'black'"
             to="/"
           ></q-btn>
-          <q-btn flat label="Sejarah" :color="isScrolled ? 'black' : 'white'">
+          <q-btn
+            flat
+            label="Sejarah"
+            :color="isTransparent ? 'white' : 'black'"
+          >
             <q-menu>
               <q-list>
                 <q-item clickable to="/sejarah">
@@ -48,7 +49,11 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat label="Booking" :color="isScrolled ? 'black' : 'white'">
+          <q-btn
+            flat
+            label="Booking"
+            :color="isTransparent ? 'white' : 'black'"
+          >
             <q-menu>
               <q-list>
                 <q-item clickable @click="toBooking('/booking')">
@@ -63,7 +68,7 @@
           <q-btn
             flat
             label="Objek Wisata"
-            :color="isScrolled ? 'black' : 'white'"
+            :color="isTransparent ? 'white' : 'black'"
           >
             <q-menu>
               <q-list>
@@ -110,6 +115,18 @@
         </div>
       </q-toolbar>
     </q-header>
+    <q-drawer v-model="drawerOpen" side="right" overlay class="sidebar" style="background: #123b32; color: white;">
+      <div class="navbar-left">
+        <img alt="icon-aplikasi" src="../assets/images/logo_keraton.png" class="app-icon" style="margin: 1vw;" />
+        <span class="sidebar-app-name">KERATON KASEPUHAN CIREBON</span>
+        <q-btn flat dense round icon="close" @click="toggleRightDrawer" class="close-btn" />
+      </div>
+      <q-list>
+        <q-item clickable to="/">
+          <q-item-section>Beranda</q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
     <q-drawer
       v-model="drawerOpen"
       side="right"
@@ -155,58 +172,41 @@
           </q-list>
         </q-expansion-item>
 
-        <q-expansion-item
-          v-if="isLogin"
-          label="Account"
-          clickable
-          @click="toggleSejarah"
-          expand-separator
-        >
+        <q-expansion-item v-if="isLogin" label="Account" clickable @click="toggleAccount" expand-separator>
+            <q-list class="submenu">
+              <q-item clickable @click="logout">
+                <q-item-section>Logout</q-item-section>
+              </q-item>
+              <q-item clickable @click="keranjang">
+                <q-item-section>Keranjang</q-item-section>
+              </q-item>
+              <q-item clickable @click="goToPurchases">
+                <q-item-section>Pembelian</q-item-section>
+              </q-item>
+              <q-item v-if="isAdmin" clickable @click="adminPage">
+                <q-item-section>Admin Page</q-item-section>
+              </q-item>
+            </q-list>
+        </q-expansion-item>
+
+        <q-expansion-item v-if="isLogin" label="Booking" clickable @click="toggleBooking">
           <q-list class="submenu">
-            <q-item clickable @click="logout">
-              <q-item-section>Logout</q-item-section>
+            <q-item clickable to="/booking">
+              <q-item-section>Paket Keraton</q-item-section>
             </q-item>
-            <q-item clickable @click="keranjang">
-              <q-item-section>Keranjang</q-item-section>
-            </q-item>
-            <q-item clickable @click="goToPurchases">
-              <q-item-section>Pembelian</q-item-section>
-            </q-item>
-            <q-item v-if="isAdmin" clickable @click="adminPage">
-              <q-item-section>Admin Page</q-item-section>
+            <q-item clickable to="/booking/events">
+              <q-item-section>Tiket Event</q-item-section>
             </q-item>
           </q-list>
         </q-expansion-item>
 
-        <q-expansion-item
-          label="Sejarah"
-          clickable
-          @click="toggleSejarah"
-          expand-separator
-        >
+        <q-expansion-item label="Sejarah" clickable @click="toggleSejarah">
           <q-list class="submenu">
             <q-item clickable to="/sejarah">
               <q-item-section>Keraton</q-item-section>
             </q-item>
             <q-item clickable to="/sejarah/silsilah">
               <q-item-section>Silsilah</q-item-section>
-            </q-item>
-          </q-list>
-        </q-expansion-item>
-
-        <q-expansion-item
-          v-if="isLogin"
-          label="Booking"
-          clickable
-          @click="toggleBooking"
-          expand-separator
-        >
-          <q-list class="submenu">
-            <q-item @click="toBooking('/booking')">
-              <q-item-section>Paket Keraton</q-item-section>
-            </q-item>
-            <q-item @click="toBooking('/booking/events')">
-              <q-item-section>Tiket Event</q-item-section>
             </q-item>
           </q-list>
         </q-expansion-item>
@@ -224,13 +224,6 @@
             </q-item>
           </q-list>
         </q-expansion-item>
-
-        <!-- <q-item clickable @click="getTickets">
-        <q-item-section>Dapatkan Tiket</q-item-section>
-        <q-item-section side>
-          <q-icon name="arrow_forward" style="font-size: 16px; color: white;"/>
-        </q-item-section>
-      </q-item> -->
       </q-list>
     </q-drawer>
     <Notification
@@ -241,10 +234,10 @@
   </q-layout>
 </template>
 
+
 <script>
 import { verifyToken } from "src/auth/auth";
 import Carts from "src/stores/carts";
-// import { verifyTokenBool } from "src/auth/auth";
 import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
@@ -260,34 +253,33 @@ export default {
       sejarahOpen: false,
       bookingOpen: false,
       wisataOpen: false,
+      accountOpen: false,
       notification: {
         message: "",
         type: "info",
       },
+      transparentRoutes: ['/','/wisata/keraton', '/wisata/museum', '/wisata/dalemagung'], // Add routes where navbar should be transparent
     };
   },
   components: {
     Notification,
   },
-  props: {
-    border: {
-      type: Boolean,
-      default: false,
-    },
-    isWhiteText: {
-      type: Boolean,
-      default: false,
-    },
-    isCheckoutPage: {
-      type: Boolean,
-      default: false,
-    },
+  computed: {
+    isTransparent() {
+      return this.transparentRoutes.includes(this.$route.path) && !this.isScrolled;
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.handleScroll(); // Check scroll status on route change
+    }
   },
   async mounted() {
     window.addEventListener("scroll", this.handleScroll);
     const tokenVerified = await verifyToken();
     this.isLogin = tokenVerified.isLogin;
     this.isAdmin = tokenVerified.isAdmin;
+    this.handleScroll(); // Check initial scroll status
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
@@ -349,12 +341,16 @@ export default {
     toggleWisata() {
       this.wisataOpen = !this.wisataOpen;
     },
+    toggleAccount() {
+      this.accountOpen = !this.accountOpen;
+    },
     toggleRightDrawer() {
       this.drawerOpen = !this.drawerOpen;
     },
   },
 };
 </script>
+
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
@@ -365,7 +361,7 @@ export default {
 }
 
 .q-header {
-  background-color: transparent !important;
+  background: transparent !important;
   box-shadow: none !important;
   margin: 0;
   padding: 0;
@@ -374,11 +370,9 @@ export default {
   width: 100%;
   z-index: 1000;
 }
-.layout-content {
-  background-color: transparent !important; /* Set the background to transparent */
-}
+
 .navbar {
-  background-color: transparent !important; /* Make navbar background transparent */
+  background-color: white;
   transition: background-color 0.3s, color 0.3s;
   top: 0;
   margin: 0;
@@ -391,8 +385,12 @@ export default {
   z-index: 1000;
 }
 
-.scrolled {
+.navbar.scrolled {
   background-color: white;
+}
+
+.navbar.transparent {
+  background: transparent !important;
 }
 
 .navbar .text-white {

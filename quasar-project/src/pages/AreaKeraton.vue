@@ -24,9 +24,7 @@
             penting di Cirebon
           </div>
         </div>
-        <a class="arrow-down" @click="scrollToContent"
-          ><img src="../assets/images/Frame.svg" class="img-arrow-down"
-        /></a>
+        <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
       </div>
 
       <div class="Destinasi">
@@ -47,23 +45,23 @@
       </div>
 
       <div class="button-container">
-        <button class="button-slider" @click="prevCard">&lt;</button>
-        <div
-          class="bulet"
-          v-for="(bullet, index) in bullets"
-          :key="index"
-          :class="{ active: index === currentIndex }"
-        ></div>
-        <button class="button-slider" @click="nextCard">&gt;</button>
-      </div>
-
-      <div class="Tourist">
-        <div class="Tourist2">
-          <div class="top-tourist">
-            <p>Top <span>Tourist</span> attraction</p>
-          </div>
-          <div class="arrow-tourist">
-            <a class="arrow-down2" @click="scrollToContent2"
+    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+    <div
+      class="bulet"
+      v-for="(bulet, index) in bullets"
+      :key="index"
+      :class="{ active: index === currentIndex }"
+    ></div>
+    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
+</div>
+        
+        <div class="Tourist">
+          <div class="Tourist2">
+            <div class="top-tourist">
+              <p>Top <span>Tourist</span> attraction</p>
+            </div>
+            <div class="arrow-tourist">
+              <a class="arrow-down2" @click="scrollToContent2"
               ><img src="../assets/images/Frame.svg" class="img-arrow-down"
             /></a>
           </div>
@@ -210,47 +208,56 @@
         <button>Dapatkan Tiket Sekarang!</button>
       </div>
 
-      <div class="container-tiket-kunjungan">
-        <div
-          class="tiket-kunjungan"
-          v-for="(element, index) in elementTiketKunjungan"
-          :key="index"
-        >
-          <div class="text-tiket-kunjungan">
-            <div class="text-tiket">{{ element.text1 }}</div>
-            <p class="text-harga">{{ element.text2 }}</p>
-            <p class="text-harga" id="text-area">{{ element.text3 }}</p>
+        <div class="container-tiket-kunjungan">
+          <div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
+            <div class="text-tiket-kunjungan">
+              <div class="text-tiket">{{element.text1}}</div>
+              <p class="text-harga">{{element.text2}}</p>
+              <p class="text-harga" id="text-area">{{element.text3}}</p>
+            </div>
+            <img class="img-tiket-kunjungan" src="../assets/images/tiketkunjungan.png" alt="">
           </div>
-          <img
-            class="img-tiket-kunjungan"
-            src="../assets/images/tiketkunjungan.png"
-            alt=""
-          />
         </div>
-      </div>
-
-      <bawah class="footer"></bawah>
+        <div class="foterr">
+          <footerDesktop/>
+        </div>
     </div>
   </div>
 </template>
 
+<script setup>
+import NavBar from '../components/NavBar.vue'
+import footerDesktop from '../components/footerDesktop.vue';
+</script>
+
+
 <script>
-import NavBar from "../components/NavBar.vue";
-import bawah from "../components/FooterComp.vue";
+
+const scrollToContent = () => {
+  document.querySelector('.Destinasi').scrollIntoView({
+    behavior: 'smooth'
+  });
+};
+
+const scrollToContent2 = () => {
+  document.querySelector('.Lokasi-container').scrollIntoView({
+    behavior: 'smooth'
+  });
+};
 
 export default {
   components: {
     NavBar,
-    bawah,
+    footerDesktop,
   },
   data() {
     return {
       cards: [
-        { content: "../src/assets/images/objekwisataslider1.png" },
-        { content: "../src/assets/images/objekwisataslider2.png" },
-        { content: "../src/assets/images/objekwisataslider3.png" },
-        { content: "../src/assets/images/objekwisataslider4.png" },
-        { content: "../src/assets/images/objekwisataslider5.png" },
+        { content: '../src/assets/images/objekwisataslider1.png' },
+        { content: '../src/assets/images/objekwisataslider2.png' },
+        { content: '../src/assets/images/objekwisataslider3.png' },
+        { content: '../src/assets/images/objekwisataslider4.png' },
+        { content: '../src/assets/images/objekwisataslider5.jpg' },
         // Add more cards as needed
       ],
       imgFasilitass: [
@@ -286,8 +293,13 @@ export default {
           text3: "Area Keraton - Guide - Nasi Dus - Sejarah & Kesenian",
         },
       ],
-      currentIndex: 0,
+      currentIndex: 2,
     };
+  },
+  computed: {
+    bullets() {
+      return Array(this.cards.length).fill('');
+    }
   },
   methods: {
     scrollToContent() {
@@ -297,15 +309,37 @@ export default {
       // Scroll to content2 implementation
     },
     prevCard() {
-      if (this.currentIndex > 0) {
-        this.currentIndex -= 1;
+  if (this.currentIndex === 0) {
+    this.currentIndex = this.cards.length - 1;
+  } else {
+    this.currentIndex--;
+  }
+},
+nextCard() {
+  if (this.currentIndex === this.cards.length - 1) {
+    this.currentIndex = 0;
+  } else {
+    this.currentIndex++;
+  }
+},
+    centerActiveCard() {
+      const sliderWidth = this.$refs.slider.offsetWidth;
+      const cardWidth = 250;
+      const offset = (sliderWidth - cardWidth) / 2;
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
+
+      if (activeCard && cardContainer) {
+        const index = this.currentIndex;
+        const newPosition = -index * cardWidth + offset;
+        cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
-    },
-    nextCard() {
-      if (this.currentIndex < this.cards.length - 1) {
-        this.currentIndex += 1;
-      }
-    },
+    }
+  },
+  watch: {
+    currentIndex() {
+      this.centerActiveCard();
+    }
   },
 };
 </script>
@@ -389,40 +423,56 @@ export default {
 
 .slider {
   display: flex;
-  justify-content: center;
-  overflow-x: auto;
+  transition: transform 0.3s ease;
+  align-items: center;
+  margin-left: 70px;
+}
+
+.slider img {
+  object-fit: cover;
 }
 
 .cardd {
-  flex: 0 0 auto;
-  margin: 0 10px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  width: 300px;
-  text-align: center;
+  width: 211.86px;
+  position: relative;
+  height: 341.65px;
+  background-color: #ccc;
+  margin: 5px;
+  margin-top: 50px;
+  border: none;
+  justify-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out;
+  background-size: cover;
+  transition: transform 0.3s ease;
 }
 
-.active {
-  border-color: blue;
+.cardd.active {
+  width: 255.72px;
+  height: 414px;
 }
 
 .button-container {
+  margin-top: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .button-slider {
-  margin: 0 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
 .bulet {
-  width: 10px;
-  height: 10px;
-  background-color: grey;
-  border-radius: 50%;
-  margin: 0 5px;
+  width: 6px;
+  height: 2px;
+  border-radius: 20%;
+  background-color: #ccc;
 }
 
 .bulet.active {
@@ -694,128 +744,8 @@ h4 {
   line-height: 2.8vw;
 }
 
-.footer-col {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: fit-content;
-  margin-top: 4vw;
+.foterr{
+  margin-top: 92vw;
 }
 
-.footer-col-1 {
-  width: 16vw;
-  padding: 1.5vw;
-  box-sizing: border-box;
-}
-
-.footer-col-2,
-.footer-col-3 {
-  width: 12vw;
-  padding: 1.5vw;
-  box-sizing: border-box;
-}
-
-.footer-col-4 {
-  margin-left: 6vw;
-  padding: 1.5vw;
-  box-sizing: border-box;
-  width: 40vw;
-}
-
-.footer-col h3 {
-  margin-bottom: 20px;
-}
-
-.footer-col ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-col li {
-  margin-bottom: 10px;
-}
-
-.footer-col a {
-  text-decoration: none;
-  color: #333;
-}
-
-.button {
-  margin-top: 2vw;
-  height: 5vw;
-  width: 100%;
-  padding-left: 1vw;
-  background-color: #123b32;
-  color: #fff;
-  text-align: left;
-  border: none;
-  cursor: pointer;
-  font-size: 1.5vw;
-  border-radius: 1vw;
-}
-
-.footer {
-  width: 90%;
-  margin: 0 auto;
-  padding-top: 100vw;
-}
-
-.adress {
-  width: 18vw;
-  font-size: 1.6vw;
-  font-weight: 400;
-  padding: 1.5vw;
-  margin-top: 1vw;
-}
-
-.susun p {
-  font-size: 1.5vw;
-}
-.lower {
-  display: flex;
-  width: 100%;
-  padding-bottom: 4vw;
-}
-.inlower {
-  width: 50vw;
-}
-.inlower p {
-  margin-top: 10vw;
-  font-size: 1.3vw;
-  padding-left: 1.5vw;
-}
-.susun {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 2vw;
-  float: right;
-  width: fit-content;
-  padding-right: 4vw;
-}
-
-.foto1,
-.foto2,
-.foto3 {
-  height: 5vw;
-  width: 5vw;
-}
-
-.foto4 {
-  height: 7vw;
-  width: 7vw;
-  margin-top: -1vw;
-}
-.collab {
-  display: flex;
-  flex-direction: row;
-  gap: 4vw;
-  width: 40vw;
-  justify-content: center;
-}
-
-.quick-links {
-  white-space: nowrap;
-}
 </style>

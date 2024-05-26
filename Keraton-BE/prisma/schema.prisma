@@ -76,11 +76,10 @@ model Order {
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
-  units          String        @default("orang")
-  category       Category?     @relation(fields: [categoryId], references: [id])
-  categoryId     Int?
-  orderSubType   OrderSubType? @relation(fields: [orderSubTypeId], references: [id])
-  orderSubTypeId Int?
+  category       Category     @relation(fields: [categoryId], references: [id])
+  categoryId     Int
+  orderSubType   OrderSubType @relation(fields: [orderSubTypeId], references: [id])
+  orderSubTypeId Int
 }
 
 model Category {
@@ -102,7 +101,7 @@ model OrderSubType {
   minimumUnits Int?
   orderType    OrderType @relation(fields: [orderTypeId], references: [id])
   orderTypeId  Int
-  orders       Order[] // Menambah relasi dengan "Order"
+  order        Order[]
 }
 
 model Transaction {
@@ -207,7 +206,6 @@ model Logs {
 model News {
   id        Int      @id @default(autoincrement())
   title     String
-  link      String   @db.Text
   desc      String   @db.Text
   image     String
   updatedAt DateTime @updatedAt

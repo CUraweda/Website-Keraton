@@ -1,123 +1,81 @@
 <template>
-  <div>
-    <nav>
-      <navbar border :isCheckoutPage="true" />
-    </nav>
-    <div class="header">
-      <div class="text1">
-        <ul>
-          <il href="#">Booking / Tiket Event</il>
-        </ul>
-        <div class="kakaje">
+  <div v-if="isLogin">
+    <div>
+      <nav>
+        <navbar border :isCheckoutPage="true" />
+      </nav>
+      <div class="header">
+        <div class="text1">
           <ul>
-            <a class="text2">
-              <strong><a class="text2">Tiket Event Keraton</a></strong>
-            </a>
+            <RouterLink :to="'/booking'">Booking / Paket Keraton</RouterLink>
           </ul>
+          <div class="kakaje">
+            <ul>
+              <a class="text2">
+                <strong><a class="text2">Tiket Event Keraton</a></strong>
+              </a>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <a class="judul1">Tiket Masuk Keraton & Bundling</a>
-  <div class="container">
-    <div class="ni" v-for="(item, index) in tiketItems" :key="index">
-      <img class="image" :src="item.image" alt="Gambar" />
-      <div class="buttonaji"></div>
-      <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
-      <h1 class="judul-besar">{{ item.titleBig }}</h1>
-      <div class="tengah">
-        <h3 class="judul-kecil">
-          {{ "Rp. " + formatRupiah(item.price) + `/ ${item.unit}` }}
-        </h3>
-        <button class="tambah" @click="addToCart(item)">
-          Tambah <img class="photo" src="../assets/Frame.svg" />
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div v-for="(item, index) in paketItems" :key="index">
-    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
+    <a class="judul1">Tiket Masuk Keraton & Bundling</a>
     <div class="container">
-      <div class="ni" v-for="(paket, index) in item" :key="index">
-        <img class="image" :src="paket.image" alt="Gambar" />
+      <div class="ni" v-for="(item, index) in tiketItems" :key="index">
+        <img
+          class="image"
+          :src="item.image ? getImageURL(item.image) : defaultImageUrl"
+          alt="Gambar"
+        />
         <div class="buttonaji"></div>
         <h2 class="judul-sedang">{{ paket.titleMedium }}</h2>
         <h1 class="judul-besar">{{ paket.titleBig }}</h1>
         <div class="tengah">
           <h3 class="judul-kecil">
-            {{ "Rp. " + formatRupiah(paket.price) + `/ ${paket.unit}` }}
+            {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
           </h3>
-          <button class="tambah" @click="addToCart(paket)">
+          <button class="tambah" @click="addToCart(item)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="footer">
-    <div class="logo">
-      <img src="../assets/images/logo_keraton.png" alt="" />
-      <p>KERATON <br />KASEPUHAN <br />CIREBON</p>
-    </div>
-    <div class="footer-col">
-      <div class="footer-col-1">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="#">Beranda</a></li>
-          <li><a href="#">Sejarah</a></li>
-          <li><a href="#">Booking</a></li>
-          <li><a href="#">Objek Wisata</a></li>
-        </ul>
-      </div>
-      <div class="footer-col-2">
-        <h3>Socials</h3>
-        <ul>
-          <li><a href="#">Whatsapp</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Threads</a></li>
-        </ul>
-      </div>
-      <div class="footer-col-3">
-        <h3>Company</h3>
-        <ul>
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Partners</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col-4">
-        <h3>Subscribes your email for updates!</h3>
-        <button class="button">Enter your email</button>
-      </div>
-    </div>
-    <div class="adress">Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>
-    <div class="lower">
-      <div class="inlower">@2024 Keraton Kasepuhan Cirebon</div>
-      <div class="susun">
-        <p>In collaboration</p>
-
-        <div class="collab">
-          <img src="../assets/images/logo_keraton.png" alt="" class="foto1" />
-          <img src="../assets/images/1 931.png" alt="" class="foto2" />
-          <img src="../assets/images/telkom.png" alt="" class="foto3" />
-          <img src="../assets/images/bjb.png" alt="" class="foto4" />
+  
+    <div v-for="(item, index) in paketItems" :key="index">
+      <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
+      <div class="container">
+        <div class="ni" v-for="(data, i) in item" :key="i">
+          <img
+            class="image"
+            :src="data.image ? getImageURL(data.image) : defaultImageUrl"
+            alt="Gambar"
+          />
+          <div class="buttonaji"></div>
+          <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
+          <h1 class="judul-besar">{{ data.titleBig }}</h1>
+          <div class="tengah">
+            <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) }}</h3>
+            <button class="tambah" @click="addToCart(data)">
+              Tambah <img class="photo" src="../assets/Frame.svg" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <Notification
+    <Notification
       v-if="notification.message"
       :message="notification.message"
       :type="notification.type"
     />
+    <footerDesktop/>
+    
+  </div>
 </template>
 
 <script setup>
 import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
+import footerDesktop from "src/components/footerDesktop.vue";
 import Carts from "../stores/carts";
 import Notification from "components/NotificationAlert.vue"
 
@@ -129,6 +87,7 @@ import { ref } from "vue";
 export default {
   components: {
     Notification,
+    footerDesktop
   },
   props: {
     disabled: {
@@ -141,6 +100,7 @@ export default {
       tiketItems: ref(),
       paketItems: ref(),
       paketNameItems: ref(),
+      defaultImageUrl: "https://picsum.photos/200/300",
       isOpen: false,
       isOpen2: false,
       isLogin: null,
@@ -320,6 +280,13 @@ export default {
         this.paketNameItems = Object.keys(pakets);
       } catch (err) {
         console.log(err);
+      }
+    },
+    getImageURL(image) {
+      if (image.startsWith("http")) {
+        return image;
+      } else {
+        return this.$api.get(`uploads/${image}`);
       }
     },
     countPrice(normalPrice, secondPrice, thirdPrice) {
