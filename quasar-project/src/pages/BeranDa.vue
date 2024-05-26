@@ -237,6 +237,7 @@
     <div
       style="
         background-size: cover;
+        height: 50vh;
         align-items: center;
         display: flex;
         flex-direction: column;
@@ -251,13 +252,14 @@
       </div>
       <div class="faq">
         <div
-          style="border-bottom: 1px solid black"
+          style="border-bottom: 1px solid black; text-transform: uppercase"
           v-for="(faq, index) in faqs"
           :key="index"
           @click="toggleAccordion(index)"
         >
-          <button class="accordion" >
-            <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
+          <button class="accordion" @click="toggleAccordion(index)">
+            <span class="nomor">{{ faq.nomor }}</span>
+            <span style="text-transform: uppercase">{{ faq.pertanyaan }}</span>
             <svg
               width="32"
               height="32"
@@ -478,6 +480,17 @@ export default {
       });
       this.faqs[index].active = !this.faqs[index].active;
     },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    handleScroll() {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    },
     startSlider() {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
@@ -561,7 +574,7 @@ background-size: cover;
 }
 
 #section5 .container {
-  /* background-image: url("../assets/images/keraton2.png"); */
+  background-image: url("../assets/images/keraton2.png");
   height: 130vh;
   /* height: 1000px; */
   background-size: cover;
@@ -586,14 +599,16 @@ background-size: cover;
 
 #section6 .container {
   background-image: url("../assets/images/batik.png");
+  background-size: cover;
 }
 
 #section7 {
   background-image: url("../assets/images/batik.png");
+  background-size: cover;
 }
 
 #section8 .container {
-  background-image: url("../assets/images/batik.png");
+  /* background-image: url("../assets/images/batik.png"); */
 }
 
 #slider {
@@ -1175,6 +1190,7 @@ background-size: cover;
 .faqText {
   font-family: "Inria Serif";
   font-size: 25px;
+
   text-align: center;
   color: #d9a520;
 }
@@ -1408,7 +1424,6 @@ input::placeholder {
 
 .footer {
   background-image: url(../assets/images/batik.png);
-  margin-top: 20vh;
 }
 
 @media screen and (max-width: 600px) {
@@ -1470,7 +1485,7 @@ input::placeholder {
 
   #section7 .container {
     background-image: url("../assets/images/batik.png");
-    display: fixed;
+    background-size: cover;
   }
 
   #section8 {
