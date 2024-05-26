@@ -19,9 +19,9 @@
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
       </h2>
-      <a :href="sectionData?.xl1?.data" v-mod class="btn1">
-        <img class="btn1" src="../assets/images/btn1.png" />
-      </a>
+      <!-- <a :href="sectionData?.xl1?.data" v-mod class="btn1">
+          <img class="btn1" src="../assets/images/btn1.png" />
+        </a> -->
       <button id="scrollToTopBtn" @click="scrollToTop" title="Go to top">
         <img style="width: 60px" src="../assets/images/btn1.png" />
       </button>
