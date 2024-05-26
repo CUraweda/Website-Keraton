@@ -244,7 +244,7 @@ defineExpose({
             <h6 class="ringkasan">Total Pemesanan</h6>
             <div class="totalHarga">
               <p>Total Harga ({{ ticketTotal }} Tiket)</p>
-              <p class="harga">Rp.{{ formatRupiah(checkoutTotal) }}</p>
+              <p class="harga">Rp. {{ formatRupiah(checkoutTotal) }}</p>
             </div>
           </div>
           <div class="biaya">
@@ -252,14 +252,14 @@ defineExpose({
               <h6 class="ringkasan">Biaya Transaksi</h6>
               <div class="totalHarga" v-for="(tax, i) in taxes" :key="i">
                 <p>{{ tax.label }}</p>
-                <p class="harga">Rp.{{ formatRupiah(tax.price) }}</p>
+                <p class="harga">Rp. {{ formatRupiah(tax.price) }}</p>
               </div>
             </div>
           </div>
           <hr />
           <div class="totalTagihan">
             <h5 class="txt-total-tagihan">Total Tagihan</h5>
-            <h6 class="ringkasan">Rp.{{ formatRupiah(totalTagihan) }}</h6>
+            <h6 class="ringkasan">Rp. {{ formatRupiah(totalTagihan) }}</h6>
           </div>
           <div class="containerbtn" @click="checkOut">
             <button class="btn">
@@ -276,20 +276,17 @@ defineExpose({
         </div>
       </div>
     </div>
+    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
   </div>
-  <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
 </template>
 
 <script>
 import Cart from 'stores/carts'
 import cookieHandler from "src/cookieHandler";
 import env from 'stores/environment'
-import Notification from "src/components/NotificationAlert.vue";
+import Notification from "components/NotificationAlert.vue";
 const cartClass = new Cart()
+
 export default {
   components: {
     Notification
@@ -328,22 +325,22 @@ export default {
       }
     }
   },
-  beforeUnmount(){
-    this.storeCartToDatabase
+  beforeUnmount() {
+    this.storeCartToDatabase()
   },
   methods: {
-    async storeCartToDatabase(){
+    async storeCartToDatabase() {
       cartClass.updateToDB()
     },
     async setCartData() {
       try {
-        const rawCart = Object.values(cartClass.getItem());
-        if (rawCart.length < 1) {
-          const response = await this.$api.get("cart", {
-            headers: {
-              Authorization: `Bearer ${this.token}`,
-            },
-          });
+      const rawCart = Object.values(cartClass.getItem());
+      if (rawCart.length < 1) {
+        const response = await this.$api.get("cart", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
 
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
@@ -375,7 +372,7 @@ export default {
         console.log(err)
       }
     },
-    setDate(){
+    setDate() {
       const date = new Date().toISOString()
       this.dateLabel = date
     },
@@ -419,10 +416,12 @@ export default {
       }
     },
     async checkOut() {
+      let cartData = {}
       try {
-        const response = await this.$api.post('trans/', {
-          carts: this.carts,
-          plannedDate: "2024-05-25T03:30:12Z",
+        for (let cart of this.carts) cartData[`${cart.type}|${cart.id}`] = cart
+        const response = await this.$api.post('trans', {
+          carts: cartData,
+          plannedDate: this.dateLabel,
           method: this.paymentMethod
         }, {
           headers: {
@@ -431,11 +430,11 @@ export default {
         })
         if (response.status != 200) throw Error(response.data.message)
         this.showNotif('Transaksi Sukses', 'info')
-      cartClass.clearCart().updateItem()
-      this.$router.go(-1)
-    } catch (err) {
-      this.showNotif(err.message, 'error')
-      console.log(err)
+        cartClass.clearCart().updateItem()
+        this.$router.go(-1)
+      } catch (err) {
+        this.showNotif(err, 'info')
+        console.log(err)
       }
     },
     countTagihan() {

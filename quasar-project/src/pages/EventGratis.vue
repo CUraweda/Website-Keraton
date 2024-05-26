@@ -120,7 +120,7 @@ export default {
     this.fetchData();
   },
   beforeUnmount(){
-    this.storeCartToDatabase
+    this.storeCartToDatabase()
   },
   methods: {
     async storeCartToDatabase(){

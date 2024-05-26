@@ -229,7 +229,7 @@ export default {
     }
   },
   beforeUnmount(){
-    this.storeCartToDatabase
+    this.storeCartToDatabase()
   },
   methods: {
     async storeCartToDatabase(){

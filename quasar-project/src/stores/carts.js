@@ -73,13 +73,10 @@ export default class Carts {
 
     removeItem(listOfData = [{ id }]) {
         if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
-        console.log(listOfData)
-    console.log(this.userCart)
         for (let data of listOfData) {
             const propertyId = `${data.type}|${data.id}`
             if (this.userCart.hasOwnProperty(propertyId)) delete this.userCart[propertyId];
         }
-        console.log(this.userCart)
         return this
     }
 }
