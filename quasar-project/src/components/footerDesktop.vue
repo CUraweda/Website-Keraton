@@ -65,7 +65,6 @@
 </template>
 <script>
 export default {
-   name: "Footer",
    methods: {
       async subscribeToKeraton() {
          try {
