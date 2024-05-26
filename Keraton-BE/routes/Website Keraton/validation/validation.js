@@ -6,7 +6,7 @@ function validate(schema) {
     try {
       if (typeof schema === 'function') schema = schema(req.params)
       if (req.method != "GET") {
-        req.body = await z.object(schema).strict().parseAsync(req.body)
+        req.body =  await z.object(schema).strict().parseAsync(req.body)
       } else req.query = await z.object(schema).strict().parseAsync(req.query)
     } catch (err) {
       return error(res, err.errors[0].message, 422)

@@ -76,8 +76,11 @@ const updateCartData = async (carts)  => {
 const countTotal = (carts) => {
     try{
         let total = 0
-        console.log(carts)
-        for(let cart of carts) total = total + cart.price
+
+        for(let cart of carts){
+            console.log(cart)
+            total = total + cart.price
+        } 
         console.log(total)
         return total
     }catch(err){
