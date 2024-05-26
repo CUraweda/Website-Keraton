@@ -523,7 +523,7 @@ export default {
 
 .block1 {
   width: 100%;
-  padding: 120px 90px 0px;
+  padding: 90px 90px 0px;
 }
 
 .custom-radio-btn {

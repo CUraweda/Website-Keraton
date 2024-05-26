@@ -38,7 +38,7 @@ const routes = [
     }
   },
   {
-  path: "/admin/event",
+    path: "/admin/event",
     name: "AdminEventPage",
     component: AdminEventPage,
     meta: {
