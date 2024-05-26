@@ -248,7 +248,7 @@ import Carts from "src/stores/carts";
 import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
-const cartClass = new Carts()
+const cartClass = new Carts();
 import { ref } from "vue";
 export default {
   data() {
@@ -302,7 +302,7 @@ export default {
           },
         });
         if (response.status != 200) throw Error(response.data.message);
-        return cartClass.updateToDB()
+        return cartClass.updateToDB();
       } catch (err) {
         console.log(err);
       }
