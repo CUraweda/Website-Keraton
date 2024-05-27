@@ -310,8 +310,6 @@ import Cart from "stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import Notification from "components/NotificationAlert.vue";
-const cartClass = new Cart();
-
 export default {
   components: {
     Notification,
@@ -323,6 +321,7 @@ export default {
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
       showPopup: ref(false),
       taxes: ref([]),
+      cartClass: new Cart(),
       dateInputLabel: ref(),
       dateLabel: ref(new Date().toISOString()),
       paymentMethod: ref(),
@@ -359,11 +358,11 @@ export default {
   },
   methods: {
     async storeCartToDatabase() {
-      cartClass.updateToDB();
+      this.cartClass.updateToDB();
     },
     async setCartData() {
       try {
-        const rawCart = Object.values(cartClass.getItem());
+        const rawCart = Object.values(this.cartClass.getItem());
         if (rawCart.length < 1) {
           const response = await this.$api.get("cart", {
             headers: {
@@ -430,9 +429,13 @@ export default {
     changeQuantity(indicator, rowData, indexData) {
       if (indicator != "min") {
         this.carts[indexData].quantity = rowData.quantity + 1;
+        this.ticketTotal = this.ticketTotal + 1
+        this.checkoutTotal = this.checkoutTotal + rowData.price
         this.totalTagihan = this.totalTagihan + rowData.price;
       } else {
         this.carts[indexData].quantity = rowData.quantity - 1;
+        this.ticketTotal = this.ticketTotal - 1
+        this.checkoutTotal = this.checkoutTotal - rowData.price
         this.totalTagihan = this.totalTagihan - rowData.price;
       }
       return this.changeStorageQuantity(this.carts[indexData]);
@@ -440,7 +443,7 @@ export default {
     changeStorageQuantity(rowData) {
       try {
         const itemId = `${rowData.type}|${rowData.id}`;
-        this.carts = cartClass.changeQuantity(
+        this.carts = this.cartClass.changeQuantity(
           itemId,
           rowData.quantity
         ).userCart;
@@ -465,7 +468,7 @@ export default {
         );
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif("Transaksi Sukses", "info");
-        cartClass.clearCart().updateItem();
+        this.cartClass.clearCart().updateItem();
         this.$router.go(-1);
       } catch (err) {
         this.showNotif(err, "info");

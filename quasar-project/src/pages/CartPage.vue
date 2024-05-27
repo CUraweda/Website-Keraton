@@ -50,8 +50,7 @@ import NavBar from "../components/NavBar.vue";
                       <div class="label flex items-center justify-between">
                         <div>
                           <label class="labelharga">
-                            Rp.
-                            {{ formatRupiah(cart.price) }}
+                            {{ cart.price < 1 ? "Free" : "Rp. " + formatRupiah(cart.price) }}
                           </label>
                           <br />
                         </div>
