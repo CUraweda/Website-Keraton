@@ -47,7 +47,7 @@
     class="sec-home"
     id="section3"
     :style="{
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      background: `linear,
     url(../assets/images/Frame.png);`,
       'background-size': 'cover;',
     }"
@@ -218,6 +218,13 @@
           <p class="sej3Text">
             {{ sectionData5?.xs2.data }}
           </p>
+          <q-btn
+            no-caps
+            style="background-color: #123b32; color: white; font-size: 1.2vw"
+            to="/booking"
+            class="button-dapatkan"
+            label="Dapatkan Tiket Sekarang!"
+          />
         </div>
       </div>
     </div>
@@ -882,7 +889,6 @@ background-size: cover;
   height: 45%;
   left: 70%;
   top: 35%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   border-radius: 50px;
   transform: 0.2s all ease;
 }
@@ -1632,7 +1638,6 @@ input::placeholder {
     height: 45%;
     left: 71%;
     top: 35%;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
     border-radius: 50px;
   }
 

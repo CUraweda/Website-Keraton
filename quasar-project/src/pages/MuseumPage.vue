@@ -100,7 +100,7 @@
         <div class="btn-kunjungan-text">
           <q-btn
             no-caps
-            to="/"
+            to="/booking"
             class="button-dapatkan"
             label="Dapatkan Tiket Sekarang!"
           />
