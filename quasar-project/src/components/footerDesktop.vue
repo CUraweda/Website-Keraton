@@ -47,6 +47,7 @@
           />
 
           <q-btn
+            v-if="(showButton = false)"
             no-caps
             type="submit"
             label="Submit"

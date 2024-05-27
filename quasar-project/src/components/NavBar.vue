@@ -108,7 +108,7 @@
           </q-btn>
           <q-btn v-else round flat @click="toggleMenu">
             <q-avatar>
-              <img src="../assets/svg/user.svg" alt="Profile" />
+              <img src="../assets/images/logo_keraton.png" alt="Profile" />
             </q-avatar>
             <q-menu>
               <q-list>

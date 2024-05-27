@@ -10,7 +10,9 @@
       <div class="kakaje">
         <ul>
           <a class="text2">
-            <strong><a class="text2">Tiket Event Upacara Adat Tradisi</a></strong>
+            <strong
+              ><a class="text2">Tiket Event Upacara Adat Tradisi</a></strong
+            >
           </a>
         </ul>
       </div>
@@ -21,8 +23,16 @@
       {{ dropdownTitle }} <img src="../assets/images/shape.png" />
     </button>
     <div v-if="isOpen" class="dropdown-menu">
-      <label v-for="(option, index) in options" :key="index" class="checkbox-container">
-        <input type="checkbox" :value="option.value" v-model="selectedOptions" />
+      <label
+        v-for="(option, index) in options"
+        :key="index"
+        class="checkbox-container"
+      >
+        <input
+          type="checkbox"
+          :value="option.value"
+          v-model="selectedOptions"
+        />
         {{ option.label }}
       </label>
     </div>
@@ -31,8 +41,16 @@
         {{ dropdownTitle2 }} <img src="../assets/images/shape.png" />
       </button>
       <div v-if="isOpen2" class="dropdown-menu2">
-        <label v-for="(option2, index2) in options2" :key="index2" class="checkbox-container">
-          <input type="checkbox" :value="option2.value" v-model="selectedOptions2" />
+        <label
+          v-for="(option2, index2) in options2"
+          :key="index2"
+          class="checkbox-container"
+        >
+          <input
+            type="checkbox"
+            :value="option2.value"
+            v-model="selectedOptions2"
+          />
           {{ option2.label }}
         </label>
       </div>
@@ -42,11 +60,15 @@
         <img class="image" :src="item.image" alt="Gambar" />
         <div class="buttonaji">
           <button class="btn-small">{{ item.buttonText1 }}</button>
-          <button class="btn-small">{{ item.isFree ? "Gratis" : "Bayar" }}</button>
+          <button class="btn-small">
+            {{ item.isFree ? "Gratis" : "Bayar" }}
+          </button>
         </div>
         <h2 class="judul-sedang">{{ item.titleBig }}</h2>
         <h1 class="judul-besar">{{ item.titleMedium }}</h1>
-        <h1 class="judul-sedang" v-if="!item.isFree">{{ "Rp. " + formatRupiah(item.price) }}</h1>
+        <h1 class="judul-sedang" v-if="!item.isFree">
+          {{ "Rp. " + formatRupiah(item.price) }}
+        </h1>
         <div class="tengah">
           <button class="tambah" @click="addToCart(item)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
@@ -119,12 +141,12 @@ export default {
   mounted() {
     this.fetchData();
   },
-  beforeUnmount(){
-    this.storeCartToDatabase()
+  beforeUnmount() {
+    this.storeCartToDatabase();
   },
   methods: {
-    async storeCartToDatabase(){
-      this.cart.updateToDB()
+    async storeCartToDatabase() {
+      this.cart.updateToDB();
     },
     async fetchData() {
       let freeOptions, iterationOptions;
@@ -139,13 +161,13 @@ export default {
           {
             ...(iterationOptions &&
               iterationOptions.length != 0 && {
-              iterat: Object.values(this.selectedOptions),
-            }),
+                iterat: Object.values(this.selectedOptions),
+              }),
             ...(freeOptions &&
               freeOptions.length < 2 &&
               freeOptions.length != 0 && {
-              free: freeOptions[0] != 0 ? true : false,
-            }),
+                free: freeOptions[0] != 0 ? true : false,
+              }),
           }
         );
         const iterationResponse = await this.$axios.get(
@@ -160,7 +182,7 @@ export default {
           titleMedium: event.desc,
           titleBig: event.name,
           isFree: event.isFree,
-          price: event.price
+          price: event.price,
         }));
         this.options = iterationResponse.data.data.map((iterat) => ({
           label: iterat.name,
@@ -190,7 +212,7 @@ export default {
           image: rowData.image,
           quantity: 1,
           price: rowData.price,
-          type: "E"
+          type: "E",
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
@@ -235,9 +257,11 @@ export default {
 }
 
 .header {
-  background: linear-gradient(90deg,
-      rgba(218, 165, 32, 0.5) 0%,
-      rgba(18, 59, 50, 0.5) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(218, 165, 32, 0.5) 0%,
+    rgba(18, 59, 50, 0.5) 100%
+  );
   padding: 20px;
   text-align: center;
   width: 100%;
@@ -556,7 +580,7 @@ nav ul li button:hover {
   /* Efek transisi untuk perubahan warna */
 }
 
-.container input:checked~.checkmark {
+.container input:checked ~ .checkmark {
   background-image: linear-gradient(gold, gold);
   z-index: 1;
 }

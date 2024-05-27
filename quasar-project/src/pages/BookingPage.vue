@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-  
+
     <div v-for="(item, index) in paketItems" :key="index">
       <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
       <div class="container">
@@ -67,18 +67,14 @@
       :message="notification.message"
       :type="notification.type"
     />
-    <footerDesktop/>
-    
   </div>
 </template>
 
 <script setup>
 import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
-import footerDesktop from "src/components/footerDesktop.vue";
 import Carts from "../stores/carts";
-import Notification from "components/NotificationAlert.vue"
-
+import Notification from "components/NotificationAlert.vue";
 </script>
 
 <script>
@@ -87,7 +83,6 @@ import { ref } from "vue";
 export default {
   components: {
     Notification,
-    footerDesktop
   },
   props: {
     disabled: {
@@ -223,17 +218,17 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.isLogin = (await verifyToken()).isLogin
+    this.isLogin = (await verifyToken()).isLogin;
     if (!this.isLogin) {
       this.$router.push("/");
     }
   },
-  beforeUnmount(){
-    this.storeCartToDatabase()
+  beforeUnmount() {
+    this.storeCartToDatabase();
   },
   methods: {
-    async storeCartToDatabase(){
-      this.cart.updateToDB()
+    async storeCartToDatabase() {
+      this.cart.updateToDB();
     },
     async fetchData() {
       try {
@@ -263,7 +258,7 @@ export default {
               if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
               }
-              
+
               for (let order of subType.orders) {
                 pakets[subTypeName].push({
                   id: order.id,
@@ -279,11 +274,9 @@ export default {
           }
         }
 
-
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
         this.paketNameItems = Object.keys(pakets);
-
       } catch (err) {
         console.log(err);
       }
@@ -362,10 +355,10 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
-        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info")
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         return this.cart.updateItem();
       } catch (err) {
-        this.showNotif(err.message, "error")
+        this.showNotif(err.message, "error");
         console.log(err);
       }
     },

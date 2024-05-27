@@ -1,0 +1,56 @@
+[33m8dd254e[m[33m ([m[1;36mHEAD -> [m[1;32muio[m[33m)[m HEAD@{0}: reset: moving to HEAD^
+[33mc19da5d[m[33m ([m[1;31morigin/experiment[m[33m)[m HEAD@{1}: pull origin experiment: Fast-forward
+[33m6c6ce92[m[33m ([m[1;31morigin/uio[m[33m)[m HEAD@{2}: commit: ghghcgh
+[33m869c1af[m HEAD@{3}: commit: asdjkasakd
+[33m7347314[m HEAD@{4}: pull origin experiment: Merge made by the 'recursive' strategy.
+[33m2d2f578[m HEAD@{5}: commit: sdhjdkja
+[33m64fe692[m HEAD@{6}: commit (merge): asdhuasdhuka
+[33m0078a9f[m HEAD@{7}: commit: dhuahia
+[33m56d3ac3[m HEAD@{8}: commit: dasbjasdjnkasd
+[33mde7cbe5[m HEAD@{9}: commit: dsabjkasdjbads
+[33mf6a9bfb[m HEAD@{10}: commit (merge): asdhuasdhiasd
+[33mc1b587c[m HEAD@{11}: commit: asdbhjasdjbasd
+[33mf792837[m HEAD@{12}: commit: dasjkdas
+[33mfa6fa2b[m HEAD@{13}: commit (merge): dsajkasjkad
+[33m5b42258[m HEAD@{14}: commit: asdjnasdhjkasd
+[33m62efc71[m HEAD@{15}: commit (merge): sdhuksdkjad
+[33mc90cabc[m[33m ([m[1;31morigin/uiop[m[33m, [m[1;32muiop[m[33m)[m HEAD@{16}: reset: moving to HEAD
+[33mc90cabc[m[33m ([m[1;31morigin/uiop[m[33m, [m[1;32muiop[m[33m)[m HEAD@{17}: checkout: moving from uiop to uio
+[33mc90cabc[m[33m ([m[1;31morigin/uiop[m[33m, [m[1;32muiop[m[33m)[m HEAD@{18}: checkout: moving from uio to uiop
+[33mc90cabc[m[33m ([m[1;31morigin/uiop[m[33m, [m[1;32muiop[m[33m)[m HEAD@{19}: commit (merge): dashuadhjadlk
+[33m7068c69[m HEAD@{20}: pull origin traash: Merge made by the 'recursive' strategy.
+[33m515192e[m HEAD@{21}: commit (merge): asdnjkasdhasd
+[33m5c419f7[m HEAD@{22}: commit: dasikhjasdkn
+[33m1a3fd66[m HEAD@{23}: pull origin traash: Merge made by the 'recursive' strategy.
+[33m4ea239a[m HEAD@{24}: reset: moving to HEAD
+[33m4ea239a[m HEAD@{25}: commit: dshjadakhd
+[33mcba2b02[m HEAD@{26}: commit (merge): adshuasdhkuad
+[33m2460081[m HEAD@{27}: commit (merge): dnhadjiadw
+[33md513982[m HEAD@{28}: commit: dbhdbkad
+[33mf35001b[m HEAD@{29}: commit: dasadbkjad
+[33mafb9d83[m HEAD@{30}: commit: asdbjkaskbjdas
+[33m6743b64[m HEAD@{31}: commit: asdhkasdbhkad
+[33m8ed47e9[m HEAD@{32}: commit: dasadjhad
+[33mee03045[m HEAD@{33}: commit: dshuasdkhuasd
+[33md11eb6d[m[33m ([m[1;32mmain[m[33m)[m HEAD@{34}: checkout: moving from main to uio
+[33md11eb6d[m[33m ([m[1;32mmain[m[33m)[m HEAD@{35}: commit: jkdsabjkasdbjkads
+[33md652c86[m[33m ([m[1;31morigin/razan-dev[m[33m)[m HEAD@{36}: pull origin traash: Fast-forward
+[33mea089b0[m HEAD@{37}: commit: dashudabukad
+[33mb6fa8d2[m HEAD@{38}: pull: Fast-forward
+[33m784dfa1[m HEAD@{39}: reset: moving to HEAD
+[33m784dfa1[m HEAD@{40}: commit: dahuadwjkads
+[33m2281603[m HEAD@{41}: pull: Merge made by the 'recursive' strategy.
+[33mea5b459[m HEAD@{42}: commit: dashjidihasd
+[33mac6ebe3[m HEAD@{43}: pull origin nadif-dev: Merge made by the 'recursive' strategy.
+[33m2008002[m HEAD@{44}: pull origin razan-dev: Merge made by the 'recursive' strategy.
+[33m1367469[m HEAD@{45}: checkout: moving from slavic to main
+[33me5b52af[m[33m ([m[1;31morigin/slavic[m[33m, [m[1;32mslavic[m[33m)[m HEAD@{46}: checkout: moving from main to slavic
+[33m1367469[m HEAD@{47}: commit (merge): dasnjasdjnads
+[33mced1063[m HEAD@{48}: commit: hjdhjasdj
+[33m502a8b4[m HEAD@{49}: pull origin razan-dev: Merge made by the 'recursive' strategy.
+[33m2b54b0c[m HEAD@{50}: reset: moving to HEAD
+[33m2b54b0c[m HEAD@{51}: reset: moving to HEAD
+[33m2b54b0c[m HEAD@{52}: commit: dssdhk
+[33me5b52af[m[33m ([m[1;31morigin/slavic[m[33m, [m[1;32mslavic[m[33m)[m HEAD@{53}: pull origin razan-dev: Fast-forward
+[33m59aaf11[m HEAD@{54}: commit: dasjasdkasd
+[33mfc11efa[m HEAD@{55}: clone: from github.com:AlifaGian/Keraton.git
