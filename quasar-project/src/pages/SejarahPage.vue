@@ -107,62 +107,6 @@
           </p>
         </div>
       </div>
-
-      <!-- bawah -->
-      <div class="halbawah">
-        <div class="bawah"></div>
-        <div class="sejajarB">
-          <h5>
-            Subscribes your email for<br />
-            updates!
-          </h5>
-        </div>
-
-        <div>
-          <form @submit.prevent="submitForm" class="submit">
-            <button class="button">Enter your email</button>
-          </form>
-        </div>
-      </div>
-
-      <div class="footer">
-        <main>
-          <section class="quick-links">
-            <h4 class="quick-links-h4">Quick Links</h4>
-
-            <h6 class="beranda"><a href="#">Beranda</a></h6>
-            <h6 class="sejarah"><a href="#">Sejarah</a></h6>
-            <h6 class="booking"><a href="#">Booking</a></h6>
-            <h6 class="objek-wisata"><a href="#">Objek Wisata</a></h6>
-          </section>
-
-          <section class="socials">
-            <h4 class="socials-h4">Socials</h4>
-
-            <h6 class="whatsapp"><a href="#"> Whatsapp</a></h6>
-            <h6 class="facebook"><a href="#"> Facebook</a></h6>
-            <h6 class="instagram"><a href="#"> Instagram</a></h6>
-            <h6 class="threads"><a href="#"> Threads</a></h6>
-          </section>
-
-          <section class="company">
-            <h4 class="company-h4">Company</h4>
-            <h6 class="about-us"><a href="#">About us</a></h6>
-            <h6 class="partners"><a href="#">Partners</a></h6>
-            <h6 class="contact"><a href="#">Contact</a></h6>
-          </section>
-
-          <div class="tulisan">
-            Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114
-          </div>
-          <div class="susun">
-            <p>In collaboration</p>
-          </div>
-          <div class="collab">
-            <img src="../assets/images/collab.png" alt="" class="collab" />
-          </div>
-        </main>
-      </div>
     </div>
   </div>
 </template>

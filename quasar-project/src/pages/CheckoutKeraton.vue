@@ -129,21 +129,17 @@ defineExpose({
                 <img src="../assets/svg/det-tiket.svg" class="img-det-tiket" />
                 <p class="det-tiket">Detail Tiket</p>
               </div>
-              <q-btn-dropdown
-                flat
-                outlined
-                rounded
-                class="text-capitalize dropdown-date rounded-btn q-pa-sm"
-                :label="dateInputLabel"
-                icon="event"
-                color
-                style="border: 2px goldenrod solid; color: #daa520"
-                dropdown-icon="arrow_drop_down"
+              <q-input
+                disable
+                standout
+                v-model="dateInputLabel"
+                dense
+                style="width: 10rem"
               >
-                <div>
-                  <q-date v-model="datelabel" />
-                </div>
-              </q-btn-dropdown>
+                <template v-slot:prepend>
+                  <q-icon name="event" color="orange" />
+                </template>
+              </q-input>
               <div v-for="(cart, index) in carts" :key="index">
                 <div class="content-4">
                   <div>

@@ -24,7 +24,9 @@
             penting di Cirebon
           </div>
         </div>
-        <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"></a>
+        <a class="arrow-down" @click="scrollToContent"
+          ><img src="../assets/images/Frame.svg"
+        /></a>
       </div>
 
       <div class="Destinasi">
@@ -45,23 +47,31 @@
       </div>
 
       <div class="button-container">
-    <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
-    <div
-      class="bulet"
-      v-for="(bulet, index) in bullets"
-      :key="index"
-      :class="{ active: index === currentIndex }"
-    ></div>
-    <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
-</div>
-        
-        <div class="Tourist">
-          <div class="Tourist2">
-            <div class="top-tourist">
-              <p>Top <span>Tourist</span> attraction</p>
-            </div>
-            <div class="arrow-tourist">
-              <a class="arrow-down2" @click="scrollToContent2"
+        <img
+          class="button-slider"
+          @click="prevCard"
+          src="../assets/svg/ArrowLeft.svg"
+        />
+        <div
+          class="bulet"
+          v-for="(bulet, index) in bullets"
+          :key="index"
+          :class="{ active: index === currentIndex }"
+        ></div>
+        <img
+          class="button-slider"
+          @click="nextCard"
+          src="../assets/svg/ArrrowRight.svg"
+        />
+      </div>
+
+      <div class="Tourist">
+        <div class="Tourist2">
+          <div class="top-tourist">
+            <p>Top <span>Tourist</span> attraction</p>
+          </div>
+          <div class="arrow-tourist">
+            <a class="arrow-down2" @click="scrollToContent2"
               ><img src="../assets/images/Frame.svg" class="img-arrow-down"
             /></a>
           </div>
@@ -208,56 +218,60 @@
         <button>Dapatkan Tiket Sekarang!</button>
       </div>
 
-        <div class="container-tiket-kunjungan">
-          <div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
-            <div class="text-tiket-kunjungan">
-              <div class="text-tiket">{{element.text1}}</div>
-              <p class="text-harga">{{element.text2}}</p>
-              <p class="text-harga" id="text-area">{{element.text3}}</p>
-            </div>
-            <img class="img-tiket-kunjungan" src="../assets/images/tiketkunjungan.png" alt="">
+      <div class="container-tiket-kunjungan">
+        <div
+          class="tiket-kunjungan"
+          v-for="(element, index) in elementTiketKunjungan"
+          :key="index"
+        >
+          <div class="text-tiket-kunjungan">
+            <div class="text-tiket">{{ element.text1 }}</div>
+            <p class="text-harga">{{ element.text2 }}</p>
+            <p class="text-harga" id="text-area">{{ element.text3 }}</p>
           </div>
+          <img
+            class="img-tiket-kunjungan"
+            src="../assets/images/tiketkunjungan.png"
+            alt=""
+          />
         </div>
-        <div class="foterr">
-          <footerDesktop/>
-        </div>
+      </div>
+      <div class="foterr">
+        <footerDesktop />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import NavBar from '../components/NavBar.vue'
-import footerDesktop from '../components/footerDesktop.vue';
+import NavBar from "../components/NavBar.vue";
 </script>
 
-
 <script>
-
 const scrollToContent = () => {
-  document.querySelector('.Destinasi').scrollIntoView({
-    behavior: 'smooth'
+  document.querySelector(".Destinasi").scrollIntoView({
+    behavior: "smooth",
   });
 };
 
 const scrollToContent2 = () => {
-  document.querySelector('.Lokasi-container').scrollIntoView({
-    behavior: 'smooth'
+  document.querySelector(".Lokasi-container").scrollIntoView({
+    behavior: "smooth",
   });
 };
 
 export default {
   components: {
     NavBar,
-    footerDesktop,
   },
   data() {
     return {
       cards: [
-        { content: '../src/assets/images/objekwisataslider1.png' },
-        { content: '../src/assets/images/objekwisataslider2.png' },
-        { content: '../src/assets/images/objekwisataslider3.png' },
-        { content: '../src/assets/images/objekwisataslider4.png' },
-        { content: '../src/assets/images/objekwisataslider5.jpg' },
+        { content: "../src/assets/images/objekwisataslider1.png" },
+        { content: "../src/assets/images/objekwisataslider2.png" },
+        { content: "../src/assets/images/objekwisataslider3.png" },
+        { content: "../src/assets/images/objekwisataslider4.png" },
+        { content: "../src/assets/images/objekwisataslider5.jpg" },
         // Add more cards as needed
       ],
       imgFasilitass: [
@@ -298,8 +312,8 @@ export default {
   },
   computed: {
     bullets() {
-      return Array(this.cards.length).fill('');
-    }
+      return Array(this.cards.length).fill("");
+    },
   },
   methods: {
     scrollToContent() {
@@ -309,37 +323,37 @@ export default {
       // Scroll to content2 implementation
     },
     prevCard() {
-  if (this.currentIndex === 0) {
-    this.currentIndex = this.cards.length - 1;
-  } else {
-    this.currentIndex--;
-  }
-},
-nextCard() {
-  if (this.currentIndex === this.cards.length - 1) {
-    this.currentIndex = 0;
-  } else {
-    this.currentIndex++;
-  }
-},
+      if (this.currentIndex === 0) {
+        this.currentIndex = this.cards.length - 1;
+      } else {
+        this.currentIndex--;
+      }
+    },
+    nextCard() {
+      if (this.currentIndex === this.cards.length - 1) {
+        this.currentIndex = 0;
+      } else {
+        this.currentIndex++;
+      }
+    },
     centerActiveCard() {
       const sliderWidth = this.$refs.slider.offsetWidth;
       const cardWidth = 250;
       const offset = (sliderWidth - cardWidth) / 2;
-      const cardContainer = document.querySelector('.slider');
-      const activeCard = document.querySelector('.cardd.active');
+      const cardContainer = document.querySelector(".slider");
+      const activeCard = document.querySelector(".cardd.active");
 
       if (activeCard && cardContainer) {
         const index = this.currentIndex;
         const newPosition = -index * cardWidth + offset;
         cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
-    }
+    },
   },
   watch: {
     currentIndex() {
       this.centerActiveCard();
-    }
+    },
   },
 };
 </script>
@@ -744,8 +758,7 @@ h4 {
   line-height: 2.8vw;
 }
 
-.foterr{
+.foterr {
   margin-top: 92vw;
 }
-
 </style>

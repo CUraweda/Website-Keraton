@@ -103,14 +103,12 @@
           <img src="../assets/images/n1.png" alt="" class="img-keraton5" />
         </div>
       </div>
-      <bawah></bawah>
     </div>
   </div>
 </template>
 
 <script>
 import navbar from "../components/NavBar.vue";
-import bawah from "../components/FooterComp.vue";
 export default {
   data() {
     return {
@@ -120,7 +118,6 @@ export default {
   },
   components: {
     navbar,
-    bawah,
   },
 };
 </script>

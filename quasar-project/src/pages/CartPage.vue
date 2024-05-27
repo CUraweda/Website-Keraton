@@ -14,10 +14,16 @@ import NavBar from "../components/NavBar.vue";
             </nav>
             <q-page-sticky position="bottom-right" :offset="[18, 18]">
               <q-btn fab color="primary" to="/user/checkout">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                  fill="#e8eaed">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="#e8eaed"
+                >
                   <path
-                    d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
+                    d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
+                  />
                 </svg>
               </q-btn>
             </q-page-sticky>
@@ -31,8 +37,16 @@ import NavBar from "../components/NavBar.vue";
                 <div class="tiket">
                   <div class="tiket__content">
                     <img :src="cart.image" :alt="i + 1" />
-                    <div class="tiket__content-details">
-                      <h6>{{ cart.name }}</h6>
+                    <div style="width: 21rem">
+                      <h6
+                        style="
+                          overflow: hidden;
+                          white-space: nowrap;
+                          text-overflow: ellipsis;
+                        "
+                      >
+                        {{ cart.name }}
+                      </h6>
                       <div class="label flex items-center justify-between">
                         <div>
                           <label class="labelharga">
@@ -42,15 +56,51 @@ import NavBar from "../components/NavBar.vue";
                           <br />
                         </div>
                         <div class="flex items-center q-gutter-md">
-                          <button style="width: 1rem" @click="changeQuantity('plus', cart, i)">
-                            +
-                          </button>
+                          <q-btn
+                            size="xs"
+                            dense
+                            @click="changeQuantity('plus', cart, i)"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="15px"
+                              viewBox="0 -960 960 960"
+                              width="15px"
+                              fill="black"
+                            >
+                              <path
+                                d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                              />
+                            </svg>
+                          </q-btn>
                           <div>{{ cart.quantity }}</div>
-                          <button style="width: 1rem" @click="changeQuantity('min', cart, i)">
-                            -
-                          </button>
+                          <q-btn
+                            size="xs"
+                            dense
+                            @click="changeQuantity('min', cart, i)"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="15px"
+                              viewBox="0 -960 960 960"
+                              width="15px"
+                              fill="black"
+                            >
+                              <path d="M200-440v-80h560v80H200Z" />
+                            </svg>
+                          </q-btn>
                           <q-btn dense @click="removeItem(cart)">
-                            <q-icon name="delete" />
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24px"
+                              viewBox="0 -960 960 960"
+                              width="24px"
+                              fill="black"
+                            >
+                              <path
+                                d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                              />
+                            </svg>
                           </q-btn>
                         </div>
                       </div>
@@ -76,7 +126,7 @@ export default {
     return {
       cartClass: new carts(),
       cartData: ref([]),
-      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
     };
   },
   mounted() {
@@ -120,31 +170,35 @@ export default {
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
         }
-        console.log(this.cartData)
+        console.log(this.cartData);
         this.cartData = rawCart.map((cart) => ({
           ...cart,
         }));
-        console.log(this.cartData)
+        console.log(this.cartData);
       } catch (err) {
         console.log(err);
       }
     },
     removeItem(rowData) {
       try {
-        this.cartData = this.cartClass.removeItem([rowData]).userCart
-        return this.cartClass.updateItem()
+        this.cartData = this.cartClass.removeItem([rowData]).userCart;
+        return this.cartClass.updateItem();
       } catch (err) {
         console.log(err);
       }
     },
     changeQuantity(indicator, rowData, indexData) {
-      this.cartData[indexData].quantity = indicator != 'min' ? rowData.quantity + 1 : rowData.quantity - 1
-      return this.changeStorageQuantity(this.cartData[indexData])
+      this.cartData[indexData].quantity =
+        indicator != "min" ? rowData.quantity + 1 : rowData.quantity - 1;
+      return this.changeStorageQuantity(this.cartData[indexData]);
     },
     changeStorageQuantity(rowData) {
       try {
-        const itemId = `${rowData.type}|${rowData.id}`
-        this.cartData = this.cartClass.changeQuantity(itemId, rowData.quantity).userCart
+        const itemId = `${rowData.type}|${rowData.id}`;
+        this.cartData = this.cartClass.changeQuantity(
+          itemId,
+          rowData.quantity
+        ).userCart;
         return this.cartClass.updateItem();
       } catch (err) {
         console.log(err);
@@ -360,13 +414,6 @@ p.menunggu__pembayaran {
   font-weight: 700;
 }
 
-.tiket__content img {
-  padding-left: 29px;
-  margin-top: 13px;
-  width: 215px;
-  height: 98.95px;
-}
-
 .custom-select option {
   background-color: #f0f0f0;
   color: #333;
@@ -561,7 +608,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container>div {
+.flex-container > div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -756,11 +803,13 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(to right,
-      #d9d9d9,
-      #d9d9d9 7px,
-      transparent 5px,
-      transparent 10px);
+  background-image: repeating-linear-gradient(
+    to right,
+    #d9d9d9,
+    #d9d9d9 7px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
 .total-biaya {
