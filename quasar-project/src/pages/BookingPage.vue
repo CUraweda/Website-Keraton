@@ -4,21 +4,8 @@
       <nav>
         <navbar border :isCheckoutPage="true" />
       </nav>
-      <div class="header">
-        <div class="text1">
-          <ul>
-            <RouterLink :to="'/booking'">Booking / Paket Keraton</RouterLink>
-          </ul>
-          <div class="kakaje">
-            <ul>
-              <a class="text2">
-                <strong><a class="text2">Tiket Event Keraton</a></strong>
-              </a>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
+    <div class="header"></div>
     <a class="judul1">Tiket Masuk Keraton & Bundling</a>
     <div class="container">
       <div class="ni" v-for="(item, index) in tiketItems" :key="index">
@@ -378,12 +365,11 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 .header {
-  margin-top: 93px;
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(218, 165, 32, 0.5) 0%,
     rgba(18, 59, 50, 0.5) 100%
-  );
+  ); */
   padding: 20px;
   text-align: center;
   width: 100%;

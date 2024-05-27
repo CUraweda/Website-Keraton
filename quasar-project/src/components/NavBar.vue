@@ -8,8 +8,9 @@
         <div class="navbar-left">
           <div class="content-navbar-left">
             <img
+              style="width: 3.2rem"
               alt="icon-aplikasi"
-              src="../assets/images/logo_keraton.png"
+              src="../assets/images/logo_keraton-removebg-preview.png"
               class="app-icon"
             />
           </div>
