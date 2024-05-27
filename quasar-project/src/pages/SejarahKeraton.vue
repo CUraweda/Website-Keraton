@@ -11,8 +11,12 @@
       <nav>
         <navbar border is-checkout-page="true" />
       </nav>
-      <div class="cover">
-        <img src="../assets/images/sejarah.jpg" alt="sejarah" />
+      <div>
+        <q-img
+          src="../assets/images/sejarah.jpg"
+          alt="sejarah"
+          class="col-grow"
+        ></q-img>
         <div class="upper">
           {{ uppertext }}
         </div>

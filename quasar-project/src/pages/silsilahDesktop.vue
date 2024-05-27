@@ -2,7 +2,7 @@
   <nav>
     <NavBar border is-checkout-page="true" />
     <div class="cover">
-      <img src="../assets/images/SilsilahSejarah.png" />
+      <q-img src="../assets/images/SilsilahSejarah.png" class="col-grow" />
     </div>
   </nav>
 
@@ -379,15 +379,7 @@
             <img
               src="../assets/images/sultan sepuh xiv.jpg"
               alt="Snow"
-              style="margin-left: -150px"
-            />
-          </div>
-          <div class="column">
-            <img
-              src="../assets/images/sultan sepuh xiv .2.jpg"
-              alt="Forest"
-              style="margin-left: 5px"
-              class="res"
+              style="margin-left: -150px; width: fit-content"
             />
           </div>
         </div>
@@ -419,15 +411,7 @@
           <img
             src="../assets/images/sultan sepuh xv.jpg"
             alt="Snow"
-            style="margin-left: -150px"
-          />
-        </div>
-        <div class="column">
-          <img
-            src="../assets/images/sultan sepuh xv .2.jpg"
-            alt="Forest"
-            style="margin-left: 5px"
-            class="res"
+            style="margin-left: -150px; width: fit-content"
           />
         </div>
       </div>
@@ -459,12 +443,7 @@ body {
   margin-top: 90px;
 }
 
-#app {
-  margin-left: 58px;
-}
-
 .text-bawah {
-  margin-left: -100px;
   margin-top: 25px;
 }
 
@@ -497,7 +476,6 @@ body {
 }
 
 .bapa {
-  margin-left: px;
   width: 798px;
   display: flex;
   flex-direction: row;
@@ -506,7 +484,6 @@ body {
 
 .garis1 {
   margin-top: 30px;
-  margin-left: -135px;
   width: 798px; /* Menyesuaikan lebar gambar menjadi 798px */
 }
 
@@ -563,7 +540,6 @@ p {
 .vl {
   border-left: 5px solid goldenrod;
   margin-top: 15px;
-  margin-left: -100px;
   height: 200px;
 }
 
@@ -574,7 +550,6 @@ p {
 
 .bullet {
   position: relative;
-  margin-left: -900;
 }
 
 .image-container {
@@ -589,7 +564,6 @@ p {
 .image-container img:last-child {
   position: absolute;
   top: 0;
-  margin-left: -115px; /* Menyesuaikan margin kiri untuk menyesuaikan posisi dengan gambar pertama */
 }
 
 .sultan-title {
@@ -640,30 +614,6 @@ nav ul {
   display: flex;
 }
 
-nav ul li {
-  margin-right: 30px;
-}
-
-nav ul li a,
-nav ul li button {
-  display: block;
-  color: #000000;
-  background-color: transparent;
-  border: none;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 5px 25px;
-  font-size: 16px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-nav ul li a:hover,
-nav ul li button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 .button1 {
   font-family: "Raleway";
   font-weight: 700px;
@@ -681,35 +631,6 @@ p {
   line-height: 24px;
   color: #212121;
 }
-.footer {
-  width: 1280px;
-  height: 650px;
-  margin-top: 402px;
-  position: relative;
-  margin-left: 90px;
-}
-a {
-  text-decoration: none;
-  color: #212121;
-}
-ul {
-  list-style-type: none;
-}
-.footer-col {
-  display: flex;
-}
-.footer-col h3 {
-  font-size: 30px;
-  font-weight: 40px;
-  display: inline-block;
-  margin-bottom: 11px;
-  margin-top: 76px;
-}
-.footer-col-1 {
-  margin-left: 88px;
-  color: #212121;
-}
-
 .logo {
   font-size: 20px;
   font-weight: 400;
@@ -723,22 +644,6 @@ ul {
   margin-right: 9px;
 }
 
-.footer-col-2 {
-  margin-left: 60px;
-}
-.footer-col-3 {
-  margin-left: 60px;
-}
-.footer-col-4 {
-  margin-left: 139px;
-  width: 400px;
-}
-.footer-col li {
-  color: #212121;
-}
-.footer-col li:not(:last-child) {
-  margin-bottom: 11px;
-}
 .adress {
   width: 184px;
   height: 84px;
@@ -747,22 +652,7 @@ ul {
   margin-top: 62px;
   margin-left: 88px;
 }
-.lower {
-  width: 1080px;
-  height: 142px;
-  margin-left: 88px;
-  display: flex;
-}
-.inlower {
-  padding-top: 130px;
-  margin-left: 80px;
-  position: absolute;
-}
-.collab {
-  display: flex;
-  flex-direction: row;
-  gap: 46px;
-}
+
 .susun {
   display: flex;
   flex-direction: column;
@@ -798,7 +688,6 @@ ul {
   font-size: 20px;
   font-weight: 800;
   margin-top: 250px;
-  margin-left: 800px;
   line-height: 28px;
   font-family: Raleway;
   position: absolute;
@@ -809,15 +698,11 @@ ul {
 /* coba responsif */
 .container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
 .column {
   width: 100%; /* Take full width on smaller screens */
-}
-.seluruh {
-  margin-left: 5%;
 }
 
 @media screen and (min-width: 768px) {

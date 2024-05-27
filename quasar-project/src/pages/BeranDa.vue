@@ -218,9 +218,6 @@
           <p class="sej3Text">
             {{ sectionData5?.xs2.data }}
           </p>
-          <a :href="sectionData5?.xl1.data">
-            <img class="btn2" src="../assets/images/tiket.png" />
-          </a>
         </div>
       </div>
     </div>
@@ -391,7 +388,7 @@ export default {
   beforeUnmount() {
     console.log("Naha nge unmount wae");
     socket.disconnect();
-    window.removeEventListener("scroll", this.handleScroll)
+    window.removeEventListener("scroll", this.handleScroll);
     clearInterval(this.sliderInterval);
   },
   methods: {
@@ -569,7 +566,7 @@ background-size: cover;
 
 #section5 .container {
   background-image: url("../assets/images/keraton2.png");
-  height: 130vh;
+  height: 200vh;
   /* height: 1000px; */
   background-size: cover;
   background-position: center;
@@ -607,7 +604,7 @@ background-size: cover;
 
 #slider {
   color: #000000;
-  height: 85vh;
+  height: 120vh;
   padding-top: 5rem;
 }
 
@@ -680,7 +677,7 @@ background-size: cover;
   text-align: Center;
   font-size: 60px;
   font-weight: 600;
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 
 @keyframes slide {

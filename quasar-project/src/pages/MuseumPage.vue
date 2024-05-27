@@ -98,7 +98,12 @@
           </div>
         </div>
         <div class="btn-kunjungan-text">
-          <button>Dapatkan Tiket Sekarang!</button>
+          <q-btn
+            no-caps
+            to="/"
+            class="button-dapatkan"
+            label="Dapatkan Tiket Sekarang!"
+          />
         </div>
 
         <div class="container-tiket-kunjungan">
@@ -449,7 +454,7 @@ export default {
   margin: -1vw auto 0 auto;
 }
 
-.btn-kunjungan-text button {
+.btn-kunjungan-text .button-dapatkan {
   float: right;
   padding: 0.5vw 1.3vw 0.5vw 1.3vw;
   border-radius: 5px;
