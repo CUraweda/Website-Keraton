@@ -17,7 +17,7 @@ const getAll = async (userId) => {
         console.log(userId)
         return await prisma.transaction.findMany({ ...(userId && {
             where: { userId }
-        }), include: { detailTrans: { include: { order: true, event: true } } }})
+        }), include: { detailTrans: { include: { order: true, event: true } } }, orderBy: { plannedDate: 'desc' }})
     }catch(err){
         throwError(err)
     }

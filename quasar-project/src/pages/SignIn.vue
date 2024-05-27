@@ -72,7 +72,7 @@ export default {
     };
   },
   methods: {
-    showNotif(mes, type) {b
+    showNotif(mes, type) {
       this.notification.message = mes;
       this.notification.type = type;
       setTimeout(() => {

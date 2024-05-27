@@ -385,12 +385,13 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.socket();
-    // this.startSlider();
+    this.startSlider();
     window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
     console.log("Naha nge unmount wae");
     socket.disconnect();
+    window.removeEventListener("scroll", this.handleScroll)
     clearInterval(this.sliderInterval);
   },
   methods: {

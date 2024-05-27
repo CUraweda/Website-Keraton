@@ -18,6 +18,7 @@ const server = http.createServer(app);
 
 //? CORS SECTION START
 const allowedOrigins = [
+  "http://192.168.100.7:9000",
   "http://localhost:9000", //Development
   "http://localhost:5173", // POS Development
 ];
