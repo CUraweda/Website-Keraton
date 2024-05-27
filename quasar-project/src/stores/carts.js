@@ -49,7 +49,6 @@ export default class Carts {
     addManyItem(listOfData = [{ id, name, image, price, quantity, event }]) {
         for (let data of listOfData) {
             const alreadyExist = this.userCart[`${data.type}|${data.id}`]
-            console.log(alreadyExist)
             if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity
             this.userCart[`${data.type}|${data.id}`] = { ...data }
         }

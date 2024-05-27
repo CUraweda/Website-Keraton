@@ -78,11 +78,17 @@
     </div>
   </div>
   <footerdesk class="bawah"></footerdesk>
+  <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
 </template>
 
 <script setup>
 import navbar from "../components/NavBar.vue";
 import footerdesk from "../components/FooterComp.vue";
+import Notification from "../components/NotificationAlert.vue";
 </script>
 
 <script>
@@ -93,6 +99,7 @@ export default {
   components: {
     navbar,
     footerdesk,
+    Notification
   },
   props: {
     disabled: {
@@ -126,6 +133,10 @@ export default {
     return {
       isOpen: false,
       isOpen2: false,
+      notification: {
+        message: "",
+        type: "info",
+      },
       imageUrl: "../assets/trigger.svg",
       options: ref(),
       cart: new Carts(),
@@ -147,6 +158,14 @@ export default {
   methods: {
     async storeCartToDatabase() {
       this.cart.updateToDB();
+    },
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
     },
     async fetchData() {
       let freeOptions, iterationOptions;
@@ -216,6 +235,7 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         return this.cart.updateItem();
       } catch (err) {
         console.log(err);

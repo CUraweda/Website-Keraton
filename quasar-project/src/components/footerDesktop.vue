@@ -100,15 +100,28 @@
       </div>
     </div>
   </div>
+  <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
 </template>
 <script>
 import { ref } from "vue";
+import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
 export default {
-  name: "FooTer",
+  components: {
+    Notification
+  },
+  name: ";lFooTer",
   data() {
     return {
       email: ref(),
       message: ref(),
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
   },
   methods: {
@@ -118,11 +131,20 @@ export default {
           email: this.email,
         });
         if (response.status != 200) throw Error(response.data.message);
+        this.showNotif(`${this.email} Successfully Subscribed`)
         return;
       } catch (err) {
         console.log(err);
       }
     },
+    showNotif(mes, type) {
+        this.notification.message = mes;
+        this.notification.type = type;
+        setTimeout(() => {
+          this.notification.message = "";
+          this.notification.type = "";
+        }, 4000);
+      },
   },
 };
 </script>

@@ -72,7 +72,7 @@
                 <q-item clickable @click="toBooking('/booking')">
                   <q-item-section>Paket Keraton</q-item-section>
                 </q-item>
-                <q-item clickable @click="toBooking('/booking/events')">
+                <q-item clickable @click="toBooking('/booking/event')">
                   <q-item-section>Tiket Event</q-item-section>
                 </q-item>
               </q-list>

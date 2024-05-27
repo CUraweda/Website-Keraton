@@ -51,7 +51,7 @@ router.get("/:id?", async (req, res) => {
 });
 
 // Note : Tolong Jangan ubah imageList jadi imageList[] (unknown field)
-router.post("/:ident/:id?", upload.array("imageList"), async (req, res) => {
+router.post("/:ident/:id?", upload.array("imageList[]"), async (req, res) => {
   let sendedData;
   try {
     if (req.files) req.body.imageList = req.files;
