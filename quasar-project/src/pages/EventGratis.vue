@@ -2,7 +2,7 @@
   <nav>
     <navbar border :isCheckoutPage="true" />
   </nav>
-  <div class="header">
+  <!-- <div class="header">
     <div class="text1">
       <ul>
         <il href="#">Booking / Tiket Event</il>
@@ -17,8 +17,9 @@
         </ul>
       </div>
     </div>
-  </div>
-  <div class="dropdown">
+  </div> -->
+  <div class="header"></div>
+  <div>
     <button @click="toggleDropdown" class="dropdown-toggle">
       {{ dropdownTitle }} <img src="../assets/images/shape.png" />
     </button>
@@ -66,28 +67,32 @@
         </div>
         <h2 class="judul-sedang">{{ item.titleBig }}</h2>
         <h1 class="judul-besar">{{ item.titleMedium }}</h1>
-        <h1 class="judul-sedang" v-if="!item.isFree">
-          {{ "Rp. " + formatRupiah(item.price) }}
-        </h1>
-        <div class="tengah">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <h6 v-if="!item.isFree">
+            {{ "Rp. " + formatRupiah(item.price) }}
+          </h6>
           <button class="tambah" @click="addToCart(item)">
-            Tambah <img class="photo" src="../assets/Frame.svg" />
+            Tambah <img src="../assets/Frame.svg" />
           </button>
         </div>
       </div>
     </div>
   </div>
-  <footerdesk class="bawah"></footerdesk>
   <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
+    v-if="notification.message"
+    :message="notification.message"
+    :type="notification.type"
+  />
 </template>
 
 <script setup>
 import navbar from "../components/NavBar.vue";
-import footerdesk from "../components/FooterComp.vue";
 import Notification from "../components/NotificationAlert.vue";
 </script>
 
@@ -98,8 +103,7 @@ import Carts from "../stores/carts";
 export default {
   components: {
     navbar,
-    footerdesk,
-    Notification
+    Notification,
   },
   props: {
     disabled: {
@@ -277,11 +281,11 @@ export default {
 }
 
 .header {
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(218, 165, 32, 0.5) 0%,
     rgba(18, 59, 50, 0.5) 100%
-  );
+  ); */
   padding: 20px;
   text-align: center;
   width: 100%;
@@ -293,7 +297,6 @@ export default {
   flex: none;
   order: 0;
   flex-grow: 0;
-  margin-top: 92.3px;
 }
 
 .text1 {
@@ -494,11 +497,12 @@ nav ul li button:hover {
   height: auto;
   padding: 4px 14px;
   border-radius: 6.29px;
+  margin-top: 1rem;
   gap: 4px;
   background: #fae084;
-  margin-left: 220px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   border: none;
   font-weight: 700;
   font-family: Raleway;
@@ -526,7 +530,7 @@ nav ul li button:hover {
   border-radius: 8px;
   border: 1px solid;
   position: absolute;
-  top: 228px;
+  margin-top: 1rem;
   left: 132px;
   display: flex;
   align-items: center;
@@ -606,13 +610,13 @@ nav ul li button:hover {
 }
 
 .dropdown-toggle2 {
+  margin-top: 1rem;
   width: 150px;
   height: 40px;
   padding: 16px;
   border-radius: 8px;
   border: 1px solid;
   position: absolute;
-  top: 228px;
   left: 132px;
   display: flex;
   align-items: center;
