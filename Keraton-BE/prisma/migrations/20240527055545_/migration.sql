@@ -28,17 +28,25 @@ CREATE TABLE `User` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `Token` (
+    `id` VARCHAR(191) NOT NULL,
+    `token` TEXT NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Order` (
     `id` VARCHAR(191) NOT NULL,
     `image` VARCHAR(191) NULL,
     `name` VARCHAR(191) NOT NULL,
     `desc` VARCHAR(191) NULL,
-    `price` DECIMAL(18, 2) NOT NULL,
+    `price` DOUBLE NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `posOnly` BOOLEAN NOT NULL DEFAULT false,
-    `units` VARCHAR(191) NOT NULL DEFAULT 'orang',
-    `categoryId` INTEGER NULL,
-    `orderSubTypeId` INTEGER NULL,
+    `categoryId` INTEGER NOT NULL,
+    `orderSubTypeId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -76,13 +84,17 @@ CREATE TABLE `OrderSubType` (
 -- CreateTable
 CREATE TABLE `Transaction` (
     `id` VARCHAR(191) NOT NULL,
+    `custName` VARCHAR(191) NULL,
+    `custEmail` VARCHAR(191) NULL,
+    `custNumber` VARCHAR(191) NULL,
     `total` DECIMAL(18, 2) NOT NULL,
     `method` VARCHAR(191) NOT NULL,
-    `status` ENUM('SUDAH_DIGUNAKAN', 'DAPAT_DIGUNAKAN', 'EXPIRED', 'MENUNGGU_PEMBAYARAN') NOT NULL,
+    `status` ENUM('SUDAH_DIGUNAKAN', 'DAPAT_DIGUNAKAN', 'EXPIRED', 'MENUNGGU_PEMBAYARAN') NOT NULL DEFAULT 'MENUNGGU_PEMBAYARAN',
     `plannedDate` DATETIME(3) NOT NULL,
     `createdDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `discount` VARCHAR(191) NOT NULL,
-    `cashback` VARCHAR(191) NOT NULL,
+    `discount` VARCHAR(191) NULL,
+    `cashback` VARCHAR(191) NULL,
+    `barcodeUID` VARCHAR(191) NULL,
     `userId` VARCHAR(191) NULL,
     `nationalityId` VARCHAR(191) NULL,
 
@@ -95,8 +107,19 @@ CREATE TABLE `DetailTrans` (
     `amount` INTEGER NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `transactionId` VARCHAR(191) NOT NULL,
-    `orderId` VARCHAR(191) NOT NULL,
+    `orderId` VARCHAR(191) NULL,
+    `eventId` INTEGER NULL,
     `guideId` VARCHAR(191) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `BarcodeUsage` (
+    `id` VARCHAR(191) NOT NULL,
+    `remainingUses` INTEGER NOT NULL,
+    `expiredAt` DATETIME(3) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -173,8 +196,8 @@ CREATE TABLE `Logs` (
 CREATE TABLE `News` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `link` TEXT NOT NULL,
     `desc` TEXT NOT NULL,
+    `link` VARCHAR(191) NOT NULL,
     `image` VARCHAR(191) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -191,17 +214,33 @@ CREATE TABLE `Subscriber` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `GlobalParam` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `identifier` VARCHAR(191) NOT NULL,
+    `data` JSON NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `User` ADD CONSTRAINT `User_nationalityId_fkey` FOREIGN KEY (`nationalityId`) REFERENCES `Nationality`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order` ADD CONSTRAINT `Order_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Token` ADD CONSTRAINT `Token_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order` ADD CONSTRAINT `Order_orderSubTypeId_fkey` FOREIGN KEY (`orderSubTypeId`) REFERENCES `OrderSubType`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Order` ADD CONSTRAINT `Order_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Order` ADD CONSTRAINT `Order_orderSubTypeId_fkey` FOREIGN KEY (`orderSubTypeId`) REFERENCES `OrderSubType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `OrderSubType` ADD CONSTRAINT `OrderSubType_orderTypeId_fkey` FOREIGN KEY (`orderTypeId`) REFERENCES `OrderType`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_barcodeUID_fkey` FOREIGN KEY (`barcodeUID`) REFERENCES `BarcodeUsage`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
@@ -213,7 +252,10 @@ ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_nationalityId_fkey` FOREIG
 ALTER TABLE `DetailTrans` ADD CONSTRAINT `DetailTrans_transactionId_fkey` FOREIGN KEY (`transactionId`) REFERENCES `Transaction`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `DetailTrans` ADD CONSTRAINT `DetailTrans_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `DetailTrans` ADD CONSTRAINT `DetailTrans_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `DetailTrans` ADD CONSTRAINT `DetailTrans_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `Events`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `DetailTrans` ADD CONSTRAINT `DetailTrans_guideId_fkey` FOREIGN KEY (`guideId`) REFERENCES `Guide`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

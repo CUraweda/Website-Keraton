@@ -98,38 +98,49 @@ text-align: left;
 .atas {
   align-items: center;
   display: flex;
-  gap: 6px;
+  gap: 0.1vw;
+  width: 30vw;
+  height: 4vw;
+}
+.icon img {
+  max-width: 2.3vw;
 }
 
 .txt-group17 {
+  display: flex;
+  align-items: center;
   font-family: "Raleway";
-  font-size: 16px;
+  font-size: 1.2vw;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
+  height: 1.8vw;
+  background-color: white;
+  padding: 0;
+  margin: 0;
 }
 
 .txt-group17 p {
-  width: 135px;
-  height: 24px;
-  left: 38px;
+  width: 10vw;
+  height: 1.8vw;
   color: #5e5e5e;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .svg-select {
   margin: auto;
 }
 .select {
-  background-color: #ffffff;
   /* padding-left: 20px;
   padding-bottom: 17.75px;
   padding-right: 20px;
   padding-top: 17.75px; */
   width: fit-content;
-  height: 44.75px;
-  margin-top: 10px;
-  border-radius: 10px;
+  height: 3.5vw;
+  border-radius: 0.5vw;
   box-shadow: 0px 4px 4px 0px rgb(0, 0, 0, 0.25);
   border: 0px;
   cursor: pointer;
@@ -144,18 +155,19 @@ text-align: left;
 }
 
 .danger {
-  margin-inline: 15px;
+  margin-inline: 1vw;
+  max-width: 1vw;
+
 }
 
-svg {
-  margin-top: 1px;
-}
 
 label {
-  font-size: 14px;
+  font-size: 1vw;
 }
 
 .svg {
-  margin-inline: 15px;
+  margin-inline: 1vw;
+  max-width: 1vw;
 }
+
 </style>

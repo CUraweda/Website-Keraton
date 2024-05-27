@@ -1,6 +1,7 @@
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
-import SejarahLP from "../pages/sejarahKeraton.vue";
+import SejarahLP from "../pages/SejarahKeraton.vue";
+import beritaterkini from "../pages/BeritaTerkini.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
@@ -120,6 +121,11 @@ const routes = [
     path: "/user/carts",
     name: "Cart",
     component: Cart,
+  },
+  {
+    path: "/beritaterkini",
+    name: "beritaterkini",
+    component: beritaterkini,
   },
   {
     path: "/template",

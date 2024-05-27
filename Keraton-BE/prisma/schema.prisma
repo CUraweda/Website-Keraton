@@ -54,8 +54,17 @@ model User {
   role          Role
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
+  carts         Json?         @default("{}")
   transaction   Transaction[]
   Logs          Logs[]
+  Token         Token[]
+}
+
+model Token {
+  id     String @id @default(uuid())
+  token  String @db.Text
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Order {
@@ -63,13 +72,13 @@ model Order {
   image          String?
   name           String
   desc           String?
-  price          Decimal       @db.Decimal(18, 2)
+  price          Float
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
-  category       Category     @relation(fields: [categoryId], references: [id])
+  category       Category      @relation(fields: [categoryId], references: [id])
   categoryId     Int
-  orderSubType   OrderSubType @relation(fields: [orderSubTypeId], references: [id])
+  orderSubType   OrderSubType  @relation(fields: [orderSubTypeId], references: [id])
   orderSubTypeId Int
 }
 
@@ -102,13 +111,15 @@ model Transaction {
   custNumber    String?
   total         Decimal       @db.Decimal(18, 2)
   method        String
-  status        Status
+  status        Status        @default(MENUNGGU_PEMBAYARAN)
   plannedDate   DateTime
   createdDate   DateTime      @default(now())
   discount      String?
   cashback      String?
-  user          User         @relation(fields: [userId], references: [id])
-  userId        String
+  barcode       BarcodeUsage? @relation(fields: [barcodeUID], references: [id])
+  barcodeUID    String?
+  user          User?         @relation(fields: [userId], references: [id])
+  userId        String?
   nationality   Nationality?  @relation(fields: [nationalityId], references: [id])
   nationalityId String?
   detailTrans   DetailTrans[]
@@ -120,10 +131,20 @@ model DetailTrans {
   createdAt     DateTime    @default(now())
   transaction   Transaction @relation(fields: [transactionId], references: [id])
   transactionId String
-  order         Order       @relation(fields: [orderId], references: [id])
-  orderId       String
+  order         Order?      @relation(fields: [orderId], references: [id])
+  orderId       String?
+  event         Events?     @relation(fields: [eventId], references: [id])
+  eventId       Int?
   guide         Guide?      @relation(fields: [guideId], references: [id])
   guideId       String?
+}
+
+model BarcodeUsage {
+  id            String        @id @default(uuid())
+  remainingUses Int
+  expiredAt     DateTime
+  createdAt     DateTime      @default(now())
+  Transaction   Transaction[]
 }
 
 model Nationality {
@@ -162,6 +183,7 @@ model Events {
   name        String
   desc        String         @db.Text
   image       String
+  DetailTrans DetailTrans[]
 }
 
 model EventIteration {
@@ -185,7 +207,21 @@ model News {
   id        Int      @id @default(autoincrement())
   title     String
   desc      String   @db.Text
+  link      String
   image     String
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+}
+
+model Subscriber {
+  id            Int     @id @default(autoincrement())
+  email         String
+  stillSubcribe Boolean @default(true)
+}
+
+model GlobalParam {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  data       Json
+  updatedAt  DateTime @updatedAt
 }

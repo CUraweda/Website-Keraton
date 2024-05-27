@@ -20,7 +20,7 @@
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
       </h2>
-      <a :href="sectionData?.xl1?.data" v-mod class="btn1">
+      <a @click="scrollToTop" class="btn1">
         <img class="btn1" src="../assets/images/btn1.png" />
       </a>
     </div>
@@ -194,19 +194,25 @@
 
   <section class="slider" id="slider">
     <h1 class="berita">Berita Terkini</h1>
-    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }">
+    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }"
+    @mouseenter="pauseSlider"
+    @mouseleave="resumeSlider"
+    >
       <div v-for="(slide, index) in slides" :key="index" class="slide">
+        <a :href="slide.link">
         <div class="news-section" :to="slide.link">
           <div class="news-image">
             <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`">
           </div>
           <div class="news-content">
             <h2 class="news-title">{{ slide.title }}</h2>
+            <p class="news-sum">{{ slide.summary }}</p>
           </div>
         </div>
+      </a>
       </div>
     </div>
-    <img class="newsbtn" src="../assets/images/btninfo.png" />
+    <a href="#/beritaterkini"><img class="newsbtn" src="../assets/images/btninfo.png" /></a>
   </section>
 
 
@@ -432,6 +438,11 @@ export default {
     }
   }
 };
+const scrollToTop = () => {
+document.querySelector('#hero').scrollIntoView({
+  behavior: 'smooth'
+});
+}
 </script>
 
 
@@ -536,6 +547,15 @@ export default {
   background-position: center;
 }
 
+
+.sl
+.btn1-img {
+  display: block;
+}
+
+.btn1:hover .btn1-img {
+  filter: brightness(70%);
+}
 .slider h2 {
   text-align: left;
   margin-bottom: 20px;
@@ -554,7 +574,10 @@ export default {
   min-width: 100%;
   box-sizing: border-box;
 }
-
+.slide a{
+  text-decoration: none;
+  color: #000000;
+}
 .news-section {
   display: flex;
   align-items: center;
@@ -585,9 +608,9 @@ export default {
   font-weight: 500;
 }
 
-.news-summary {
-  font-size: 16px;
-  color: #555;
+.news-sum {
+  font-size: 25px;
+  color: #000000;
 }
 
 .berita{
@@ -621,7 +644,7 @@ export default {
   padding: 5px;
   gap: 10px;
   position: relative;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   cursor: pointer;
   margin-left: 42vw;
 }
@@ -660,9 +683,10 @@ export default {
 } */
 
 .btn1 {
-  top: 65%;
-  left: 49, 5%;
-  position: absolute;
+  top: 85%;
+  left: 89%;
+  position: fixed;
+  z-index: 1000;
 }
 
 .btn1:hover {
@@ -1427,10 +1451,11 @@ input::placeholder {
   }
 
   .btn1 {
-    top: 65%;
-    left: 45%;
-    position: absolute;
-  }
+  top: 90%;
+  left: 89%;
+  position: fixed;
+  z-index: 1000;
+}
 
   .btn1:hover {
     filter: brightness(70%);

@@ -4,6 +4,7 @@
   </nav>
   <div class="body">
     <div class="group1">
+      <div class="up">
       <div class="pesan-tiket-langsung">
         <div class="txt-pesan-tiket-langsung">
           <h4>Pesan Tiket Langsung</h4>
@@ -17,7 +18,10 @@
           <h6>Pastikan pesanan Anda BENAR sebelum checkout ya!</h6>
         </div>
       </div>
-
+      <div class="border-bottom">
+        <hr>
+      </div>
+    </div> 
       <div class="container">
         <div id="detailPemesanan">
           <div class="atas">
@@ -157,7 +161,6 @@
               <p class="harga">Rp. {{ hargaString }}</p>
             </div>
           </div>
-          <div class="biaya">
             <div class="biayaTransaksi">
               <h6>Biaya Transaksi</h6>
               <div class="totalHarga">
@@ -168,7 +171,6 @@
                 <p>Biaya Jasa Aplikasi</p>
                 <p class="harga">Rp. {{ jasaAppString }}</p>
               </div>
-            </div>
           </div>
           <hr />
           <div class="totalTagihan">
@@ -275,15 +277,18 @@ nav {
   font-family: "Raleway";
   font-size: 1.5vw;
   font-weight: 400;
-  line-height: 28px;
+  /* line-height: 28px; */
   letter-spacing: 0em;
   text-align: left;
-  background-color: white;
+  display: flex;
+  align-items: center;
+  height: 2vw;
+  /* background-color: white; */
 }
 
 .pesan-tiket-langsung {
   width: 40vw;
-  height: 3vw;
+  height: 4vw;
   margin-top: 3vw;
   display: flex;
   align-items: center;
@@ -296,6 +301,9 @@ nav {
   line-height: 40px;
   color: #000000;
   font-family: "Raleway";
+  display: flex;
+  align-items: center;
+  height: 3vw
 }
 
 #detailPemesanan {
@@ -316,6 +324,12 @@ nav {
   background-color: yellow;
 } */
 
+.border-bottom hr{
+  display: none;
+  align-items: center;
+  /* display: none; */
+  border: 0.3vw solid #d9d9d9;
+}
 .atas {
   align-items: center;
   display: flex;
@@ -352,10 +366,12 @@ nav {
 }
 
 .txt-group17 p {
-  width: 10vw;
+  width: 20vw;
   height: 1.8vw;
   color: #5e5e5e;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .akun {
@@ -398,13 +414,13 @@ nav {
 
 .pilih-kategori {
   margin-top: 3.5vw;
-  width: 476px;
+  width: 40vw;
   height: 82px;
 }
 
 .radioBtn {
   display: flex;
-  /* gap: 2vw; */
+  gap: 2vw;
   margin-top: 1.5vw;
   margin-left: 1.5vw;
 }
@@ -414,30 +430,30 @@ nav {
   display: flex;
   justify-content: center;
   width: 10vw;
-  height: 4vw;
+  height: 40vw;
   top: 133px;
-  margin-right: 2vw;
+  /* margin-right: 2vw; */
 }
 
 .pelajar {
   justify-content: center;
   display: flex;
   width: 10vw;
-  height: 48px;
+  height: 4vw;
   top: 133px;
   left: 149px;
   padding: 12px, 20px, 12px, 20px;
-  margin-right: 27px;
+  /* margin-right: 27px; */
 }
 
 .mancanegara {
   justify-content: center;
   display: flex;
-  width: 15vw;
-  height: 48px;
-  top: 133px;
-  left: 301px;
-  padding: 12px, 20px, 12px, 20px;
+  width: 12vw;
+  height: 4vw;
+  /* top: 133px; */
+  /* left: 301px; */
+  /* padding: 12px, 20px, 12px, 20px; */
 }
 
 .umum,
@@ -454,7 +470,10 @@ label {
   /* margin-left: 10px; */
   color: #212121;
   cursor: pointer;
-  height: 20px;
+  height: 1.5vw;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 .detail-tiket {
@@ -469,8 +488,9 @@ label {
   opacity: 0.5;
 }
 
-.icon-date {
-  max-width: 3vw;
+.icon-date img{
+  width: 2vw;
+  height: 2vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -640,7 +660,7 @@ input[type="date"]:focus {
 
 #ringkasanBooking {
   width: 40vw;
-  height: 25vw;
+  height: 21vw;
   /* padding-right: 5rem; */
   /* margin-left: 8rem; */
   margin-top: 4.5vw;
@@ -648,7 +668,7 @@ input[type="date"]:focus {
   border-radius: 1vw;
   /* padding: 20px, 23px,20px, 23px; */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 20px;
+  padding: 1.5vw;
   gap: 8px;
   background-color: #ffffff;
   transition: top .3s ease  ;
@@ -729,9 +749,15 @@ h5 {
   font-family: "Raleway";
   color: #000000;
 }
-
 .totalPemesanan {
-  padding-top: 2vw;
+  padding-top: 1.5vw; 
+
+}
+.totalPemesanan h6{
+  /* padding-top: 2vw; */
+  height: 2vw;
+  display: flex;
+  align-items: center;
 }
 
 h6 {
@@ -754,14 +780,20 @@ h6 {
   font-family: "Raleway";
   font-weight: bold;
   font-size: 2vw;
+  display: flex;
+  align-items: center;
+  /* background-color: red; */
   /* line-height: 0.3vw; */
 
 }
 .harga {
   line-height: 0.3vw;
 }
+h6.harga {
+  margin-top: 1vw;
+}
 .totalHarga {
-  height: 1.5vw;
+  /* height: 1.5vw; */
   display: flex;
   justify-content: space-between;
   /* margin-top: 0.vw; */
@@ -770,22 +802,65 @@ h6 {
   font-size: 1vw;
 }
 
-.biaya {
-  height: 9vw;
-  padding: 15px, 0px, 15px, 0px;
-}
 
 hr {
   margin-top: 1vw;
 }
-
-.biayaTransaksi {
-  margin-top: 0.5vw;
-  padding-top: 1.5vw;
+.biayaTransaksi{
+  padding-top: 1.5vw; 
+}
+.biayaTransaksi h6{
+  /* margin-top: 0.5vw; */
+  height: 2vw;
+  display: flex;
+  align-items: center;
 }
 
 
+@media (max-width: 600px) {
+  .container {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    transform: scale(2);
+    margin-top: 50vw;
+  }
+  .border-bottom hr {
+    margin-top: -1vw;
+    display: block;
+  }
+  
+  .up {
+    margin-top: 30vw;
+    transform: scale(2)
+  }
+  /* .txt-pesan-tiket-langsung {
+    transform: scale(2);
+    margin-top: 30vw;
+  }
+  */
+  .txt-group1 p{
+    background-color: red;
+    height: 5vw;
+    width: 30vw
+  }
+  .body {
+    padding: 0;
+  }
+  #ringkasanBooking {
+    margin-top: 20vw
+  }
+  .radioBtn {
+    display: grid;
+    align-items: left;
+    justify-content: left
+  }
 
+  
+  .pelajar, .umum, .mancanegara {
+    margin: 0
+  }
+}
 </style>
 
 <script setup>
