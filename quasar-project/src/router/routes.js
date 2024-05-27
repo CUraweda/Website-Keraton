@@ -99,18 +99,12 @@ const routes = [
   {
     path: "/booking/event",
     name: "eventgratis",
-    component: EventGratis,
-    meta: {
-      preventToken: true
-    }
+    component: EventGratis
   },
   {
     path: "/booking",
     name: "booking",
-    component: Booking,
-    meta: {
-      preventToken: true
-    }
+    component: Booking
   },
   {
     path: "/filterbayar",

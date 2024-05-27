@@ -21,8 +21,8 @@ expressRouter.post("/register", async (req, res) => {
   }
 
   try {
-    const token = await userModel.signUp(req.body);
-    return success(res, "Register akun berhasil", await token);
+    const data = await userModel.signUp(req.body);
+    return success(res, "Register akun berhasil", data);
   } catch (err) {
     return error(res, err.message);
   }
@@ -30,7 +30,7 @@ expressRouter.post("/register", async (req, res) => {
 
 expressRouter.get('/logout', auth([]), async (req, res) => {
   try{
-    const deletedToken = await userModel.logOUt(req.user.id, req.token)
+    const deletedToken = await userModel.logOUt(req.token)
     return success(res, 'Log Out Success', deletedToken)
   }catch(err){
     return error(res, err.message)

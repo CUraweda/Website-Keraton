@@ -1,5 +1,6 @@
 import { event } from 'quasar'
 import env from './environment'
+import cookieHandler from 'src/cookieHandler'
 // import { decrypt, encrypt } from './encryption'
 
 export default class Carts {
@@ -24,7 +25,8 @@ export default class Carts {
     }
 
     async updateToDB() {
-        const token = localStorage.getItem(env.TOKEN_STORAGE_NAME)
+        const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+        console.log(token)
         if (!token) throw Error('Token didnt exist, please Log In')
         const response = await fetch(env.BASE_URL + "/keraton/cart/update", {
             method: "POST",

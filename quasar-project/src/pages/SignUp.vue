@@ -101,8 +101,11 @@
 <script>
 import { BASE_URL } from "src/auth/config";
 import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
-import { ref } from "vue";
+import { ref } from "vue"
 import { useRouter } from "vue-router";
+import Carts from "../stores/carts"
+import cookieHandler from "src/cookieHandler";
+import env from "stores/environment"
 
 export default {
   data() {
@@ -111,6 +114,7 @@ export default {
       email: "",
       password: "",
       name: "",
+      cartClass: new Carts(),
       emailError: false,
       passwordError: false,
       nameError: false,
@@ -174,45 +178,23 @@ export default {
       };
 
       try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-        const data = await response.json();
+        const response = await this.$api.post("/auth/register", payload);
+        if (response.status != 200) throw Error(response.data.message);
 
-        if (!response.ok) {
-          if (response.status === 500) {
-            this.showNotif(
-              "there is an error in the server, try again later",
-              "error"
-            );
-          } else if (
-            response.status === 404 &&
-            data.message.includes("constraint")
-          ) {
-            this.showNotif(
-              "email has been used please use another email",
-              "error"
-            );
-          } else {
-            this.showNotif(
-              "unknown error please contact the developer",
-              "error"
-            );
-          }
-          return;
-        }
+        const { token, user } = response.data.data;
+        const cartData = Object.values(user.carts);
+        delete user.carts;
+
+        this.cartClass.setNew(cartData);
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
+        localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
 
         this.showNotif("Register Successfuly", "info");
-        localStorage.setItem("token", data.data);
         this.$router.push("/");
-      } catch (error) {
-        console.error("Error:", error);
+      } catch (err) {
+        console.log("Error:", err);
         this.showNotif(
-          "unknown fatal error please contact the developer",
+        err.response ? err.response.data.message : err.message,
           "error"
         );
       }

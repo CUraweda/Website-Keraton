@@ -231,7 +231,6 @@
         </q-expansion-item>
 
         <q-expansion-item
-          v-if="isLogin"
           label="Booking"
           clickable
           @click="toggleBooking"
@@ -340,18 +339,20 @@ export default {
     async logout() {
       try {
         const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
+        cartClass.updateToDB();
         const response = await this.$api.get("auth/logout", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         if (response.status != 200) throw Error(response.data.message);
-        return cartClass.updateToDB();
       } catch (err) {
         console.log(err);
       }
       localStorage.removeItem(env.USER_STORAGE_NAME);
       cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
+      cartClass.clearCart()
+      window.location.reload()
       return (this.isLogin = false); // Set isLogin ke false saat logout
     },
     showNotif(mes, type) {
@@ -363,11 +364,7 @@ export default {
       }, 4000);
     },
     async toBooking(url) {
-      if (this.isLogin) {
         this.$router.push(url);
-      } else {
-        this.showNotif("You need to log in first", "error");
-      }
     },
     keranjang() {
       this.$router.push("/user/carts");

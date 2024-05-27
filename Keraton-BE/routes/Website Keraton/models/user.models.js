@@ -37,12 +37,19 @@ const logIn = async (body) => {
     throwError(err);
   }
 };
+const emailExist = async (email) => {
+  try{
+    return await prisma.user.findFirst({ where: { email } })
+  }catch(err){
+    throwError(err)
+  }
+}
 const signUp = async (data) => {
   try {
     const { email, password, name } = data;
-
+    const emailAlreadyExist = await emailExist(email)
+    if(emailAlreadyExist) throw Error('Email Already exist')
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = await prisma.user.create({
       data: {
         email,
@@ -57,8 +64,8 @@ const signUp = async (data) => {
       password: password,
     };
 
-    const token = await logIn(newDataForLog);
-    return token;
+    const data  = await logIn(newDataForLog);
+    return data;
   } catch (err) {
     throwError(err);
   }

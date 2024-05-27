@@ -76,9 +76,9 @@ model Order {
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
-  category       Category     @relation(fields: [categoryId], references: [id])
+  category       Category      @relation(fields: [categoryId], references: [id])
   categoryId     Int
-  orderSubType   OrderSubType @relation(fields: [orderSubTypeId], references: [id])
+  orderSubType   OrderSubType  @relation(fields: [orderSubTypeId], references: [id])
   orderSubTypeId Int
 }
 
@@ -207,6 +207,7 @@ model News {
   id        Int      @id @default(autoincrement())
   title     String
   desc      String   @db.Text
+  link      String
   image     String
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
