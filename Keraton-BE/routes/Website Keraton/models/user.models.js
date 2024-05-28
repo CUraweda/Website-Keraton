@@ -29,8 +29,10 @@ const logIn = async (body) => {
     if (!match) throw new Error("Password tidak sesuai");
 
     const token = jwt.sign(user, process.env.SECRET_KEY_AUTH);
-
-    return token;
+    await prisma.token.create({ data: { token, userId: user.id } })
+    delete user.password
+    delete user.id
+    return { token, user };
   } catch (err) {
     throwError(err);
   }
@@ -61,14 +63,24 @@ const signUp = async (data) => {
     throwError(err);
   }
 };
-const update = async (id,data) => {
-  try{
+const update = async (id, data) => {
+  try {
     const user = await isExist({ id })
-    if(!user) throw Error('User didnt exist')
+    if (!user) throw Error('User didnt exist')
     return await prisma.user.update({ where: { id }, data })
-  }catch(err){
+  } catch (err) {
     throwError(err)
   }
 }
 
-module.exports = { getUser, isExist, logIn, signUp , update};
+const logOUt = async (token) => {
+  try {
+    const isExist = await prisma.token.findFirst({ where: { token } })
+    if (!isExist) throw Error('Token didnt exist in db')
+    return await prisma.token.delete({ where: { id: isExist.id } })
+  } catch (err) {
+    throwError(err)
+  }
+}
+
+module.exports = { getUser, isExist, logIn, signUp, update, logOUt };

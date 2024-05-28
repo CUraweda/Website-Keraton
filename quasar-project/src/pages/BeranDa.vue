@@ -4,18 +4,17 @@
     id="hero"
     :style="{
       'min-height': '100vh',
-      'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
       'background-position': 'center',
-      'display': 'flex',
+      display: 'flex',
       'flex-direction': 'column',
       'align-items': 'center',
       'justify-content': 'center',
     }"
   >
     <div class="texthero">
-
       <h5 style="color: #fae084">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
@@ -29,12 +28,12 @@
   <section
     class="sec-home"
     id="section2"
-     :style="{
-    'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }"
+    :style="{
+      'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
   >
     <div class="container">
       <div class="hero">
@@ -47,13 +46,14 @@
     </div>
   </section>
 
-  <section class="sec-home" 
-  id="section3"
-  :style="{
-    'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+  <section
+    class="sec-home"
+    id="section3"
+    :style="{
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(../assets/images/Frame.png);`,
-  'background-size': 'cover;',
-}"
+      'background-size': 'cover;',
+    }"
   >
     <div class="container">
       <div class="text">
@@ -64,13 +64,14 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section4"
-  :style="{
-    'background-image': `url(${sectionimg3})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }"
+  <section
+    class="sec-home"
+    id="section4"
+    :style="{
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
   >
     <div class="container">
       <div class="text">
@@ -93,20 +94,6 @@
       <div class="card3">
         <a href="https://your-link-here.com">
           <img :src="sectionData3?.xi3.data" alt="sejarah3" />
-          <div class="caption">
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M24 17V26C24 26.5304 23.7893 27.0391 23.4142 27.4142C23.0391 27.7893 22.5304 28 22 28H6C5.46957 28 4.96086 27.7893 4.58579 27.4142C4.21071 27.0391 4 26.5304 4 26V10C4 9.46957 4.21071 8.96086 4.58579 8.58579C4.96086 8.21071 5.46957 8 6 8H15C15.2652 8 15.5196 8.10536 15.7071 8.29289C15.8946 8.48043 16 8.73478 16 9C16 9.26522 15.8946 9.51957 15.7071 9.70711C15.5196 9.89464 15.2652 10 15 10H6V26H22V17C22 16.7348 22.1054 16.4804 22.2929 16.2929C22.4804 16.1054 22.7348 16 23 16C23.2652 16 23.5196 16.1054 23.7071 16.2929C23.8946 16.4804 24 16.7348 24 17ZM28 5C28 4.73478 27.8946 4.48043 27.7071 4.29289C27.5196 4.10536 27.2652 4 27 4H19C18.8021 3.99984 18.6086 4.05841 18.444 4.16828C18.2794 4.27815 18.1511 4.43439 18.0754 4.61721C17.9996 4.80003 17.9798 5.00122 18.0185 5.19531C18.0571 5.38939 18.1525 5.56764 18.2925 5.7075L21.5863 9L16.2925 14.2925C16.1049 14.4801 15.9994 14.7346 15.9994 15C15.9994 15.2654 16.1049 15.5199 16.2925 15.7075C16.4801 15.8951 16.7346 16.0006 17 16.0006C17.2654 16.0006 17.5199 15.8951 17.7075 15.7075L23 10.4138L26.2925 13.7075C26.4324 13.8475 26.6106 13.9429 26.8047 13.9815C26.9988 14.0202 27.2 14.0004 27.3828 13.9246C27.5656 13.8489 27.7218 13.7206 27.8317 13.556C27.9416 13.3914 28.0002 13.1979 28 13V5Z"
-                fill="white"
-              />
-            </svg>
-          </div>
         </a>
       </div>
 
@@ -123,7 +110,7 @@
       'background-position': 'center',
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
-      'transition': 'background-image 0.5s ease-in-out'
+      transition: 'background-image 0.5s ease-in-out',
     }"
   >
     <div class="container">
@@ -139,7 +126,7 @@
             'background-image': `url(${sectionData4?.xi1.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card4', sectionData4?.xi1.data)"
         >
@@ -157,7 +144,7 @@
             'background-image': `url(${sectionData4?.xi2.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card5', sectionData4?.xi2.data)"
         >
@@ -172,7 +159,7 @@
             'background-image': `url(${sectionData4?.xi3.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
-            'background-color': '#b6b6b6'
+            'background-color': '#b6b6b6',
           }"
           @click="setActiveCard('card6', sectionData4?.xi3.data)"
         >
@@ -202,7 +189,7 @@
         <a :href="slide.link">
         <div class="news-section" :to="slide.link">
           <div class="news-image">
-            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`">
+            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
           <div class="news-content">
             <h2 class="news-title">{{ slide.title }}</h2>
@@ -215,15 +202,16 @@
     <a href="#/beritaterkini"><img class="newsbtn" src="../assets/images/btninfo.png" /></a>
   </section>
 
-
-  
-  <section class="sec-home" id="section6"
-  :style="{
-    'background-image': `url(${sectionimg1})`,
-    'background-position': 'center',
-    'background-repeat': 'no-repeat',
-    'background-size': 'cover',
-  }">
+  <section
+    class="sec-home"
+    id="section6"
+    :style="{
+      'background-image': `url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }"
+  >
     <div class="container">
       <div class="text">
         <p class="owText">{{ sectionName5 }}</p>
@@ -242,8 +230,19 @@
     </div>
   </section>
 
-  <section class="sec-home" id="section7">
-    <div class="container">
+  <section id="section7">
+    <div
+      style="
+        background-size: cover;
+        height: 50vh;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        background-position: center;
+        color: white;
+        font-family: Raleway, sans-serif;
+      "
+    >
       <div class="text">
         <p class="faqText">{{ sectionName6 }}</p>
         <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
@@ -253,9 +252,11 @@
           style="border-bottom: 1px solid black"
           v-for="(faq, index) in faqs"
           :key="index"
+          @click="toggleAccordion(index)"
         >
           <button class="accordion" @click="toggleAccordion(index)">
-            <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
+            <span class="nomor">{{ faq.nomor }}</span>
+            <span>{{ faq.pertanyaan }}</span>
             <svg
               width="32"
               height="32"
@@ -268,8 +269,9 @@
                 d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
                 fill="#D9A520"
               />
-            </svg></button
-          ><svg
+            </svg>
+          </button>
+          <svg
             width="1064"
             height="1"
             viewBox="0 0 1064 1"
@@ -304,58 +306,83 @@ export default {
   },
   data() {
     return {
-      sectionData: ref(),
       linkYoutube: ref(),
       title1: ref(""),
       subTitle1: ref(""),
       title2: ref(""),
       subTitle2: ref(""),
       backgroundImageUrl1: ref(),
+      status: ref(),
       backgroundImageUrl2: ref(),
       faqs: [
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
       activeCard: null,
-      currentBackground: null,
+      currentBackground: ref(),
       slides: [
         {
-          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
-          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
-          link: 'https://blue.kumparan.com',
-          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+          imageUrl:
+            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
+          title:
+            "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
+          link: "https://blue.kumparan.com",
+          summary:
+            "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
+      sectionimg: ref(),
+      sectionData: ref(),
+      sectionName: ref(),
+      sectionimg1: ref(),
+      sectionName1: ref(),
+      sectionData1: ref(),
+      sectionName2: ref(),
+      sectionimg2: ref(),
+      sectionName3: ref(),
+      sectionData3: ref(),
+      sectionName4: ref(),
+      sectionimg4: ref(),
+      sectionData4: ref(),
+      sectionName5: ref(),
+      sectionData5: ref(),
+      sectionName6: ref(),
+      sectionData6: ref(),
       currentSlideIndex: 0,
-      sliderInterval: null
+      sliderInterval: null,
     };
   },
   mounted() {
@@ -363,33 +390,39 @@ export default {
     this.fetchNews();
     this.socket();
     this.startSlider();
+    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
+    console.log("Naha nge unmount wae");
     socket.disconnect();
+    window.removeEventListener("scroll", this.handleScroll)
     clearInterval(this.sliderInterval);
   },
   methods: {
+    // toggleAccordion(data, condition) {
+    //   this.faqs[condition].active = !this.faqs[condition].active;
+    // },
     socket() {
       socket.connect();
       socket.on("dashboard", () => {
         this.fetchData();
       });
     },
-    async fetchNews(){
-      try{
-        const response = await this.$api.get('news')
-        console.log(response.data.data)
-        this.slides = response.data.data.map(news => ({
+    async fetchNews() {
+      try {
+        const response = await this.$api.get("news");
+        console.log(response.data.data);
+        this.slides = response.data.data.map((news) => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          summary: news.desc
-        }))
+          desc: news.desc,
+          summary: news.desc,
+        }));
 
-        console.log(this.slides)
-      
-      }catch(err){
-        console.log(err)
+        console.log(this.slides);
+      } catch (err) {
+        console.log(err);
       }
     },
     async fetchData() {
@@ -423,11 +456,37 @@ export default {
 
         this.sectionName6 = dataRest.contents[6].sectionName;
         this.sectionData6 = dataRest.contents[6].context;
+        const contextValue = Object.values(dataRest.contents[6].context);
+        contextValue.shift();
+        this.faqs = contextValue.map((context, i) => ({
+          nomor: String(i + 1).padStart(2, "0"),
+          pertanyaan: context.data,
+          jawaban: context.sub,
+          active: false,
+        }));
 
         this.currentBackground = this.sectionimg4;
-
       } catch (err) {
         console.log(err);
+      }
+    },
+    toggleAccordion(index) {
+      this.faqs.forEach((faq, idx) => {
+        if (idx !== index) {
+          faq.active = false;
+        }
+      });
+      this.faqs[index].active = !this.faqs[index].active;
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    },
+    handleScroll() {
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      if (window.scrollY > 20) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
       }
     },
     startSlider() {
@@ -435,18 +494,22 @@ export default {
     },
     nextSlide() {
       this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
+    },
+    pauseSlider() {
+     clearInterval(this.sliderInterval);
+    },
+    resumeSlider() {
+      this.startSlider();
     }
   }
-};
+}
+
 const scrollToTop = () => {
 document.querySelector('#hero').scrollIntoView({
   behavior: 'smooth'
 });
 }
 </script>
-
-
-
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
@@ -473,10 +536,34 @@ document.querySelector('#hero').scrollIntoView({
 /* #section1 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("../assets/images/bg1.png");
-  background-size: cover;
+background-size: cover;
   margin-top: -110px;
   z-index: -999;
 } */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: none;
+  padding: 0;
+}
+
+#scrollToTopBtn img {
+  width: 40px;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#scrollToTopBtn:hover img {
+  background-color: #555;
+  border-radius: 50%;
+}
 
 #section2 .container {
   background-image: linear-gradient(transparent, #fff9a0, #ffe96e);
@@ -487,7 +574,7 @@ document.querySelector('#hero').scrollIntoView({
 
 #section3 .container {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-  url("../assets/images/keraton2.png");
+    url("../assets/images/keraton2.png");
   background-size: cover;
 }
 
@@ -496,11 +583,11 @@ document.querySelector('#hero').scrollIntoView({
 }
 
 #section5 .container {
-  /* background-image: url("../assets/images/keraton2.png"); */
+  background-image: url("../assets/images/keraton2.png");
   height: 130vh;
   /* height: 1000px; */
   background-size: cover;
-  background-position: center
+  background-position: center;
 }
 
 #section5 .container::before {
@@ -516,33 +603,35 @@ document.querySelector('#hero').scrollIntoView({
 
 #section5 .container .text {
   position: absolute;
-  margin-top: 12rem;
+  margin-top: 5rem;
 }
 
 #section6 .container {
   background-image: url("../assets/images/batik.png");
+  background-size: cover;
 }
 
-#section7 .container {
+#section7 {
   background-image: url("../assets/images/batik.png");
-  display: fixed;
+  background-size: cover;
 }
 
 #section8 .container {
-  background-image: url("../assets/images/batik.png");
+  /* background-image: url("../assets/images/batik.png"); */
 }
 
 #slider {
   color: #000000;
-  height: 85vh;
-  padding-top: 5rem;
+  height: 110vh;
+  padding-top: 2rem;
 }
 
 .slider {
   position: relative;
   margin: auto;
   overflow: hidden;
-  background-image: url("../assets/images/batik.png"), linear-gradient(0deg, #fff9a021, #ffe96e);
+  background-image: url("../assets/images/batik.png"),
+    linear-gradient(0deg, #fff9a021, #ffe96e);
   background-size: cover;
   background-position: center;
 }
@@ -561,7 +650,7 @@ document.querySelector('#hero').scrollIntoView({
   margin-bottom: 20px;
   margin-bottom: 75px;
   font-weight: 300;
-  font-family: 'Raleway';
+  font-family: "Raleway";
   font-size: 40px;
 }
 
@@ -613,38 +702,40 @@ document.querySelector('#hero').scrollIntoView({
   color: #000000;
 }
 
-.berita{
+.berita {
   font-family: "Inria Serif";
   text-align: Center;
   font-size: 60px;
   font-weight: 600;
-  margin-top: -5rem;
 }
 
-        @keyframes slide{
-          0% {
+@keyframes slide {
+  0% {
     transform: translateX(0%);
   }
+
   25% {
     transform: translateX(0%);
   }
+
   50% {
     transform: translateX(33.3333%);
   }
+
   75% {
     transform: translateX(33.3333%);
   }
+
   100% {
     transform: translateX(66.6667%);
   }
+}
 
-        }
-
-  .newsbtn {
+.newsbtn {
   padding: 5px;
   gap: 10px;
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   cursor: pointer;
   margin-left: 42vw;
 }
@@ -723,7 +814,7 @@ document.querySelector('#hero').scrollIntoView({
   width: 33%;
   left: 34%;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 1.2vw !important;
   line-height: 28px;
   color: #212121;
 }
@@ -757,36 +848,22 @@ document.querySelector('#hero').scrollIntoView({
 }
 
 .owText {
-  font-size: 25px;
-  font-family: "Inria Serif";
   color: #daa520;
-  position: absolute;
-  width: 35%;
-  left: 32%;
-  top: 12%;
-  line-height: 30px;
+  width: 90%;
+  margin: 2px auto;
+  font-family: "Inria Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
 }
-
 .ksc6Text {
-  position: absolute;
-  width: 33%;
-  left: 33%;
-  top: 15%;
+  width: 90%;
+  margin: auto;
   font-family: "Inria Serif";
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
   color: #212121;
-}
-
-.sej3Text {
-  position: absolute;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
-  color: #000000;
-  text-align: left;
 }
 
 .btn2 {
@@ -795,9 +872,6 @@ document.querySelector('#hero').scrollIntoView({
   align-items: left;
   padding: 5px;
   gap: 10px;
-  position: absolute;
-  top: 150px;
-  left: -5px;
 }
 
 .btn2:hover {
@@ -885,22 +959,33 @@ document.querySelector('#hero').scrollIntoView({
   width: 100%;
   height: 45%;
   position: relative;
-  margin-top: 158px;
+  margin-top: 100px;
 }
 
 .text2 {
   position: absolute;
   font-family: "Raleway";
   font-style: normal;
-  width: 557px;
-  height: 112px;
-  left: 93px;
+  width: 50%;
+  height: 900px;
+  left: 100px;
+  text-align: justify;
   top: 80px;
   justify-content: left;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 1.7rem;
   color: #000000;
+}
+
+@media (max-width: 700px) {
+  .text2 {
+    left: 60px;
+    width: 60%;
+    font-size: 1rem;
+  }
+  .ksc6Text {
+    font-size: 30px;
+  }
 }
 
 .eventText {
@@ -959,11 +1044,11 @@ document.querySelector('#hero').scrollIntoView({
   border-radius: 10px;
   flex: 1;
 }
-.card4 img 
-.card5 img 
+.card4 img
+.card5 img
 .card6 img{
   flex: 2;
-  background-color: rgb(207,207,207); 
+  background-color: rgb(207,207,207);
 } */
 .container-card {
   position: absolute;
@@ -975,6 +1060,7 @@ document.querySelector('#hero').scrollIntoView({
   justify-content: center;
   height: 427px;
 }
+
 .card4 {
   position: relative;
   height: 427px;
@@ -982,6 +1068,7 @@ document.querySelector('#hero').scrollIntoView({
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card5 {
   background-size: cover;
   position: relative;
@@ -993,6 +1080,7 @@ document.querySelector('#hero').scrollIntoView({
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card6 {
   background-size: cover;
   position: relative;
@@ -1004,15 +1092,19 @@ document.querySelector('#hero').scrollIntoView({
   flex: 1;
   transition: 0.3s all ease;
 }
+
 .card4:hover,
 .card5:hover,
 .card6:hover {
   flex: 200px;
 }
-.card4.active, .card5.active, .card6.active {
+.card4.active,
+.card5.active,
+.card6.active {
   flex: 200px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 .title4 {
   position: absolute;
   bottom: 8%;
@@ -1049,41 +1141,43 @@ document.querySelector('#hero').scrollIntoView({
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.3
-  ); /* Adjust the opacity (0.3) to your preference */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Adjust the opacity (0.3) to your preference */
   z-index: 1;
   border-radius: 20px;
 }
 
 .title5 {
   position: absolute;
-  bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-  left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+  bottom: 10px;
+  /* Geser ke bawah sejauh 10px dari tepi kartu */
+  left: 26px;
+  /* Geser ke kiri sejauh 10px dari tepi kartu */
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 40px;
   color: #ffffff;
-  text-align: left; /* Teks diatur menjadi rata kiri */
+  text-align: left;
+  /* Teks diatur menjadi rata kiri */
   z-index: 2;
 }
 
 .title6 {
   position: absolute;
-  bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-  left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+  bottom: 10px;
+  /* Geser ke bawah sejauh 10px dari tepi kartu */
+  left: 26px;
+  /* Geser ke kiri sejauh 10px dari tepi kartu */
   font-family: "Raleway";
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
   line-height: 40px;
   color: #ffffff;
-  text-align: left; /* Teks diatur menjadi rata kiri */
+  text-align: left;
+  /* Teks diatur menjadi rata kiri */
 }
 
 .sec5Text {
@@ -1109,29 +1203,27 @@ document.querySelector('#hero').scrollIntoView({
 }
 
 .faqText {
-  position: absolute;
   font-family: "Inria Serif";
-  font-size: 25px;
-  top: 2vw;
+  font-size: 30px;
+  margin: 10px 0;
   text-align: center;
   color: #d9a520;
 }
 
 .tanyaText {
-  position: absolute;
   font-family: "Inria Serif";
   font-style: normal;
   font-size: 25px;
   text-align: center;
   font-weight: 700;
   color: #212121;
-  top: 5vw;
-  left: 39vw;
+  margin-bottom: 10px;
 }
 
 .faq {
   position: relative;
   top: 1vw;
+  width: 80%;
 }
 
 .accordion {
@@ -1154,7 +1246,7 @@ document.querySelector('#hero').scrollIntoView({
 
 .accordion svg {
   position: absolute;
-  left: 1000px;
+  right: 10px;
 }
 
 .accordion svg.active {
@@ -1346,9 +1438,8 @@ input::placeholder {
   color: #212121;
 }
 
-.footer{
+.footer {
   background-image: url(../assets/images/batik.png);
-  margin-top: -10px;
 }
 
 @media screen and (max-width: 600px) {
@@ -1404,16 +1495,12 @@ input::placeholder {
     margin-bottom: -2rem;
   }
 
-  #section6 .container {
-    background-image: url("../assets/images/batik.png");
-  }
-
   #section7 .container {
     background-image: url("../assets/images/batik.png");
-    display: fixed;
+    background-size: cover;
   }
 
-  #section8 .container {
+  #section8 {
     background-image: url("../assets/images/batik.png");
   }
 
@@ -1424,7 +1511,7 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     display: flex;
-    height: 120vh;
+    height: 100vh;
     flex-direction: column;
     background-position: center;
     color: white;
@@ -1535,42 +1622,16 @@ input::placeholder {
     line-height: 30px;
   }
 
-  .ksc6Text {
+  /* .sej3Text {
     position: absolute;
-    width: 100%;
-    left: 0%;
-    top: 15%;
-    font-family: "Inria Serif";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 35px;
-    color: #212121;
-  }
-
-  .sej3Text {
-    position: absolute;
-    font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 28px;
     color: #000000;
-    text-align: left;
-  }
-
-  .btn2 {
-    display: flex;
-    flex-direction: row;
-    align-items: left;
-    padding: 5px;
-    gap: 10px;
-    position: absolute;
-    top: 150px;
-    left: -5px;
-  }
-
-  .btn2:hover {
-    filter: brightness(70%);
-  }
+    font-weight: 400;
+    font-size: 1.6vw;
+    text-align: justify;
+  } */
 
   .card1:hover img,
   .card2:hover img,
@@ -1637,24 +1698,13 @@ input::placeholder {
     filter: brightness(70%);
   }
 
-  .tiket {
-    background: linear-gradient(
-      90deg,
-      rgba(218, 165, 32, 0.5) 0%,
-      rgba(18, 59, 50, 0.5) 100%
-    );
-    width: 100%;
-    height: 45%;
-    position: relative;
-    margin-top: 158px;
-  }
-
+  /*
   .text2 {
     position: absolute;
     font-family: "Raleway";
     font-style: normal;
-    width: 557px;
-    height: 112px;
+    width: 50%;
+    height: 1012px;
     left: 93px;
     top: 80px;
     justify-content: left;
@@ -1662,7 +1712,7 @@ input::placeholder {
     font-size: 20px;
     line-height: 28px;
     color: #000000;
-  }
+  } */
 
   .eventText {
     position: absolute;
@@ -1685,7 +1735,8 @@ input::placeholder {
     line-height: 48px;
     color: #ffffff;
   }
-  /* 
+
+  /*
 .card4 img {
   position: absolute;
   width: 26%;
@@ -1804,6 +1855,7 @@ input::placeholder {
     justify-content: center;
     height: 427px;
   }
+
   .card4 {
     background-image: url("../assets/images/card4.png");
     background-size: cover;
@@ -1817,6 +1869,7 @@ input::placeholder {
     transition: 0.3s all ease;
     /* filter: brightness(70%); */
   }
+
   .card5 {
     background-image: url("../assets/images/card5.png");
     background-size: cover;
@@ -1829,6 +1882,7 @@ input::placeholder {
     flex: 1;
     transition: 0.3s all ease;
   }
+
   .card6 {
     background-image: url("../assets/images/card6.png");
     background-size: cover;
@@ -1841,6 +1895,7 @@ input::placeholder {
     flex: 1;
     transition: 0.3s all ease;
   }
+
   .card4:hover,
   .card5:hover,
   .card6:hover {
@@ -1879,28 +1934,34 @@ input::placeholder {
 
   .title5 {
     position: absolute;
-    bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-    left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+    bottom: 10px;
+    /* Geser ke bawah sejauh 10px dari tepi kartu */
+    left: 26px;
+    /* Geser ke kiri sejauh 10px dari tepi kartu */
     font-family: "Raleway";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     color: #ffffff;
-    text-align: left; /* Teks diatur menjadi rata kiri */
+    text-align: left;
+    /* Teks diatur menjadi rata kiri */
   }
 
   .title6 {
     position: absolute;
-    bottom: 10px; /* Geser ke bawah sejauh 10px dari tepi kartu */
-    left: 26px; /* Geser ke kiri sejauh 10px dari tepi kartu */
+    bottom: 10px;
+    /* Geser ke bawah sejauh 10px dari tepi kartu */
+    left: 26px;
+    /* Geser ke kiri sejauh 10px dari tepi kartu */
     font-family: "Raleway";
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     color: #ffffff;
-    text-align: left; /* Teks diatur menjadi rata kiri */
+    text-align: left;
+    /* Teks diatur menjadi rata kiri */
   }
 
   .sec5Text {
@@ -1926,35 +1987,9 @@ input::placeholder {
     left: 43%;
     margin-top: 380px;
   }
+
   .btnViewMore:hover {
     filter: brightness(70%);
-  }
-
-  .faqText {
-    position: absolute;
-    font-family: "Inria Serif";
-    font-size: 25px;
-    top: 2vw;
-    text-align: center;
-    color: #d9a520;
-  }
-
-  .tanyaText {
-    position: absolute;
-    width: 21%;
-    font-family: "Inria Serif";
-    font-style: normal;
-    font-size: 25px;
-    text-align: center;
-    font-weight: 700;
-    color: #212121;
-    top: 5vw;
-    left: 41vw;
-  }
-
-  .faq {
-    position: relative;
-    top: 1vw;
   }
 
   .accordion {

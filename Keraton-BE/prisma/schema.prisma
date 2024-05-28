@@ -224,4 +224,8 @@ model GlobalParam {
   identifier String
   data       Json
   updatedAt  DateTime @updatedAt
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ab62b597aa3d76642b62a367a7afdf2aa889d99a

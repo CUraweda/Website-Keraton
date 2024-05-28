@@ -15,12 +15,12 @@ const getAll = async (query = { type, subType}) => {
     try {
         return await prisma.order.findMany({
             where: {
-                subType:{
+                orderSubType: {
                     ...(subType != undefined && {id: +subType}),
                     ...(type != undefined && { typeId: +type })
                 }
             },
-            include: { subType: true }
+            include: { orderSubType: true }
         })
     } catch (err) {
         throwError(err)

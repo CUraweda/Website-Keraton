@@ -1,6 +1,7 @@
 <template>
   <nav>
     <NavBar border is-checkout-page="true" />
+    <NavBar border is-checkout-page="true" />
     <div class="cover">
       <img src="../assets/images/SilsilahSejarah.png" />
       <p class="top-title">Warisan Leluhur Cirebon</p>

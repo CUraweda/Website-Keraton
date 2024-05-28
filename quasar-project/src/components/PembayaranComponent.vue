@@ -133,6 +133,7 @@ text-align: left;
 .svg-select {
   margin: auto;
 }
+
 .select {
   /* padding-left: 20px;
   padding-bottom: 17.75px;
@@ -154,6 +155,17 @@ text-align: left;
   } */
 }
 
+@media (max-width: 900px) {
+  .select {
+    width: 100%;
+  }
+  .danger {
+    margin-inline: 10px;
+  }
+  .svg-select {
+    margin: 0%;
+  }
+}
 .danger {
   margin-inline: 1vw;
   max-width: 1vw;

@@ -26,6 +26,17 @@ router.get('/', auth([]), async (req, res) => {
 router.post('/update', auth([]), async (req, res) => {
     try{
         const data = await cartModel.updateCart(req.user.id, req.body.cart)
+        return success(res, 'Update Successfully', data)
+    }catch(err){
+        return error(res, err.message)
+    }
+})
+
+router.post('/validate', async (req, res) => {
+    try{
+        const cartData = Object.values(req.body.carts)
+        if(cartData.length < 1) throw Error('No item to validate')
+        const data = await cartModel.updateCartData(cartData)
         return data
     }catch(err){
         return error(res, err.message)

@@ -86,14 +86,12 @@
           filled
           type="file"
           v-model="image.data"
-          :name="'imageList'"
           :label="image.data ? 'Ganti Image' : 'Tambah Image'"
           color="black"
           class="q-mt-md"
-          @update:model-value="(file) => handleUpload(file, i)"
+          @update:model-value="handleUpload(image.data)"
         />
-        <q-img :src="image.preview" v-if="image.preview" />
-        <q-img :src="image.data" v-else />
+        <q-img :src="image.data?.data || image.data" v-if="image.data" />
       </div>
 
       <q-btn
@@ -114,9 +112,9 @@
 </template>
 
 <script>
+import { verifyToken } from "src/auth/auth";
 import socket from "src/socket";
 import { ref } from "vue";
-import {verifyTokenAdmin} from "../../auth/auth"
 import Notification from "../../components/NotificationAlert.vue"; // Make sure to adjust the path
 
 export default {
@@ -145,7 +143,7 @@ export default {
   },
   async mounted() {
     this.fetchData();
-    this.verifyAdmin();
+    this.isAdmin = (await verifyToken()).isAdmin;
     socket.connect();
   },
   beforeUnmount() {
@@ -200,51 +198,23 @@ export default {
     },
     async sendUpdate() {
       try {
-        let formData = new FormData();
-
-        formData.append("pageId", 1);
-        formData.append("sectionName", this.sectionName);
-        formData.append("sectionOrder", this.sectionOrder);
-
-        // Append text inputs
-        this.textInputs.forEach((text, index) => {
-          formData.append(`textList[${index}].data`, text.data);
-          formData.append(`textList[${index}].textSize`, text.textSize);
-        });
-
-        // Append image inputs
-        this.imageInputs.forEach((image, index) => {
-          if (image.data) {
-            formData.append(`imageList`, image.data); // Ensure this matches the backend
-          }
-        });
-
-        // Append link inputs
-        this.linkInputs.forEach((link, index) => {
-          formData.append(`linkList[${index}].data`, link.data);
-        });
-
-        const linkIdentifier = this.contentId
-          ? `edit/${this.contentId}`
-          : "create/";
-        const response = await this.$api.post(
-          `/content/${linkIdentifier}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          this.showNotif("successfully changed the page", "info")
-        } else if (response.status === 404) {
-          this.showNotif("unknown error please contact the developer", "error")
-        } else {
-          this.showNotif("unknown error code please contact the developer", "error")
+        let textList = [],
+          imageList = [],
+          linkList = [];
+        console.log(this.imageInputs);
+        for (let text of this.textInputs) textList.push(text);
+        for (let image of this.imageInputs) {
+          console.log(image);
+          imageList.push(image.data);
         }
-
+        for (let link of this.linkInputs) linkList.push({ data: link.data, sub: "" })
+        const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
+        const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        if (response.status != 200) throw Error("Error occured");
         socket.emit("dashboard", {});
       } catch (err) {
         this.showNotif("fatal error please contact the developer immediately", "error")
@@ -268,8 +238,7 @@ export default {
           break;
         case "image":
           this.imageInputs.push({
-            data: null,
-            preview: null,
+            data: "",
           });
           break;
         case "link":
@@ -281,10 +250,9 @@ export default {
           break;
       }
     },
-    handleUpload(file, index) {
-      if (file) {
-        this.imageInputs[index].data = file;
-        this.imageInputs[index].preview = URL.createObjectURL(file);
+    handleUpload(image) {
+      if (image) {
+        image.data = URL.createObjectURL(image);
       }
     },
     takeTwoChars(str) {

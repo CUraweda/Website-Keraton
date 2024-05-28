@@ -1,6 +1,8 @@
 const { throwError } = require("../../utils/helper")
 const { prisma } = require("../../utils/prisma")
 const userModel = require('../models/user.models')
+const eventModel = require('../models/events.models')
+const orderModel = require('../models/order.models')
 
 const action = async (actionParam, id, carts) => {
     try {
@@ -12,7 +14,7 @@ const action = async (actionParam, id, carts) => {
                 break;
             case "break":
                 for (let cart of carts) delete rawUserCarts[cart.id]
-                break
+                brea
             default:
                 break
         }
@@ -24,6 +26,7 @@ const action = async (actionParam, id, carts) => {
 
 const updateCart = async (id, carts) => {
     try{
+
         return await prisma.user.update({ where: { id }, data: { carts } })
     }catch(err){
         throwError(err)
@@ -41,4 +44,48 @@ const validate  = async (id, carts) => {
     }
 }
 
-module.exports = { action, updateCart }
+const updateCartData = async (carts)  => {
+    let dataExist
+    try{
+        for(let cart of carts){
+            switch(cart.type){
+                case "E":
+                    dataExist = await eventModel.isExist(cart.id)
+                    break;
+                case "T":
+                    dataExist = await orderModel.isExist(cart.id)
+                    break;
+                default:
+                    break;
+            }
+            if(!dataExist) delete cart
+            cart = {
+                id: dataExist.id,
+                name: dataExist.name,
+                type: cart.type,
+                image: cart.image,
+                price: cart.price
+            }
+        }
+        return carts
+    }catch(err){
+        throwError(err)
+    }
+}
+
+const countTotal = (carts) => {
+    try{
+        let total = 0
+
+        for(let cart of carts){
+            console.log(cart)
+            total = total + cart.price
+        } 
+        console.log(total)
+        return total
+    }catch(err){
+        throwError(err)
+    }
+}
+
+module.exports = { action, updateCart, countTotal, updateCartData }

@@ -32,7 +32,7 @@
         <h1 class="judul-besar">{{ item.titleBig }}</h1>
         <div class="tengah">
           <h3 class="judul-kecil">
-            {{ `Rp. ${formatRupiah(item.price)} / orang` }}
+            {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
           </h3>
           <button class="tambah" @click="addToCart(item)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-  
+
     <div v-for="(item, index) in paketItems" :key="index">
       <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
       <div class="container">
@@ -62,23 +62,28 @@
         </div>
       </div>
     </div>
-  
-    <footerDesktop/>
-    
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
 <script setup>
+import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
-import footerDesktop from "src/components/footerDesktop.vue";
 import Carts from "../stores/carts";
+import Notification from "components/NotificationAlert.vue";
 </script>
 
 <script>
 import { ref } from "vue";
-import { verifyTokenBool } from "src/auth/auth";
 
 export default {
+  components: {
+    Notification,
+  },
   props: {
     disabled: {
       type: Boolean,
@@ -106,18 +111,125 @@ export default {
       ],
       selectedOptions: [],
       selectedOptions2: [],
+      notification: {
+        message: "",
+        type: "info",
+      },
+      // items: [
+      //   {
+      //     id: 1,
+      //     image: "src/assets/images/imageArea.png",
+      //     titleMedium: "Tiket Masuk Keraton",
+      //     titleBig:
+      //       "Menikmati area Keraton. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp. 10.000-20.000/orang",
+      //   },
+      //   {
+      //     id: 2,
+      //     image: "/src/assets/images/museum.png",
+      //     titleMedium: "Tiket Masuk Museum",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.15.000/orang",
+      //   },
+      //   {
+      //     id: 3,
+      //     image: "src/assets/images/museum.png",
+      //     titleMedium: "Tiket Masuk Keraton + Museum",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.20.000/orang",
+      //   },
+      //   {
+      //     id: 4,
+      //     image: "src/assets/images/keraton.png",
+      //     titleMedium: "Tadarus di langgar alit",
+      //     titleBig:
+      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
+      //     price: "Rp.20.000/orang",
+      //   },
+      //   {
+      //     id: 5,
+      //     image: "src/assets/images/isra.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi I",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan",
+      //     price: "Rp.85.000/orang",
+      //   },
+      //   {
+      //     id: 6,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi II",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.135.000/orang",
+      //   },
+      //   {
+      //     id: 7,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi III",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.200.000/orang",
+      //   },
+      //   {
+      //     id: 8,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Silatuhrahmi IV",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
+      //     price: "Rp.200.000/orang",
+      //   },
+      //   {
+      //     id: 9,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi I",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + snack khas cirebon + kesenian",
+      //     price: "Rp.115.000/orang",
+      //   },
+      //   {
+      //     id: 10,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi II",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + kesenian",
+      //     price: "Rp.175.000/orang",
+      //   },
+      //   {
+      //     id: 11,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Non Silatuhrahmi III",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + kesenian",
+      //     price: "Rp.175.000/orang",
+      //   },
+      //   {
+      //     id: 12,
+      //     image: "src/assets/images/sholat.png",
+      //     titleMedium: "Paket Wisata Pelajar",
+      //     titleBig:
+      //       "Menikmati Keraton dengan guide + makan (nasi dus) + belajar sejarah dan kesenian",
+      //     price: "Rp.60.000/orang",
+      //   },
+      // ],
       cart: new Carts(),
     };
   },
   async mounted() {
     this.fetchData();
-    this.isLogin = await verifyTokenBool();
-
+    this.isLogin = (await verifyToken()).isLogin;
     if (!this.isLogin) {
       this.$router.push("/");
     }
   },
+  beforeUnmount() {
+    this.storeCartToDatabase();
+  },
   methods: {
+    async storeCartToDatabase() {
+      this.cart.updateToDB();
+    },
     async fetchData() {
       try {
         const response = await this.$api.get("items/booking");
@@ -128,26 +240,9 @@ export default {
 
         for (let subType of response.data.data) {
           switch (subType.orderTypeId) {
-            case 1:
-              for (let order of subType.order) {
+            case 1: //Tiket Type
+              for (let order of subType.orders) {
                 tikets.push({
-                  id: order.id,
-                  image: order.image,
-                  titleMedium: order.name,
-                  titleBig: order.desc,
-                  quantity: 0,
-                  price: `${order.price}`,
-                  unit: order.units,
-                });
-              }
-              break;
-            case 2:
-              const subTypeName = subType.name;
-              if (!pakets[subTypeName]) {
-                pakets[subTypeName] = [];
-              }
-              for (let order of subType.order) {
-                pakets[subTypeName].push({
                   id: order.id,
                   image: order.image,
                   titleMedium: order.name,
@@ -158,7 +253,23 @@ export default {
                 });
               }
               break;
-            default:
+            case 2: //Paket Type
+              const subTypeName = subType.name;
+              if (!pakets[subTypeName]) {
+                pakets[subTypeName] = [];
+              }
+
+              for (let order of subType.orders) {
+                pakets[subTypeName].push({
+                  id: order.id,
+                  image: order.image,
+                  titleMedium: order.name,
+                  titleBig: order.desc,
+                  quantity: 0,
+                  price: order.price,
+                  unit: order.units,
+                });
+              }
               break;
           }
         }
@@ -240,14 +351,24 @@ export default {
           image: rowData.image,
           quantity: 1,
           price: rowData.price,
-          type: "TKT",
+          type: "T",
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         return this.cart.updateItem();
       } catch (err) {
+        this.showNotif(err.message, "error");
         console.log(err);
       }
+    },
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
     },
   },
 };
@@ -306,6 +427,7 @@ export default {
   text-align: left;
   font-weight: bold;
 }
+
 .judul1 {
   font-family: "Raleway";
   font-size: 24px;
@@ -386,55 +508,74 @@ nav ul li button:hover {
 .container::-webkit-scrollbar {
   display: none;
 }
+
 .container {
   display: flex;
   margin-left: 131px;
-  height: 340px; /* Contoh ukuran tinggi */
+  height: 340px;
+  /* Contoh ukuran tinggi */
   overflow-x: scroll;
   margin-bottom: 72px;
 }
 
 .buttonaji {
-  display: flex; /* Use flexbox */
-  justify-content: left; /* Center children horizontally */
-  align-items: left; /* Center children vertically */
+  display: flex;
+  /* Use flexbox */
+  justify-content: left;
+  /* Center children horizontally */
+  align-items: left;
+  /* Center children vertically */
   margin-left: -10px;
 }
 
 .tengah {
-  display: flex; /* Use flexbox */
-  justify-content: left; /* Center children horizontally */
-  align-items: left; /* Center children vertically */
+  display: flex;
+  /* Use flexbox */
+  justify-content: left;
+  /* Center children horizontally */
+  align-items: left;
+  /* Center children vertically */
 }
 
 .image {
   width: 325px;
   height: 181px;
   object-fit: cover;
-  border-radius: 10px; /* Adjust the value to change the roundness */
+  border-radius: 10px;
+  /* Adjust the value to change the roundness */
   z-index: 2;
 }
 
 .btn-small {
-  padding: 6px 12px; /* Reduced padding for a more compact button */
-  font-size: 12px; /* Decreased font size */
-  border-radius: 6.29px; /* Updated border-radius */
+  padding: 6px 12px;
+  /* Reduced padding for a more compact button */
+  font-size: 12px;
+  /* Decreased font size */
+  border-radius: 6.29px;
+  /* Updated border-radius */
   background: transparent;
   border: 0.79px solid #49454f1f;
   color: #1d1b20;
-  width: 75.15px; /* Width based on Hug dimension */
-  height: 25.15px; /* Height based on Fixed dimension */
-  font-family: Raleway; /* Corrected the font-family property */
+  width: 75.15px;
+  /* Width based on Hug dimension */
+  height: 25.15px;
+  /* Height based on Fixed dimension */
+  font-family: Raleway;
+  /* Corrected the font-family property */
   display: flex;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  justify-content: center;
+  /* Center the content horizontally */
+  align-items: center;
+  /* Center the content vertically */
   margin-right: 0px;
-  margin-left: 10px; /* Adjusted margin for spacing */
+  margin-left: 10px;
+  /* Adjusted margin for spacing */
   cursor: pointer;
 }
 
 .btn-small:hover {
-  background-color: #49454f1f; /* Darker shade when hovered */
+  background-color: #49454f1f;
+  /* Darker shade when hovered */
 }
 
 .judul-sedang {
@@ -524,7 +665,8 @@ nav ul li button:hover {
 }
 
 .dropdown-toggle img {
-  margin-left: auto; /* Jarak antara teks dan gambar */
+  margin-left: auto;
+  /* Jarak antara teks dan gambar */
   z-index: 1;
 }
 
@@ -550,7 +692,8 @@ nav ul li button:hover {
   width: 100%;
   height: 24px;
   padding: 8px;
-  gap: 8px; /* Jarak antara checkbox dan teks */
+  gap: 8px;
+  /* Jarak antara checkbox dan teks */
   font-family: Lexend;
   font-size: 14px;
   cursor: pointer;
@@ -568,11 +711,13 @@ nav ul li button:hover {
   width: 24px;
   height: 24px;
   fill: none;
-  stroke: black; /* Warna default ikon centang */
+  stroke: black;
+  /* Warna default ikon centang */
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: stroke 0.3s ease; /* Efek transisi untuk perubahan warna */
+  transition: stroke 0.3s ease;
+  /* Efek transisi untuk perubahan warna */
 }
 
 .container input:checked ~ .checkmark {
@@ -621,7 +766,8 @@ nav ul li button:hover {
 }
 
 .dropdown-toggle2 img {
-  margin-left: auto; /* Jarak antara teks dan gambar */
+  margin-left: auto;
+  /* Jarak antara teks dan gambar */
   z-index: 1;
 }
 
@@ -629,34 +775,42 @@ nav ul li button:hover {
   width: 68px;
   height: 71px;
 }
+
 .foto2 {
   width: 69px;
   height: 74px;
 }
+
 .foto3 {
   width: 53px;
   height: 71px;
 }
+
 .foto4 {
   width: 100px;
   height: 49px;
 }
+
 .footer {
   width: 1280px;
   height: 650px;
   margin-top: 156px;
   position: relative;
 }
+
 a {
   text-decoration: none;
   color: #212121;
 }
+
 ul {
   list-style-type: none;
 }
+
 .footer-col {
   display: flex;
 }
+
 .footer-col h3 {
   font-size: 30px;
   font-weight: 40px;
@@ -664,6 +818,7 @@ ul {
   margin-bottom: 11px;
   margin-top: 76px;
 }
+
 .footer-col-1 {
   margin-left: 88px;
   color: #212121;
@@ -685,19 +840,24 @@ ul {
 .footer-col-2 {
   margin-left: 60px;
 }
+
 .footer-col-3 {
   margin-left: 60px;
 }
+
 .footer-col-4 {
   margin-left: 139px;
   width: 434px;
 }
+
 .footer-col li {
   color: #212121;
 }
+
 .footer-col li:not(:last-child) {
   margin-bottom: 11px;
 }
+
 .adress {
   width: 184px;
   height: 84px;
@@ -706,22 +866,26 @@ ul {
   margin-top: 62px;
   margin-left: 88px;
 }
+
 .lower {
   width: 1080px;
   height: 142px;
   margin-left: 88px;
   display: flex;
 }
+
 .inlower {
   padding-top: 108px;
   margin-left: 80px;
   position: absolute;
 }
+
 .collab {
   display: flex;
   flex-direction: row;
   gap: 46px;
 }
+
 .susun {
   display: flex;
   flex-direction: column;

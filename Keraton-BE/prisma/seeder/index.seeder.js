@@ -10,9 +10,11 @@ const { subTypeSeed } = require("./orderSubType.seeder");
 const { typeSeed } = require("./orderType.seeder.");
 const { categorySeed } = require("./category.seeder");
 const { newsSeed } = require("./news.seeder");
+const { paramSeed } = require("./globalParam.seeder");
 
 async function main() {
   await pageSeed();
+  await paramSeed()
   await newsSeed();
   await nationalitySeed();
   await userSeed();

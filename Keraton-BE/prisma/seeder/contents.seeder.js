@@ -24,7 +24,7 @@ const contents = [
         sectionOrder: 1,
         context: {
             xs1: {
-                data: "Keraton Kesepuham Cirebon",
+                data: "Keraton Kesepuhan Cirebon",
                 textSize: ""
             },
             xs2: {
@@ -120,7 +120,7 @@ const contents = [
         sectionName: "FAQ",
         sectionOrder: 6,
         context: {
-            xs1: {
+        xs1: {
                 data: "Ada pertanyaan untuk Kami?"
             },
             xs2: {
@@ -129,8 +129,8 @@ const contents = [
 
             },
             xs3: {
-                data: "Bagaimana saya ?",
-                sub: "Anda tidak bisa memesan lonte melalui website kami"
+                data: "Bagaimana saya menggunakan tiketnya?",
+                sub: "Anda bisa memperlihatkan tiket pada dealer kami di gerbang masuk Keraton Kesepuhan"
 
             }
         }
