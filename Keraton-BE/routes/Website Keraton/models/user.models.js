@@ -23,7 +23,7 @@ const logIn = async (body) => {
   const { email, password } = body;
   try {
     const user = await getUser(email);
-    if (!user) throw new Error("Username tidak ditemukan!");
+    if (!user) throw new Error("Email tidak ditemukan!");
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw new Error("Password tidak sesuai");
@@ -64,7 +64,7 @@ const signUp = async (data) => {
       password: password,
     };
 
-    const data  = await logIn(newDataForLog);
+    data = await logIn(newDataForLog);
     return data;
   } catch (err) {
     throwError(err);

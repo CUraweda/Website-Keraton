@@ -7,19 +7,6 @@ const { auth } = require("../middlewares/auth");
 const cookieParser = require("cookie-parser");
 
 expressRouter.post("/register", async (req, res) => {
-  const { email, password, name } = req.body;
-
-  if (!email || !password || !name) {
-    return error(
-      res,
-      "Email, password, name, and password confirmation are required."
-    );
-  }
-
-  if (password.length < 6) {
-    return error(res, "password must be more than 6 characters or more")
-  }
-
   try {
     const data = await userModel.signUp(req.body);
     return success(res, "Register akun berhasil", data);

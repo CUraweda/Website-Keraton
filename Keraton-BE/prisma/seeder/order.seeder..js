@@ -8,7 +8,10 @@ const orders = [
     image: "https://picsum.photos/200/300",
     desc: "Menikmati area Keraton. Jam operasional dari 08.00 - 17.00 WIB.",
     categoryId: 1,
-    orderSubTypeId: 1
+    orderSubTypeId: 1,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton"
+    
   },
   {
     name: "Tiket Masuk Keraton Pelajar",
@@ -16,7 +19,9 @@ const orders = [
     image: "https://picsum.photos/200/300",
     price: 15000.0,
     categoryId: 2,
-    orderSubTypeId: 1
+    orderSubTypeId: 1,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton"
   },
   {
     name: "Tiket Masuk Keraton Mancanegara",
@@ -24,7 +29,9 @@ const orders = [
     image: "https://picsum.photos/200/300",
     price: 20000.0,
     categoryId: 3,
-    orderSubTypeId: 1
+    orderSubTypeId: 1,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton"
   },
   {
     name: "Tiket Masuk Museum",
@@ -32,7 +39,9 @@ const orders = [
     image: "https://picsum.photos/200/300",
     price: 15000,
     categoryId: 3,
-    orderSubTypeId: 1
+    orderSubTypeId: 1,
+    wisataRelation: "museum",
+    wisataDesc: "Area Museum Pusaka"
   },
   {
     name: "Tiket Masuk Keraton + Museum",
@@ -40,7 +49,9 @@ const orders = [
     image: "https://picsum.photos/200/300",
     price: 20000,
     categoryId: 3,
-    orderSubTypeId: 1
+    orderSubTypeId: 1,
+    wisataRelation: "keraton museum",
+    wisataDesc: "Area Keraton - Area Museum Pusaka"
   },
   
   {
@@ -49,7 +60,9 @@ const orders = [
     image: "https://picsum.photos/200/300",
     price: 85000,
     categoryId: 3,
-    orderSubTypeId: 2
+    orderSubTypeId: 2,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Snack - Foto bersama Sultan"
   },
   {
     name: "Paket Wisata Silaturahmi II",
@@ -57,7 +70,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan + kesenian.",
     price: 135000,
     categoryId: 3,
-    orderSubTypeId: 2
+    orderSubTypeId: 2,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Snack - Foto bersama Sultan - Kesenian"
   },
   {
     name: "Paket Wisata Silaturahmi III",
@@ -65,7 +80,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + makan (masakan nasional) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
     price: 200000,
     categoryId: 3,
-    orderSubTypeId: 3
+    orderSubTypeId: 3,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Makan - Foto bersama Sultan - Kesenian"
   },
   {
     name: "Paket Wisata Non Silaturahmi I",
@@ -73,7 +90,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + snack khas cirebon + kesenian.",
     price: 115000,
     categoryId: 3,
-    orderSubTypeId: 2
+    orderSubTypeId: 2,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Snack - Kesenian"
   },
   {
     name: "Paket Wisata Non Silaturahmi II",
@@ -81,7 +100,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + makan (masakan nasional) + kesenian.",
     price: 175000,
     categoryId: 3,
-    orderSubTypeId: 2
+    orderSubTypeId: 2,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Makan - Kesenian"
   },
   {
     name: "Paket Wisata Non Silaturahmi III",
@@ -89,7 +110,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + kesenian.",
     price: 175000,
     categoryId: 3,
-    orderSubTypeId: 3
+    orderSubTypeId: 3,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Makan - Kesenian"
   },
   {
     name: "Paket Wisata Pelajar",
@@ -97,7 +120,9 @@ const orders = [
     desc: "Menikmati Keraton dengan guide + makan (nasi dus) + belajar sejarah dan kesenian.",
     price: 60000,
     categoryId: 3,
-    orderSubTypeId: 4
+    orderSubTypeId: 4,
+    wisataRelation: "keraton",
+    wisataDesc: "Area Keraton - Guide - Makan - Sejarah & Kesenian"
   }
 ];
 

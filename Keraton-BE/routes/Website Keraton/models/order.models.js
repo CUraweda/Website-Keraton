@@ -27,6 +27,17 @@ const getAll = async (query = { type, subType}) => {
     }
 }
 
+const getRelatedObjekWisata = async (identifier) => {
+    try{
+        return await prisma.order.findMany({
+            where: { wisataRelation: { contains: identifier} },
+            orderBy: { orderSubTypeId: 'asc' }
+        })
+    }catch(err){
+        throwError(err)
+    }
+}
+
 const getOne = async (id) => {
     try{
         return await prisma.order.findFirstOrThrow({
@@ -49,4 +60,4 @@ const createUpdate = async (ident,data = { id, name, desc, unit, price, priceUmu
     }
 }
 
-module.exports = { isExist, getOne, getAll, createUpdate }
+module.exports = { isExist, getOne, getAll, createUpdate, getRelatedObjekWisata }
