@@ -133,7 +133,7 @@ export default {
         this.$router.go(-1);
       } catch (err) {
         console.log(err);
-        this.showNotif(err.message, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
       }
     },
   },

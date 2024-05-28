@@ -9,7 +9,7 @@
           class="image"
           src="../assets/images/Baluarti Keraton.png"
         />
-        <h1 class="image-text">BALUARTI KERATON</h1>
+        <h1 class="image-text">{{ wisataName }}</h1>
         <div class="image-text2">
           <div>
             Keraton Kasepuhan Cirebon adalah salah satu dari empat keraton di
@@ -312,6 +312,7 @@ export default {
           text3: "Area Keraton - Guide - Nasi Dus - Sejarah & Kesenian",
         },
       ],
+      wisataName: '',
       currentIndex: 2,
     };
   },
@@ -319,6 +320,9 @@ export default {
     bullets() {
       return Array(this.cards.length).fill("");
     },
+  },
+  mounted(){
+    this.fetchData()
   },
   methods: {
     scrollToContent() {
@@ -353,6 +357,27 @@ export default {
         const newPosition = -index * cardWidth + offset;
         cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
+    },
+    async fetchData(){
+      try{
+        const response = await this.$api.get('wisata/1')
+        if(response.status != 200) throw Error(response.data.message)
+        const { wisataData, orderData } = response.data.data
+        this.wisataName = wisataData.name
+        this.elementTiketKunjungan = orderData.map(order => ({
+          img: order.image,
+          text1: order.name,
+          text2: order.price < 0 ? "Free" : `Rp. ${this.formatRupiah(order.price)} / ${order.units}`,
+          text3: order.wisataDesc
+        }))
+      }catch(err){
+        console.log(err)
+      }
+    },
+    formatRupiah(price) {
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
     },
   },
   watch: {

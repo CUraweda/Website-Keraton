@@ -6,7 +6,7 @@
     <div class="container-title-top">
       <img src="../assets/images/museumPusakaa.png" class="img-title" alt="" />
       <div class="container-title-text">
-        <div class="texttitle-img">MUSEUM PUSAKA</div>
+        <div class="texttitle-img">{{ wisataName }}</div>
         <div class="container-subtitle">
           <p>
             Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan,
@@ -172,6 +172,7 @@ export default {
           text3: "Area Museum Pusaka",
         },
       ],
+      wisataName: '',
       currentIndex: 2,
     };
   },
@@ -179,6 +180,9 @@ export default {
     bullets() {
       return Array(this.cards.length).fill("");
     },
+  },
+  mounted(){
+    this.fetchData()
   },
   methods: {
     prevCard() {
@@ -207,6 +211,27 @@ export default {
         const newPosition = -index * cardWidth + offset;
         cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
+    },
+    async fetchData(){
+      try{
+        const response = await this.$api.get('wisata/2')
+        if(response.status != 200) throw Error(response.data.message)
+        const { wisataData, orderData } = response.data.data
+        this.wisataName = wisataData.name
+        this.elementTiketKunjungan = orderData.map(order => ({
+          img: order.image,
+          text1: order.name,
+          text2: order.price < 0 ? "Free" : `Rp. ${this.formatRupiah(order.price)} / ${order.units}`,
+          text3: order.wisataDesc
+        }))
+      }catch(err){
+        console.log(err)
+      }
+    },
+    formatRupiah(price) {
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
     },
   },
   watch: {

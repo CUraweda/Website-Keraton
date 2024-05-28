@@ -45,7 +45,7 @@
         <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
         <h1 class="judul-besar">{{ data.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) }}</h3>
+          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) + "/" + data.unit }}</h3>
           <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
@@ -229,9 +229,9 @@ export default {
       console.log("Filtered items:", filteredItems);
     },
     addToCart(rowData) {
-      const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
-      if (tokenExist) throw Error('You need to login first')
       try {
+        const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+        if (!tokenExist) throw Error('Anda Masih Belum Log In!')
         const storedData = {
           id: rowData.id,
           name: rowData.titleMedium,

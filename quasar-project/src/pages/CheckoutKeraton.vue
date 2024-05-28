@@ -471,7 +471,7 @@ export default {
         this.cartClass.clearCart().updateItem();
         this.$router.go(-1);
       } catch (err) {
-        this.showNotif(err, "info");
+        this.showNotif(err.response ? err.response.data.message  : err.message, "info");
         console.log(err);
       }
     },

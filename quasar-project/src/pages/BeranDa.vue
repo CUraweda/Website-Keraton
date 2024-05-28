@@ -292,10 +292,12 @@
 </template>
 
 <script setup>
+import cookieHandler from "src/cookieHandler";
 import navbar from "../components/NavBar.vue";
 import bawah from "../components/footerDesktop.vue";
 import socket from "src/socket";
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import environment from "src/stores/environment";
 </script>
 
 <script>
@@ -468,6 +470,14 @@ export default {
         this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
+      }
+    },
+    async setDefaultAndCheck(){
+      try{
+        const token = cookieHandler.getCookie(environment.TOKEN_STORAGE_NAME)
+
+      }catch(err){
+        console.log(err)
       }
     },
     toggleAccordion(index) {

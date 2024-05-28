@@ -99,6 +99,8 @@ import Notification from "../components/NotificationAlert.vue";
 <script>
 import { ref } from "vue";
 import Carts from "../stores/carts";
+import cookieHandler from "src/cookieHandler";
+import env from 'stores/environment'
 
 export default {
   components: {
@@ -229,6 +231,8 @@ export default {
     },
     addToCart(rowData) {
       try {
+    const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+    if (!tokenExist) throw Error('Anda Masih Belum Log In!')
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
@@ -242,6 +246,7 @@ export default {
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         return this.cart.updateItem();
       } catch (err) {
+        this.showNotif(err.message, 'error')
         console.log(err);
       }
     },
