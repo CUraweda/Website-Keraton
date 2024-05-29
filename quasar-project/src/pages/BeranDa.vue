@@ -472,12 +472,11 @@ export default {
         console.log(err);
       }
     },
-    async setDefaultAndCheck(){
-      try{
-        const token = cookieHandler.getCookie(environment.TOKEN_STORAGE_NAME)
-
-      }catch(err){
-        console.log(err)
+    async setDefaultAndCheck() {
+      try {
+        const token = cookieHandler.getCookie(environment.TOKEN_STORAGE_NAME);
+      } catch (err) {
+        console.log(err);
       }
     },
     toggleAccordion(index) {
@@ -583,7 +582,7 @@ background-size: cover;
 
 #section5 .container {
   background-image: url("../assets/images/keraton2.png");
-  height: 200vh;
+  height: 150vh;
   /* height: 1000px; */
   background-size: cover;
   background-position: center;

@@ -42,63 +42,31 @@
             no-caps
             label="Beranda"
             :color="isTransparent ? 'white' : 'black'"
-            to="/"
+            to="/admin/home"
           ></q-btn>
           <q-btn
             flat
-            label="Sejarah"
+            label="Content"
             no-caps
             :color="isTransparent ? 'white' : 'black'"
-          >
-            <q-menu>
-              <q-list>
-                <q-item clickable to="/sejarah">
-                  <q-item-section>Keraton</q-item-section>
-                </q-item>
-                <q-item clickable to="/sejarah/silsilah">
-                  <q-item-section>Silsilah</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+            to="/admin/content"
+          />
           <q-btn
             flat
             no-caps
-            label="Booking"
+            label="Tiket dan Event"
+            to="/admin/event"
             :color="isTransparent ? 'white' : 'black'"
-          >
-            <q-menu>
-              <q-list>
-                <q-item clickable @click="toBooking('/booking')">
-                  <q-item-section>Paket Keraton</q-item-section>
-                </q-item>
-                <q-item clickable @click="toBooking('/booking/event')">
-                  <q-item-section>Tiket Event</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+          />
+
           <q-btn
             flat
             no-caps
-            label="Objek Wisata"
+            label="Berita"
             :color="isTransparent ? 'white' : 'black'"
             class="col-grow"
-          >
-            <q-menu>
-              <q-list>
-                <q-item clickable to="/wisata/keraton">
-                  <q-item-section>Keraton Kesepuhan</q-item-section>
-                </q-item>
-                <q-item clickable to="/wisata/museum">
-                  <q-item-section>Museum Pusaka</q-item-section>
-                </q-item>
-                <q-item clickable to="/wisata/dalemagung">
-                  <q-item-section>Dalem Agung Pangkuwati</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+            to="/admin/news"
+          />
           <q-btn
             no-caps
             style="background: #123b32; color: white; padding-inline: 30px"
@@ -278,7 +246,7 @@
 <script>
 import { verifyToken } from "src/auth/auth";
 import Carts from "src/stores/carts";
-import Notification from "./NotificationAlert.vue"; // Make sure to adjust the path
+import Notification from "./NotificationAlert.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 const cartClass = new Carts();

@@ -1,26 +1,29 @@
 <template>
-  <div>
+  <nav>
     <navbar />
-    <div style="margin-top: 150px" class="q-px-xl">
-      <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
-      <div>Ubah dan atur konten di halaman beranda web</div>
-      <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-xl">
-        <template v-slot:body-cell-Action="scope">
-          <q-btn
-            color="positive"
-            :label="'Edit '"
-            :href="'#/admin/add/' + scope.row.id"
-            @click="scope.selected = scope.row.id"
-          />
-        </template>
-      </q-table>
-    </div>
-  </div>
+  </nav>
+  <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
+  <div>Ubah dan atur konten di halaman beranda web</div>
+  <q-table
+    :rows="rows"
+    :columns="columns"
+    row-key="name"
+    style="margin-top: 5rem"
+  >
+    <template v-slot:body-cell-Action="scope">
+      <q-btn
+        color="positive"
+        :label="'Edit '"
+        :href="'#/admin/add/' + scope.row.id"
+        @click="scope.selected = scope.row.id"
+      />
+    </template>
+  </q-table>
 </template>
 
 <script>
 import { verifyToken } from "src/auth/auth";
-import navbar from "src/components/NavBar.vue";
+import navbar from "src/components/NavbarAdmin.vue";
 import { ref } from "vue";
 
 const columns = [
@@ -127,5 +130,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
