@@ -298,6 +298,9 @@ import bawah from "../components/footerDesktop.vue";
 import socket from "src/socket";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import environment from "src/stores/environment";
+import Carts from "src/stores/carts";
+import GlobalStorageData from "src/stores/globa";
+import { verifyToken } from "src/auth/auth";
 </script>
 
 <script>
@@ -391,11 +394,11 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.socket();
+    this.setDefaultAndCheck()
     this.startSlider();
     window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
-    console.log("Naha nge unmount wae");
     socket.disconnect();
     window.removeEventListener("scroll", this.handleScroll);
     clearInterval(this.sliderInterval);
@@ -472,11 +475,39 @@ export default {
         console.log(err);
       }
     },
-    async setDefaultAndCheck() {
-      try {
-        const token = cookieHandler.getCookie(environment.TOKEN_STORAGE_NAME);
-      } catch (err) {
-        console.log(err);
+    async setDefaultAndCheck(){
+      try{
+        const cartClass = new Carts()
+        const globalStorageClass = new GlobalStorageData()
+        const checkToken = await verifyToken()
+        if(checkToken.isLogin){
+          //Globalcn
+          globalStorageClass.setItem('isLogin', checkToken.isLogin)
+          globalStorageClass.setItem('isAdmin', checkToken.isAdmin)
+          globalStorageClass.update()
+          //Cart
+          const cart = cartClass.getItem()
+          if(cart){
+            const validateCartResponse = await this.$api.post('cart/validate', {
+              carts: cart
+            })
+            if(validateCartResponse.status != 200){
+              cartClass.clearCart()
+              throw Error(validateCartResponse.data.message)
+            } 
+            cartClass.setNew(Object.values(validateCartResponse.data.data))
+          }
+        }
+        const availableWisata = await this.$api.get('wisata')
+        if(availableWisata.status != 200) throw Error(availableWisata.data.message)
+        const wisataData = availableWisata.data.data.wisataData.map(wisata => ({
+          label: wisata.label,
+          value: wisata.to
+        }))
+        localStorage.setItem(environment.WISATA_STORAGE_NAME, JSON.stringify(wisataData))
+
+      }catch(err){
+        console.log(err)
       }
     },
     toggleAccordion(index) {

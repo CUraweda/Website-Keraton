@@ -250,6 +250,7 @@
 
 <script setup>
 import NavBar from "../components/NavBar.vue";
+import { ref } from "vue"
 </script>
 
 <script>
@@ -312,7 +313,7 @@ export default {
           text3: "Area Keraton - Guide - Nasi Dus - Sejarah & Kesenian",
         },
       ],
-      wisataName: '',
+      wisataName: ref(),
       currentIndex: 2,
     };
   },
@@ -363,7 +364,7 @@ export default {
         const response = await this.$api.get('wisata/1')
         if(response.status != 200) throw Error(response.data.message)
         const { wisataData, orderData } = response.data.data
-        this.wisataName = wisataData.name
+        this.wisataName = wisataData.label
         this.elementTiketKunjungan = orderData.map(order => ({
           img: order.image,
           text1: order.name,

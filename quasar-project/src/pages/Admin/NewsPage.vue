@@ -1,12 +1,17 @@
 <template>
+    <div v-for="(data, i) in newsDatas">
+        <h1>{{ data. }}</h1>
+    </div>
     <div>
         <q-input v-model="newsData.name"></q-input>
         <q-input v-model="newsData.desc"></q-input>
         <q-input v-model="newsData.image"></q-input>
         <q-input v-model="newsData.price"></q-input>
-        <!-- Nteu paham nu iterationId kumaha, sing penting dropdown isina make data iterationsDatas -->
 
-        <q-dialog v-model="newsDialog"></q-dialog>
+        <q-btn @click="handleDialog"></q-btn>
+        <q-dialog v-model="newsDialog">
+            
+        </q-dialog>
     </div>
     <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
 </template>
@@ -26,7 +31,6 @@ export default {
             token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
             newsDatas: ref(),
             newsData: ref({
-                iterationId: null,
                 price: null,
                 name: null,
                 desc: null,
@@ -46,19 +50,13 @@ export default {
     },
     mounted(){
         this.fethcData()
-    },
+},
     methods: {
         async fethcData() {
             try {
                 const responseNews = await this.$api.get('news')
-                const responseIteration = await this.$api.get('iteration')
                 if (responseNews.status != 200) throw Error(responseNews.data.message)
-                if (responseIteration.status != 200) throw Error(responseIteration.data.message)
                 this.newsDatas = responseNews.data.data
-                this.iterationsDatas = responseIteration.data.data.nap(iterat => ({
-                    label: iterat.name,
-                    value: iterat.id
-                }))
             } catch (err) {
                 console.log(err)
             }

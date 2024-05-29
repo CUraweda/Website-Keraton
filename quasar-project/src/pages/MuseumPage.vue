@@ -217,7 +217,7 @@ export default {
         const response = await this.$api.get('wisata/2')
         if(response.status != 200) throw Error(response.data.message)
         const { wisataData, orderData } = response.data.data
-        this.wisataName = wisataData.name
+        this.wisataName = wisataData.label
         this.elementTiketKunjungan = orderData.map(order => ({
           img: order.image,
           text1: order.name,

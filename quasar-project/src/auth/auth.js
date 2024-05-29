@@ -19,7 +19,9 @@ export async function verifyToken() {
     return data
   } catch (err) {
     console.log(err)
-    // cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
+    cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
+    localStorage.removeItem(env.CART_STORAGE_NAME)
+    localStorage.removeItem(env.USER_STORAGE_NAME)
     return data
   }
 }
