@@ -223,7 +223,7 @@ defineExpose({
                         /></span>
                       </div>
                     </div>
-                    <div class="kredit">
+                    <!-- <div class="kredit">
                       <div class="txt-kredit-popup">
                         <h6>Bank BJB</h6>
                       </div>
@@ -239,18 +239,28 @@ defineExpose({
                             src="../assets/svg/FrameVector-Right.svg"
                         /></span>
                       </div>
-                    </div>
-                    <div class="kredit">
+                    </div> -->
+                    <!-- <div class="kredit">
                       <div class="txt-kredit-popup">
                         <h6>Cash</h6>
                       </div>
                       <div class="icon">
-                        <span @click="payWith('CASH')"
+                        <span @click="payWith('instances')"
                           ><img
                             class="image"
                             src="../assets/svg/FrameVector-Right.svg"
                         /></span>
                       </div>
+                      </div> -->
+                      <div v-for="instance in instances" :key="instance.value" class="debit">
+                        <span @click="payWith(instance)">
+                          <img src="{{ instance.icon }}"/>
+                          {{ instance.label }}
+                          <img
+                            class="image"
+                            src="../assets/svg/FrameVector-Right.svg"
+                          />
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -310,6 +320,7 @@ import Cart from "stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import Notification from "components/NotificationAlert.vue";
+import logobank from '../assets/svg/logobank.svg';
 export default {
   components: {
     Notification,
@@ -328,6 +339,28 @@ export default {
       ticketTotal: ref(0),
       checkoutTotal: ref(0),
       totalTagihan: ref(0),
+      instances: ref([
+        { 
+          label: "Bank BJB",
+          value: "BJB",
+          icon: [logobank],
+        },
+        { 
+          label: "Bank BCA",
+          value: "BCA",
+          icon: [logobank],
+        },
+        { 
+          label: "Bank Mandiri",
+          value: "MANDIRI",
+          icon: [logobank],
+        },
+        { 
+          label: "Bank BNI",
+          value: "BNI",
+          icon: [logobank],
+        },
+      ]),
       notification: {
         message: "",
         type: "info",
@@ -406,14 +439,8 @@ export default {
       this.dateLabel = date;
     },
     payWith(indicator) {
-      switch (indicator) {
-        case "CASH":
-          this.paymentMethod = "CASH";
-          this.handlePaymentMethodPopUp(); //Clos Payment Mehod Pop Up
-          break;
-        default:
-          break;
-      }
+      this.paymentMethod = indicator.value;
+      this.handlePaymentMethodPopUp(); //Clos Payment Mehod Pop Up
     },
     handlePaymentMethodPopUp() {
       this.showPopup = !this.showPopup;
@@ -1212,6 +1239,7 @@ label {
 .image {
   margin: auto 0;
   height: 100%;
+  padding: 0vw 0vh 0vh 43vh;
 }
 
 .icon {
@@ -1242,6 +1270,16 @@ label {
   width: 100%;
   height: 56px;
   padding-inline: 20px;
+  border-bottom: 1px solid #d0d5dd;
+  align-items: center;
+}
+.debit {
+  display: flex;
+  justify-content: space-between;
+  gap: 100vh;
+  width: 40vw;
+  height: 56px;
+  margin-left: 6vh;
   border-bottom: 1px solid #d0d5dd;
   align-items: center;
 }
