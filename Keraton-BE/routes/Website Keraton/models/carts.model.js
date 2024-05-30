@@ -6,7 +6,7 @@ const orderModel = require('../models/order.models')
 
 const action = async (actionParam, id, carts) => {
     try {
-        const user = await validate(id, carts)
+        const user = await prisma.user.findFirst(id)
         let rawUserCarts = user.carts
         switch (actionParam) {
             case "add":
@@ -33,9 +33,31 @@ const updateCart = async (id, carts) => {
     }
 }
 
-const validate = async (id, carts) => {
+const validate = async (carts) => {
+    let dataToMatch = {}, checkedCart = []
     try {
         if (carts.length < 1) throw Error('No Item in carts')
+        await (await prisma.order.findMany()).forEach(order => {
+            dataToMatch["T"|order.id] = {
+                image: order.image,
+                price: order.price
+            }
+        })
+        await (await prisma.events.findMany()).forEach(event => {
+            dataToMatch["E|"+event.id] = {
+                image: event.image,
+                price: event.price
+            }
+        })
+        for(let cart of carts){
+            const itemIdentifier = `${cart.type}|${cart.id}`
+            const itemExist = dataToMatch[itemIdentifier]
+            if(!itemExist) continue
+            cart.price = itemExist.price
+            cart.image = itemExist.image
+            checkedCart.push(cart)
+        }
+        return checkedCart
     } catch (err) {
         throwError(err)
     }
@@ -85,4 +107,4 @@ const countTotal = (carts) => {
     }
 }
 
-module.exports = { action, updateCart, countTotal, updateCartData }
+module.exports = { action, updateCart, countTotal, updateCartData, validate }

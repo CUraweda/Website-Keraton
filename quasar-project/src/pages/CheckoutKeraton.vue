@@ -909,7 +909,7 @@ body {
   width: 542px;
   height: 348px;
   top: 255px;
-  left: 950px;
+  left: 50vw;
   border-radius: 15px;
   /* padding: 20px, 23px,20px, 23px; */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

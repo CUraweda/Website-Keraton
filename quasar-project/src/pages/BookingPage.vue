@@ -70,7 +70,7 @@ import cookieHandler from "src/cookieHandler";
 
 export default {
   components: {
-    Notification,
+    Notification
   },
   props: {
     disabled: {
@@ -794,5 +794,8 @@ ul {
   margin-top: 22px;
   line-height: 28px;
   font-family: "Raleway";
+}
+.namanyafooter{
+  margin-top: 2rem;
 }
 </style>

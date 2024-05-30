@@ -1,7 +1,7 @@
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
-import SejarahLP from "../pages/sejarahKeraton.vue";
-import AdminEventPage from "pages/Admin/EventPage.vue"
+import SejarahLP from "../pages/SejarahKeraton.vue";
+import beritaterkini from "../pages/BeritaTerkini.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
@@ -16,9 +16,10 @@ import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
 import silsilahDesktop from "../pages/silsilahDesktop.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
-import NyobaAdmin from "../pages/nyobaAdmin.vue";
+import AdminEventPage from "../pages/Admin/EventPage.vue"
 import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
+import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 
 const routes = [
   {
@@ -38,13 +39,31 @@ const routes = [
     }
   },
   {
+    path: "/admin/news",
+    name: "AdminNewsPage",
+    component: AdminNewsPage,
+    meta: {
+      preventToken: true
+    }
+  },
+  {
     path: "/admin/event",
     name: "AdminEventPage",
+    component: AdminHomePage,
+    meta: {
+      preventToken: true
+    }
+  },
+  
+  {
+    path: "/admin/news",
+    name: "AdminNewsPage",
     component: AdminEventPage,
     meta: {
       preventToken: true
     }
   },
+  
   {
     path: "/signin",
     name: "signin",
@@ -127,17 +146,14 @@ const routes = [
     component: silsilahDesktop,
   },
   {
-    path: "/nyobaAdmin",
-    name: "nyobaAdmin",
-    component: NyobaAdmin,
-  },
-  {
     path: "/user/carts",
     name: "Cart",
     component: Cart,
-    meta: {
-      preventToken: true
-    }
+  },
+  {
+    path: "/beritaterkini",
+    name: "beritaterkini",
+    component: beritaterkini,
   },
   {
     path: "/template",
