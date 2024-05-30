@@ -101,7 +101,6 @@
         text-color="white"
         label="Save and Update"
         class="full-width q-mt-md"
-        href="/#/"
       />
     </div>
     <Notification
@@ -199,17 +198,12 @@ export default {
     },
     async sendUpdate() {
       try {
-        let textList = [],
-          imageList = [],
-          linkList = [];
-        console.log(this.imageInputs);
+        let textList = [],imageList = [],linkList = [], imageSub = []
         for (let text of this.textInputs) textList.push(text);
-        for (let image of this.imageInputs) {
-          console.log(image);
-          imageList.push(image.data);
-        }
+        for (let image of this.imageInputs) imageList.push(image.data)
         for (let link of this.linkInputs) linkList.push({ data: link.data, sub: "" })
         const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
+        console.log(imageList)
         const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -217,6 +211,7 @@ export default {
         })
         if (response.status != 200) throw Error("Error occured");
         socket.emit("dashboard", {});
+        window.location.reload()
       } catch (err) {
         this.showNotif("fatal error please contact the developer immediately", "error")
         console.log(err);

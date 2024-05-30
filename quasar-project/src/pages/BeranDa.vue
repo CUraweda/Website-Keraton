@@ -121,12 +121,12 @@
           class="card4"
           :class="{ active: activeCard === 'card4' }"
           :style="{
-            'background-image': `url(${sectionData4?.xi1.data})`,
+            'background-image': `url(${sectionData4?.xi1?.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
             'background-color': '#b6b6b6',
           }"
-          @click="setActiveCard('card4', sectionData4?.xi1.data)"
+          @click="setActiveCard('card4', sectionData4?.xi1?.data)"
         >
           <div class="overlay"></div>
           <a href="#">
@@ -139,12 +139,12 @@
           class="card5"
           :class="{ active: activeCard === 'card5' }"
           :style="{
-            'background-image': `url(${sectionData4?.xi2.data})`,
+            'background-image': `url(${sectionData4?.xi2?.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
             'background-color': '#b6b6b6',
           }"
-          @click="setActiveCard('card5', sectionData4?.xi2.data)"
+          @click="setActiveCard('card5', sectionData4?.xi2?.data)"
         >
           <a href="#">
             <p class="title5">Jamasan Kerisa dan Tombak</p>
@@ -154,12 +154,12 @@
           class="card6"
           :class="{ active: activeCard === 'card6' }"
           :style="{
-            'background-image': `url(${sectionData4?.xi3.data})`,
+            'background-image': `url(${sectionData4?.xi3?.data})`,
             'background-size': 'cover',
             'border-radius': '20px',
             'background-color': '#b6b6b6',
           }"
-          @click="setActiveCard('card6', sectionData4?.xi3.data)"
+          @click="setActiveCard('card6', sectionData4?.xi3?.data)"
         >
           <a href="#">
             <p class="title6">Siraman Panjat Jimat</p>
@@ -171,7 +171,7 @@
         dan tradisi turun menurun dengan rutin melaksanakan upacara adat tradisi
         mereka.
       </p>
-      <a :href="sectionData4?.xl1.data">
+      <a :href="sectionData4?.xl1?.data">
         <img class="btnViewMore" src="../assets/images/btninfo.png" />
       </a>
     </div>
@@ -393,34 +393,33 @@ export default {
       let rawSection = {};
       try {
         const response = await this.$api.get("page/content/1");
-        const dataRest = response.data.data[0];
-        console.log(dataRest.contents[3]);
+        const dataRest = response?.data?.data[0];
 
         // Section data assignments
         this.sectionimg = dataRest.contents[0]?.context?.xi1?.data;
-        this.sectionData = dataRest.contents[0].context;
-        this.sectionName = dataRest.contents[0].sectionName;
+        this.sectionData = dataRest.contents[0]?.context;
+        this.sectionName = dataRest.contents[0]?.sectionName;
 
         this.sectionimg1 = dataRest.contents[1]?.context?.xi1?.data;
-        this.sectionName1 = dataRest.contents[1].sectionName;
-        this.sectionData1 = dataRest.contents[1].context;
+        this.sectionName1 = dataRest.contents[1]?.sectionName;
+        this.sectionData1 = dataRest.contents[1]?.context;
 
-        this.sectionName2 = dataRest.contents[2].sectionName;
-        this.sectionData2 = dataRest.contents[2].context;
+        this.sectionName2 = dataRest.contents[2]?.sectionName;
+        this.sectionData2 = dataRest.contents[2]?.context;
         this.sectionimg2 = dataRest.contents[2]?.context?.xi1?.data;
 
-        this.sectionName3 = dataRest.contents[3].sectionName;
-        this.sectionData3 = dataRest.contents[3].context;
+        this.sectionName3 = dataRest.contents[3]?.sectionName;
+        this.sectionData3 = dataRest.contents[3]?.context;
 
-        this.sectionName4 = dataRest.contents[4].sectionName;
-        this.sectionimg4 = dataRest.contents[4].context?.xi1?.data;
-        this.sectionData4 = dataRest.contents[4].context;
+        this.sectionName4 = dataRest.contents[4]?.sectionName;
+        this.sectionimg4 = dataRest.contents[4]?.context?.xi1?.data;
+        this.sectionData4 = dataRest.contents[4]?.context;
 
-        this.sectionName5 = dataRest.contents[5].sectionName;
-        this.sectionData5 = dataRest.contents[5].context;
+        this.sectionName5 = dataRest.contents[5]?.sectionName;
+        this.sectionData5 = dataRest.contents[5]?.context;
 
-        this.sectionName6 = dataRest.contents[6].sectionName;
-        this.sectionData6 = dataRest.contents[6].context;
+        this.sectionName6 = dataRest.contents[6]?.sectionName;
+        this.sectionData6 = dataRest.contents[6]?.context;
 
         this.currentBackground = this.sectionimg4;
       } catch (err) {
