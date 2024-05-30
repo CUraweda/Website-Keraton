@@ -176,7 +176,7 @@
     </div>
   </section>
 
-  <section class="slider" id="slider">
+  <section class="slider" id="slider" v-if="slides.length > 1">
     <h1 class="berita">Berita Terkini</h1>
     <div
       class="slides"
