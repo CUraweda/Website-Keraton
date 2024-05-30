@@ -34,7 +34,7 @@
           </div>
           <q-input
             filled
-            v-model="event.name"
+            v-model="event.title"
             label="Name"
             color="black"
             bg-color="gray"
@@ -50,7 +50,7 @@
           />
 
           <div class="flex items-center q-mt-md q-gutter-md">
-            <q-btn no-caps label="Create" @click="sendCreate('event')" />
+            <q-btn no-caps label="Create" @click="actionHandler('event')" />
             <q-input
               filled
               v-model="event.price"
@@ -156,7 +156,7 @@
             @update:model-value="handleUploadTiket()"
           />
           <q-img :src="imgURLTiket" v-if="imgURLTiket" />
-          <q-btn no-caps label="Create" @click="sendCreate('tiket')" />
+          <q-btn no-caps label="Create" @click="actionHandler('tiket')" />
         </div>
       </q-card-section>
     </q-card>
@@ -179,8 +179,8 @@
 
           <q-card-section>
             <div class="flex q-gutter-sm">
-              <q-badge color="blue">{{ item.buttonText1 }}</q-badge>
-              <q-badge color="blue">{{ item.buttonText2 }}</q-badge>
+              <q-badge color="blue">{{ item.name }}</q-badge>
+              <q-badge color="blue">{{ item.isFree }}</q-badge>
             </div>
             <div
               class="text-h6 q-mt-sm q-mb-xs"
@@ -190,7 +190,7 @@
                 text-overflow: ellipsis;
               "
             >
-              {{ item.titleBig }}
+              {{ item.title }}
             </div>
             <div
               class="text-caption text-grey"
@@ -200,7 +200,7 @@
                 text-overflow: ellipsis;
               "
             >
-              {{ item.titleMedium }}
+              {{ item.desc }}
             </div>
           </q-card-section>
 
@@ -211,7 +211,7 @@
 
             <q-space />
 
-            <q-btn flat>
+            <q-btn flat @click="openDialog('event', item)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -224,7 +224,7 @@
                 />
               </svg>
             </q-btn>
-            <q-btn flat
+            <q-btn flat @click="sendDelete('event', item.id)"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -287,7 +287,7 @@
 
             <q-space />
 
-            <q-btn flat>
+            <q-btn flat @click="openDialog('tiket', item)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -300,7 +300,7 @@
                 />
               </svg>
             </q-btn>
-            <q-btn flat
+            <q-btn flat @click="sendDelete('tiket', item.id)"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -317,84 +317,6 @@
       </div>
     </div>
   </div>
-  <!-- <q-dialog v-model="addNewTiketPaket">
-      <q-input
-        filled
-        v-model="tikets.name"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="tikets.desc"
-        label="Text"
-        type="textarea"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="tikets.price"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="tikets.priceUmum"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="tikets.priceMancanegara"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-file
-        filled
-        type="file"
-        v-model="tikets.image"
-        label="Tambahkan Image"
-        color="black"
-        class="q-mt-md"
-      />
-    </q-dialog> -->
-
-  <!-- <q-dialog v-model="addNewEvent">
-      <q-input
-        filled
-        v-model="event.name"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="event.desc"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-input
-        filled
-        v-model="event.price"
-        label="Text"
-        color="black"
-        bg-color="gray"
-      />
-      <q-file
-        filled
-        type="file"
-        v-model="event.image"
-        label="Tambahkan Image"
-        color="black"
-        class="q-mt-md"
-      />
-    </q-dialog> -->
 </template>
 
 <script>
@@ -411,7 +333,7 @@ export default {
       currentId: null,
       events: ref(),
       tiketPakets: ref(),
-      iterations: ref(),
+      iterations: ref({}),
       units: ref([
         { data: "orang", label: "Perorangan" },
         { data: "kelompok", label: "Perkelompok" },
@@ -420,6 +342,7 @@ export default {
       event: ref({
         name: "",
         desc: "",
+        title: "",
         price: "",
         image: ref(null),
         iterationId: null,
@@ -481,10 +404,11 @@ export default {
           id: event.id,
           image: event.image,
           price: event.price ? `Rp. ${this.formatRupiah(event.price)}` : "",
-          buttonText1: event.iteration.name,
-          buttonText2: event.isFree ? "Gratis" : "Bayar",
-          titleMedium: event.desc,
-          titleBig: event.name,
+          name: event.iteration.name,
+          isFree: event.isFree ? "Gratis" : "Bayar",
+          desc: event.desc,
+          title: event.name,
+          iterationId: event.iteration.name,
         }));
         this.tiketPakets = tiketPaketReponse.data.data.map((tiket) => ({
           id: tiket.id,
@@ -529,6 +453,29 @@ export default {
         console.log(err);
       }
     },
+
+    async sendDelete(type, id) {
+      let url;
+      try {
+        switch (type) {
+          case "event":
+            url = `event/${id}`;
+            break;
+          case "tiket":
+            url = `item/${id}`;
+            break;
+          default:
+            break;
+        }
+        const response = await this.$api.delete(url);
+        if (response.status == 200) {
+          this.fetchData();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
     async sendCreate(type) {
       let url, requestBody;
       try {
@@ -563,12 +510,22 @@ export default {
       }
     },
     openDialog(type, itemData) {
-      type != "event"
-        ? (this.addNewTiketPaket = true)
-        : (this.addNewEvent = true);
-      if (itemData) {
-        const dataToChanged = type != "event" ? "event" : "tikets";
-        this[dataToChanged] = { ...itemData };
+      if (type === "event") {
+        this.addNewEvent = true;
+        if (itemData) {
+          this.event = { ...itemData };
+          if (itemData.image) {
+            this.imgURLEvent = itemData.image;
+          }
+        }
+      } else {
+        this.addNewTiketPaket = true;
+        if (itemData) {
+          this.tikets = { ...itemData };
+          if (itemData.image) {
+            this.imgURLTiket = itemData.image;
+          }
+        }
       }
     },
     formatRupiah(price) {
