@@ -62,7 +62,6 @@ import navbar from "../components/NavBar.vue";
 import Carts from "../stores/carts";
 import env from "stores/environment"
 import Notification from "components/NotificationAlert.vue";
-import FooterComp from "components/FooterComp.vue";
 </script>
 
 <script>
@@ -71,7 +70,7 @@ import cookieHandler from "src/cookieHandler";
 
 export default {
   components: {
-    Notification, FooterComp
+    Notification
   },
   props: {
     disabled: {

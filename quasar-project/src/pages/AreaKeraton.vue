@@ -196,9 +196,6 @@
             <img class="img-tiket-kunjungan" src="../assets/images/tiketkunjungan.png" alt="">
           </div>
         </div></a>
-        <div class="foterr">
-          <footerDesktop/>
-        </div>
     </div>
 </div>
 </template>
@@ -226,7 +223,6 @@ const scrollToContent2 = () => {
 export default {
   components: {
     NavBar,
-    footerDesktop,
   },
   data() {
     return {

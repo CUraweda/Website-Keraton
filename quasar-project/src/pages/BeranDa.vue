@@ -462,14 +462,6 @@ export default {
         console.log(err)
       }
     },
-    toggleAccordion(index) {
-      this.faqs.forEach((faq, idx) => {
-        if (idx !== index) {
-          faq.active = false;
-        }
-      });
-      this.faqs[index].active = !this.faqs[index].active;
-    },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },

@@ -1,6 +1,6 @@
 <template>
-    <div v-for="(data, i) in newsDatas">
-        <h1>{{ data. }}</h1>
+    <div v-for="(data, i) in newsDatas" :key="i">
+        <h1>{{ data.name }}</h1>
     </div>
     <div>
         <div class="napbar">

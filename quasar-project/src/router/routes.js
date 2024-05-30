@@ -16,6 +16,7 @@ import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
 import silsilahDesktop from "../pages/silsilahDesktop.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
+import AdminEventPage from "../pages/Admin/EventPage.vue"
 import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
 import AdminNewsPage from "../pages/Admin/NewsPage.vue";

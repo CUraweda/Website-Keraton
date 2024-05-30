@@ -106,12 +106,10 @@
       </div>
     </div>
   </div>
-  <FooterComp/>
 </template>
 
 <script>
 import navbar from "../components/NavBar.vue";
-import FooterComp from "../components/FooterComp.vue";
 export default {
   data() {
     return {
@@ -120,7 +118,7 @@ export default {
     };
   },
   components: {
-    navbar,FooterComp
+    navbar
   },
 };
 </script>
