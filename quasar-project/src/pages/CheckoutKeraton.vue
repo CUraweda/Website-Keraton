@@ -363,6 +363,7 @@ export default {
     async setCartData() {
       try {
         const rawCart = Object.values(this.cartClass.getItem());
+        console.log(rawCart)
         if (rawCart.length < 1) {
           const response = await this.$api.get("cart", {
             headers: {
@@ -392,6 +393,7 @@ export default {
     },
     async validateCartData() {
       try {
+        console.log(this.carts)
         const response = await this.$api.post("cart/validate", {
           carts: this.carts,
         });
