@@ -1,57 +1,13 @@
 <template>
-  <div>
-    <div>
-      <!-- <h1>Event</h1> -->
-      <div
-        class="flex col-grow q-gutter-md"
-        style="
-          overflow-x: auto;
-          flex-wrap: nowrap;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        "
-      >
-        <div v-for="(item, index) in events" :key="index">
-          <q-card
-            class="my-card"
-            flat
-            bordered
-            style="width: 20rem; height: 30rem"
-          >
-            <q-img :src="item.image" style="height: 15rem" />
-
-            <q-card-section>
-              <div class="flex q-gutter-sm">
-                <q-badge color="blue">{{ item.buttonText1 }}</q-badge>
-                <q-badge color="blue">{{ item.buttonText2 }}</q-badge>
-              </div>
-              <div class="text-h6 q-mt-sm q-mb-xs">{{ item.titleBig }}</div>
-              <div class="text-caption text-grey">
-                {{ item.titleMedium }}
-              </div>
-            </q-card-section>
-
-            <q-card-actions>
-              <div class="text-subtitle1 text-weight-medium">
-                {{ item.price }}
-              </div>
-
-              <q-space />
-
-              <q-btn flat color="primary" label="Bayar" />
-            </q-card-actions>
-          </q-card>
-        </div>
-      </div>
-    </div>
+  <navbar />
+  <div class="q-gutter-xs q-mx-md">
+    <q-btn class="text-capitalize" @click="openDialog('event')"
+      >Add New Event</q-btn
+    >
+    <q-btn class="text-capitalize" @click="openDialog('tiketPaket')"
+      >Add New Tiket / Paket</q-btn
+    >
   </div>
-
-  <q-btn class="text-capitalize" @click="openDialog('event')"
-    >Add New Event</q-btn
-  >
-  <q-btn class="text-capitalize" @click="openDialog('tiketPaket')"
-    >Add New Tiket / Paket</q-btn
-  >
 
   <q-dialog v-model="addNewEvent">
     <q-card>
@@ -64,9 +20,11 @@
       <q-card-section class="flex q-gutter-md">
         <div>
           <div class="flex">
-            <q-input
-              filled
-              v-model="event.name"
+            <q-select
+              standout
+              v-model="event.iterationId"
+              :options="iterations"
+              class="col-grow"
               label="Iteration"
               color="black"
               bg-color="gray"
@@ -122,7 +80,7 @@
   </q-dialog>
 
   <q-dialog v-model="addNewTiketPaket">
-    <q-card style="width: 610px; max-width: 70vw">
+    <q-card style="width: 40rem; max-width: 70vw">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">Add New Tiket Paket</div>
         <q-space />
@@ -206,6 +164,158 @@
     </q-card>
   </q-dialog>
 
+  <div class="q-gutter-md">
+    <div
+      class="flex col-grow q-gutter-md"
+      style="
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      "
+    >
+      <div v-for="(item, index) in events" :key="index">
+        <q-card class="my-card" flat bordered style="width: 20rem">
+          <q-img :src="item.image" style="height: 15rem" />
+
+          <q-card-section>
+            <div class="flex q-gutter-sm">
+              <q-badge color="blue">{{ item.buttonText1 }}</q-badge>
+              <q-badge color="blue">{{ item.buttonText2 }}</q-badge>
+            </div>
+            <div
+              class="text-h6 q-mt-sm q-mb-xs"
+              style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ item.titleBig }}
+            </div>
+            <div
+              class="text-caption text-grey"
+              style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ item.titleMedium }}
+            </div>
+          </q-card-section>
+
+          <q-card-actions>
+            <div class="text-subtitle1 text-weight-medium">
+              {{ item.price }}
+            </div>
+
+            <q-space />
+
+            <q-btn flat>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="green"
+              >
+                <path
+                  d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                />
+              </svg>
+            </q-btn>
+            <q-btn flat
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="red"
+              >
+                <path
+                  d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                /></svg
+            ></q-btn>
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+
+    <div
+      class="flex col-grow q-gutter-md"
+      style="
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      "
+    >
+      <div v-for="(item, index) in tiketPakets" :key="index">
+        <q-card class="my-card" flat bordered style="width: 20rem">
+          <q-img :src="item.image" style="height: 15rem" />
+
+          <q-card-section>
+            <q-badge color="blue">{{ item.subType }}</q-badge>
+            <div
+              class="text-h6 q-mt-sm q-mb-xs"
+              style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ item.name }}
+            </div>
+            <div
+              class="text-caption text-grey"
+              style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              {{ item.desc }}
+            </div>
+          </q-card-section>
+
+          <q-card-actions>
+            <div class="text-subtitle1 text-weight-medium">
+              {{ item.price }}
+            </div>
+
+            <q-space />
+
+            <q-btn flat>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="green"
+              >
+                <path
+                  d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                />
+              </svg>
+            </q-btn>
+            <q-btn flat
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="red"
+              >
+                <path
+                  d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                /></svg
+            ></q-btn>
+          </q-card-actions>
+        </q-card>
+      </div>
+    </div>
+  </div>
   <!-- <q-dialog v-model="addNewTiketPaket">
       <q-input
         filled
@@ -287,9 +397,11 @@
 </template>
 
 <script>
+import navbar from "src/components/NavbarAdmin.vue";
 import socket from "src/socket";
 import { ref } from "vue";
 export default {
+  components: { navbar },
   setup() {
     return {
       unit: ref(),
@@ -379,7 +491,7 @@ export default {
           name: tiket.name,
           desc: tiket.desc,
           subType: tiket.orderSubType.name,
-          price: tiket.price,
+          price: tiket.price ? `Rp. ${this.formatRupiah(tiket.price)}` : "",
         }));
         this.iterations = helper.data.data.iterations;
         this.subTypes = helper.data.data.subTypes;

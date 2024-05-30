@@ -10,7 +10,7 @@
             <img
               style="width: 3.2rem"
               alt="icon-aplikasi"
-              src="../assets/images/logo_keraton-removebg-preview.png"
+              src="../assets/images/logo_keraton 1.png"
               class="app-icon"
             />
           </div>
@@ -43,13 +43,6 @@
             label="Beranda"
             :color="isTransparent ? 'white' : 'black'"
             to="/admin/home"
-          ></q-btn>
-          <q-btn
-            flat
-            label="Content"
-            no-caps
-            :color="isTransparent ? 'white' : 'black'"
-            to="/admin/content"
           />
           <q-btn
             flat
@@ -368,8 +361,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
 .q-layout {
-  min-height: auto !important; /* Or set to desired value */
-  background: transparent !important;
+  min-height: 6rem !important; /* Or set to desired value */
 }
 
 .q-header {
