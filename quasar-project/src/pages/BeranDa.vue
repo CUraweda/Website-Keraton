@@ -358,7 +358,7 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.socket();
-    this.setDefaultAndCheck()
+    // this.setDefaultAndCheck()
     this.startSlider();
   },
   beforeUnmount() {
