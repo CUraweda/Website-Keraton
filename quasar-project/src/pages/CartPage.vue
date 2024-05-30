@@ -169,7 +169,6 @@ export default {
           if (response.status != 200) throw Error(response.data.message);
           rawCart = response.data.data;
         }
-        console.log(this.cartData);
         this.cartData = rawCart.map((cart) => ({
           ...cart,
         }));
