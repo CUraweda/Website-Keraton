@@ -21,13 +21,11 @@
         <div>
           <div class="flex">
             <q-select
-              standout
+              filled
               v-model="event.iterationId"
               :options="iterations"
               class="col-grow"
               label="Iteration"
-              color="black"
-              bg-color="gray"
             />
             <div class="flex items-center">
               <div>Free</div>
@@ -164,7 +162,8 @@
     </q-card>
   </q-dialog>
 
-  <div class="q-gutter-md">
+  <div class="q-gutter-md q-mt-md">
+    <div class="text-h5 q-mx-lg q-mt-md">Event</div>
     <div
       class="flex col-grow q-gutter-md"
       style="
@@ -241,6 +240,8 @@
         </q-card>
       </div>
     </div>
+
+    <div class="text-h5 q-mt-md q-mx-lg">Tiket & Paket</div>
 
     <div
       class="flex col-grow q-gutter-md"
@@ -410,7 +411,7 @@ export default {
       currentId: null,
       events: ref(),
       tiketPakets: ref(),
-      iterations: ref([]),
+      iterations: ref(),
       units: ref([
         { data: "orang", label: "Perorangan" },
         { data: "kelompok", label: "Perkelompok" },
@@ -421,7 +422,7 @@ export default {
         desc: "",
         price: "",
         image: ref(null),
-        iterationId: 0,
+        iterationId: null,
         isFree: false,
       }),
       tikets: ref({
@@ -493,7 +494,11 @@ export default {
           subType: tiket.orderSubType.name,
           price: tiket.price ? `Rp. ${this.formatRupiah(tiket.price)}` : "",
         }));
-        this.iterations = helper.data.data.iterations;
+        this.iterations = helper.data.data.iteration.map((itr) => ({
+          label: itr.name,
+          value: itr.id,
+        }));
+        console.log(this.iterations);
         this.subTypes = helper.data.data.subTypes;
       } catch (err) {
         console.log(err);

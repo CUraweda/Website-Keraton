@@ -16,7 +16,7 @@ import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
 import silsilahDesktop from "../pages/silsilahDesktop.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
-import AdminEventPage from "../pages/Admin/EventPage.vue"
+import AdminEventPage from "../pages/Admin/EventPage.vue";
 import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
 import AdminNewsPage from "../pages/Admin/NewsPage.vue";
@@ -27,43 +27,43 @@ const routes = [
     name: "AdminHomePage",
     component: AdminHomePage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/admin/add/:id",
     name: "AdminAddPage",
     component: AdminAddPage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/admin/news",
     name: "AdminNewsPage",
     component: AdminNewsPage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/admin/event",
     name: "AdminEventPage",
-    component: AdminHomePage,
+    component: AdminEventPage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
-  
+
   {
     path: "/admin/news",
     name: "AdminNewsPage",
     component: AdminEventPage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
-  
+
   {
     path: "/signin",
     name: "signin",
@@ -94,8 +94,8 @@ const routes = [
     name: "checkout",
     component: CheckoutKeraton,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/pilihanpaket",
@@ -112,18 +112,18 @@ const routes = [
     name: "historytransaksi",
     component: HistoryTransaksi,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/booking/event",
     name: "eventgratis",
-    component: EventGratis
+    component: EventGratis,
   },
   {
     path: "/booking",
     name: "booking",
-    component: Booking
+    component: Booking,
   },
   {
     path: "/filterbayar",
@@ -161,9 +161,9 @@ const routes = [
     component: Template,
   },
   {
-    path: '/:catchAll(.*)*',
-    component: () => import('pages/PageNotFound.vue')
-  }
+    path: "/:catchAll(.*)*",
+    component: () => import("pages/PageNotFound.vue"),
+  },
 ];
 
 export default routes;
