@@ -32,7 +32,7 @@
       <div>
         <img
           src="../assets/images/Frame.jpeg"
-          style="margin-left: -106px; padding-top: -200px margin-bottom: 10px"
+          style="margin-left: -106px; padding-top: -200px; margin-bottom: 10px"
         />
         <span class="gold-text">1662 M</span> <br /><br />
         <div class="garis">

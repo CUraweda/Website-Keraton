@@ -62,6 +62,7 @@ import navbar from "../components/NavBar.vue";
 import Carts from "../stores/carts";
 import env from "stores/environment"
 import Notification from "components/NotificationAlert.vue";
+import FooterComp from "components/FooterComp.vue";
 </script>
 
 <script>
@@ -70,7 +71,7 @@ import cookieHandler from "src/cookieHandler";
 
 export default {
   components: {
-    Notification,
+    Notification, FooterComp
   },
   props: {
     disabled: {
@@ -794,5 +795,8 @@ ul {
   margin-top: 22px;
   line-height: 28px;
   font-family: "Raleway";
+}
+.namanyafooter{
+  margin-top: 2rem;
 }
 </style>

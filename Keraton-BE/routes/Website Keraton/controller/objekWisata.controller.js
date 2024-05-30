@@ -8,6 +8,7 @@ router.get('/:id?', async (req, res) => {
     let { id } = req.params, wisataData, orderData
     try{
         wisataData = id ? await objeKWisataModel.getOne({ where: { id: +id } }) : await objeKWisataModel.getAll()
+        console.log(wisataData)
         if(id) orderData = await order.getRelatedObjekWisata(wisataData.orderIdentifier)
         return success(res, 'Success', { wisataData, orderData })
     }catch(err){

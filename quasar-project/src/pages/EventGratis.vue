@@ -277,13 +277,13 @@ export default {
 };
 </script>
 
-<style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+  <style scoped>
+  @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-.bawah {
-  transform: scale(0.9);
-  margin-left: -70px;
-}
+  .bawah {
+    transform: scale(0.9);
+    margin-left: -70px;
+  }
 
 .header {
   /* background: linear-gradient(
@@ -304,198 +304,198 @@ export default {
   flex-grow: 0;
 }
 
-.text1 {
-  margin-left: 110px;
-  font-size: 24px;
-  font-family: Raleway;
-}
+  .text1 {
+    margin-left: 110px;
+    font-size: 24px;
+    font-family: Raleway;
+  }
 
-.text1 {
-  font-size: 14px;
-  color: #212121;
-  font-family: "Arial", sans-serif;
-  width: 400px;
-  height: 22px;
-  top: 86.69px;
-  left: 156px;
-  line-height: 22px;
-  text-align: left;
-}
+  .text1 {
+    font-size: 14px;
+    color: #212121;
+    font-family: "Arial", sans-serif;
+    width: 400px;
+    height: 22px;
+    top: 86.69px;
+    left: 156px;
+    line-height: 22px;
+    text-align: left;
+  }
 
-.text2 {
-  width: 372px;
-  height: 32px;
-  top: 151px;
-  left: 132px;
-  font-family: Raleway;
-  font-size: 24px;
-  line-height: 32px;
-  text-align: left;
-  font-weight: bold;
-}
+  .text2 {
+    width: 372px;
+    height: 32px;
+    top: 151px;
+    left: 132px;
+    font-family: Raleway;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: left;
+    font-weight: bold;
+  }
 
-.opsi1 {
-  width: 150px;
-  height: 40px;
-  top: 228px;
-  left: 132px;
-  font-family: "Lexend", sans-serif;
-  padding: 10px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid;
-  border-color: #e0e0e0;
-  margin-left: 129px;
-}
+  .opsi1 {
+    width: 150px;
+    height: 40px;
+    top: 228px;
+    left: 132px;
+    font-family: "Lexend", sans-serif;
+    padding: 10px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid;
+    border-color: #e0e0e0;
+    margin-left: 129px;
+  }
 
-.opsi2 {
-  width: 150px;
-  height: 40px;
-  top: 228px;
-  left: 132px;
-  font-family: "Lexend", sans-serif;
-  padding: 10px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid;
-  border-color: #e0e0e0;
-  margin-left: 30px;
-}
+  .opsi2 {
+    width: 150px;
+    height: 40px;
+    top: 228px;
+    left: 132px;
+    font-family: "Lexend", sans-serif;
+    padding: 10px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid;
+    border-color: #e0e0e0;
+    margin-left: 30px;
+  }
 
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
 
-nav ul li {
-  margin-right: 30px;
-}
+  nav ul li {
+    margin-right: 30px;
+  }
 
-nav ul li a,
-nav ul li button {
-  display: block;
-  color: #000000;
-  background-color: transparent;
-  border: none;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 5px 25px;
-  font-size: 16px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  nav ul li a,
+  nav ul li button {
+    display: block;
+    color: #000000;
+    background-color: transparent;
+    border: none;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 5px 25px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
 
-nav ul li a:hover,
-nav ul li button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
+  nav ul li a:hover,
+  nav ul li button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
 
-.ni {
-  height: 90px;
-  margin-top: 90px;
-  position: relative;
-}
+  .ni {
+    height: 90px;
+    margin-top: 90px;
+    position: relative;
+  }
 
-.container::-webkit-scrollbar {
-  display: none;
-}
+  .container::-webkit-scrollbar {
+    display: none;
+  }
 
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 200px 10px;
-  /* width: 250px; */
-  /* overflow-x: auto; */
-}
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 200px 10px;
+    /* width: 250px; */
+    /* overflow-x: auto; */
+  }
 
-.buttonaji {
-  display: flex;
-  /* Use flexbox */
-  justify-content: left;
-  /* Center children horizontally */
-  align-items: left;
-  /* Center children vertically */
-  margin-left: -10px;
-}
+  .buttonaji {
+    display: flex;
+    /* Use flexbox */
+    justify-content: left;
+    /* Center children horizontally */
+    align-items: left;
+    /* Center children vertically */
+    margin-left: -10px;
+  }
 
-.tengah {
-  display: flex;
-  /* Use flexbox */
-  justify-content: left;
-  /* Center children horizontally */
-  align-items: left;
-  /* Center children vertically */
-}
+  .tengah {
+    display: flex;
+    /* Use flexbox */
+    justify-content: left;
+    /* Center children horizontally */
+    align-items: left;
+    /* Center children vertically */
+  }
 
-.image {
-  width: 325px;
-  height: 181px;
-  object-fit: cover;
-  border-radius: 10px;
-  /* Adjust the value to change the roundness */
-  z-index: 2;
-}
+  .image {
+    width: 325px;
+    height: 181px;
+    object-fit: cover;
+    border-radius: 10px;
+    /* Adjust the value to change the roundness */
+    z-index: 2;
+  }
 
-.btn-small {
-  padding: 6px 12px;
-  /* Reduced padding for a more compact button */
-  font-size: 12px;
-  /* Decreased font size */
-  border-radius: 6.29px;
-  /* Updated border-radius */
-  background: transparent;
-  border: 0.79px solid #49454f1f;
-  color: #1d1b20;
-  width: 75.15px;
-  /* Width based on Hug dimension */
-  height: 25.15px;
-  /* Height based on Fixed dimension */
-  font-family: Raleway;
-  /* Corrected the font-family property */
-  display: flex;
-  justify-content: center;
-  /* Center the content horizontally */
-  align-items: center;
-  /* Center the content vertically */
-  margin-right: 0px;
-  margin-left: 10px;
-  /* Adjusted margin for spacing */
-  cursor: pointer;
-}
+  .btn-small {
+    padding: 6px 12px;
+    /* Reduced padding for a more compact button */
+    font-size: 12px;
+    /* Decreased font size */
+    border-radius: 6.29px;
+    /* Updated border-radius */
+    background: transparent;
+    border: 0.79px solid #49454f1f;
+    color: #1d1b20;
+    width: 75.15px;
+    /* Width based on Hug dimension */
+    height: 25.15px;
+    /* Height based on Fixed dimension */
+    font-family: Raleway;
+    /* Corrected the font-family property */
+    display: flex;
+    justify-content: center;
+    /* Center the content horizontally */
+    align-items: center;
+    /* Center the content vertically */
+    margin-right: 0px;
+    margin-left: 10px;
+    /* Adjusted margin for spacing */
+    cursor: pointer;
+  }
 
-.btn-small:hover {
-  background-color: #49454f1f;
-  /* Darker shade when hovered */
-}
+  .btn-small:hover {
+    background-color: #49454f1f;
+    /* Darker shade when hovered */
+  }
 
-.judul-sedang {
-  width: 308px;
-  height: 24px;
-  font-family: Raleway;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0em;
-  text-align: left;
-}
+  .judul-sedang {
+    width: 308px;
+    height: 24px;
+    font-family: Raleway;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
 
-.judul-besar {
-  width: 308px;
-  height: 66px;
-  font-family: Raleway;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #5e5e5e;
-}
+  .judul-besar {
+    width: 308px;
+    height: 66px;
+    font-family: Raleway;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #5e5e5e;
+  }
 
 .tambah {
   width: auto;
@@ -514,19 +514,19 @@ nav ul li button:hover {
   cursor: pointer;
 }
 
-/* .tambah :hover {
-} */
+  /* .tambah :hover {
+  } */
 
-.photo {
-  text-align: center;
-  margin-left: 6px;
-}
+  .photo {
+    text-align: center;
+    margin-left: 6px;
+  }
 
-.btn-small,
-.btn-kall,
-.tambah {
-  width: auto;
-}
+  .btn-small,
+  .btn-kall,
+  .tambah {
+    width: auto;
+  }
 
 .dropdown-toggle {
   width: 150px;
@@ -548,71 +548,71 @@ nav ul li button:hover {
   cursor: pointer;
 }
 
-.dropdown-toggle span {
-  margin-right: 8px;
-  z-index: 1;
-}
+  .dropdown-toggle span {
+    margin-right: 8px;
+    z-index: 1;
+  }
 
-.dropdown-toggle img {
-  margin-left: auto;
-  /* Jarak antara teks dan gambar */
-  z-index: 1;
-}
+  .dropdown-toggle img {
+    margin-left: auto;
+    /* Jarak antara teks dan gambar */
+    z-index: 1;
+  }
 
-.dropdown-menu {
-  position: absolute;
-  width: 150px;
-  top: 274px;
-  left: 132px;
-  border: 1px solid;
-  border-radius: 8px;
-  background-color: #ffffff;
-  font-family: Lexend;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 17.5px;
-  cursor: pointer;
-  z-index: 1;
-}
+  .dropdown-menu {
+    position: absolute;
+    width: 150px;
+    top: 160px;
+    left: 132px;
+    border: 1px solid;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-family: Lexend;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17.5px;
+    cursor: pointer;
+    z-index: 1;
+  }
 
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 24px;
-  padding: 8px;
-  gap: 8px;
-  /* Jarak antara checkbox dan teks */
-  font-family: Lexend;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 1;
-}
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 24px;
+    padding: 8px;
+    gap: 8px;
+    /* Jarak antara checkbox dan teks */
+    font-family: Lexend;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 1;
+  }
 
-.checkbox-container label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  z-index: 1;
-}
+  .checkbox-container label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1;
+  }
 
-.checkbox-icon {
-  width: 24px;
-  height: 24px;
-  fill: none;
-  stroke: black;
-  /* Warna default ikon centang */
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: stroke 0.3s ease;
-  /* Efek transisi untuk perubahan warna */
-}
+  .checkbox-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: black;
+    /* Warna default ikon centang */
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.3s ease;
+    /* Efek transisi untuk perubahan warna */
+  }
 
-.container input:checked ~ .checkmark {
-  background-image: linear-gradient(gold, gold);
-  z-index: 1;
-}
+  .container input:checked ~ .checkmark {
+    background-image: linear-gradient(gold, gold);
+    z-index: 1;
+  }
 
 .dropdown-toggle2 {
   margin-top: 1rem;
@@ -636,27 +636,31 @@ nav ul li button:hover {
   z-index: 1;
 }
 
-.dropdown-menu2 {
-  position: absolute;
-  width: 150px;
-  top: 274px;
-  left: 132px;
-  border: 1px solid;
-  border-radius: 8px;
-  background-color: #ffffff;
-  margin-left: 170px;
-  cursor: pointer;
-  z-index: 1;
-}
+  .dropdown-menu2 {
+    position: absolute;
+    width: 150px;
+    top: 160px;
+    left: 132px;
+    border: 1px solid;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-left: 170px;
+    cursor: pointer;
+    z-index: 1;
+  }
 
-.dropdown-toggle2 span {
-  margin-right: 8px;
-  z-index: 1;
-}
+  .dropdown-toggle2 span {
+    margin-right: 8px;
+    z-index: 1;
+  }
 
-.dropdown-toggle2 img {
-  margin-left: auto;
-  /* Jarak antara teks dan gambar */
-  z-index: 1;
-}
-</style>
+  .dropdown-toggle2 img {
+    margin-left: auto;
+    /* Jarak antara teks dan gambar */
+    z-index: 1;
+  }
+
+  .namanyafooter{
+    margin-top: 15rem;
+  }
+  </style>

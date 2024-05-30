@@ -26,6 +26,7 @@ const action = async (actionParam, id, carts) => {
 
 const updateCart = async (id, carts) => {
     try {
+
         return await prisma.user.update({ where: { id }, data: { carts } })
     } catch (err) {
         throwError(err)

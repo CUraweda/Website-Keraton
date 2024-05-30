@@ -4,41 +4,29 @@
       <navbar isWhiteText />
     </nav>
     <div class="container-title-top">
-      <img
-        src="../assets/images/dalemagungpakungwati.png"
-        class="img-title"
-        alt=""
-      />
+      <img src="../assets/images/dalemagungpakungwati.png" class="img-title" alt="">
       <div class="container-title-text">
         <div class="texttitle-img">{{ wisataName }}</div>
         <div class="container-subtitle">
-          <p>
-            Salah satu destinasi wisata yang wajib dikunjungi jika Anda
-            berkunjung ke Cirebon.
-          </p>
-          <p>
-            Dibangun pada tahun 1430 oleh Pangeran Cakrabuana, pendiri Kerajaan
-            Cirebon.
-          </p>
-          <p>
-            Memiliki koleksi benda bersejarah, seperti kereta kencana, gamelan,
-            dan lukisan.
-          </p>
+          <p>Salah satu destinasi wisata yang wajib dikunjungi jika Anda berkunjung ke Cirebon.</p>
+          <p>Dibangun pada tahun 1430 oleh Pangeran Cakrabuana, pendiri Kerajaan Cirebon.</p>
+          <p>Memiliki koleksi benda bersejarah, seperti kereta kencana, gamelan, dan lukisan.</p>
         </div>
         <div class="container-arrowdown">
-          <a class="arrow-down" @click="scrollToContent"
-            ><img src="../assets/images/Frame.svg" class="img-arrow-down"
-          /></a>
+          <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"
+              class="img-arrow-down" /></a>
         </div>
       </div>
     </div>
-
+  
     <div class="container-title2">
-      <div><span>Mengapresiasi</span> nilai seni Cirebon</div>
+      <div class="bawah-title">
+        <span>Mengapresiasi</span> nilai seni Cirebon
+      </div>
       <p class="bawah-title2">
-        Dalem Agung Pakungwati merupakan kompleks bangunan utama di Keraton
-        Kasepuhan, Cirebon, Jawa Barat.
+        Dalem Agung Pakungwati merupakan kompleks bangunan utama di Keraton Kasepuhan, Cirebon, Jawa Barat.
       </p>
+      <div class="container-slider">
       <div class="slider" ref="slider">
         <img
           v-for="(card, index) in cards"
@@ -48,38 +36,29 @@
           :class="{ cardd: true, active: index === currentIndex }"
         />
       </div>
-
+    </div>
+  
       <div class="button-container">
-        <img
-          class="button-slider"
-          @click="prevCard"
-          src="../assets/svg/ArrowLeft.svg"
-        />
-        <div
-          class="bulet"
-          v-for="(bulet, index) in bullets"
-          :key="index"
-          :class="{ active: index === currentIndex }"
-        ></div>
-        <img
-          class="button-slider"
-          @click="nextCard"
-          src="../assets/svg/ArrrowRight.svg"
-        />
+        <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+        <div class="bulet" v-for="(bulet, index) in bullets" :key="index" :class="{ active: index === currentIndex }">
+        </div>
+        <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
       </div>
     </div>
-
+  
     <div class="container-fasilitas">
       <div class="fasilitas-text">
-        <div>Fasilitas</div>
         <div>
-          Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang
-          kegiatan wisata dan budaya.
+          Fasilitas
+        </div>
+        <div>
+          Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang kegiatan wisata dan
+          budaya.
         </div>
       </div>
       <div class="fasilitas-img1">
         <div v-for="(elemen, index) in fasilitaselement" :key="index">
-          <img :src="elemen.img1" alt="" />
+          <img :src="elemen.img1" alt="">
           <div class="text-fasilitas">
             {{ elemen.text1 }}
           </div>
@@ -87,18 +66,20 @@
       </div>
       <div class="fasilitas-img1 fasilitas-img2">
         <div v-for="(elemen, index) in fasilitaselement" :key="index">
-          <img :src="elemen.img2" alt="" />
+          <img :src="elemen.img2" alt="">
           <div class="text-fasilitas">
             {{ elemen.text2 }}
           </div>
         </div>
       </div>
       <div>
+  
         <div class="fasilitas-text kunjungan-text">
-          <div>Kunjungan</div>
           <div>
-            Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
-            wisata yang menarik.
+            Kunjungan
+          </div>
+          <div>
+            Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik.
           </div>
         </div>
         <div class="btn-kunjungan-text">
@@ -109,19 +90,18 @@
             label="Dapatkan Tiket Sekarang!"
           />
         </div>
-
+  
         <div class="container-tiket-kunjungan">
-          <div
-            class="tiket-kunjungan"
-            v-for="(element, index) in elementTiketKunjungan"
-            :key="index"
-          >
+          <a href="/#/booking"><div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
             <div class="text-tiket-kunjungan">
               <div class="text-tiket">{{ element.text1 }}</div>
               <p class="text-harga">{{ element.text2 }}</p>
               <p class="text-harga" id="text-area">{{ element.text3 }}</p>
             </div>
-            <img class="img-tiket-kunjungan" :src="element.img" alt="" />
+            <img class="img-tiket-kunjungan" :src="element.img" alt="">
+          </div></a>
+          <div class="footerr">
+            <footerDesktop />
           </div>
         </div>
       </div>
@@ -130,51 +110,39 @@
 </template>
 
 <script setup>
-import navbar from "../components/NavBar.vue";
+import navbar from '../components/NavBar.vue'
+import footerDesktop from '../components/footerDesktop.vue';
 </script>
 
 <script>
+
 const scrollToContent = () => {
-  document.querySelector(".container-title2").scrollIntoView({
-    behavior: "smooth",
+  document.querySelector('.container-title2').scrollIntoView({
+    behavior: 'smooth'
   });
 };
 
 export default {
   components: {
     navbar,
+    footerDesktop,
   },
   data() {
     return {
       cards: [
-        { content: "../src/assets/images/nilaisenislider1.png" },
-        { content: "../src/assets/images/nilaisenislider2.png" },
-        { content: "../src/assets/images/nilaisenislider3.png" },
-        { content: "../src/assets/images/nilaisenislider4.png" },
-        { content: "../src/assets/images/nilaisenislider5.png" },
+        { content: '../src/assets/images/nilaisenislider1.png' },
+        { content: '../src/assets/images/nilaisenislider2.png' },
+        { content: '../src/assets/images/nilaisenislider3.png' },
+        { content: '../src/assets/images/nilaisenislider4.png' },
+        { content: '../src/assets/images/nilaisenislider5.png' },
         // Add more cards as needed
       ],
       fasilitaselement: [
-        {
-          img1: "../src/assets/images/panggungsanggabuwana.png",
-          img2: "../src/assets/images/masjidagungkasepuhan.png",
-          text1: "Panggung Sanggabuwana",
-          text2: "Masjid Agung Kasepuhan",
-        },
-        {
-          img1: "../src/assets/images/pendopoagungpakungwati.png",
-          img2: "../src/assets/images/museumpusakakeraton.png",
-          text1: "Pendopo Agung Pakungwati",
-          text2: "Museum Pusaka Keraton Kasepuhan",
-        },
+        {img1: '../src/assets/images/panggungsanggabuwana.png', img2: '../src/assets/images/masjidagungkasepuhan.png', text1: 'Panggung Sanggabuwana', text2: 'Masjid Agung Kasepuhan'},
+        {img1: '../src/assets/images/pendopoagungpakungwati.png', img2: '../src/assets/images/museumpusakakeraton.png', text1: 'Pendopo Agung Pakungwati', text2: 'Museum Pusaka Keraton Kasepuhan'}
       ],
       elementTiketKunjungan: [
-        {
-          img: "../src/assets/images/imgtiketagungdalem.png",
-          text1: "Tiket Masuk Keraton Kasepuhan Cirebon",
-          text2: "Rp. 10.000/orang",
-          text3: "Area Keraton",
-        },
+        {img: '../src/assets/images/imgtiketagungdalem.png',text1:'Tiket Masuk Keraton Kasepuhan Cirebon', text2: 'Rp. 10.000/orang', text3: 'Area Keraton'},
       ],
       wisataName: "",
       currentIndex: 2,
@@ -182,8 +150,11 @@ export default {
   },
   computed: {
     bullets() {
-      return Array(this.cards.length).fill("");
-    },
+      return Array(this.cards.length).fill('');
+    }
+  },
+  mounted(){
+    this.fetchData()
   },
   mounted(){
     this.fetchData()
@@ -205,10 +176,10 @@ export default {
     },
     centerActiveCard() {
       const sliderWidth = this.$refs.slider.offsetWidth;
-      const cardWidth = 250;
+      const cardWidth = 205;
       const offset = (sliderWidth - cardWidth) / 2;
-      const cardContainer = document.querySelector(".slider");
-      const activeCard = document.querySelector(".cardd.active");
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
 
       if (activeCard && cardContainer) {
         const index = this.currentIndex;
@@ -241,13 +212,13 @@ export default {
   watch: {
     currentIndex() {
       this.centerActiveCard();
-    },
+    }
   },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
 
 <style scoped>
@@ -268,12 +239,15 @@ export default {
   position: relative;
 }
 
+.container-title-top{
+  padding-bottom: 10vw;
+}
 .container-subtitle {
   display: flex;
   width: 90%;
   margin: 0 auto;
   font-weight: 600;
-  padding-top: 15vw;
+  padding-top: 10vw;
   font-size: 1vw;
   position: relative;
 }
@@ -287,7 +261,7 @@ export default {
 }
 
 .container-title-text {
-  margin-top: -38vw;
+  margin-top: -46vw;
   color: white;
 }
 
@@ -301,13 +275,35 @@ export default {
   margin: 0 auto;
 }
 
+/* .container-title2{
+  margin-top: 10vw;
+} */
+
+.bawah-title {
+  text-align: center;
+  margin: 0 auto;
+  width: 67vw;
+  color: #5E5E5E;
+  font-size: 1.6vw;
+  margin-top: 5vw;
+}
 .bawah-title2 {
   text-align: center;
   margin: 0 auto;
   width: 67vw;
-  color: #5e5e5e;
+  color: #5E5E5E;
   font-size: 1.6vw;
   margin-top: 2vw;
+}
+
+.container-slider{
+  width: 95vw;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  height: 40vw;
+  align-items: center;
+  margin-left: -3vw;
 }
 
 .slider {
@@ -393,8 +389,8 @@ export default {
   text-align: center;
   font-size: 1.5vw;
   margin: 0 auto;
-  color: #5e5e5e;
-  margin-top: 1vw;
+  color: #5E5E5E;
+  margin-top: 1vw
 }
 
 .container-title2 {
@@ -429,7 +425,7 @@ export default {
   flex: 0.8;
   font-size: 1.4vw;
   text-align: right;
-  color: #5e5e5e;
+  color: #5E5E5E;
 }
 
 .fasilitas-img1 {
@@ -451,7 +447,7 @@ export default {
   position: relative;
 }
 
-.fasilitas-img1 > div {
+.fasilitas-img1>div {
   flex: 1;
   padding: 0.5vw;
 }
@@ -488,7 +484,7 @@ export default {
   padding: 0.5vw 1.3vw 0.5vw 1.3vw;
   border-radius: 5px;
   border: 0;
-  background-color: #123b32;
+  background-color: #123B32;
   color: white;
   font-size: 1.2vw;
 }
@@ -506,13 +502,15 @@ export default {
   width: 96%;
   padding-top: 1vw;
   padding-bottom: 0.7vw;
-  border-bottom: 0.1vw solid #d0d5dd;
+  border-bottom: 0.1vw solid #D0D5DD;
 }
 
 .text-tiket-kunjungan {
   width: 100%;
   padding-top: 2vw;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 }
 
 .text-tiket {
@@ -524,7 +522,7 @@ export default {
 .text-harga {
   font-weight: 400;
   font-size: 1.7vw;
-  color: #5e5e5e;
+  color: #5E5E5E;
   margin-bottom: 0;
 }
 
