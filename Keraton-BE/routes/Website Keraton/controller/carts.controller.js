@@ -36,8 +36,8 @@ router.post('/validate', async (req, res) => {
     try{
         const cartData = Object.values(req.body.carts)
         if(cartData.length < 1) throw Error('No item to validate')
-        const data = await cartModel.updateCartData(cartData)
-        return data
+        const data = await cartModel.validate(cartData)
+        return success(res, 'Validated', data)
     }catch(err){
         return error(res, err.message)
     }

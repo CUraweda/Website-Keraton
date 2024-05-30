@@ -11,6 +11,7 @@ const { typeSeed } = require("./orderType.seeder.");
 const { categorySeed } = require("./category.seeder");
 const { newsSeed } = require("./news.seeder");
 const { paramSeed } = require("./globalParam.seeder");
+const { objekWisataSeed } = require("./objekWisata.seeder");
 
 async function main() {
   await pageSeed();
@@ -23,6 +24,7 @@ async function main() {
   await categorySeed()
   await typeSeed();
   await subTypeSeed();
+  await objekWisataSeed()
   await orderSeed();
   await eventSeed();
   await contentSeed();

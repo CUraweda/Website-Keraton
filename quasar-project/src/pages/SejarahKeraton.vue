@@ -2,17 +2,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet"
-  />
+
   <div>
     <div>
       <nav>
         <navbar border is-checkout-page="true" />
       </nav>
-      <div class="cover">
-        <img src="../assets/images/sejarah.jpg" alt="sejarah" />
+      <div>
+        <q-img
+          src="../assets/images/sejarah.jpg"
+          alt="sejarah"
+          class="col-grow"
+        ></q-img>
         <div class="upper">
           {{ uppertext }}
         </div>
@@ -117,12 +118,13 @@ export default {
     };
   },
   components: {
-    navbar,
+    navbar
   },
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 .button {
   width: 431px;
   height: 58px;
@@ -140,7 +142,7 @@ export default {
 }
 
 .textAll {
-  font-family: "Raleway", sans-serif;
+  font-family: Raleway;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -155,6 +157,7 @@ export default {
   color: #fae084;
   font-size: 2vw;
   white-space: nowrap;
+  font-family: "Raleway";
 }
 
 .upper-2 {
@@ -167,12 +170,14 @@ export default {
   font-weight: 400;
   width: 40vw;
   text-align: center;
+  font-family: "Raleway";
 }
 
 .info {
   padding-top: 10%;
   margin: 0 auto;
   width: 80%;
+  font-family: "Raleway";
 }
 
 .info1 {
@@ -180,6 +185,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
+  font-family: "Raleway";
 }
 
 .info1 p {
@@ -188,6 +194,7 @@ export default {
   font-weight: 400;
   color: #212121;
   width: 50%;
+  font-family: "Raleway";
 }
 
 .info1 img {
@@ -205,6 +212,7 @@ export default {
   padding-top: 9vw;
   width: 100%;
   margin: 0 auto;
+  font-family: "Raleway";
 }
 
 .info2 p,
@@ -213,18 +221,21 @@ export default {
 .info5 p {
   font-weight: 400;
   color: #212121;
+  font-family: "Raleway";
 }
 
 .info2 p,
 .info4-text p {
   text-align: right;
   margin-left: 4vw;
+  font-family: "Raleway";
 }
 
 .info3 p,
 .info5 p {
   text-align: left;
   margin-right: 4vw;
+  font-family: "Raleway";
 }
 
 .between,
@@ -232,6 +243,7 @@ export default {
   white-space: nowrap;
   margin-right: 2vw;
   padding-bottom: 1vw;
+  font-family: "Raleway";
 }
 
 .between2,

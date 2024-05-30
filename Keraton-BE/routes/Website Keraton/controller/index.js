@@ -11,6 +11,7 @@ const controlSubscribe = require("../controller/subscriber.controller");
 const controlCart = require("../controller/carts.controller");
 const controlTransaction = require('../controller/transaction.controller')
 const controlParam = require('../controller/params.controller')
+const controlObjekWisata = require('./objekWisata.controller')
 router.use("/content", controlContent);
 router.use("/page", controlPage);
 router.use("/auth", controlAuth);
@@ -22,5 +23,6 @@ router.use("/cart", controlCart);
 router.use("/subscribe", controlSubscribe);
 router.use("/iteration", controlIteration);
 router.use('/param', controlParam)
+router.use('/wisata', controlObjekWisata)
 
 module.exports = router;

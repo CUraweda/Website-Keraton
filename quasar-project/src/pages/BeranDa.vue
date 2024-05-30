@@ -15,7 +15,7 @@
     }"
   >
     <div class="texthero">
-      <h5 style="color: #fae084">{{ sectionName }}</h5>
+      <h5 style="color: #fae084" font-family="Raleway">{{ sectionName }}</h5>
       <h2 style="padding: 0 10rem">
         {{ sectionData?.xs1?.data }}
       </h2>
@@ -46,14 +46,12 @@
     </div>
   </section>
 
-  <section
-    class="sec-home"
-    id="section3"
-    :style="{
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(../assets/images/Frame.png);`,
-      'background-size': 'cover;',
-    }"
+  <section class="sec-home" 
+  id="section3"
+  :style="{
+    'background-image': `url(${sectionimg2})`,
+  'background-size': 'cover',
+}"
   >
     <div class="container">
       <div class="text">
@@ -62,7 +60,7 @@
         </a>
       </div>
     </div>
-  </section>
+  </section>
 
   <section
     class="sec-home"
@@ -179,7 +177,7 @@
     </div>
   </section>
 
-  <section class="slider" id="slider">
+  <section class="slider" id="slider" v-if="slides.length > 1">
     <h1 class="berita">Berita Terkini</h1>
     <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%)` }"
     @mouseenter="pauseSlider"
@@ -222,69 +220,60 @@
           <p class="sej3Text">
             {{ sectionData5?.xs2.data }}
           </p>
-          <a :href="sectionData5?.xl1.data">
-            <img class="btn2" src="../assets/images/tiket.png" />
-          </a>
+          <q-btn
+            no-caps
+            style="background-color: #123b32; color: white; font-size: 1.2vw"
+            to="/booking"
+            class="button-dapatkan"
+            label="Dapatkan Tiket Sekarang!"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <section id="section7">
-    <div
-      style="
-        background-size: cover;
-        height: 50vh;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        background-position: center;
-        color: white;
-        font-family: Raleway, sans-serif;
-      "
-    >
-      <div class="text">
-        <p class="faqText">{{ sectionName6 }}</p>
-        <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
-      </div>
-      <div class="faq">
-        <div
-          style="border-bottom: 1px solid black"
-          v-for="(faq, index) in faqs"
-          :key="index"
-          @click="toggleAccordion(index)"
-        >
-          <button class="accordion" @click="toggleAccordion(index)">
-            <span class="nomor">{{ faq.nomor }}</span>
-            <span>{{ faq.pertanyaan }}</span>
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              :class="{ active: faq.active }"
-            >
-              <path
-                d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
-                fill="#D9A520"
-              />
-            </svg>
-          </button>
+  <section class="sec-home" id="section7">
+  <div class="container">
+    <div class="text">
+      <p class="faqText">{{ sectionName6 }}</p>
+      <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
+    </div>
+    <div class="faq">
+      <div
+        style="border-bottom: 1px solid black"
+        v-for="(faq, index) in faqs"
+        :key="index"
+      >
+        <button class="accordion" @click="toggleAccordion(index)">
+          <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
           <svg
-            width="1064"
-            height="1"
-            viewBox="0 0 1064 1"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-          ></svg>
-          <div class="panel" v-show="faq.active">
-            <p class="jawaban">{{ faq.jawaban }}</p>
-          </div>
+            :class="{ active: faq.active }"
+          >
+            <path
+              d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
+              fill="#D9A520"
+            />
+          </svg>
+        </button>
+        <svg
+          width="1064"
+          height="1"
+          viewBox="0 0 1064 1"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        ></svg>
+        <div class="panel" v-show="faq.active">
+          <p class="jawaban">{{ faq.jawaban }}</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <section class="sec-home" id="section8">
     <bawah class="footer"></bawah>
@@ -292,10 +281,15 @@
 </template>
 
 <script setup>
+import cookieHandler from "src/cookieHandler";
 import navbar from "../components/NavBar.vue";
 import bawah from "../components/footerDesktop.vue";
 import socket from "src/socket";
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import environment from "src/stores/environment";
+import Carts from "src/stores/carts";
+import GlobalStorageData from "src/stores/globa";
+import { verifyToken } from "src/auth/auth";
 </script>
 
 <script>
@@ -306,122 +300,92 @@ export default {
   },
   data() {
     return {
+      sectionData: ref(),
       linkYoutube: ref(),
       title1: ref(""),
       subTitle1: ref(""),
       title2: ref(""),
       subTitle2: ref(""),
       backgroundImageUrl1: ref(),
-      status: ref(),
       backgroundImageUrl2: ref(),
       faqs: [
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban:
-            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
       activeCard: null,
-      currentBackground: ref(),
+      currentBackground: null,
       slides: [
         {
-          imageUrl:
-            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
-          title:
-            "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
-          link: "https://blue.kumparan.com",
-          summary:
-            "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
+          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
+          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
+          link: 'https://blue.kumparan.com',
+          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
         },
       ],
-      sectionimg: ref(),
-      sectionData: ref(),
-      sectionName: ref(),
-      sectionimg1: ref(),
-      sectionName1: ref(),
-      sectionData1: ref(),
-      sectionName2: ref(),
-      sectionimg2: ref(),
-      sectionName3: ref(),
-      sectionData3: ref(),
-      sectionName4: ref(),
-      sectionimg4: ref(),
-      sectionData4: ref(),
-      sectionName5: ref(),
-      sectionData5: ref(),
-      sectionName6: ref(),
-      sectionData6: ref(),
       currentSlideIndex: 0,
-      sliderInterval: null,
+      sliderInterval: null
     };
   },
   mounted() {
     this.fetchData();
     this.fetchNews();
     this.socket();
+    // this.setDefaultAndCheck()
     this.startSlider();
-    window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
-    console.log("Naha nge unmount wae");
     socket.disconnect();
-    window.removeEventListener("scroll", this.handleScroll)
+    window.removeEventListener("scroll", this.handleScroll);
     clearInterval(this.sliderInterval);
   },
   methods: {
-    // toggleAccordion(data, condition) {
-    //   this.faqs[condition].active = !this.faqs[condition].active;
-    // },
     socket() {
       socket.connect();
       socket.on("dashboard", () => {
         this.fetchData();
       });
     },
-    async fetchNews() {
-      try {
-        const response = await this.$api.get("news");
+    async fetchNews(){
+      try{
+        const response = await this.$api.get('news');
         console.log(response.data.data);
-        this.slides = response.data.data.map((news) => ({
+        this.slides = response.data.data.map(news => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          desc: news.desc,
-          summary: news.desc,
+          summary: news.desc
         }));
 
         console.log(this.slides);
-      } catch (err) {
+      }catch(err){
         console.log(err);
       }
     },
@@ -442,6 +406,7 @@ export default {
         this.sectionData1 = dataRest.contents[1].context;
 
         this.sectionName2 = dataRest.contents[2].sectionName;
+        this.sectionData2 = dataRest.contents[2].context;
         this.sectionimg2 = dataRest.contents[2]?.context?.xi1?.data;
 
         this.sectionName3 = dataRest.contents[3].sectionName;
@@ -456,27 +421,46 @@ export default {
 
         this.sectionName6 = dataRest.contents[6].sectionName;
         this.sectionData6 = dataRest.contents[6].context;
-        const contextValue = Object.values(dataRest.contents[6].context);
-        contextValue.shift();
-        this.faqs = contextValue.map((context, i) => ({
-          nomor: String(i + 1).padStart(2, "0"),
-          pertanyaan: context.data,
-          jawaban: context.sub,
-          active: false,
-        }));
 
         this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
       }
     },
-    toggleAccordion(index) {
-      this.faqs.forEach((faq, idx) => {
-        if (idx !== index) {
-          faq.active = false;
+    async setDefaultAndCheck(){
+      try{
+        const cartClass = new Carts()
+        const globalStorageClass = new GlobalStorageData()
+        const checkToken = await verifyToken()
+        if(checkToken.isLogin){
+          //Globalcn
+          globalStorageClass.setItem('isLogin', checkToken.isLogin)
+          globalStorageClass.setItem('isAdmin', checkToken.isAdmin)
+          globalStorageClass.update()
+          //Cart
+          const cart = cartClass.getItem()
+          if(cart){
+            const validateCartResponse = await this.$api.post('cart/validate', {
+              carts: cart
+            })
+            if(validateCartResponse.status != 200){
+              cartClass.clearCart()
+              throw Error(validateCartResponse.data.message)
+            } 
+            cartClass.setNew(Object.values(validateCartResponse.data.data))
+          }
         }
-      });
-      this.faqs[index].active = !this.faqs[index].active;
+        const availableWisata = await this.$api.get('wisata')
+        if(availableWisata.status != 200) throw Error(availableWisata.data.message)
+        const wisataData = availableWisata.data.data.wisataData.map(wisata => ({
+          label: wisata.label,
+          value: wisata.to
+        }))
+        localStorage.setItem(environment.WISATA_STORAGE_NAME, JSON.stringify(wisataData))
+
+      }catch(err){
+        console.log(err)
+      }
     },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -500,14 +484,16 @@ export default {
     },
     resumeSlider() {
       this.startSlider();
+    },
+    toggleAccordion(index) {
+      this.faqs[index].active = !this.faqs[index].active;
     }
   }
 }
-
 const scrollToTop = () => {
-document.querySelector('#hero').scrollIntoView({
-  behavior: 'smooth'
-});
+  document.querySelector('#hero').scrollIntoView({
+    behavior: 'smooth'
+  });
 }
 </script>
 
@@ -528,9 +514,14 @@ document.querySelector('#hero').scrollIntoView({
   align-items: center;
   justify-content: center;
 } */
+
+Body{
+  font-family: Raleway;
+}
 .texthero {
   text-align: center;
   color: white;
+  font-family: Raleway;
 }
 
 /* #section1 .container {
@@ -573,8 +564,7 @@ background-size: cover;
 }
 
 #section3 .container {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../assets/images/keraton2.png");
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   background-size: cover;
 }
 
@@ -584,7 +574,7 @@ background-size: cover;
 
 #section5 .container {
   background-image: url("../assets/images/keraton2.png");
-  height: 130vh;
+  height: 150vh;
   /* height: 1000px; */
   background-size: cover;
   background-position: center;
@@ -622,8 +612,8 @@ background-size: cover;
 
 #slider {
   color: #000000;
-  height: 110vh;
-  padding-top: 2rem;
+  height: 120vh;
+  padding-top: 5rem;
 }
 
 .slider {
@@ -707,6 +697,7 @@ background-size: cover;
   text-align: Center;
   font-size: 60px;
   font-weight: 600;
+  margin-top: 1rem;
 }
 
 @keyframes slide {
@@ -912,7 +903,6 @@ background-size: cover;
   height: 45%;
   left: 70%;
   top: 35%;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   border-radius: 50px;
   transform: 0.2s all ease;
 }
@@ -1663,7 +1653,6 @@ input::placeholder {
     height: 45%;
     left: 71%;
     top: 35%;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
     border-radius: 50px;
   }
 

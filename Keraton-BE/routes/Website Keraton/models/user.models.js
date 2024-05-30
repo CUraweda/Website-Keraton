@@ -23,7 +23,7 @@ const logIn = async (body) => {
   const { email, password } = body;
   try {
     const user = await getUser(email);
-    if (!user) throw new Error("Username tidak ditemukan!");
+    if (!user) throw new Error("Email tidak ditemukan!");
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) throw new Error("Password tidak sesuai");
@@ -37,12 +37,19 @@ const logIn = async (body) => {
     throwError(err);
   }
 };
+const emailExist = async (email) => {
+  try{
+    return await prisma.user.findFirst({ where: { email } })
+  }catch(err){
+    throwError(err)
+  }
+}
 const signUp = async (data) => {
   try {
     const { email, password, name } = data;
-
+    const emailAlreadyExist = await emailExist(email)
+    if(emailAlreadyExist) throw Error('Email Already exist')
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = await prisma.user.create({
       data: {
         email,
@@ -57,8 +64,8 @@ const signUp = async (data) => {
       password: password,
     };
 
-    const token = await logIn(newDataForLog);
-    return token;
+    data = await logIn(newDataForLog);
+    return data;
   } catch (err) {
     throwError(err);
   }

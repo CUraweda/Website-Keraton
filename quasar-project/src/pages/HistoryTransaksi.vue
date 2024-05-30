@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import NavBar from "../components/NavBar.vue";
 import cookieHandler from "src/cookieHandler";
-import env from 'stores/environment'
+import env from "stores/environment";
 
 const detail = ref(false);
 const cara = ref(false);
@@ -88,16 +88,33 @@ const transactions = [
             <div class="search">
               <label for="search" class="search-label">
                 <img src="../assets/svg/search.svg" class="search-icon" />
-                <input type="search" v-model="searchQuery" id="search" name="search" placeholder="Cari transaksi"
-                  class="Pencarian" />
+                <input
+                  type="search"
+                  v-model="searchQuery"
+                  id="search"
+                  name="search"
+                  placeholder="Cari transaksi"
+                  class="Pencarian"
+                />
               </label>
             </div>
             <div class="date">
-              <input value="Pilih tanggal" type="date" class="tanggal" placeholder="Pilih tanggal" />
+              <input
+                value="Pilih tanggal"
+                type="date"
+                class="tanggal"
+                placeholder="Pilih tanggal"
+              />
             </div>
             <div class="status">
-              <select name="Status" placeholder="status" value="Status" v-model="selectedStatus"
-                @change="statusSelected = true" class="custom-select">
+              <select
+                name="Status"
+                placeholder="status"
+                value="Status"
+                v-model="selectedStatus"
+                @change="statusSelected = true"
+                class="custom-select"
+              >
                 <option value="sudahDigunakan">Sudah digunakan</option>
                 <option value="dapatDigunakan">Dapat digunakan</option>
                 <option value="expired">Expired</option>
@@ -107,11 +124,19 @@ const transactions = [
           </div>
         </div>
       </div>
-      <div v-for="transaction in historyDatas" :key="transaction.status" class="tabel">
+      <div
+        v-for="transaction in historyDatas"
+        :key="transaction.status"
+        class="tabel"
+      >
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
-              <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
+              <img
+                src="../assets/images/Vector.png"
+                alt="icon-tiket"
+                class="icon-tiket"
+              />
               <p>Tiket</p>
               <label>{{ transaction.date }}</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
@@ -121,23 +146,42 @@ const transactions = [
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
                 <div class="flex items-center q-gutter-xs">
-                  <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data" :key="i">{{ badge.name }}</q-badge>
+                  <q-badge
+                    rounded
+                    :color="badge.badgeColor"
+                    v-for="(badge, i) in transaction.detailDatas.data"
+                    :key="i"
+                    >{{ badge.name }}</q-badge
+                  >
                 </div>
                 <div class="label">
-                  <label class="labelharga">{{ `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`  }}</label><br />
-                  <label>{{ `+${transaction.detailDatas.length - 1} tiket lainnya` }}</label>
+                  <label class="labelharga">{{
+                    `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
+                  }}</label
+                  ><br />
+                  <label>{{
+                    `+${transaction.detailDatas.length - 1} tiket lainnya`
+                  }}</label>
                 </div>
                 <div class="total">
                   <div class="info">
                     <p class="total__belanja">Total belanja</p>
-                    <p class="hrga">Rp. {{  transaction.total }}</p>
+                    <p class="hrga">Rp. {{ transaction.total }}</p>
                   </div>
                   <div class="actions">
-                    <a v-for="(action, index) in transaction.actions" :key="index" @click="action.handler"
-                      class="detail">
+                    <a
+                      v-for="(action, index) in transaction.actions"
+                      :key="index"
+                      @click="action.handler"
+                      class="detail"
+                    >
                       <p class="bantu">{{ action.label }}</p>
                     </a>
-                    <a href="" class="bantuan" v-if="transaction.status !== 'menungguPembayaran'"></a>
+                    <a
+                      href=""
+                      class="bantuan"
+                      v-if="transaction.status !== 'menungguPembayaran'"
+                    ></a>
                   </div>
                 </div>
               </div>
@@ -152,8 +196,9 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <h1 class="p">Detail Transaksi</h1>
-              <span class="close" @click="closeDetailTransaksi"><img src="../assets/images/close.png"
-                  class="Icon" /></span>
+              <span class="close" @click="closeDetailTransaksi"
+                ><img src="../assets/images/close.png" class="Icon"
+              /></span>
             </div>
             <div class="isi">
               <small class="label-card1">Sudah digunakan</small>
@@ -178,8 +223,10 @@ const transactions = [
                   </div>
                 </div>
                 <div class="all-tiket">
-                  <small>Lihat semua tiket
-                    <img src="../assets/svg/panahBawah.svg" alt="" /></small>
+                  <small
+                    >Lihat semua tiket
+                    <img src="../assets/svg/panahBawah.svg" alt=""
+                  /></small>
                 </div>
                 <h6 class="info-pembayaran">Info pembayaran</h6>
                 <div class="status-pembayaran">
@@ -218,8 +265,9 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <h1 class="p">Cara Pembayaran</h1>
-              <span class="close" @click="closeMenungguPembayaran"><img src="../assets/images/close.png"
-                  class="Icon" /></span>
+              <span class="close" @click="closeMenungguPembayaran"
+                ><img src="../assets/images/close.png" class="Icon"
+              /></span>
             </div>
             <div class="isi">
               <div class="bjb">
@@ -277,25 +325,29 @@ export default {
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       historyDatas: ref([]),
       rawHistoryDatas: ref({}),
-    }
+    };
   },
   mounted() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     async fetchData() {
       try {
-        const response = await this.$api.get('trans', {
+        const response = await this.$api.get("trans", {
           headers: {
-            Authorization: `Bearer ${this.token}`
-          }
-        })
-        if (response.status != 200) throw Error(response.data.message)
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+        if (response.status != 200) throw Error(response.data.message);
         for (let transaction of response.data.data) {
-          let planDate = new Date(transaction.plannedDate)
-          planDate = new Intl.DateTimeFormat('en-GB',  { day: '2-digit', month: 'short', year: 'numeric' }).format(planDate);
+          let planDate = new Date(transaction.plannedDate);
+          planDate = new Intl.DateTimeFormat("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }).format(planDate);
 
-          this.rawHistoryDatas[transaction.id] = transaction.detailTrans
+          this.rawHistoryDatas[transaction.id] = transaction.detailTrans;
           this.historyDatas.push({
             ...this.simplifyDetail(transaction.detailTrans),
             ...this.simplifyStatus(transaction.status),
@@ -306,80 +358,82 @@ export default {
             //   { label: "|" },
             //   { label: "Cara Pembayaran", handler: openMenungguPembayaran() },
             // ]
-          })
+          });
         }
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
     openDetailTransaksi(row) {
       detail.value = !detail.value;
     },
-    simplifyDetail(detail){
+    simplifyDetail(detail) {
       let detailDatas = {
         length: 0,
-        data: []
-      }
-      for (let detailData of detail){
-        let contentToPush = {}
-        if(detailData.order){
-          const orderData = detailData.order
-          contentToPush['price'] = orderData.price,
-          contentToPush['quantity'] = detailData.amount
-          contentToPush['name'] = orderData.name
-          contentToPush['badgeColor'] = orderData.orderSubTypeId ? 'blue' : 'orange'
-        }else {
-          const eventData = detailData.event
-          contentToPush['price'] = eventData.price,
-          contentToPush['quantity'] = detailData.amount
-          contentToPush['name'] = eventData.name
-          contentToPush['badgeColor'] = 'green'
+        data: [],
+      };
+      for (let detailData of detail) {
+        let contentToPush = {};
+        if (detailData.order) {
+          const orderData = detailData.order;
+          (contentToPush["price"] = orderData.price),
+            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["name"] = orderData.name;
+          contentToPush["badgeColor"] = orderData.orderSubTypeId
+            ? "blue"
+            : "orange";
+        } else {
+          const eventData = detailData.event;
+          (contentToPush["price"] = eventData.price),
+            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["name"] = eventData.name;
+          contentToPush["badgeColor"] = "green";
         }
-        detailDatas.data.push(contentToPush)
+        detailDatas.data.push(contentToPush);
       }
-      detailDatas.length = detail.length
-      return { detailDatas }
+      detailDatas.length = detail.length;
+      return { detailDatas };
     },
     simplifyStatus(status) {
-      let dataToReturn = {}
+      let dataToReturn = {};
       switch (status) {
         case "SUDAH_DIGUNAKAN":
-          dataToReturn['status'] = "sudahDigunakan"
-          dataToReturn['label'] = "Sudah Digunakan"
-          dataToReturn['class'] = "sudah__digunakan"
-          dataToReturn['cardClass'] = "card-1"
+          dataToReturn["status"] = "sudahDigunakan";
+          dataToReturn["label"] = "Sudah Digunakan";
+          dataToReturn["class"] = "sudah__digunakan";
+          dataToReturn["cardClass"] = "card-1";
           break;
         case "DAPAT_DIGUNAKAN":
-          dataToReturn['status'] = "dapatDigunakan"
-          dataToReturn['label'] = "Dapat Digunakan"
-          dataToReturn['class'] = "dapat__digunakan"
-          dataToReturn['cardClass'] = "card-2"
+          dataToReturn["status"] = "dapatDigunakan";
+          dataToReturn["label"] = "Dapat Digunakan";
+          dataToReturn["class"] = "dapat__digunakan";
+          dataToReturn["cardClass"] = "card-2";
           break;
         case "EXPIRED":
-          dataToReturn['status'] = "expired"
-          dataToReturn['label'] = "Expired"
-          dataToReturn['class'] = "expired"
-          dataToReturn['cardClass'] = "card-3"
+          dataToReturn["status"] = "expired";
+          dataToReturn["label"] = "Expired";
+          dataToReturn["class"] = "expired";
+          dataToReturn["cardClass"] = "card-3";
           break;
         case "MENUNGGU_PEMBAYARAN":
-          dataToReturn['status'] = "menungguPembayaran"
-          dataToReturn['label'] = "Menunggu Pembayaran"
-          dataToReturn['class'] = "menunggu__pembayaran"
-          dataToReturn['cardClass'] = "card-4"
+          dataToReturn["status"] = "menungguPembayaran";
+          dataToReturn["label"] = "Menunggu Pembayaran";
+          dataToReturn["class"] = "menunggu__pembayaran";
+          dataToReturn["cardClass"] = "card-4";
           break;
         default:
           break;
       }
-      return dataToReturn
-    }
+      return dataToReturn;
+    },
   },
   formatRupiah(price) {
-      if (price === 0) return "Free"
-      return (price / 1000).toLocaleString("en-US", {
-        minimumFractionDigits: 3,
-      });
-    },
-}
+    if (price === 0) return "Free";
+    return (price / 1000).toLocaleString("en-US", {
+      minimumFractionDigits: 3,
+    });
+  },
+};
 </script>
 
 <style scoped>
@@ -621,12 +675,9 @@ label.labelharga {
 }
 
 .info {
-  padding-top: 25px;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
-  /* Menyusun paragraf total belanja dan harga secara vertikal */
-  gap: 0.5rem;
-  /* Jarak antara paragraf */
 }
 
 .actions {
@@ -677,9 +728,7 @@ label.labelharga {
 
 p.total__belanja {
   font-size: 12px;
-  line-height: 20px;
   font-weight: 400;
-  padding-bottom: 1px;
 }
 
 p.hrga {
@@ -785,7 +834,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container>div {
+.flex-container > div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -980,11 +1029,13 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(to right,
-      #d9d9d9,
-      #d9d9d9 7px,
-      transparent 5px,
-      transparent 10px);
+  background-image: repeating-linear-gradient(
+    to right,
+    #d9d9d9,
+    #d9d9d9 7px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
 .total-biaya {

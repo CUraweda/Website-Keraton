@@ -73,11 +73,14 @@ model Order {
   name           String
   desc           String?
   price          Float
+  units          String        @default("orang")
   createdAt      DateTime      @default(now())
   posOnly        Boolean       @default(false)
   detailTrans    DetailTrans[]
   category       Category      @relation(fields: [categoryId], references: [id])
   categoryId     Int
+  wisataRelation String?
+  wisataDesc String? @db.Text
   orderSubType   OrderSubType  @relation(fields: [orderSubTypeId], references: [id])
   orderSubTypeId Int
 }
@@ -101,7 +104,7 @@ model OrderSubType {
   minimumUnits Int?
   orderType    OrderType @relation(fields: [orderTypeId], references: [id])
   orderTypeId  Int
-  order        Order[]
+  orders       Order[] //PLease do not change this
 }
 
 model Transaction {
@@ -224,8 +227,11 @@ model GlobalParam {
   identifier String
   data       Json
   updatedAt  DateTime @updatedAt
-<<<<<<< HEAD
 }
-=======
+
+model ObjekWisata {
+  id    Int     @id @default(autoincrement())
+  label String
+  to    String
+  orderIdentifier String
 }
->>>>>>> ab62b597aa3d76642b62a367a7afdf2aa889d99a

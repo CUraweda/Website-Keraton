@@ -6,9 +6,9 @@ const orderModel = require('../models/order.models')
 
 const action = async (actionParam, id, carts) => {
     try {
-        const user = await validate(id, carts)
+        const user = await prisma.user.findFirst(id)
         let rawUserCarts = user.carts
-        switch(actionParam){
+        switch (actionParam) {
             case "add":
                 for (let cart of carts) rawUserCarts[cart.id] = cart
                 break;
@@ -25,30 +25,49 @@ const action = async (actionParam, id, carts) => {
 }
 
 const updateCart = async (id, carts) => {
-    try{
+    try {
 
         return await prisma.user.update({ where: { id }, data: { carts } })
-    }catch(err){
+    } catch (err) {
         throwError(err)
     }
 }
 
-const validate  = async (id, carts) => {
-    try{
+const validate = async (carts) => {
+    let dataToMatch = {}, checkedCart = []
+    try {
         if (carts.length < 1) throw Error('No Item in carts')
-        const user = await userModel.isExist({ id })
-        if (!user) throw Error('User didnt exist')
-        return user
-    }catch(err){
+        await (await prisma.order.findMany()).forEach(order => {
+            dataToMatch["T"|order.id] = {
+                image: order.image,
+                price: order.price
+            }
+        })
+        await (await prisma.events.findMany()).forEach(event => {
+            dataToMatch["E|"+event.id] = {
+                image: event.image,
+                price: event.price
+            }
+        })
+        for(let cart of carts){
+            const itemIdentifier = `${cart.type}|${cart.id}`
+            const itemExist = dataToMatch[itemIdentifier]
+            if(!itemExist) continue
+            cart.price = itemExist.price
+            cart.image = itemExist.image
+            checkedCart.push(cart)
+        }
+        return checkedCart
+    } catch (err) {
         throwError(err)
     }
 }
 
-const updateCartData = async (carts)  => {
+const updateCartData = async (carts) => {
     let dataExist
-    try{
-        for(let cart of carts){
-            switch(cart.type){
+    try {
+        for (let cart of carts) {
+            switch (cart.type) {
                 case "E":
                     dataExist = await eventModel.isExist(cart.id)
                     break;
@@ -58,7 +77,7 @@ const updateCartData = async (carts)  => {
                 default:
                     break;
             }
-            if(!dataExist) delete cart
+            if (!dataExist) delete cart
             cart = {
                 id: dataExist.id,
                 name: dataExist.name,
@@ -68,24 +87,24 @@ const updateCartData = async (carts)  => {
             }
         }
         return carts
-    }catch(err){
+    } catch (err) {
         throwError(err)
     }
 }
 
 const countTotal = (carts) => {
-    try{
+    try {
         let total = 0
 
-        for(let cart of carts){
+        for (let cart of carts) {
             console.log(cart)
             total = total + cart.price
-        } 
+        }
         console.log(total)
         return total
-    }catch(err){
+    } catch (err) {
         throwError(err)
     }
 }
 
-module.exports = { action, updateCart, countTotal, updateCartData }
+module.exports = { action, updateCart, countTotal, updateCartData, validate }

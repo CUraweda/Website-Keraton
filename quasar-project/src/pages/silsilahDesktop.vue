@@ -32,12 +32,10 @@
       </div>
     </div>
   </div>
-  <FooterComp/>
 </template>
 
 <script>
 import NavBar from "../components/NavBar.vue";
-import FooterComp from "../components/FooterComp.vue";
 import sultanXImage from '../assets/images/sultan sepuh xi.png';
 import sultanXIImage from '../assets/images/sultan sepuh xii.jpg';
 import sultanXIIImage from '../assets/images/sultan sepuh xiii.jpg';
@@ -49,7 +47,7 @@ import sultanXVmage2 from '../assets/images/sultan sepuh xv 2.jpg';
 
 export default {
   components: {
-    NavBar, FooterComp
+    NavBar
   },
   data() {
     return {

@@ -55,10 +55,8 @@ onMounted(() => {
 });
 </script>
 
-<style lang="css"></style>
-
 <template>
-  <nav class="navbar">
+  <nav>
     <navbar border />
   </nav>
   <div class="body">
