@@ -1,40 +1,31 @@
 <template>
-  <div>
-    <nav>
-      <navbar isWhiteText />
-    </nav>
-    <div class="container-title-top">
-      <img src="../assets/images/museumPusakaa.png" class="img-title" alt="" />
-      <div class="container-title-text">
-        <div class="texttitle-img">MUSEUM PUSAKA</div>
-        <div class="container-subtitle">
-          <p>
-            Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan,
-            Cirebon, Jawa Barat.
-          </p>
-          <p>
-            Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja
-            Mochamad Jayadiningrat.
-          </p>
-          <p>
-            Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri
-            dari dua lantai.
-          </p>
-        </div>
-        <div class="container-arrowdown">
-          <a class="arrow-down" @click="scrollToContent"
-            ><img src="../assets/images/Frame.svg" class="img-arrow-down"
-          /></a>
-        </div>
+  <div><nav>
+    <navbar isWhiteText />
+  </nav>
+  <div class="container-title-top">
+    <img src="../assets/images/museumPusakaa.png" class="img-title" alt="">
+    <div class="container-title-text">
+      <div class="texttitle-img">MUSEUM PUSAKA</div>
+      <div class="container-subtitle">
+        <p>Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan, Cirebon, Jawa Barat.</p>
+        <p>Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja Mochamad Jayadiningrat.</p>
+        <p>Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari dua lantai.</p>
+      </div>
+      <div class="container-arrowdown">
+        <a class="arrow-down" @click="scrollToContent"><img src="../assets/images/Frame.svg"
+            class="img-arrow-down" /></a>
       </div>
     </div>
+  </div>
 
-    <div class="container-title2">
-      <div><span>Mengenal</span> sejarah dan budaya Cirebon</div>
-      <p class="bawah-title2">
-        Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta
-        kencana, gamelan, dan lukisan.
-      </p>
+  <div class="container-title2">
+    <div>
+      <span>Mengenal</span> sejarah dan budaya Cirebon
+    </div>
+    <p class="bawah-title2">
+      Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta kencana, gamelan, dan lukisan.
+    </p>
+    <div class="container-slider">
       <div class="slider" ref="slider">
         <img
           v-for="(card, index) in cards"
@@ -44,136 +35,116 @@
           :class="{ cardd: true, active: index === currentIndex }"
         />
       </div>
-
-      <div class="button-container">
-        <img
-          class="button-slider"
-          @click="prevCard"
-          src="../assets/svg/ArrowLeft.svg"
-        />
-        <div
-          class="bulet"
-          v-for="(bulet, index) in bullets"
-          :key="index"
-          :class="{ active: index === currentIndex }"
-        ></div>
-        <img
-          class="button-slider"
-          @click="nextCard"
-          src="../assets/svg/ArrrowRight.svg"
-        />
-      </div>
     </div>
 
-    <div class="container-fasilitas">
-      <div class="fasilitas-text">
-        <div>Fasilitas</div>
-        <div>
-          Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang
-          kegiatan wisata dan budaya.
-        </div>
+    <div class="button-container">
+      <img class="button-slider" @click="prevCard" src="../assets/svg/ArrowLeft.svg" />
+      <div class="bulet" v-for="(bulet, index) in bullets" :key="index" :class="{ active: index === currentIndex }">
       </div>
-      <div class="fasilitas-img1">
-        <div v-for="(elemen, index) in fasilitaselement" :key="index">
-          <img :src="elemen.img1" alt="" />
-          <div class="text-fasilitas">
-            {{ elemen.text1 }}
-          </div>
-        </div>
-      </div>
-      <div class="fasilitas-img1 fasilitas-img2">
-        <div v-for="(elemen, index) in fasilitaselement" :key="index">
-          <img :src="elemen.img2" alt="" />
-          <div class="text-fasilitas">
-            {{ elemen.text2 }}
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="fasilitas-text kunjungan-text">
-          <div>Kunjungan</div>
-          <div>
-            Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
-            wisata yang menarik.
-          </div>
-        </div>
-        <div class="btn-kunjungan-text">
-          <a href="#/booking"><button>Dapatkan Tiket Sekarang!</button></a>
-        </div>
-
-        <div class="container-tiket-kunjungan">
-          <div
-            class="tiket-kunjungan"
-            v-for="(element, index) in elementTiketKunjungan"
-            :key="index"
-          >
-            <div class="text-tiket-kunjungan">
-              <div class="text-tiket">{{ element.text1 }}</div>
-              <p class="text-harga">{{ element.text2 }}</p>
-              <p class="text-harga" id="text-area">{{ element.text3 }}</p>
-            </div>
-            <img class="img-tiket-kunjungan" :src="element.img" alt="" />
-          </div>
-        </div>
-      </div>
+      <img class="button-slider" @click="nextCard" src="../assets/svg/ArrrowRight.svg" />
     </div>
   </div>
+
+  <div class="container-fasilitas">
+    <div class="fasilitas-text">
+      <div>
+        Fasilitas
+      </div>
+      <div>
+        Fasilitas di Keraton Kasepuhan Cirebon cukup lengkap untuk menunjang kegiatan wisata dan
+        budaya.
+      </div>
+    </div>
+    <div class="fasilitas-img1">
+      <div v-for="(elemen, index) in fasilitaselement" :key="index">
+        <img :src="elemen.img1" alt="">
+        <div class="text-fasilitas">
+          {{ elemen.text1 }}
+        </div>
+      </div>
+    </div>
+    <div class="fasilitas-img1 fasilitas-img2">
+      <div v-for="(elemen, index) in fasilitaselement" :key="index">
+        <img :src="elemen.img2" alt="">
+        <div class="text-fasilitas">
+          {{ elemen.text2 }}
+        </div>
+      </div>
+    </div>
+    <div>
+
+      <div class="fasilitas-text kunjungan-text">
+        <div>
+          Kunjungan
+        </div>
+        <div>
+          Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket wisata yang menarik.
+        </div>
+      </div>
+      <div class="btn-kunjungan-text">
+        <a href="/#/booking"><button style="cursor: pointer;">Dapatkan Tiket Sekarang!</button></a>
+      </div>
+
+      <div class="container-tiket-kunjungan">
+        <a href="/#/booking"><div class="tiket-kunjungan" v-for="(element, index) in elementTiketKunjungan" :key="index">
+          <div class="text-tiket-kunjungan">
+            <div class="text-tiket">{{ element.text1 }}</div>
+            <p class="text-harga">{{ element.text2 }}</p>
+            <p class="text-harga" id="text-area">{{ element.text3 }}</p>
+          </div>
+          <img class="img-tiket-kunjungan" :src="element.img" alt="">
+        </div></a>
+        <div class="foterr">
+          <footerDesktop/>
+        </div>
+      </div>
+    </div>
+  </div></div>
+  
 </template>
 
 <script setup>
-import navbar from "../components/NavBar.vue";
+import navbar from '../components/NavBar.vue'
+import footerDesktop from '../components/footerDesktop.vue';
 </script>
 
 <script>
+
 const scrollToContent = () => {
-  document.querySelector(".container-title2").scrollIntoView({
-    behavior: "smooth",
+  document.querySelector('.container-title2').scrollIntoView({
+    behavior: 'smooth'
   });
 };
 
 export default {
   components: {
     navbar,
+    footerDesktop,
   },
   data() {
     return {
       cards: [
-        { content: "../src/assets/images/sejarahslider1.png" },
-        { content: "../src/assets/images/sejarahslider2.png" },
-        { content: "../src/assets/images/sejarahslider3.png" },
-        { content: "../src/assets/images/sejarahslider4.png" },
-        { content: "../src/assets/images/sejarahslider5.png" },
+        { content: '../src/assets/images/sejarahslider1.png' },
+        { content: '../src/assets/images/sejarahslider2.png' },
+        { content: '../src/assets/images/sejarahslider3.png' },
+        { content: '../src/assets/images/sejarahslider4.png' },
+        { content: '../src/assets/images/sejarahslider5.png' },
         // Add more cards as needed
       ],
       fasilitaselement: [
-        {
-          img1: "../src/assets/images/image33.png",
-          img2: "../src/assets/images/card2.png",
-          text1: "Ruang Pameran",
-          text2: "Ruang Audio Visual",
-        },
-        {
-          img1: "../src/assets/images/card3.png",
-          img2: "../src/assets/images/card4Museum.png",
-          text1: "Ruang Kelas",
-          text2: "Tempat Penjualan Souvenir",
-        },
+        { img1: '../src/assets/images/image33.png', img2: '../src/assets/images/card2.png', text1: 'Ruang Pameran', text2: 'Ruang Audio Visual' },
+        { img1: '../src/assets/images/card3.png', img2: '../src/assets/images/card4Museum.png', text1: 'Ruang Kelas', text2: 'Tempat Penjualan Souvenir' }
       ],
       elementTiketKunjungan: [
-        {
-          img: "../src/assets/images/museumPaket.png",
-          text1: "Tiket Masuk Museum Pusaka",
-          text2: "Rp. 15.000/orang",
-          text3: "Area Museum Pusaka",
-        },
+        { img: '../src/assets/images/museumPaket.png', text1: 'Tiket Masuk Museum Pusaka', text2: 'Rp. 15.000/orang', text3: 'Area Museum Pusaka' },
       ],
-      currentIndex: 2,
+      currentIndex: 2
     };
   },
   computed: {
     bullets() {
-      return Array(this.cards.length).fill("");
-    },
+      return Array(this.cards.length).fill('');
+    }
   },
   methods: {
     prevCard() {
@@ -192,28 +163,28 @@ export default {
     },
     centerActiveCard() {
       const sliderWidth = this.$refs.slider.offsetWidth;
-      const cardWidth = 250;
+      const cardWidth = 205;
       const offset = (sliderWidth - cardWidth) / 2;
-      const cardContainer = document.querySelector(".slider");
-      const activeCard = document.querySelector(".cardd.active");
+      const cardContainer = document.querySelector('.slider');
+      const activeCard = document.querySelector('.cardd.active');
 
       if (activeCard && cardContainer) {
         const index = this.currentIndex;
         const newPosition = -index * cardWidth + offset;
         cardContainer.style.transform = `translateX(${newPosition}px)`;
       }
-    },
+    }
   },
   watch: {
     currentIndex() {
       this.centerActiveCard();
-    },
+    }
   },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 </style>
 
 <style scoped>
@@ -239,7 +210,7 @@ export default {
   width: 90%;
   margin: 0 auto;
   font-weight: 600;
-  padding-top: 15vw;
+  padding-top: 10vw;
   font-size: 1vw;
   position: relative;
 }
@@ -253,7 +224,7 @@ export default {
 }
 
 .container-title-text {
-  margin-top: -38vw;
+  margin-top: -46vw;
   color: white;
 }
 
@@ -267,20 +238,31 @@ export default {
   margin: 0 auto;
 }
 
+
 .bawah-title2 {
   text-align: center;
   margin: 0 auto;
   width: 67vw;
-  color: #5e5e5e;
+  color: #5E5E5E;
   font-size: 1.6vw;
   margin-top: 2vw;
+}
+
+.container-slider{
+  width: 95vw;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  height: 40vw;
+  align-items: center;
+  margin-left: -3vw;
 }
 
 .slider {
   display: flex;
   transition: transform 0.3s ease;
   align-items: center;
-  margin-left: 70px;
+  margin-left: 11vw;
 }
 
 .slider img {
@@ -359,12 +341,12 @@ export default {
   text-align: center;
   font-size: 1.5vw;
   margin: 0 auto;
-  color: #5e5e5e;
-  margin-top: 1vw;
+  color: #5E5E5E;
+  margin-top: 1vw
 }
 
 .container-title2 {
-  margin-top: 10vw;
+  margin-top: 20vw;
 }
 
 .img-pagination {
@@ -395,7 +377,7 @@ export default {
   flex: 0.8;
   font-size: 1.4vw;
   text-align: right;
-  color: #5e5e5e;
+  color: #5E5E5E;
 }
 
 .fasilitas-img1 {
@@ -417,7 +399,7 @@ export default {
   position: relative;
 }
 
-.fasilitas-img1 > div {
+.fasilitas-img1>div {
   flex: 1;
   padding: 0.5vw;
 }
@@ -454,7 +436,7 @@ export default {
   padding: 0.5vw 1.3vw 0.5vw 1.3vw;
   border-radius: 5px;
   border: 0;
-  background-color: #123b32;
+  background-color: #123B32;
   color: white;
   font-size: 1.2vw;
 }
@@ -472,7 +454,7 @@ export default {
   width: 96%;
   padding-top: 1vw;
   padding-bottom: 0.7vw;
-  border-bottom: 0.1vw solid #d0d5dd;
+  border-bottom: 0.1vw solid #D0D5DD;
 }
 
 .text-tiket-kunjungan {
@@ -485,12 +467,14 @@ export default {
   font-weight: 600;
   font-size: 1.7vw;
   height: min-content;
+  color: black;
+  text-decoration: none;
 }
 
 .text-harga {
   font-weight: 400;
   font-size: 1.7vw;
-  color: #5e5e5e;
+  color: #5E5E5E;
   margin-bottom: 0;
 }
 
@@ -537,9 +521,11 @@ h4 {
   line-height: 2.8vw;
 }
 
-.foterr {
+.foterr{
   margin-top: 42vw;
 }
+
+
 
 @media screen and (max-width: 600px) {
   .img-title {

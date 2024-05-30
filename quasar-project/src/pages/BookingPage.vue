@@ -1,88 +1,78 @@
 <template>
-  <div v-if="isLogin">
-    <div>
-      <nav>
-        <navbar border :isCheckoutPage="true" />
-      </nav>
-      <div class="header">
-        <div class="text1">
+  <div>
+    <nav>
+      <navbar border :isCheckoutPage="true" />
+    </nav>
+    <div class="header">
+      <div class="text1">
+        <ul>
+          <RouterLink :to="'/booking'">Booking / Paket Keraton</RouterLink>
+        </ul>
+        <div class="kakaje">
           <ul>
-            <RouterLink :to="'/booking'">Booking / Paket Keraton</RouterLink>
+            <a class="text2">
+              <strong><a class="text2">Tiket Event Keraton</a></strong>
+            </a>
           </ul>
-          <div class="kakaje">
-            <ul>
-              <a class="text2">
-                <strong><a class="text2">Tiket Event Keraton</a></strong>
-              </a>
-            </ul>
-          </div>
         </div>
       </div>
     </div>
-    <a class="judul1">Tiket Masuk Keraton & Bundling</a>
+  </div>
+  <a class="judul1">Tiket Masuk Keraton & Bundling</a>
+  <div class="container">
+    <div class="ni" v-for="(item, index) in tiketItems" :key="index">
+      <img class="image" :src="item.image ? getImageURL(item.image) : defaultImageUrl" alt="Gambar" />
+      <div class="buttonaji"></div>
+      <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
+      <h1 class="judul-besar">{{ item.titleBig }}</h1>
+      <div class="tengah">
+        <h3 class="judul-kecil">
+          {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
+        </h3>
+        <button class="tambah" @click="addToCart(item)">
+          Tambah <img class="photo" src="../assets/Frame.svg" />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div v-for="(item, index) in paketItems" :key="index">
+    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
     <div class="container">
-      <div class="ni" v-for="(item, index) in tiketItems" :key="index">
-        <img
-          class="image"
-          :src="item.image ? getImageURL(item.image) : defaultImageUrl"
-          alt="Gambar"
-        />
+      <div class="ni" v-for="(data, i) in item" :key="i">
+        <img class="image" :src="data.image ? getImageURL(data.image) : defaultImageUrl" alt="Gambar" />
         <div class="buttonaji"></div>
-        <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
-        <h1 class="judul-besar">{{ item.titleBig }}</h1>
+        <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
+        <h1 class="judul-besar">{{ data.titleBig }}</h1>
         <div class="tengah">
-          <h3 class="judul-kecil">
-            {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
-          </h3>
-          <button class="tambah" @click="addToCart(item)">
+          <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) + "/" + data.unit }}</h3>
+          <button class="tambah" @click="addToCart(data)">
             Tambah <img class="photo" src="../assets/Frame.svg" />
           </button>
         </div>
       </div>
     </div>
-
-    <div v-for="(item, index) in paketItems" :key="index">
-      <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
-      <div class="container">
-        <div class="ni" v-for="(data, i) in item" :key="i">
-          <img
-            class="image"
-            :src="data.image ? getImageURL(data.image) : defaultImageUrl"
-            alt="Gambar"
-          />
-          <div class="buttonaji"></div>
-          <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
-          <h1 class="judul-besar">{{ data.titleBig }}</h1>
-          <div class="tengah">
-            <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) }}</h3>
-            <button class="tambah" @click="addToCart(data)">
-              Tambah <img class="photo" src="../assets/Frame.svg" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
   </div>
+  <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
+  <FooterComp class="namanyafooter"/>
 </template>
 
 <script setup>
 import { verifyToken } from "src/auth/auth";
 import navbar from "../components/NavBar.vue";
 import Carts from "../stores/carts";
+import env from "stores/environment"
 import Notification from "components/NotificationAlert.vue";
+import FooterComp from "components/FooterComp.vue";
 </script>
 
 <script>
 import { ref } from "vue";
+import cookieHandler from "src/cookieHandler";
 
 export default {
   components: {
-    Notification,
+    Notification, FooterComp
   },
   props: {
     disabled: {
@@ -98,7 +88,6 @@ export default {
       defaultImageUrl: "https://picsum.photos/200/300",
       isOpen: false,
       isOpen2: false,
-      isLogin: null,
       imageUrl: "../assets/trigger.svg",
       options: [
         { label: "Hari", value: "Perhari" },
@@ -115,113 +104,11 @@ export default {
         message: "",
         type: "info",
       },
-      // items: [
-      //   {
-      //     id: 1,
-      //     image: "src/assets/images/imageArea.png",
-      //     titleMedium: "Tiket Masuk Keraton",
-      //     titleBig:
-      //       "Menikmati area Keraton. Jam operasional dari 08.00 - 17.00 WIB.",
-      //     price: "Rp. 10.000-20.000/orang",
-      //   },
-      //   {
-      //     id: 2,
-      //     image: "/src/assets/images/museum.png",
-      //     titleMedium: "Tiket Masuk Museum",
-      //     titleBig:
-      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-      //     price: "Rp.15.000/orang",
-      //   },
-      //   {
-      //     id: 3,
-      //     image: "src/assets/images/museum.png",
-      //     titleMedium: "Tiket Masuk Keraton + Museum",
-      //     titleBig:
-      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-      //     price: "Rp.20.000/orang",
-      //   },
-      //   {
-      //     id: 4,
-      //     image: "src/assets/images/keraton.png",
-      //     titleMedium: "Tadarus di langgar alit",
-      //     titleBig:
-      //       "Menikmati area Museum. Jam operasional dari 08.00 - 17.00 WIB.",
-      //     price: "Rp.20.000/orang",
-      //   },
-      //   {
-      //     id: 5,
-      //     image: "src/assets/images/isra.png",
-      //     titleMedium: "Paket Wisata Silatuhrahmi I",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan",
-      //     price: "Rp.85.000/orang",
-      //   },
-      //   {
-      //     id: 6,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Silatuhrahmi II",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + snack khas cirebon + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-      //     price: "Rp.135.000/orang",
-      //   },
-      //   {
-      //     id: 7,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Silatuhrahmi III",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-      //     price: "Rp.200.000/orang",
-      //   },
-      //   {
-      //     id: 8,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Silatuhrahmi IV",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + silatuhrahmi dan foto bersama dengan Sultan + kesenian",
-      //     price: "Rp.200.000/orang",
-      //   },
-      //   {
-      //     id: 9,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Non Silatuhrahmi I",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + snack khas cirebon + kesenian",
-      //     price: "Rp.115.000/orang",
-      //   },
-      //   {
-      //     id: 10,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Non Silatuhrahmi II",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + makan (masakan nasional) + kesenian",
-      //     price: "Rp.175.000/orang",
-      //   },
-      //   {
-      //     id: 11,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Non Silatuhrahmi III",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + makan (masakan khas Cirebon) + kesenian",
-      //     price: "Rp.175.000/orang",
-      //   },
-      //   {
-      //     id: 12,
-      //     image: "src/assets/images/sholat.png",
-      //     titleMedium: "Paket Wisata Pelajar",
-      //     titleBig:
-      //       "Menikmati Keraton dengan guide + makan (nasi dus) + belajar sejarah dan kesenian",
-      //     price: "Rp.60.000/orang",
-      //   },
-      // ],
       cart: new Carts(),
     };
   },
   async mounted() {
     this.fetchData();
-    this.isLogin = (await verifyToken()).isLogin;
-    if (!this.isLogin) {
-      this.$router.push("/");
-    }
   },
   beforeUnmount() {
     this.storeCartToDatabase();
@@ -345,6 +232,8 @@ export default {
     },
     addToCart(rowData) {
       try {
+        const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+        if (!tokenExist) throw Error('Anda Masih Belum Log In!')
         const storedData = {
           id: rowData.id,
           name: rowData.titleMedium,
@@ -379,11 +268,9 @@ export default {
 
 .header {
   margin-top: 93px;
-  background: linear-gradient(
-    90deg,
-    rgba(218, 165, 32, 0.5) 0%,
-    rgba(18, 59, 50, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(218, 165, 32, 0.5) 0%,
+      rgba(18, 59, 50, 0.5) 100%);
   padding: 20px;
   text-align: center;
   width: 100%;
@@ -720,7 +607,7 @@ nav ul li button:hover {
   /* Efek transisi untuk perubahan warna */
 }
 
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
   background-image: linear-gradient(gold, gold);
   z-index: 1;
 }
@@ -909,5 +796,8 @@ ul {
   margin-top: 22px;
   line-height: 28px;
   font-family: "Raleway";
+}
+.namanyafooter{
+  margin-top: 2rem;
 }
 </style>

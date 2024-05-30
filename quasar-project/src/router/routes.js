@@ -18,6 +18,7 @@ import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
 import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
+import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 
 const routes = [
   {
@@ -32,6 +33,14 @@ const routes = [
     path: "/admin/add/:id",
     name: "AdminAddPage",
     component: AdminAddPage,
+    meta: {
+      preventToken: true
+    }
+  },
+  {
+    path: "/admin/news",
+    name: "AdminNewsPage",
+    component: AdminNewsPage,
     meta: {
       preventToken: true
     }
@@ -98,18 +107,12 @@ const routes = [
   {
     path: "/booking/event",
     name: "eventgratis",
-    component: EventGratis,
-    meta: {
-      preventToken: true
-    }
+    component: EventGratis
   },
   {
     path: "/booking",
     name: "booking",
-    component: Booking,
-    meta: {
-      preventToken: true
-    }
+    component: Booking
   },
   {
     path: "/filterbayar",

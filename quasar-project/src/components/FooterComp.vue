@@ -149,6 +149,7 @@ export default {
   width: 100%;
   padding: 80px;
   margin: 0 auto;
+
 }
 
 .container-footer-img {

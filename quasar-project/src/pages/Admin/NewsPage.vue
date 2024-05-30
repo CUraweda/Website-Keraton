@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="napbar">
+        <Navbar /></div>
+        <h1>News Page</h1>
         <q-input v-model="newsData.name"></q-input>
         <q-input v-model="newsData.desc"></q-input>
         <q-input v-model="newsData.image"></q-input>
@@ -13,30 +16,35 @@
 
 <script>
 import { ref } from 'vue'
+import Navbar from "src/components/NavBar.vue";
 import cookieHandler from "src/cookieHandler";
-import env from 'src/environment'
+import env from 'src/stores/environment'
 import Notification from "components/NotificationAlert.vue"
 
 export default {
     components: {
-        Notification
+        Notification, Navbar,
     },
     data() {
-        return {
-            token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
-            newsDatas: ref(),
-            newsData: ref({
-                iterationId: null,
-                price: null,
-                name: null,
-                desc: null,
-                image: null
-            }),
-            iterationsDatas: ref(),
-            newsDialog: ref(false),
-            currentId: undefined
+    return {
+        token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
+        newsDatas: ref(),
+        newsData: ref({
+            iterationId: null,
+            price: null,
+            name: null,
+            desc: null,
+            image: null
+        }),
+        iterationsDatas: ref(),
+        newsDialog: ref(false),
+        currentId: undefined,
+        notification: {  // Tambahkan properti notification ke dalam objek data
+            message: '',
+            type: ''
         }
-    },
+    }
+},
     watch: {
         newsDialog: {
             handler(val) {
@@ -109,3 +117,10 @@ export default {
     }
 }
 </script>
+
+<style>
+.napbar{
+    display: absolute;
+    height: 83px;
+}
+</style>

@@ -10,6 +10,7 @@ const controlGuide = require("./guide.controller");
 const controlNationality = require("./nationality.controller");
 const controlCategory = require("./category.controller");
 const controlLogs = require("./logs.controller");
+
 router.use("/user", controlUser);
 router.use("/order", controlOrder);
 router.use("/order-type", controlOrderType);
