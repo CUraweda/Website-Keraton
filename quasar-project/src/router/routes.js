@@ -58,7 +58,7 @@ const routes = [
   {
     path: "/admin/news",
     name: "AdminNewsPage",
-    component: AdminEventPage,
+    component: AdminNewsPage,
     meta: {
       preventToken: true,
     },

@@ -1,27 +1,41 @@
 <template>
-  <nav>
+  <div>
     <navbar />
-  </nav>
-  <div class="q-mx-lg">
-    <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
-    <div>Ubah dan atur konten di halaman beranda web</div>
-    <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-md">
-      <template v-slot:body-cell-Action="scope">
+    <div style="margin-top: 150px" class="q-px-xl">
+      <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
+      <div>Ubah dan atur konten di halaman beranda web</div>
+      <div class="q-mt-xl">
         <q-btn
-          no-caps
           color="positive"
-          :label="'Edit '"
-          :href="'#/admin/add/' + scope.row.id"
-          @click="scope.selected = scope.row.id"
+          label="News"
+          href="#/admin/news"
+          class="q-mb-md"
         />
-      </template>
-    </q-table>
+        <q-btn
+          color="positive"
+          label="Event"
+          href="#/admin/event"
+          class="q-mb-md"
+        />
+        <q-table :rows="rows" :columns="columns" row-key="name">
+          <template v-slot:body-cell-Action="scope">
+            <q-btn
+              color="positive"
+              :label="'Edit '"
+              :href="'#/admin/add/' + scope.row.id"
+              @click="scope.selected = scope.row.id"
+            />
+          </template>
+        </q-table>
+      </div>
+    </div>
   </div>
 </template>
 
+
 <script>
 import { verifyToken } from "src/auth/auth";
-import navbar from "src/components/NavbarAdmin.vue";
+import navbar from "src/components/NavBar.vue";
 import { ref } from "vue";
 
 const columns = [
@@ -128,3 +142,5 @@ export default {
   },
 };
 </script>
+
+<style></style>
