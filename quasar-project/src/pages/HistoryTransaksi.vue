@@ -194,7 +194,7 @@ const transactions = [
       </div>
 
       <div style="display: none">
-        <div ref="pdfContainer">
+        <div ref="data">
           <div class="flex items-center justify-between">
             <div>No. Transaksi</div>
             <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
@@ -263,7 +263,7 @@ const transactions = [
             </q-card-section>
 
             <q-card-section>
-              <div ref="pdfContainer">
+              <div ref="data">
                 <div class="flex items-center justify-between">
                   <div>No. Transaksi</div>
                   <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
@@ -402,7 +402,7 @@ export default {
   },
   methods: {
     print() {
-      const element = this.$refs.pdfContainer;
+      const element = this.$refs.data;
 
       html2pdf(element, {
         margin: 2,
