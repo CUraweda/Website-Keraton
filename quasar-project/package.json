@@ -23,6 +23,7 @@
     "quasar": "^2.6.0",
     "socket.io-client": "^4.7.5",
     "vue": "^3.0.0",
+    "vue-barcode-reader": "^1.0.3",
     "vue-router": "^4.3.2",
     "vuex": "^4.0.2"
   },
