@@ -3,6 +3,9 @@ import { ref } from "vue";
 import NavBar from "../components/NavBar.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
 
 const detail = ref(false);
 const cara = ref(false);
@@ -190,75 +193,140 @@ const transactions = [
         </div>
       </div>
 
-      <!-- popup -->
-      <section class="detail-transaksi" v-if="detail">
-        <div class="popup">
-          <div class="popup-content">
-            <div class="header">
-              <h1 class="p">Detail Transaksi</h1>
-              <span class="close" @click="closeDetailTransaksi"
-                ><img src="../assets/images/close.png" class="Icon"
-              /></span>
-            </div>
-            <div class="isi">
-              <small class="label-card1">Sudah digunakan</small>
-              <div class="info__details">
-                <div class="flex-container">
-                  <div>
-                    <h6>No. Transaksi</h6>
-                    <p>INV/20230817/MPL/3721648145</p>
-                  </div>
-                  <div>
-                    <h6>Tanggal Pembelian</h6>
-                    <p>15 Agustus 2023, 10:00 WIB</p>
-                  </div>
-                </div>
-                <h6 class="detailtiket">Detail tiket</h6>
-                <div class="detail-tiket">
-                  <img src="../assets/svg/gambarKraton.svg" alt="" />
-                  <div class="info-detail-tiket">
-                    <p>Tiket Masuk Keraton Kasepuhan (UMUM)</p>
-                    <label class="harga">17 Agu 2023; 10:00; </label>
-                    <label class="harga">1 x Rp. 10.000</label>
-                  </div>
-                </div>
-                <div class="all-tiket">
-                  <small
-                    >Lihat semua tiket
-                    <img src="../assets/svg/panahBawah.svg" alt=""
-                  /></small>
-                </div>
-                <h6 class="info-pembayaran">Info pembayaran</h6>
-                <div class="status-pembayaran">
-                  <h6>Status pembayaran</h6>
-                  <small>Berhasil</small>
-                </div>
-                <div class="pemesan">
-                  <h6>Pemesan</h6>
-                  <p>John Doe<label>/johndoe@keraton.com</label></p>
-                </div>
-                <div class="metode-pmbayaran">
-                  <h6>Metode Pembayaran</h6>
-                  <p>BJB Virtual Account</p>
-                </div>
-                <div class="total-harga-3-Tiket">
-                  <h6>Total Harga(3 Tiket)</h6>
-                  <p>Rp. 30.000</p>
-                </div>
-                <div class="biaya-layanan">
-                  <h6>Biaya Layanan</h6>
-                  <p>Rp. 3.500</p>
-                </div>
-                <div class="line"></div>
-                <div class="total-biaya">
-                  <h6>Total Biaya</h6>
-                  <p>Rp. 33.500</p>
-                </div>
-              </div>
+      <div style="display: none">
+        <div ref="pdfContainer">
+          <div class="flex items-center justify-between">
+            <div>No. Transaksi</div>
+            <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
+          </div>
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Status Transaksi</div>
+            <div>
+              <q-badge color="blue" ref="pdfContainer"> #4D96F2 </q-badge>
             </div>
           </div>
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Tanggal Pembelian</div>
+            <div>12 januari 20023190731289</div>
+          </div>
+
+          <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
+          <div class="flex q-mt-md q-gutter-x-md">
+            <q-img src="../assets/images/agung.png" style="width: 10rem" />
+            <div>
+              <div>dsakljdlksajdlksjdslajldsajldsakj</div>
+              <div>dkasjlkdsajlkasjlksadj</div>
+              <div>dsajkldsajlkdsa</div>
+            </div>
+          </div>
+
+          <div class="text-h6 text-bold q-mt-xl">Info Pembayaran</div>
+          <div class="flex items-center justify-between">
+            <div>Status Pembayaran</div>
+            <div><q-badge color="blue"> #4D96F2 </q-badge></div>
+          </div>
+
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Pemesanan</div>
+            <div>12 januari 20023190731289</div>
+          </div>
+
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Metode Pembayaran</div>
+            <div>12 januari 20023190731289</div>
+          </div>
+
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Total Harga(3 Tiket)</div>
+            <div>12 januari 20023190731289</div>
+          </div>
+
+          <div class="flex items-center justify-between q-mt-md">
+            <div>Biaya Layanan</div>
+            <div>12 januari 20023190731289</div>
+          </div>
+
+          <div class="flex items-center justify-between q-mt-xl">
+            <div>Total Biaya</div>
+            <div>12 januari 20023190731289</div>
+          </div>
         </div>
-      </section>
+      </div>
+
+      <div>
+        <q-dialog v-model="icon">
+          <q-card style="width: 50rem">
+            <q-card-section class="row items-center q-pb-none">
+              <div class="text-h6">Detail Transaksi</div>
+              <q-space />
+              <q-btn icon="close" flat round dense v-close-popup />
+            </q-card-section>
+
+            <q-card-section>
+              <div ref="pdfContainer">
+                <div class="flex items-center justify-between">
+                  <div>No. Transaksi</div>
+                  <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
+                </div>
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Status Transaksi</div>
+                  <div>
+                    <q-badge color="blue" ref="pdfContainer"> #4D96F2 </q-badge>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Tanggal Pembelian</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+
+                <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
+                <div class="flex q-mt-md q-gutter-x-md">
+                  <q-img
+                    src="../assets/images/agung.png"
+                    style="width: 10rem"
+                  />
+                  <div>
+                    <div>dsakljdlksajdlksjdslajldsajldsakj</div>
+                    <div>dkasjlkdsajlkasjlksadj</div>
+                    <div>dsajkldsajlkdsa</div>
+                  </div>
+                </div>
+
+                <div class="text-h6 text-bold q-mt-xl">Info Pembayaran</div>
+                <div class="flex items-center justify-between">
+                  <div>Status Pembayaran</div>
+                  <div><q-badge color="blue"> #4D96F2 </q-badge></div>
+                </div>
+
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Pemesanan</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Metode Pembayaran</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Total Harga(3 Tiket)</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+
+                <div class="flex items-center justify-between q-mt-md">
+                  <div>Biaya Layanan</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+
+                <div class="flex items-center justify-between q-mt-xl">
+                  <div>Total Biaya</div>
+                  <div>12 januari 20023190731289</div>
+                </div>
+              </div>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
+      </div>
 
       <section class="detail-transaksi" v-if="cara">
         <div class="popup">
@@ -314,6 +382,7 @@ const transactions = [
           </div>
         </div>
       </section>
+      <q-btn label="hallo" @click="print" />
     </div>
   </div>
 </template>
@@ -322,6 +391,7 @@ const transactions = [
 export default {
   data() {
     return {
+      icon: true,
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       historyDatas: ref([]),
       rawHistoryDatas: ref({}),
@@ -331,6 +401,24 @@ export default {
     this.fetchData();
   },
   methods: {
+    print() {
+      const element = this.$refs.pdfContainer;
+
+      html2pdf(element, {
+        margin: 2,
+        filename: `Report ${new Date().toISOString().split("T")[0]}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait",
+          putOnlyUsedFonts: true,
+          // Sesuaikan skala jika diperlukan
+          scale: 0.8,
+        },
+      });
+    },
     async fetchData() {
       try {
         const response = await this.$api.get("trans", {
