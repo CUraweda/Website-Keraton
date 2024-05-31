@@ -1,5 +1,4 @@
 <template>
-  <navbar />
   <div class="q-gutter-xs q-mx-md">
     <q-btn class="text-capitalize" @click="openDialog('event')"
       >Add New Event</q-btn
@@ -320,7 +319,6 @@
 </template>
 
 <script>
-import navbar from "src/components/NavbarAdmin.vue";
 import socket from "src/socket";
 import { ref } from "vue";
 export default {
