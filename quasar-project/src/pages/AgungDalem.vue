@@ -100,9 +100,6 @@
             </div>
             <img class="img-tiket-kunjungan" :src="element.img" alt="">
           </div></a>
-          <div class="footerr">
-            <footerDesktop />
-          </div>
         </div>
       </div>
     </div>
@@ -111,7 +108,6 @@
 
 <script setup>
 import navbar from '../components/NavBar.vue'
-import footerDesktop from '../components/footerDesktop.vue';
 </script>
 
 <script>
@@ -125,7 +121,6 @@ const scrollToContent = () => {
 export default {
   components: {
     navbar,
-    footerDesktop,
   },
   data() {
     return {

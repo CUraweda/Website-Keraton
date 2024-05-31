@@ -176,21 +176,15 @@ export default {
     async fetchData() {
       let freeOptions, iterationOptions;
       try {
-        if (this.selectedOptions)
-          iterationOptions = Object.values(this.selectedOptions);
-        if (this.selectedOptions2)
-          freeOptions = Object.values(this.selectedOptions2);
-        console.log(freeOptions, iterationOptions);
+        if (this.selectedOptions) iterationOptions = Object.values(this.selectedOptions);
+        if (this.selectedOptions2) freeOptions = Object.values(this.selectedOptions2);
         const eventResponse = await this.$axios.post(
           "http://localhost:3000/keraton/event/page",
           {
-            ...(iterationOptions &&
-              iterationOptions.length != 0 && {
+            ...(iterationOptions && iterationOptions.length != 0 && {
                 iterat: Object.values(this.selectedOptions),
               }),
-            ...(freeOptions &&
-              freeOptions.length < 2 &&
-              freeOptions.length != 0 && {
+            ...(freeOptions && freeOptions.length < 2 && freeOptions.length != 0 && {
                 free: freeOptions[0] != 0 ? true : false,
               }),
           }

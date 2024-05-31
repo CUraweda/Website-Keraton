@@ -26,7 +26,7 @@ export default class Carts {
 
     async updateToDB() {
         const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
-        console.log(token)
+        console.log(this.userCart)
         if (!token) throw Error('Token didnt exist, please Log In')
         const response = await fetch(env.BASE_URL + "/keraton/cart/update", {
             method: "POST",

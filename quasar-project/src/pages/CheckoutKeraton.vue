@@ -103,14 +103,22 @@ defineExpose({
                 <p class="det-tiket">Detail Tiket</p>
               </div>
               <q-input
-                disable
-                standout
-                v-model="dateInputLabel"
+                outlined
                 dense
+                v-model="dateLabel"
+                label="Date"
                 style="width: 10rem"
               >
-                <template v-slot:prepend>
-                  <q-icon name="event" color="orange" />
+                <template v-slot:append>
+                  <q-icon name="event" color="orange" class="cursor-pointer">
+                    <q-popup-proxy>
+                      <q-date
+                        v-model="dateLabel"
+                        mask="YYYY-MM-DD"
+                        style="width: 300px"
+                      />
+                    </q-popup-proxy>
+                  </q-icon>
                 </template>
               </q-input>
               <div v-for="(cart, index) in carts" :key="index">
@@ -252,14 +260,18 @@ defineExpose({
                         /></span>
                       </div>
                       </div> -->
-                      <div v-for="instance in instances" :key="instance.value" class="debit">
-                        <span @click="payWith(instance)">
-                          <img src="{{ instance.icon }}"/>
-                          {{ instance.label }}
-                          <img
-                            class="image"
-                            src="../assets/svg/FrameVector-Right.svg"
-                          />
+                    <div
+                      v-for="instance in instances"
+                      :key="instance.value"
+                      class="debit"
+                    >
+                      <span @click="payWith(instance)">
+                        <img src="{{ instance.icon }}" />
+                        {{ instance.label }}
+                        <img
+                          class="image"
+                          src="../assets/svg/FrameVector-Right.svg"
+                        />
                       </span>
                     </div>
                   </div>
@@ -320,13 +332,14 @@ import Cart from "stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import Notification from "components/NotificationAlert.vue";
-import logobank from '../assets/svg/logobank.svg';
+import logobank from "../assets/svg/logobank.svg";
 export default {
   components: {
     Notification,
   },
   data() {
     return {
+      input: ref(),
       carts: ref([]),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
@@ -340,22 +353,22 @@ export default {
       checkoutTotal: ref(0),
       totalTagihan: ref(0),
       instances: ref([
-        { 
+        {
           label: "Bank BJB",
           value: "BJB",
           icon: [logobank],
         },
-        { 
+        {
           label: "Bank BCA",
           value: "BCA",
           icon: [logobank],
         },
-        { 
+        {
           label: "Bank Mandiri",
           value: "MANDIRI",
           icon: [logobank],
         },
-        { 
+        {
           label: "Bank BNI",
           value: "BNI",
           icon: [logobank],
@@ -396,6 +409,7 @@ export default {
     async setCartData() {
       try {
         const rawCart = Object.values(this.cartClass.getItem());
+        console.log(rawCart);
         if (rawCart.length < 1) {
           const response = await this.$api.get("cart", {
             headers: {
@@ -425,6 +439,7 @@ export default {
     },
     async validateCartData() {
       try {
+        console.log(this.carts);
         const response = await this.$api.post("cart/validate", {
           carts: this.carts,
         });
@@ -456,13 +471,13 @@ export default {
     changeQuantity(indicator, rowData, indexData) {
       if (indicator != "min") {
         this.carts[indexData].quantity = rowData.quantity + 1;
-        this.ticketTotal = this.ticketTotal + 1
-        this.checkoutTotal = this.checkoutTotal + rowData.price
+        this.ticketTotal = this.ticketTotal + 1;
+        this.checkoutTotal = this.checkoutTotal + rowData.price;
         this.totalTagihan = this.totalTagihan + rowData.price;
       } else {
         this.carts[indexData].quantity = rowData.quantity - 1;
-        this.ticketTotal = this.ticketTotal - 1
-        this.checkoutTotal = this.checkoutTotal - rowData.price
+        this.ticketTotal = this.ticketTotal - 1;
+        this.checkoutTotal = this.checkoutTotal - rowData.price;
         this.totalTagihan = this.totalTagihan - rowData.price;
       }
       return this.changeStorageQuantity(this.carts[indexData]);
@@ -498,7 +513,10 @@ export default {
         this.cartClass.clearCart().updateItem();
         this.$router.go(-1);
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message  : err.message, "info");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "info"
+        );
         console.log(err);
       }
     },
