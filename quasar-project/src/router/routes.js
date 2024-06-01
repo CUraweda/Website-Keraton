@@ -20,6 +20,7 @@ import AdminEventPage from "../pages/Admin/EventPage.vue";
 import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
 import AdminNewsPage from "../pages/Admin/NewsPage.vue";
+import QrCodePage from "../pages/QrCodePage.vue";
 
 const routes = [
   {
@@ -59,6 +60,15 @@ const routes = [
     path: "/admin/news",
     name: "AdminNewsPage",
     component: AdminNewsPage,
+    meta: {
+      preventToken: true,
+    },
+  },
+
+  {
+    path: "/test/qr",
+    name: "QrCodePage",
+    component: QrCodePage,
     meta: {
       preventToken: true,
     },

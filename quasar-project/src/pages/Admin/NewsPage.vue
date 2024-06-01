@@ -24,13 +24,31 @@
             </q-card-section>
 
             <q-card-actions>
-              <q-btn
-                no-caps
-                dense
-                color="green"
-                label="Link"
-                :href="data.link"
-              />
+              <q-btn flat @click="handleDialog(data)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="green"
+                >
+                  <path
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                  />
+                </svg>
+              </q-btn>
+              <q-btn flat @click="deleteData(data.id)"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="red"
+                >
+                  <path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                  /></svg
+              ></q-btn>
               <q-space />
             </q-card-actions>
           </q-card>
@@ -50,7 +68,7 @@
           <div>
             <q-input
               filled
-              v-model="newsData.name"
+              v-model="newsData.title"
               label="Title"
               color="black"
               bg-color="gray"
@@ -123,11 +141,12 @@ export default {
   },
   data() {
     return {
+      imgURLNews: ref(),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       newsDatas: ref(),
       newsData: ref({
         link: null,
-        name: null,
+        title: null,
         desc: null,
         image: null,
       }),
@@ -168,9 +187,17 @@ export default {
     },
     async createUpdateData() {
       try {
-        let url = "news";
+        let url = "news/action";
         if (this.currentId) url += `/${this.currentId}`;
-        const response = await this.$api.post(url, { ...this.newsData });
+        const response = await this.$api.post(
+          url,
+          { ...this.newsData },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         if (response.status != 200) throw Error(response.data.message);
         this.newsDialog = false;
         this.showNotif(response.data.message, success);
@@ -178,11 +205,12 @@ export default {
         console.log(err);
       }
     },
-    async deleteData() {
+    async deleteData(id) {
       try {
-        const response = await this.$api.delete(`news/${this.currentId}`);
+        const response = await this.$api.delete(`news/${id}`);
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif(response.data.message, success);
+        this.fetchData();
       } catch (err) {
         console.log(err);
       }
@@ -195,9 +223,15 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    handleDialog() {
+    handleDialog(data) {
       this.newsDialog = !this.newsDialog;
-      if (!this.newsDialog) this.currentId = undefined;
+      this.currentId = data ? data.id : undefined;
+      if (data) {
+        this.newsData = { ...data };
+        this.imgURLNews = data.image;
+      } else {
+        this.resetDefault();
+      }
     },
     resetDefault() {
       this.newsData = {
