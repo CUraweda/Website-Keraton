@@ -91,33 +91,16 @@ const transactions = [
             <div class="search">
               <label for="search" class="search-label">
                 <img src="../assets/svg/search.svg" class="search-icon" />
-                <input
-                  type="search"
-                  v-model="searchQuery"
-                  id="search"
-                  name="search"
-                  placeholder="Cari transaksi"
-                  class="Pencarian"
-                />
+                <input type="search" v-model="search.s" id="search" name="search" placeholder="Cari transaksi"
+                  class="Pencarian" />
               </label>
             </div>
             <div class="date">
-              <input
-                value="Pilih tanggal"
-                type="date"
-                class="tanggal"
-                placeholder="Pilih tanggal"
-              />
+              <input type="date" v-model="search.d" class="tanggal" placeholder="Pilih tanggal" />
             </div>
             <div class="status">
-              <select
-                name="Status"
-                placeholder="status"
-                value="Status"
-                v-model="selectedStatus"
-                @change="statusSelected = true"
-                class="custom-select"
-              >
+              <select name="Status" placeholder="status" value="Status" v-model="search.stat"
+                @change="statusSelected = true" class="custom-select">
                 <option value="sudahDigunakan">Sudah digunakan</option>
                 <option value="dapatDigunakan">Dapat digunakan</option>
                 <option value="expired">Expired</option>
@@ -127,19 +110,11 @@ const transactions = [
           </div>
         </div>
       </div>
-      <div
-        v-for="transaction in historyDatas"
-        :key="transaction.status"
-        class="tabel"
-      >
+      <div v-for="transaction in historyDatas" :key="transaction.status" class="tabel">
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
-              <img
-                src="../assets/images/Vector.png"
-                alt="icon-tiket"
-                class="icon-tiket"
-              />
+              <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
               <p>Tiket</p>
               <label>{{ transaction.date }}</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
@@ -149,19 +124,14 @@ const transactions = [
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
                 <div class="flex items-center q-gutter-xs">
-                  <q-badge
-                    rounded
-                    :color="badge.badgeColor"
-                    v-for="(badge, i) in transaction.detailDatas.data"
-                    :key="i"
-                    >{{ badge.name }}</q-badge
-                  >
+                  <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data"
+                    :key="i">{{ badge.name }}</q-badge>
                 </div>
                 <div class="label">
                   <label class="labelharga">{{
-                    `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
-                  }}</label
-                  ><br />
+                  `${transaction.detailDatas.data[0].quantity} tiket x Rp.
+                    ${this.formatRupiah(transaction.detailDatas.data[0].price)}`
+                }}</label><br />
                   <label>{{
                     `+${transaction.detailDatas.length - 1} tiket lainnya`
                   }}</label>
@@ -169,22 +139,16 @@ const transactions = [
                 <div class="total">
                   <div class="info">
                     <p class="total__belanja">Total belanja</p>
-                    <p class="hrga">Rp. {{ transaction.total }}</p>
+                    <p class="hrga">Rp. {{ formatRupiah(transaction.total) }}</p>
                   </div>
                   <div class="actions">
-                    <a
-                      v-for="(action, index) in transaction.actions"
-                      :key="index"
-                      @click="action.handler"
-                      class="detail"
-                    >
-                      <p class="bantu">{{ action.label }}</p>
+                    <a @click="openDetailDialog(transaction)">
+                      <p class="bantu">Detail Transaksi</p>
                     </a>
-                    <a
-                      href=""
-                      class="bantuan"
-                      v-if="transaction.status !== 'menungguPembayaran'"
-                    ></a>
+                    <p class="bantu">|</p>
+                    <a @click="cara = !cara" class="bantuan" v-if="transaction.status === 'menungguPembayaran'">
+                      <p class="bantu">Cara Bayar</p>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -194,71 +158,68 @@ const transactions = [
       </div>
 
       <div style="display: none">
-        <div ref="data">
+        <div ref="data" v-if="detailData.transactionNo">
           <div class="flex items-center justify-between">
             <div>No. Transaksi</div>
-            <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
+            <div>{{ detailData.transactionNo }}</div>
           </div>
           <div class="flex items-center justify-between q-mt-md">
             <div>Status Transaksi</div>
             <div>
-              <q-badge color="blue" ref="pdfContainer"> #4D96F2 </q-badge>
+              <q-badge color="blue" ref="pdfContainer"> {{ detailData.status.label }} </q-badge>
             </div>
           </div>
           <div class="flex items-center justify-between q-mt-md">
-            <div>Tanggal Pembelian</div>
-            <div>12 januari 20023190731289</div>
+            <div>Tanggal Pemesanan</div>
+            <div>{{ formatDate(detailData.planDate) }}</div>
           </div>
 
           <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-          <div class="flex q-mt-md q-gutter-x-md">
-            <q-img src="../assets/images/agung.png" style="width: 10rem" />
+          <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
+            <q-img :src="detailData.image" style="width: 10rem" />
             <div>
-              <div>dsakljdlksajdlksjdslajldsajldsakj</div>
-              <div>dkasjlkdsajlkasjlksadj</div>
+              <div>{{ detailData.name }}</div>
+              <div>{{ detailData.price }}</div>
               <div>dsajkldsajlkdsa</div>
             </div>
           </div>
 
           <div class="text-h6 text-bold q-mt-xl">Info Pembayaran</div>
-          <div class="flex items-center justify-between">
-            <div>Status Pembayaran</div>
-            <div><q-badge color="blue"> #4D96F2 </q-badge></div>
-          </div>
-
           <div class="flex items-center justify-between q-mt-md">
             <div>Pemesanan</div>
-            <div>12 januari 20023190731289</div>
+            <div>{{ formatDate(detailData.createdDate) }}</div>
           </div>
 
           <div class="flex items-center justify-between q-mt-md">
             <div>Metode Pembayaran</div>
-            <div>12 januari 20023190731289</div>
+            <div>{{ detailData.payMethod }}</div>
           </div>
 
           <div class="flex items-center justify-between q-mt-md">
-            <div>Total Harga(3 Tiket)</div>
-            <div>12 januari 20023190731289</div>
+            <div>Total Harga({{ detailData.totalAmount }} Tiket)</div>
+            <div>{{ detailData.total }}</div>
           </div>
 
           <div class="flex items-center justify-between q-mt-md">
             <div>Biaya Layanan</div>
-            <div>12 januari 20023190731289</div>
+            <div>{{ detailData.fee }}</div>
           </div>
 
           <div class="flex items-center justify-between q-mt-xl">
             <div>Total Biaya</div>
-            <div>12 januari 20023190731289</div>
+            <div>{{ detailData.totalTransaction }}</div>
           </div>
         </div>
       </div>
 
       <div>
-        <q-dialog v-model="icon">
+        <q-dialog v-model="detailDialog">
           <q-card style="width: 50rem">
             <q-card-section class="row items-center q-pb-none">
               <div class="text-h6">Detail Transaksi</div>
               <q-space />
+              <q-btn icon="local_activity" flat round dense @click="printPDF" />
+              <q-btn icon="mail" flat round dense @click="sendEmail" />
               <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
 
@@ -266,61 +227,53 @@ const transactions = [
               <div ref="data">
                 <div class="flex items-center justify-between">
                   <div>No. Transaksi</div>
-                  <div>dslakjdklsajlkdjlkjsdljadskljdskla</div>
+                  <div>{{ detailData.transactionNo }}</div>
                 </div>
                 <div class="flex items-center justify-between q-mt-md">
                   <div>Status Transaksi</div>
                   <div>
-                    <q-badge color="blue" ref="pdfContainer"> #4D96F2 </q-badge>
+                    <q-badge color="blue" ref="pdfContainer"> {{ detailData.status.label }} </q-badge>
                   </div>
                 </div>
                 <div class="flex items-center justify-between q-mt-md">
-                  <div>Tanggal Pembelian</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>Tanggal Pemesanan</div>
+                  <div>{{ formatDate(detailData.planDate) }}</div>
                 </div>
 
                 <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-                <div class="flex q-mt-md q-gutter-x-md">
-                  <q-img
-                    src="../assets/images/agung.png"
-                    style="width: 10rem"
-                  />
+                <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
+                  <q-img :src="detailData.image" style="width: 10rem" />
                   <div>
-                    <div>dsakljdlksajdlksjdslajldsajldsakj</div>
-                    <div>dkasjlkdsajlkasjlksadj</div>
+                    <div>{{ detailData.name }}</div>
+                    <div>{{ detailData.price }}</div>
                     <div>dsajkldsajlkdsa</div>
                   </div>
                 </div>
 
                 <div class="text-h6 text-bold q-mt-xl">Info Pembayaran</div>
-                <div class="flex items-center justify-between">
-                  <div>Status Pembayaran</div>
-                  <div><q-badge color="blue"> #4D96F2 </q-badge></div>
-                </div>
-
                 <div class="flex items-center justify-between q-mt-md">
                   <div>Pemesanan</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>{{ formatDate(detailData.createdDate) }}</div>
                 </div>
 
                 <div class="flex items-center justify-between q-mt-md">
                   <div>Metode Pembayaran</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>{{ detailData.payMethod }}</div>
                 </div>
 
                 <div class="flex items-center justify-between q-mt-md">
-                  <div>Total Harga(3 Tiket)</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>Total Harga({{ detailData.totalAmount }} Tiket)</div>
+                  <div>{{ detailData.total }}</div>
                 </div>
 
                 <div class="flex items-center justify-between q-mt-md">
                   <div>Biaya Layanan</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>{{ detailData.fee }}</div>
                 </div>
 
                 <div class="flex items-center justify-between q-mt-xl">
                   <div>Total Biaya</div>
-                  <div>12 januari 20023190731289</div>
+                  <div>{{ detailData.totalTransaction }}</div>
                 </div>
               </div>
             </q-card-section>
@@ -333,9 +286,8 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <h1 class="p">Cara Pembayaran</h1>
-              <span class="close" @click="closeMenungguPembayaran"
-                ><img src="../assets/images/close.png" class="Icon"
-              /></span>
+              <span class="close" @click="closeMenungguPembayaran"><img src="../assets/images/close.png"
+                  class="Icon" /></span>
             </div>
             <div class="isi">
               <div class="bjb">
@@ -382,7 +334,6 @@ const transactions = [
           </div>
         </div>
       </section>
-      <q-btn label="hallo" @click="print" />
     </div>
   </div>
 </template>
@@ -391,17 +342,30 @@ const transactions = [
 export default {
   data() {
     return {
-      icon: true,
+      detailDialog: ref(false),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       historyDatas: ref([]),
       rawHistoryDatas: ref({}),
+      detailData: ref({}),
+      search: ref({
+        s: undefined,
+        d: undefined,
+        stat: undefined
+      })
     };
   },
   mounted() {
     this.fetchData();
   },
+  watch: {
+    search: {
+      handler() {
+        this.fetchData()
+      }
+    }
+  },
   methods: {
-    print() {
+    printPDF() {
       const element = this.$refs.data;
 
       html2pdf(element, {
@@ -421,10 +385,15 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await this.$api.get("trans", {
+        let endpointLink = 'trans?'
+        if (this.search.s) endpointLink += `s=${this.search.s}`
+        if (this.search.d) endpointLink += `d=${this.search.d}`
+        if (this.search.stat) endpointLink += `stat=${this.search.stat}`
+        const response = await this.$api.get(endpointLink, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
+          query: { ...this.search }
         });
         if (response.status != 200) throw Error(response.data.message);
         for (let transaction of response.data.data) {
@@ -441,6 +410,7 @@ export default {
             ...this.simplifyStatus(transaction.status),
             date: planDate,
             total: transaction.total,
+            raw: transaction
             // actions: [
             //   { label: "Lihat detail", handler:() },
             //   { label: "|" },
@@ -450,6 +420,47 @@ export default {
         }
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async sendEmail() {
+      try {
+        if (!this.detailData.transactionNo) throw Error('Specify Transaction')
+        const response = await this.$api.get(`email/invoice/${this.detailData.transactionNo}`, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        if (response.status != 200) throw Error(response.data.message)
+        console.log('Request sended, please wait')
+      } catch (err) {
+        console.log(err)
+      }
+    },
+
+    openDetailDialog(rowData) {
+      this.detailDialog = !this.detailDialog
+      if (!this.detailDialog) return this.detailData = {}
+      rowData = rowData.raw
+      const total = parseFloat(rowData.total)
+      this.detailData = {
+        transactionNo: rowData.id,
+        status: this.simplifyStatus(rowData.status),
+        totalAmount: rowData.amount,
+        planDate: rowData.plannedDate,
+        createdDate: rowData.createdDate,
+        payMethod: rowData.method,
+        total: this.formatRupiah(total),
+        fee: this.formatRupiah(rowData.additionalFee),
+        totalTransaction: this.formatRupiah(total + rowData.additionalFee),
+        details: rowData.detailTrans.map(detail => {
+          const itemData = detail.order ? detail.order : detail.event
+          return {
+            image: itemData.image,
+            name: itemData.name,
+            price: `${detail.amount} x ${itemData.price < 1 ? "Free" : "Rp" + this.formatRupiah(itemData.price)}`
+          }
+        })
       }
     },
     openDetailTransaksi(row) {
@@ -514,12 +525,19 @@ export default {
       }
       return dataToReturn;
     },
-  },
-  formatRupiah(price) {
-    if (price === 0) return "Free";
-    return (price / 1000).toLocaleString("en-US", {
-      minimumFractionDigits: 3,
-    });
+    formatRupiah(price) {
+      if (price === 0) return "Free";
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
+    },
+    formatDate(date) {
+      return new Intl.DateTimeFormat("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }).format(new Date(date));
+    }
   },
 };
 </script>
@@ -922,7 +940,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container > div {
+.flex-container>div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -1117,13 +1135,11 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(
-    to right,
-    #d9d9d9,
-    #d9d9d9 7px,
-    transparent 5px,
-    transparent 10px
-  );
+  background-image: repeating-linear-gradient(to right,
+      #d9d9d9,
+      #d9d9d9 7px,
+      transparent 5px,
+      transparent 10px);
 }
 
 .total-biaya {

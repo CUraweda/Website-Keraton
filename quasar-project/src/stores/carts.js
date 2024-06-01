@@ -42,13 +42,13 @@ export default class Carts {
         return this
     }
 
-    setNew(listOfData = [{ id, name, image, price, quantity, event }]) {
+    setNew(listOfData = [{ id, name, image, price, minimumUnit , quantity, event }]) {
         if (listOfData.length < 1) return this
         for(let data of listOfData) this.userCart[`${data.type}|${data.id}`] = { ...data }
         return this.updateItem()
     }
 
-    addManyItem(listOfData = [{ id, name, image, price, quantity, event }]) {
+    addManyItem(listOfData = [{ id, name, image, price, minimumUnit, quantity, event }]) {
         for (let data of listOfData) {
             const alreadyExist = this.userCart[`${data.type}|${data.id}`]
             if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity

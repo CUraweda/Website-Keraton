@@ -511,7 +511,7 @@ export default {
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif("Transaksi Sukses", "info");
         this.cartClass.clearCart().updateItem();
-        this.$router.go(-1);
+        this.$router.replace('/user/transaction')
       } catch (err) {
         this.showNotif(
           err.response ? err.response.data.message : err.message,

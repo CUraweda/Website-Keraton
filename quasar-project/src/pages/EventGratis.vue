@@ -234,7 +234,7 @@ export default {
           quantity: 1,
           price: rowData.price,
           type: "E",
-        };
+      };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");

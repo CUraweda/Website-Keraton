@@ -37,7 +37,7 @@
   </div>
 
   <div v-for="(item, index) in paketItems" :key="index">
-    <a class="judul1">{{ paketNameItems[index] }} (minimal 35 orang)</a>
+    <a class="judul1">{{ paketNameItems[index].name + `(minimal ${paketNameItems[index].minimumUnit} orang)` }}</a>
     <div class="container">
       <div class="ni" v-for="(data, i) in item" :key="i">
         <img class="image" :src="data.image ? getImageURL(data.image) : defaultImageUrl" alt="Gambar" />
@@ -132,6 +132,7 @@ export default {
                   image: order.image,
                   titleMedium: order.name,
                   titleBig: order.desc,
+                  subType: subType.orderTypeId,
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
@@ -139,7 +140,7 @@ export default {
               }
               break;
             case 2: //Paket Type
-              const subTypeName = subType.name;
+              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined}`;
               if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
               }
@@ -150,6 +151,7 @@ export default {
                   image: order.image,
                   titleMedium: order.name,
                   titleBig: order.desc,
+                  minimumUnit: subType.minimumUnits,
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
@@ -161,7 +163,10 @@ export default {
 
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
-        this.paketNameItems = Object.keys(pakets);
+        this.paketNameItems = Object.keys(pakets).map(paket => {
+          const [name, minimumUnit] = paket.split('|')
+          return { name, minimumUnit }
+        })
       } catch (err) {
         console.log(err);
       }
@@ -237,6 +242,7 @@ export default {
           name: rowData.titleMedium,
           image: rowData.image,
           quantity: 1,
+          minimumUnit: rowData.minimumUnit,
           price: rowData.price,
           type: "T",
         };
@@ -795,7 +801,8 @@ ul {
   line-height: 28px;
   font-family: "Raleway";
 }
-.namanyafooter{
+
+.namanyafooter {
   margin-top: 2rem;
 }
 </style>
