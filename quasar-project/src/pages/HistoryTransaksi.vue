@@ -258,12 +258,123 @@ const transactions = [
       <q-dialog v-model="caraBayar">
         <q-card style="width: 50rem">
           <q-card-section class="row items-center q-pb-none">
-            <div class="text-h6">Cara Pembayaran</div>
+            <div class="text-h4">Cara Pembayaran</div>
             <q-space />
             <q-btn icon="close" flat round dense v-close-popup />
           </q-card-section>
 
-          <q-card-section> </q-card-section>
+          <q-card-section>
+            <div class="q-pa-md">
+              <q-list bordered>
+                <q-expansion-item
+                  group="somegroup"
+                  label="BJB Virtual Account"
+                  default-opened
+                >
+                  <q-card>
+                    <q-card-section>
+                      <div class="flex justify-between">
+                        <div>
+                          <div>Nomor Virtual Account</div>
+                          <div>1892379812732189</div>
+                        </div>
+
+                        <q-btn flat>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#DAA520"
+                          >
+                            <path
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                            />
+                          </svg>
+                        </q-btn>
+                      </div>
+
+                      <div class="flex q-mt-md justify-between">
+                        <div>
+                          <div>Total Pembayaran</div>
+                          <div>1892379812732189</div>
+                        </div>
+
+                        <q-btn flat>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#DAA520"
+                          >
+                            <path
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                            />
+                          </svg>
+                        </q-btn>
+                      </div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  icon="perm_identity"
+                  label="Second"
+                  header-class="text-teal"
+                >
+                  <q-card>
+                    <q-card-section>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Quidem, eius reprehenderit eos corrupti commodi magni
+                      quaerat ex numquam, dolorum officiis modi facere maiores
+                      architecto suscipit iste eveniet doloribus ullam aliquid.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  icon="shopping_cart"
+                  label="Third"
+                  header-class="text-purple"
+                >
+                  <q-card>
+                    <q-card-section>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Quidem, eius reprehenderit eos corrupti commodi magni
+                      quaerat ex numquam, dolorum officiis modi facere maiores
+                      architecto suscipit iste eveniet doloribus ullam aliquid.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+
+                <q-separator />
+
+                <q-expansion-item
+                  group="somegroup"
+                  icon="bluetooth"
+                  label="Fourth"
+                  header-class="bg-teal text-white"
+                  expand-icon-class="text-white"
+                >
+                  <q-card class="bg-teal-2">
+                    <q-card-section>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Quidem, eius reprehenderit eos corrupti commodi magni
+                      quaerat ex numquam, dolorum officiis modi facere maiores
+                      architecto suscipit iste eveniet doloribus ullam aliquid.
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+              </q-list>
+            </div>
+          </q-card-section>
         </q-card>
       </q-dialog>
 
