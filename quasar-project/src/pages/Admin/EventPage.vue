@@ -300,7 +300,6 @@ export default {
           label: subType.name,
           value: subType.id,
         }))
-        console.log(this.iterations);
         this.subTypes = helper.data.data.subTypes;
       } catch (err) {
         console.log(err);

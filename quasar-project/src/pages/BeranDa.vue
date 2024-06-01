@@ -187,7 +187,7 @@
         <a :href="slide.link">
         <div class="news-section" :to="slide.link">
           <div class="news-image">
-            <img :src="slide.imageUrl" :alt="Berita `${index + 1}`" />
+            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
           </div>
           <div class="news-content">
             <h2 class="news-title">{{ slide.title }}</h2>

@@ -105,7 +105,7 @@ defineExpose({
               <q-input
                 outlined
                 dense
-                v-model="dateLabel"
+                v-model="dateInputLabel"
                 label="Date"
                 style="width: 10rem"
               >
@@ -113,8 +113,7 @@ defineExpose({
                   <q-icon name="event" color="orange" class="cursor-pointer">
                     <q-popup-proxy>
                       <q-date
-                        v-model="dateLabel"
-                        mask="YYYY-MM-DD"
+                        v-model="dateInput"
                         style="width: 300px"
                       />
                     </q-popup-proxy>
@@ -346,6 +345,7 @@ export default {
       showPopup: ref(false),
       taxes: ref([]),
       cartClass: new Cart(),
+      dateInput: ref(),
       dateInputLabel: ref(),
       dateLabel: ref(new Date().toISOString()),
       paymentMethod: ref(),
@@ -388,7 +388,7 @@ export default {
     this.setDate();
   },
   watch: {
-    dateLabel: {
+    dateInput: {
       handler(val) {
         console.log(val);
         this.dateInputLabel = new Intl.DateTimeFormat("id-ID", {
@@ -451,7 +451,7 @@ export default {
     },
     setDate() {
       const date = new Date().toISOString();
-      this.dateLabel = date;
+      this.dateInput = date;
     },
     payWith(indicator) {
       this.paymentMethod = indicator.value;
@@ -499,7 +499,7 @@ export default {
           "trans",
           {
             carts: this.carts,
-            plannedDate: this.dateLabel,
+            plannedDate: this.dateInput,
             method: this.paymentMethod,
           },
           {
