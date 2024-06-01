@@ -98,11 +98,11 @@
         </div>
       </div>
 
-      <div class="container-kunjungan-text">
-        <div class="Lokasi kunjungan-text1">Kunjungan</div>
-        <div class="Lokasi-samping kunjungan-text2">
+      <div class="fasilitas-text kunjungan-text">
+        <div>Kunjungan</div>
+        <div>
           Kunjungi Keraton Kasepuhan Cirebon dengan berbagai pilihan paket
-          wisata yang menarik
+          wisata yang menarik.
         </div>
       </div>
       <div class="btn-kunjungan-text">
@@ -265,6 +265,13 @@ export default {
 </style>
 
 <style scoped>
+.fasilitas-text {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 4vw;
+}
+
 .Lokasi {
   flex: 2;
   font-size: 4vw;
