@@ -530,11 +530,9 @@ export default {
     this.fetchData();
   },
   watch: {
-    search: {
-      handler() {
-        this.fetchData();
-      },
-    },
+    "search.s": "fetchData",
+    "search.d": "fetchData",
+    "search.stat": "fetchData",
   },
   methods: {
     printPDF() {
@@ -558,16 +556,26 @@ export default {
     async fetchData() {
       try {
         let endpointLink = "trans?";
-        if (this.search.s) endpointLink += `s=${this.search.s}`;
-        if (this.search.d) endpointLink += `d=${this.search.d}`;
-        if (this.search.stat) endpointLink += `stat=${this.search.stat}`;
+        if (this.search.s) endpointLink += `s=${this.search.s}&`;
+        if (this.search.d) endpointLink += `d=${this.search.d}&`;
+        if (this.search.stat) endpointLink += `stat=${this.search.stat}&`;
+
+        // Menghapus karakter & terakhir jika ada
+        if (endpointLink.endsWith("&")) {
+          endpointLink = endpointLink.slice(0, -1);
+        }
+
         const response = await this.$api.get(endpointLink, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
-          query: { ...this.search },
         });
+
         if (response.status != 200) throw Error(response.data.message);
+
+        // Reset historyDatas sebelum mengisinya kembali
+        this.historyDatas = [];
+
         for (let transaction of response.data.data) {
           let planDate = new Date(transaction.plannedDate);
           planDate = new Intl.DateTimeFormat("en-GB", {
@@ -594,7 +602,6 @@ export default {
         console.log(err);
       }
     },
-
     async sendEmail() {
       try {
         if (!this.detailData.transactionNo) throw Error("Specify Transaction");
