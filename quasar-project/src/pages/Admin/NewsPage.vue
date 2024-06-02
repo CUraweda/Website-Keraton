@@ -3,15 +3,12 @@
     <navbar />
     <q-btn label="Create News" @click="handleDialog" />
     <div class="q-gutter-xs q-mt-md">
-      <div
-        class="flex col-grow q-gutter-md"
-        style="
+      <div class="flex col-grow q-gutter-md" style="
           overflow-x: auto;
           flex-wrap: nowrap;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        "
-      >
+        ">
         <div v-for="(data, i) in newsDatas" :key="i">
           <q-card class="my-card" flat bordered style="width: 20rem">
             <q-img :src="data.image" style="height: 15rem" />
@@ -25,30 +22,18 @@
 
             <q-card-actions>
               <q-btn flat @click="handleDialog(data)">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="green"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                  fill="green">
                   <path
-                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
-                  />
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                 </svg>
               </q-btn>
-              <q-btn flat @click="deleteData(data.id)"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24px"
-                  viewBox="0 -960 960 960"
-                  width="24px"
-                  fill="red"
-                >
+              <q-btn flat @click="deleteData(data.id)"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                  viewBox="0 -960 960 960" width="24px" fill="red">
                   <path
-                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
-                  /></svg
-              ></q-btn>
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                </svg>
+              </q-btn>
               <q-space />
             </q-card-actions>
           </q-card>
@@ -66,49 +51,19 @@
 
         <q-card-section class="flex q-gutter-md">
           <div>
-            <q-input
-              filled
-              v-model="newsData.title"
-              label="Title"
-              color="black"
-              bg-color="gray"
-            />
-            <q-input
-              filled
-              v-model="newsData.desc"
-              label="Description"
-              color="black"
-              bg-color="gray"
-              class="q-mt-md"
-            />
-            <q-input
-              filled
-              v-model="newsData.link"
-              label="Link"
-              color="black"
-              bg-color="gray"
-              class="q-mt-md"
-            />
+            <q-input filled v-model="newsData.title" label="Title" color="black" bg-color="gray" />
+            <q-input filled v-model="newsData.desc" label="Description" color="black" bg-color="gray" class="q-mt-md" />
+            <q-input filled v-model="newsData.link" label="Link" color="black" bg-color="gray" class="q-mt-md" />
           </div>
 
-          <div
-            style="
+          <div style="
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-            "
-          >
+            ">
             <div>
-              <q-file
-                filled
-                type="file"
-                v-model="newsData.image"
-                label="Tambahkan Image"
-                color="black"
-                class="ellipsis"
-                style="width: 10rem"
-                @update:model-value="handleUploadNews()"
-              />
+              <q-file filled type="file" v-model="newsData.image" label="Tambahkan Image" color="black" class="ellipsis"
+                style="width: 10rem" @update:model-value="handleUploadNews()" />
               <q-img :src="imgURLNews" v-if="imgURLNews" />
             </div>
             <div>
@@ -154,7 +109,6 @@ export default {
       newsDialog: ref(false),
       currentId: undefined,
       notification: {
-        // Tambahkan properti notification ke dalam objek data
         message: "",
         type: "",
       },
@@ -168,7 +122,7 @@ export default {
     },
   },
   mounted() {
-    this.fethcData();
+    this.fetchData();
   },
   methods: {
     handleUploadNews() {
@@ -176,7 +130,7 @@ export default {
         this.imgURLNews = URL.createObjectURL(this.newsData.image);
       }
     },
-    async fethcData() {
+    async fetchData() {
       try {
         const responseNews = await this.$api.get("news");
         if (responseNews.status != 200) throw Error(responseNews.data.message);
@@ -189,17 +143,21 @@ export default {
       try {
         let url = "news/action";
         if (this.currentId) url += `/${this.currentId}`;
-        const response = await this.$api.post(
-          url,
-          { ...this.newsData },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        console.log(this.newsData)
+        const requestBody = {
+          link: this.newsData.link,
+          desc: this.newsData.desc,
+          title: this.newsData.title,
+          image: this.newsData.image,
+        }
+        const response = await this.$api.post(url, requestBody, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         if (response.status != 200) throw Error(response.data.message);
         this.newsDialog = false;
+        this.fetchData()
         this.showNotif(response.data.message, success);
       } catch (err) {
         console.log(err);
@@ -209,8 +167,8 @@ export default {
       try {
         const response = await this.$api.delete(`news/${id}`);
         if (response.status != 200) throw Error(response.data.message);
-        this.showNotif(response.data.message, success);
         this.fetchData();
+        this.showNotif(response.data.message, success);
       } catch (err) {
         console.log(err);
       }
@@ -229,11 +187,11 @@ export default {
       if (data) {
         this.newsData = { ...data };
         this.imgURLNews = data.image;
-      } else {
-        this.resetDefault();
       }
     },
     resetDefault() {
+      this.imgURLNews = undefined
+      this.currentId = undefined
       this.newsData = {
         iterationId: null,
         price: null,
@@ -257,6 +215,7 @@ body {
   height: 100vh;
   background-color: #f0f0f0;
 }
+
 .container {
   background-color: #fff;
   padding: 20px;
@@ -264,22 +223,27 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px;
 }
+
 .form-group {
   margin-bottom: 15px;
 }
+
 .form-group label {
   display: block;
   margin-bottom: 5px;
 }
+
 .form-group input,
 .form-group textarea {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
 }
+
 .form-group textarea {
   resize: vertical;
 }
+
 .form-group button {
   padding: 10px 15px;
   background-color: #007bff;
@@ -288,6 +252,7 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .form-group button:hover {
   background-color: #0056b3;
 }
