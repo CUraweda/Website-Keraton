@@ -4,7 +4,7 @@
     id="hero"
     :style="{
       'min-height': '100vh',
-      'background': `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
       'background-repeat': 'no-repeat',
       'background-size': 'cover',
       'background-position': 'center',
@@ -46,12 +46,13 @@
     </div>
   </section>
 
-  <section class="sec-home" 
-  id="section3"
-  :style="{
-    'background-image': `url(${sectionimg2})`,
-  'background-size': 'cover',
-}"
+  <section
+    class="sec-home"
+    id="section3"
+    :style="{
+      'background-image': `url(${sectionimg2})`,
+      'background-size': 'cover',
+    }"
   >
     <div class="container">
       <div class="text">
@@ -179,25 +180,33 @@
 
   <section class="slider" id="slider" v-if="slides.length > 1">
     <h1 class="berita">Berita Terkini</h1>
-    <div class="slides" :style="{ transform: `translateX(${currentSlideIndex * -300 / slides.length}%) `}"
-    @mouseenter="pauseSlider"
-    @mouseleave="resumeSlider"
+    <div
+      class="slides"
+      :style="{
+        transform: `translateX(${
+          (currentSlideIndex * -300) / slides.length
+        }%) `,
+      }"
+      @mouseenter="pauseSlider"
+      @mouseleave="resumeSlider"
     >
       <div v-for="(slide, index) in slides" :key="index" class="slide">
         <a :href="slide.link">
-        <div class="news-section" :to="slide.link">
-          <div class="news-image">
-            <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
+          <div class="news-section" :to="slide.link">
+            <div class="news-image">
+              <img :src="slide.imageUrl" :alt="`Berita ${index + 1}`" />
+            </div>
+            <div class="news-content">
+              <h2 class="news-title">{{ slide.title }}</h2>
+              <p class="news-sum">{{ slide.summary }}</p>
+            </div>
           </div>
-          <div class="news-content">
-            <h2 class="news-title">{{ slide.title }}</h2>
-            <p class="news-sum">{{ slide.summary }}</p>
-          </div>
-        </div>
-      </a>
+        </a>
       </div>
     </div>
-    <a href="#/beritaterkini"><img class="newsbtn" src="../assets/images/btninfo.png" /></a>
+    <a href="#/beritaterkini"
+      ><img class="newsbtn" src="../assets/images/btninfo.png"
+    /></a>
   </section>
 
   <section
@@ -233,47 +242,47 @@
   </section>
 
   <section class="sec-home" id="section7">
-  <div class="container">
-    <div class="text">
-      <p class="faqText">{{ sectionName6 }}</p>
-      <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
-    </div>
-    <div class="faq">
-      <div
-        style="border-bottom: 1px solid black"
-        v-for="(faq, index) in faqs"
-        :key="index"
-      >
-        <button class="accordion" @click="toggleAccordion(index)">
-          <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
+    <div class="container">
+      <div class="text">
+        <p class="faqText">{{ sectionName6 }}</p>
+        <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
+      </div>
+      <div class="faq">
+        <div
+          style="border-bottom: 1px solid black"
+          v-for="(faq, index) in faqs"
+          :key="index"
+        >
+          <button class="accordion" @click="toggleAccordion(index)">
+            <span class="nomor">{{ faq.nomor }}</span> {{ faq.pertanyaan }}
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              :class="{ active: faq.active }"
+            >
+              <path
+                d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
+                fill="#D9A520"
+              />
+            </svg>
+          </button>
           <svg
-            width="32"
-            height="32"
-            viewBox="0 0 32 32"
+            width="1064"
+            height="1"
+            viewBox="0 0 1064 1"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            :class="{ active: faq.active }"
-          >
-            <path
-              d="M16 3C13.4288 3 10.9154 3.76244 8.77759 5.1909C6.63975 6.61935 4.97351 8.64968 3.98957 11.0251C3.00563 13.4006 2.74819 16.0144 3.2498 18.5362C3.75141 21.0579 4.98953 23.3743 6.80762 25.1924C8.6257 27.0105 10.9421 28.2486 13.4638 28.7502C15.9856 29.2518 18.5995 28.9944 20.9749 28.0104C23.3503 27.0265 25.3807 25.3603 26.8091 23.2224C28.2376 21.0846 29 18.5712 29 16C28.9964 12.5533 27.6256 9.24882 25.1884 6.81163C22.7512 4.37445 19.4467 3.00364 16 3ZM21.7075 14.7075L16.7075 19.7075C16.6146 19.8005 16.5043 19.8742 16.3829 19.9246C16.2615 19.9749 16.1314 20.0008 16 20.0008C15.8686 20.0008 15.7385 19.9749 15.6171 19.9246C15.4957 19.8742 15.3854 19.8005 15.2925 19.7075L10.2925 14.7075C10.1049 14.5199 9.99945 14.2654 9.99945 14C9.99945 13.7346 10.1049 13.4801 10.2925 13.2925C10.4801 13.1049 10.7346 12.9994 11 12.9994C11.2654 12.9994 11.5199 13.1049 11.7075 13.2925L16 17.5863L20.2925 13.2925C20.3854 13.1996 20.4957 13.1259 20.6171 13.0756C20.7385 13.0253 20.8686 12.9994 21 12.9994C21.1314 12.9994 21.2615 13.0253 21.3829 13.0756C21.5043 13.1259 21.6146 13.1996 21.7075 13.2925C21.8004 13.3854 21.8741 13.4957 21.9244 13.6171C21.9747 13.7385 22.0006 13.8686 22.0006 14C22.0006 14.1314 21.9747 14.2615 21.9244 14.3829C21.8741 14.5043 21.8004 14.6146 21.7075 14.7075Z"
-              fill="#D9A520"
-            />
-          </svg>
-        </button>
-        <svg
-          width="1064"
-          height="1"
-          viewBox="0 0 1064 1"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        ></svg>
-        <div class="panel" v-show="faq.active">
-          <p class="jawaban">{{ faq.jawaban }}</p>
+          ></svg>
+          <div class="panel" v-show="faq.active">
+            <p class="jawaban">{{ faq.jawaban }}</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section class="sec-home" id="section8">
     <bawah class="footer"></bawah>
@@ -312,31 +321,36 @@ export default {
         {
           nomor: "01",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "02",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "03",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "04",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
         {
           nomor: "05",
           pertanyaan: "Bagaimana cara saya memesan tiket melalui website?",
-          jawaban: "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
+          jawaban:
+            "Anda bisa pergi ke halaman tiket dan mulai memilih pilihan tiket yang anda inginkan.",
           active: false,
         },
       ],
@@ -344,14 +358,17 @@ export default {
       currentBackground: null,
       slides: [
         {
-          imageUrl: 'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg',
-          title: 'Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi',
-          link: 'https://blue.kumparan.com',
-          summary: 'Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.'
+          imageUrl:
+            "https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1634025439/01hjn2w4fqaggmdagd299n5v6y.jpg",
+          title:
+            "Sejarah Keraton Kasepuhan Cirebon beserta Peninggalannya yang Bernilai Tinggi",
+          link: "https://blue.kumparan.com",
+          summary:
+            "Ringkasan singkat dari berita pertama. Ini adalah contoh ringkasan yang memberikan gambaran umum tentang isi berita.",
         },
       ],
       currentSlideIndex: 0,
-      sliderInterval: null
+      sliderInterval: null,
     };
   },
   mounted() {
@@ -373,19 +390,19 @@ export default {
         this.fetchData();
       });
     },
-    async fetchNews(){
-      try{
-        const response = await this.$api.get('news');
+    async fetchNews() {
+      try {
+        const response = await this.$api.get("news");
         console.log(response.data.data);
-        this.slides = response.data.data.map(news => ({
+        this.slides = response.data.data.map((news) => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
-          summary: news.desc
+          summary: news.desc,
         }));
 
         console.log(this.slides);
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
     },
@@ -426,39 +443,44 @@ export default {
         console.log(err);
       }
     },
-    async setDefaultAndCheck(){
-      try{
-        const cartClass = new Carts()
-        const globalStorageClass = new GlobalStorageData()
-        const checkToken = await verifyToken()
-        if(checkToken.isLogin){
+    async setDefaultAndCheck() {
+      try {
+        const cartClass = new Carts();
+        const globalStorageClass = new GlobalStorageData();
+        const checkToken = await verifyToken();
+        if (checkToken.isLogin) {
           //Globalcn
-          globalStorageClass.setItem('isLogin', checkToken.isLogin)
-          globalStorageClass.setItem('isAdmin', checkToken.isAdmin)
-          globalStorageClass.update()
+          globalStorageClass.setItem("isLogin", checkToken.isLogin);
+          globalStorageClass.setItem("isAdmin", checkToken.isAdmin);
+          globalStorageClass.update();
           //Cart
-          const cart = cartClass.getItem()
-          if(cart){
-            const validateCartResponse = await this.$api.post('cart/validate', {
-              carts: cart
-            })
-            if(validateCartResponse.status != 200){
-              cartClass.clearCart()
-              throw Error(validateCartResponse.data.message)
-            } 
-            cartClass.setNew(Object.values(validateCartResponse.data.data))
+          const cart = cartClass.getItem();
+          if (cart) {
+            const validateCartResponse = await this.$api.post("cart/validate", {
+              carts: cart,
+            });
+            if (validateCartResponse.status != 200) {
+              cartClass.clearCart();
+              throw Error(validateCartResponse.data.message);
+            }
+            cartClass.setNew(Object.values(validateCartResponse.data.data));
           }
         }
-        const availableWisata = await this.$api.get('wisata')
-        if(availableWisata.status != 200) throw Error(availableWisata.data.message)
-        const wisataData = availableWisata.data.data.wisataData.map(wisata => ({
-          label: wisata.label,
-          value: wisata.to
-        }))
-        localStorage.setItem(environment.WISATA_STORAGE_NAME, JSON.stringify(wisataData))
-
-      }catch(err){
-        console.log(err)
+        const availableWisata = await this.$api.get("wisata");
+        if (availableWisata.status != 200)
+          throw Error(availableWisata.data.message);
+        const wisataData = availableWisata.data.data.wisataData.map(
+          (wisata) => ({
+            label: wisata.label,
+            value: wisata.to,
+          })
+        );
+        localStorage.setItem(
+          environment.WISATA_STORAGE_NAME,
+          JSON.stringify(wisataData)
+        );
+      } catch (err) {
+        console.log(err);
       }
     },
     scrollToTop() {
@@ -476,24 +498,25 @@ export default {
       this.sliderInterval = setInterval(this.nextSlide, 3000); // Change slide every 3 seconds
     },
     nextSlide() {
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
+      this.currentSlideIndex =
+        (this.currentSlideIndex + 1) % this.slides.length;
     },
     pauseSlider() {
-     clearInterval(this.sliderInterval);
+      clearInterval(this.sliderInterval);
     },
     resumeSlider() {
       this.startSlider();
     },
     toggleAccordion(index) {
       this.faqs[index].active = !this.faqs[index].active;
-    }
-  }
-}
+    },
+  },
+};
 const scrollToTop = () => {
-  document.querySelector('#hero').scrollIntoView({
-    behavior: 'smooth'
+  document.querySelector("#hero").scrollIntoView({
+    behavior: "smooth",
   });
-}
+};
 </script>
 
 <style scoped>
@@ -514,7 +537,7 @@ const scrollToTop = () => {
   justify-content: center;
 } */
 
-Body{
+Body {
   font-family: Raleway;
 }
 .texthero {
@@ -625,9 +648,7 @@ background-size: cover;
   background-position: center;
 }
 
-
-.sl
-.btn1-img {
+.sl .btn1-img {
   display: block;
 }
 
@@ -652,7 +673,7 @@ background-size: cover;
   min-width: 100%;
   box-sizing: border-box;
 }
-.slide a{
+.slide a {
   text-decoration: none;
   color: #000000;
 }
@@ -1527,11 +1548,11 @@ input::placeholder {
   }
 
   .btn1 {
-  top: 90%;
-  left: 89%;
-  position: fixed;
-  z-index: 1000;
-}
+    top: 90%;
+    left: 89%;
+    position: fixed;
+    z-index: 1000;
+  }
 
   .btn1:hover {
     filter: brightness(70%);
@@ -1653,6 +1674,49 @@ input::placeholder {
     left: 71%;
     top: 35%;
     border-radius: 50px;
+  }
+
+  @media (max-width: 1200px) {
+    .container {
+      background-size: cover;
+      text-align: center;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      height: 60vh;
+      flex-direction: column;
+      background-position: center;
+      color: white;
+      font-family: Raleway, sans-serif;
+    }
+
+    .card1 img {
+      position: absolute;
+      width: 25%;
+      height: 30%;
+      left: 5%;
+      top: 35%;
+      border-radius: 50px;
+    }
+
+    .card2 img {
+      position: absolute;
+      width: 31%;
+      height: 32%;
+      left: 35%;
+      top: 32%;
+      border-radius: 50px;
+    }
+
+    .card3 img {
+      position: absolute;
+      width: 25%;
+      height: 30%;
+      left: 71%;
+      top: 35%;
+      border-radius: 50px;
+    }
   }
 
   .title3 {
