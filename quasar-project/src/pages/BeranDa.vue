@@ -216,7 +216,21 @@
       'background-size': 'cover',
     }"
   >
-    <div class="container">
+    <div
+      style="
+        background-size: cover;
+        text-align: center;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        height: 95vh;
+        flex-direction: column;
+        background-position: center;
+        color: white;
+        font-family: Raleway, sans-serif;
+      "
+    >
       <div class="text">
         <p class="owText">{{ sectionName5 }}</p>
         <p class="ksc6Text">{{ sectionData5?.xs1.data }}</p>
@@ -605,7 +619,7 @@ background-size: cover;
 
 #section5 .container {
   background-image: url("../assets/images/keraton2.png");
-  height: 150vh;
+  height: 120vh;
   /* height: 1000px; */
   background-size: cover;
   background-position: center;
@@ -624,7 +638,6 @@ background-size: cover;
 
 #section5 .container .text {
   position: absolute;
-  margin-top: 5rem;
 }
 
 #section6 .container {
