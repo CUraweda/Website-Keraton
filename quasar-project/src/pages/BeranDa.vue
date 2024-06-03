@@ -524,20 +524,7 @@ const scrollToTop = () => {
 @import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css");
 
-/* #hero {
-  min-height: 100vh;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../assets/images/bg1.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-} */
-
-Body {
+body {
   font-family: Raleway;
 }
 .texthero {
