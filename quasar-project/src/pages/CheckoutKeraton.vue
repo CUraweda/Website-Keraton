@@ -107,7 +107,7 @@ defineExpose({
                 dense
                 v-model="dateInputLabel"
                 label="Date"
-                style="width: 10rem"
+                style="width: 15rem"
               >
                 <template v-slot:append>
                   <q-icon name="event" color="orange" class="cursor-pointer">
@@ -115,7 +115,9 @@ defineExpose({
                       <q-date
                         v-model="dateInput"
                         style="width: 300px"
+                        mask="YYYY-MM-DD HH:mm"
                       />
+                        <q-time v-model="dateInput" mask="YYYY-MM-DD HH:mm" style="width: 300px" />
                     </q-popup-proxy>
                   </q-icon>
                 </template>
@@ -390,11 +392,12 @@ export default {
   watch: {
     dateInput: {
       handler(val) {
-        console.log(val);
         this.dateInputLabel = new Intl.DateTimeFormat("id-ID", {
           day: "numeric",
           month: "long",
           year: "numeric",
+          hour: '2-digit',
+          minute: '2-digit'
         }).format(new Date(val));
       },
     },
@@ -499,7 +502,7 @@ export default {
           "trans",
           {
             carts: this.carts,
-            plannedDate: this.dateInput,
+            plannedDate: new Date(this.dateInput).toISOString(),
             method: this.paymentMethod,
           },
           {

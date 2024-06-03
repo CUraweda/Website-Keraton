@@ -438,6 +438,19 @@ export default {
         this.sectionName6 = dataRest.contents[6]?.sectionName;
         this.sectionData6 = dataRest.contents[6]?.context;
 
+        const faqsDatas = Object.values(dataRest.contents[6]?.context)
+        let faqs = []
+        for(let faqIndex in faqsDatas){
+          const faqData = faqsDatas[faqIndex]
+          faqs.push({
+            nomor: faqIndex,
+            pertanyaan: faqData?.data,
+            jawaban: faqData?.sub,
+            active: false
+          })
+        }
+        faqs.shift()
+        this.faqs = faqs
         this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
