@@ -204,9 +204,6 @@
         </a>
       </div>
     </div>
-    <a href="#/beritaterkini"
-      ><img class="newsbtn" src="../assets/images/btninfo.png"
-    /></a>
   </section>
 
   <section
@@ -242,7 +239,19 @@
   </section>
 
   <section class="sec-home" id="section7">
-    <div class="container">
+    <div
+      style="
+        background-size: cover;
+        text-align: center;
+        align-items: center;
+        display: flex;
+        height: 40vh;
+        flex-direction: column;
+        background-position: center;
+        color: white;
+        font-family: Raleway, sans-serif;
+      "
+    >
       <div class="text">
         <p class="faqText">{{ sectionName6 }}</p>
         <h2 class="tanyaText">{{ sectionData6?.xs1.data }}</h2>
@@ -438,19 +447,19 @@ export default {
         this.sectionName6 = dataRest.contents[6]?.sectionName;
         this.sectionData6 = dataRest.contents[6]?.context;
 
-        const faqsDatas = Object.values(dataRest.contents[6]?.context)
-        let faqs = []
-        for(let faqIndex in faqsDatas){
-          const faqData = faqsDatas[faqIndex]
+        const faqsDatas = Object.values(dataRest.contents[6]?.context);
+        let faqs = [];
+        for (let faqIndex in faqsDatas) {
+          const faqData = faqsDatas[faqIndex];
           faqs.push({
             nomor: faqIndex,
             pertanyaan: faqData?.data,
             jawaban: faqData?.sub,
-            active: false
-          })
+            active: false,
+          });
         }
-        faqs.shift()
-        this.faqs = faqs
+        faqs.shift();
+        this.faqs = faqs;
         this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
@@ -634,7 +643,7 @@ background-size: cover;
 
 #slider {
   color: #000000;
-  height: 120vh;
+  height: 85svh;
   padding-top: 5rem;
 }
 
@@ -1215,7 +1224,7 @@ background-size: cover;
 .faqText {
   font-family: "Inria Serif";
   font-size: 30px;
-  margin: 10px 0;
+  margin: 2px 0;
   text-align: center;
   color: #d9a520;
 }
