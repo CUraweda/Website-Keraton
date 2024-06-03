@@ -1692,29 +1692,66 @@ input::placeholder {
     }
 
     .card1 img {
+      margin-top: 10px;
       position: absolute;
       width: 25%;
-      height: 30%;
-      left: 5%;
-      top: 35%;
+      height: 34%;
       border-radius: 50px;
     }
 
     .card2 img {
+      margin-top: 10px;
       position: absolute;
       width: 31%;
-      height: 32%;
-      left: 35%;
-      top: 32%;
+      height: 36%;
       border-radius: 50px;
     }
 
     .card3 img {
+      margin-top: 10px;
       position: absolute;
       width: 25%;
-      height: 30%;
-      left: 71%;
-      top: 35%;
+      height: 34%;
+      border-radius: 50px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      background-size: cover;
+      text-align: center;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      height: 60vh;
+      flex-direction: column;
+      background-position: center;
+      color: white;
+      font-family: Raleway, sans-serif;
+    }
+
+    .card1 img {
+      margin-top: 10px;
+      position: absolute;
+      width: 25%;
+      height: 34%;
+      border-radius: 50px;
+    }
+
+    .card2 img {
+      margin-top: 10px;
+      position: absolute;
+      width: 31%;
+      height: 36%;
+      border-radius: 50px;
+    }
+
+    .card3 img {
+      margin-top: 10px;
+      position: absolute;
+      width: 25%;
+      height: 34%;
       border-radius: 50px;
     }
   }
