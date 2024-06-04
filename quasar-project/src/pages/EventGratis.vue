@@ -179,7 +179,7 @@ export default {
         if (this.selectedOptions) iterationOptions = Object.values(this.selectedOptions);
         if (this.selectedOptions2) freeOptions = Object.values(this.selectedOptions2);
         const eventResponse = await this.$axios.post(
-          "http://localhost:3000/keraton/event/page",
+          "https://api-prmn.curaweda.com:3031/keraton/event/page",
           {
             ...(iterationOptions && iterationOptions.length != 0 && {
                 iterat: Object.values(this.selectedOptions),
@@ -190,7 +190,7 @@ export default {
           }
         );
         const iterationResponse = await this.$axios.get(
-          "http://localhost:3000/keraton/iteration"
+          "https://api-prmn.curaweda.com:3031/keraton/iteration"
         );
         if (eventResponse.status != 200) throw Error("Error occured");
         if (iterationResponse.status != 200) throw Error("Error occured");

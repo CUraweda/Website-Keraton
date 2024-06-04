@@ -80,26 +80,6 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    // async verifyToken() {
-    //   const token = localStorage.getItem("token");
-    //   if (!token) {
-    //     this.isLogin = false;
-    //     return;
-    //   }
-
-    //   try {
-    //     const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     });
-    //     const data = await response.json();
-    //     this.isLogin = true;
-    //     this.$router.push("/");
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //   }
-    // },
     async submitForm() {
       this.emailError = !this.email.trim();
       this.passwordError = !this.password.trim();

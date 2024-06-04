@@ -6,5 +6,6 @@ export default {
     GLOBAL_STORAGE: "global",
     ENCRYPTION_KEY: "iEqe0fQLYB",
     ENCRYPTION_IV: "PQhD9fKakp",
-    BASE_URL: `http://localhost:3000`
+    BASE_URL: "http://localhost:3000"
+    // BASE_URL: `https://api-prmn.curaweda.com:3031`
 }

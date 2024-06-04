@@ -1,3 +1,3 @@
 export function BASE_URL() {
-    return `http://localhost:3000`;
+    return `https://api-prmn.curaweda.com:3031`;
 }

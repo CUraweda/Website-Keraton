@@ -133,7 +133,7 @@ export default {
       }
 
       try {
-        const response = await fetch(BASE_URL() + "/keraton/auth/auth", {
+        const response = await fetch(env.BASE_URL + "/keraton/auth/auth", {
           headers: {
             Authorization: token,
           },

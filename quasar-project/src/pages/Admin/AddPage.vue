@@ -7,107 +7,51 @@
 
     <div style="padding-inline: 300px; margin-top: 120px">
       <div class="col-grow">
-        <q-input
-          filled
-          v-model="sectionName"
-          label="Section Name"
-          color="black"
-          bg-color="gray"
-        />
+        <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" />
       </div>
-      <q-input
-        filled
-        v-model="sectionOrder"
-        type="number"
-        label="Order"
-        color="black"
-        bg-color="gray"
-      />
+      <q-input filled v-model="sectionOrder" type="number" label="Order" color="black" bg-color="gray" />
 
-      <q-btn
-        no-caps
-        @click="addNewInput('text')"
-        label="Tambahkan Text Input"
-      />
-      <q-btn
-        no-caps
-        @click="addNewInput('link')"
-        label="Tambahkan Link Input"
-      />
-      <q-btn
-        no-caps
-        @click="addNewInput('image')"
-        label="Tambahkan Image Input"
-      />
+      <q-btn no-caps @click="addNewInput('text')" label="Tambahkan Text Input" />
+      <q-btn no-caps @click="addNewInput('link')" label="Tambahkan Link Input" />
+      <q-btn no-caps @click="addNewInput('image')" label="Tambahkan Image Input" />
 
-      <div
-        v-for="(item, i) in textInputs"
-        :key="i"
-        class="flex full-width"
-        style="gap: 5px"
-      >
+      <div v-for="(item, i) in textInputs" :key="i" class="flex full-width" style="gap: 5px">
         <div class="col-grow">
-          <q-input
-            filled
-            v-model="item.data"
-            label="Text"
-            color="black"
-            bg-color="gray"
-          />
+          <q-input filled v-model="item.data" label="Text" color="black" bg-color="gray" />
         </div>
-        <q-input
-          filled
-          v-model="item.textSize"
-          label="Size"
-          color="black"
-          bg-color="gray"
-        />
+        <div v-for="(subData, i) in item.subDatas" :key="i">
+          <q-input filled v-model="item.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
+          <q-input filled v-model="item[subData]" label="Value" color="black" bg-color="gray" />
+        </div>
+        <q-btn @click="addNewSubInput('text', i)"  label="Add Sub" />
       </div>
 
-      <div
-        v-for="(link, i) in linkInputs"
-        :key="i"
-        class="flex full-width q-mt-md"
-        style="gap: 5px"
-      >
+      <div v-for="(link, i) in linkInputs" :key="i" class="flex full-width q-mt-md" style="gap: 5px">
         <div class="col-grow">
-          <q-input
-            filled
-            v-model="link.data"
-            label="Link"
-            color="black"
-            bg-color="gray"
-          />
+          <q-input filled v-model="link.data" label="Link" color="black" bg-color="gray" />
+          <div v-for="(subData, i) in link.subDatas" :key="i">
+            <q-input filled v-model="link.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
+            <q-input filled v-model="link[subData]" label="Value" color="black" bg-color="gray" />
+          </div>
+          <q-btn @click="addNewSubInput('link', i)"  label="Add Sub"/>
         </div>
       </div>
 
       <div v-for="(image, i) in imageInputs" :key="i">
-        <q-file
-          filled
-          type="file"
-          v-model="image.data"
-          :label="image.data ? 'Ganti Image' : 'Tambah Image'"
-          color="black"
-          class="q-mt-md"
-          @update:model-value="handleUpload(image.data)"
-        />
+        <q-file filled type="file" v-model="image.data" :label="image.data ? 'Ganti Image' : 'Tambah Image'"
+          color="black" class="q-mt-md" @update:model-value="handleUpload(image.data)" />
         <q-img :src="image.data?.data || image.data" v-if="image.data" />
+        <div v-for="(subData, i) in image.subDatas" :key="i">
+          <q-input filled v-model="image.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
+          <q-input filled v-model="image[subData]" label="Value" color="black" bg-color="gray" />
+        </div>
+        <q-btn @click="addNewSubInput('image', i)" label="Add Sub" />
       </div>
 
-      <q-btn
-        no-caps
-        @click="sendUpdate"
-        style="background: #123b32"
-        text-color="white"
-        label="Save and Update"
-        class="full-width q-mt-md"
-      />
+      <q-btn no-caps @click="sendUpdate" style="background: #123b32" text-color="white" label="Save and Update"
+        class="full-width q-mt-md" />
     </div>
-    <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
+    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
   </div>
 </template>
 
@@ -165,7 +109,7 @@ export default {
         if (!this.isAdmin) {
           return this.$router.replace("/");
         }
-        
+
       } catch (error) {
         console.log(error)
       }
@@ -186,32 +130,38 @@ export default {
         for (let contextKey of contextKeys) {
           rawContext[this.takeTwoChars(contextKey)].push({
             ...context[contextKey],
-          });
+            subDatas: Object.keys(context[contextKey]).filter(key => key !== 'data')
+          })
         }
 
         this.textInputs = rawContext.xs;
         this.imageInputs = rawContext.xi;
         this.linkInputs = rawContext.xl;
+
+        console.log(this.imageInputs)
       } catch (err) {
         console.log(err);
       }
     },
     async sendUpdate() {
       try {
-        let textList = [],imageList = [],linkList = [], imageSub = []
+        let textList = [], imageList = [], linkList = [], imageSub = []
         for (let text of this.textInputs) textList.push(text);
-        for (let image of this.imageInputs) imageList.push(image.data)
+        for (let imageIndex in this.imageInputs) {
+          imageList.push(this.imageInputs[imageIndex].data)
+          imageList[imageIndex].sub = "TEST"
+          console.log(imageList)
+        }
         for (let link of this.linkInputs) linkList.push({ data: link.data, sub: "" })
-        const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
-        console.log(imageList)
-        const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        if (response.status != 200) throw Error("Error occured");
-        socket.emit("dashboard", {});
-        window.location.reload()
+        // const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
+        // const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
+        //   headers: {
+        //     'Content-Type': 'multipart/form-data'
+        //   }
+        // })
+        // if (response.status != 200) throw Error("Error occured");
+        // socket.emit("dashboard", {});
+        // window.location.reload()
       } catch (err) {
         this.showNotif("fatal error please contact the developer immediately", "error")
         console.log(err);
@@ -223,6 +173,25 @@ export default {
       this.addNewInput("text");
       this.addNewInput("image");
       this.addNewInput("link");
+    },
+    addNewSubInput(type, i) {
+      console.log(type, i)
+      switch(type) {
+        case "text":
+          this.textInputs[i][''] = undefined
+          this.textInputs[i].subDatas.push('');
+          break;
+          case "image":
+            this.imageInputs[i][''] = undefined
+            this.imageInputs[i].subDatas.push('');
+            break;
+            case "link":
+              this.linkInputs[i][''] = undefined
+              this.linkInputs[i].subDatas.push('');
+          break;
+        default:
+          break;
+      }
     },
     addNewInput(type) {
       switch (type) {

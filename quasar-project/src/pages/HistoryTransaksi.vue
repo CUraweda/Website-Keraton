@@ -12,10 +12,6 @@ const cara = ref(false);
 const selectedStatus = ref("sudahDigunakan");
 const statusSelected = ref(false);
 
-const openDetailTransaksi = () => {
-  detail.value = !detail.value;
-};
-
 const closeDetailTransaksi = () => {
   detail.value = false;
 };
@@ -28,52 +24,6 @@ const closeMenungguPembayaran = () => {
   cara.value = false;
 };
 
-const transactions = [
-  {
-    status: "sudahDigunakan",
-    label: "Sudah digunakan",
-    class: "sudah__digunakan",
-    cardClass: "card-1",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "dapatDigunakan",
-    label: "Dapat digunakan",
-    class: "dapat__digunakan",
-    cardClass: "card-2",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "expired",
-    label: "Expired",
-    class: "expired",
-    cardClass: "card-3",
-    actions: [
-      { label: "Lihat detail transaksi", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Bantuan", handler: null }, // Handler bisa diisi sesuai kebutuhan
-    ],
-  },
-  {
-    status: "menungguPembayaran",
-    label: "Menunggu pembayaran",
-    class: "menunggu__pembayaran",
-    cardClass: "card-4",
-    actions: [
-      { label: "Lihat detail", handler: openDetailTransaksi },
-      { label: "|" },
-      { label: "Cara Pembayaran", handler: openMenungguPembayaran },
-    ],
-  },
-];
 </script>
 
 <template>
@@ -91,33 +41,16 @@ const transactions = [
             <div class="search">
               <label for="search" class="search-label">
                 <img src="../assets/svg/search.svg" class="search-icon" />
-                <input
-                  type="search"
-                  v-model="search.s"
-                  id="search"
-                  name="search"
-                  placeholder="Cari transaksi"
-                  class="Pencarian"
-                />
+                <input type="search" v-model="search.s" id="search" name="search" placeholder="Cari transaksi"
+                  class="Pencarian" />
               </label>
             </div>
             <div class="date">
-              <input
-                type="date"
-                v-model="search.d"
-                class="tanggal"
-                placeholder="Pilih tanggal"
-              />
+              <input type="date" v-model="search.d" class="tanggal" placeholder="Pilih tanggal" />
             </div>
             <div class="status">
-              <select
-                name="Status"
-                placeholder="status"
-                value="Status"
-                v-model="search.stat"
-                @change="statusSelected = true"
-                class="custom-select"
-              >
+              <select name="Status" placeholder="status" value="Status" v-model="search.stat"
+                @change="statusSelected = true" class="custom-select">
                 <option value="sudahDigunakan">Sudah digunakan</option>
                 <option value="dapatDigunakan">Dapat digunakan</option>
                 <option value="expired">Expired</option>
@@ -127,19 +60,11 @@ const transactions = [
           </div>
         </div>
       </div>
-      <div
-        v-for="transaction in historyDatas"
-        :key="transaction.status"
-        class="tabel"
-      >
+      <div v-for="transaction in historyDatas" :key="transaction.status" class="tabel">
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
-              <img
-                src="../assets/images/Vector.png"
-                alt="icon-tiket"
-                class="icon-tiket"
-              />
+              <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
               <p>Tiket</p>
               <label>{{ transaction.date }}</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
@@ -149,23 +74,12 @@ const transactions = [
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
                 <div class="flex items-center q-gutter-xs">
-                  <q-badge
-                    rounded
-                    :color="badge.badgeColor"
-                    v-for="(badge, i) in transaction.detailDatas.data"
-                    :key="i"
-                    >{{ badge.name }}</q-badge
-                  >
+                  <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data"
+                    :key="i">{{ badge.name }}</q-badge>
                 </div>
                 <div class="label">
-                  <label class="labelharga">{{
-                    `${transaction.detailDatas.data[0].quantity} tiket x Rp.
-                    ${this.formatRupiah(transaction.detailDatas.data[0].price)}`
-                  }}</label
-                  ><br />
-                  <label>{{
-                    `+${transaction.detailDatas.length - 1} tiket lainnya`
-                  }}</label>
+                  <label class="labelharga">{{ `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}` }}</label><br />
+                  <label v-if="(transaction.detailDatas.length - 1) != 0">{{ `+${transaction.detailDatas.length - 1} tiket lainnya` }}</label>
                 </div>
                 <div class="total">
                   <div class="info">
@@ -179,11 +93,8 @@ const transactions = [
                       <p class="bantu">Detail Transaksi</p>
                     </a>
                     <p class="bantu">|</p>
-                    <a
-                      @click="caraBayar = !caraBayar"
-                      class="bantuan"
-                      v-if="transaction.status === 'menungguPembayaran'"
-                    >
+                    <a @click="caraBayar = !caraBayar" class="bantuan"
+                      v-if="transaction.status === 'menungguPembayaran'">
                       <p class="bantu">Cara Bayar</p>
                     </a>
                   </div>
@@ -214,11 +125,7 @@ const transactions = [
           </div>
 
           <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-          <div
-            class="flex q-mt-md q-gutter-x-md"
-            v-for="(detailData, i) in detailData.details"
-            :key="i"
-          >
+          <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
             <q-img :src="detailData.image" style="width: 10rem" />
             <div>
               <div>{{ detailData.name }}</div>
@@ -266,11 +173,7 @@ const transactions = [
           <q-card-section>
             <div class="q-pa-md">
               <q-list bordered>
-                <q-expansion-item
-                  group="somegroup"
-                  label="BJB Virtual Account"
-                  default-opened
-                >
+                <q-expansion-item group="somegroup" label="BJB Virtual Account" default-opened>
                   <q-card>
                     <q-card-section>
                       <div class="flex justify-between">
@@ -280,16 +183,10 @@ const transactions = [
                         </div>
 
                         <q-btn flat>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="24px"
-                            viewBox="0 -960 960 960"
-                            width="24px"
-                            fill="#DAA520"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#DAA520">
                             <path
-                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                            />
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
                           </svg>
                         </q-btn>
                       </div>
@@ -301,16 +198,10 @@ const transactions = [
                         </div>
 
                         <q-btn flat>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="24px"
-                            viewBox="0 -960 960 960"
-                            width="24px"
-                            fill="#DAA520"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#DAA520">
                             <path
-                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                            />
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
                           </svg>
                         </q-btn>
                       </div>
@@ -320,12 +211,7 @@ const transactions = [
 
                 <q-separator />
 
-                <q-expansion-item
-                  group="somegroup"
-                  icon="perm_identity"
-                  label="Second"
-                  header-class="text-teal"
-                >
+                <q-expansion-item group="somegroup" icon="perm_identity" label="Second" header-class="text-teal">
                   <q-card>
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -338,12 +224,7 @@ const transactions = [
 
                 <q-separator />
 
-                <q-expansion-item
-                  group="somegroup"
-                  icon="shopping_cart"
-                  label="Third"
-                  header-class="text-purple"
-                >
+                <q-expansion-item group="somegroup" icon="shopping_cart" label="Third" header-class="text-purple">
                   <q-card>
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -356,13 +237,8 @@ const transactions = [
 
                 <q-separator />
 
-                <q-expansion-item
-                  group="somegroup"
-                  icon="bluetooth"
-                  label="Fourth"
-                  header-class="bg-teal text-white"
-                  expand-icon-class="text-white"
-                >
+                <q-expansion-item group="somegroup" icon="bluetooth" label="Fourth" header-class="bg-teal text-white"
+                  expand-icon-class="text-white">
                   <q-card class="bg-teal-2">
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -408,11 +284,7 @@ const transactions = [
               </div>
 
               <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-              <div
-                class="flex q-mt-md q-gutter-x-md"
-                v-for="(detailData, i) in detailData.details"
-                :key="i"
-              >
+              <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
                 <q-img :src="detailData.image" style="width: 10rem" />
                 <div>
                   <div>{{ detailData.name }}</div>
@@ -456,9 +328,8 @@ const transactions = [
           <div class="popup-content">
             <div class="header">
               <div class="Text-h2 text-bold">Cara Pembayaran</div>
-              <span class="close" @click="closeMenungguPembayaran"
-                ><img src="../assets/images/close.png" class="Icon"
-              /></span>
+              <span class="close" @click="closeMenungguPembayaran"><img src="../assets/images/close.png"
+                  class="Icon" /></span>
             </div>
             <div class="isi">
               <div class="bjb">
@@ -507,12 +378,19 @@ const transactions = [
       </section>
     </div>
   </div>
+  <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
 </template>
 
 <script>
+import Notification from "components/NotificationAlert.vue"; // Make sure to adjust the path
 export default {
   data() {
     return {
+      user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
       caraBayar: false,
       detailDialog: ref(false),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
@@ -524,10 +402,17 @@ export default {
         d: undefined,
         stat: undefined,
       }),
+      notification: {
+        message: "",
+        type: "info",
+      },
     };
   },
   mounted() {
     this.fetchData();
+  },
+  components: {
+    Notification
   },
   watch: {
     "search.s": "fetchData",
@@ -552,6 +437,7 @@ export default {
           scale: 0.8,
         },
       });
+      this.openDetailDialog()
     },
     async fetchData() {
       try {
@@ -598,6 +484,7 @@ export default {
             // ]
           });
         }
+        console.log(this.historyDatas)
       } catch (err) {
         console.log(err);
       }
@@ -614,7 +501,8 @@ export default {
           }
         );
         if (response.status != 200) throw Error(response.data.message);
-        console.log("Request sended, please wait");
+        this.showNotif(`Email sedang dikirimkan ke ${this.user.email}, mohon ditunggu`)
+        this.openDetailDialog()
       } catch (err) {
         console.log(err);
       }
@@ -640,11 +528,7 @@ export default {
           return {
             image: itemData.image,
             name: itemData.name,
-            price: `${detail.amount} x ${
-              itemData.price < 1
-                ? "Free"
-                : "Rp" + this.formatRupiah(itemData.price)
-            }`,
+            price: `${detail.amount} x ${itemData.price < 1 ? "Free" : "Rp" + this.formatRupiah(itemData.price)}`
           };
         }),
       };
@@ -661,16 +545,14 @@ export default {
         let contentToPush = {};
         if (detailData.order) {
           const orderData = detailData.order;
-          (contentToPush["price"] = orderData.price),
-            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["price"] = this.formatRupiah(orderData.price),
+          contentToPush["quantity"] = detailData.amount;
           contentToPush["name"] = orderData.name;
-          contentToPush["badgeColor"] = orderData.orderSubTypeId
-            ? "blue"
-            : "orange";
+          contentToPush["badgeColor"] = orderData.orderSubTypeId ? "blue" : "orange";
         } else {
           const eventData = detailData.event;
-          (contentToPush["price"] = eventData.price),
-            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["price"] = this.formatRupiah(eventData.price),
+          contentToPush["quantity"] = detailData.amount;
           contentToPush["name"] = eventData.name;
           contentToPush["badgeColor"] = "green";
         }
@@ -716,6 +598,14 @@ export default {
       return (price / 1000).toLocaleString("en-US", {
         minimumFractionDigits: 3,
       });
+    },
+    showNotif(mes, type) {
+      this.notification.message = mes;
+      this.notification.type = type;
+      setTimeout(() => {
+        this.notification.message = "";
+        this.notification.type = "";
+      }, 4000);
     },
     formatDate(date) {
       return new Intl.DateTimeFormat("id-ID", {
@@ -1126,7 +1016,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container > div {
+.flex-container>div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -1321,13 +1211,11 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(
-    to right,
-    #d9d9d9,
-    #d9d9d9 7px,
-    transparent 5px,
-    transparent 10px
-  );
+  background-image: repeating-linear-gradient(to right,
+      #d9d9d9,
+      #d9d9d9 7px,
+      transparent 5px,
+      transparent 10px);
 }
 
 .total-biaya {

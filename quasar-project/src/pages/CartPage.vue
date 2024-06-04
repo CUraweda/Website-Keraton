@@ -12,7 +12,7 @@ import NavBar from "../components/NavBar.vue";
             <nav class="navbar">
               <NavBar border />
             </nav>
-            <q-page-sticky position="bottom-right" :offset="[18, 18]">
+            <q-page-sticky v-if="cartData.length > 1" position="bottom-right" :offset="[18, 18]">
               <q-btn fab color="primary" to="/user/checkout">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
