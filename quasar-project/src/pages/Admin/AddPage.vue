@@ -1,55 +1,81 @@
 <template>
-  <div v-if="isAdmin">
-    <div class="text-center text-h6 text-bold q-mt-md">
-      Edit Section {{ sectionName }}
-    </div>
-    <div class="text-center q-mt-sm">Ubah dan alur konten web Keraton</div>
+  <div v-if="isAdmin" style="margin-top: 50px; justify-content: center;">
+    <div style="margin: auto; width: 90%;">
+      <div style="justify-content: space-between; display: flex; width: 100%; padding: auto; align-items: center;">
+        <div>
+          <div class="text-h6 text-bold q-mt-md">
+            Edit Section {{ sectionName }}
+          </div>
+          <div class="q-mt-sm">Ubah dan alur konten web Keraton</div>
+        </div>
+        <div style="padding: auto; height: 100%; ">
+          <q-btn
+            auto-close
+            flat
+            size="15px"
+            round
+            icon="more_vert"
+          >
+            <q-menu>
+              <q-list
+                style="align-content: flex-end; width: 200px;"
+              >
+                <q-btn icon="add" flat dense no-caps @click="addNewInput('text')" label="Add Text Input" class="full-width" style="width: 100%; justify-content: flex-start;"/>
+                <q-btn icon="add" flat dense no-caps @click="addNewInput('link')" label="Add Link Input" class="full-width" style="width: 100%; text-align: left;"/>
+                <q-btn icon="add" flat dense no-caps @click="addNewInput('image')" label="Add Image Input" class="full-width" style="width: 100%; text-align: left;"/>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
 
-    <div style="padding-inline: 300px; margin-top: 120px">
-      <div class="col-grow">
-        <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" />
       </div>
-      <q-input filled v-model="sectionOrder" type="number" label="Order" color="black" bg-color="gray" />
-
-      <q-btn no-caps @click="addNewInput('text')" label="Tambahkan Text Input" />
-      <q-btn no-caps @click="addNewInput('link')" label="Tambahkan Link Input" />
-      <q-btn no-caps @click="addNewInput('image')" label="Tambahkan Image Input" />
-
-      <div v-for="(item, i) in textInputs" :key="i" class="flex full-width" style="gap: 5px">
-        <div class="col-grow">
-          <q-input filled v-model="item.data" label="Text" color="black" bg-color="gray" />
+      <div class="col" style="height: fit-content; gap: 10px; width: 100%; display: inline-flex; padding: 10px 0;">
+        <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" class="full-width"/>
+        <q-input filled v-model="sectionOrder" type="number" label="Order" color="black" bg-color="gray" />
+      </div>
+      
+      <div style="height: fit-content; gap: 10px; width: 100%; display: inlineflex; padding-bottom: 10px 0;">
+      <div v-for="(item, i) in textInputs" :key="i" class="full-width" style="gap: 5px">
+        <div>
+          <q-separator style="margin: 10px 0;"/>
+          <q-input filled v-model="item.data" label="Text" color="black" bg-color="gray" style="padding-bottom: 10px;" class="full-width"/>
         </div>
         <div v-for="(subData, i) in item.subDatas" :key="i">
-          <q-input filled v-model="item.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
-          <q-input filled v-model="item[subData]" label="Value" color="black" bg-color="gray" />
+          <q-input filled v-model="item.subDatas[i]" label="Sub Name" color="black" bg-color="gray" style="padding-bottom: 10px;" />
+          <q-input filled v-model="item[subData]" label="Value" color="black" bg-color="gray" style="padding-bottom: 10px;"/>
         </div>
         <q-btn @click="addNewSubInput('text', i)"  label="Add Sub" />
       </div>
-
-      <div v-for="(link, i) in linkInputs" :key="i" class="flex full-width q-mt-md" style="gap: 5px">
+      </div>
+      
+      <div v-for="(link, i) in linkInputs" :key="i" class="flex full-width" style="gap: 5px">
         <div class="col-grow">
-          <q-input filled v-model="link.data" label="Link" color="black" bg-color="gray" />
+          <q-separator style="margin: 10px 0;"/>
+          <q-input filled v-model="link.data" label="Link" color="black" style="padding-bottom: 10px;" bg-color="gray" />
           <div v-for="(subData, i) in link.subDatas" :key="i">
-            <q-input filled v-model="link.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
-            <q-input filled v-model="link[subData]" label="Value" color="black" bg-color="gray" />
+            <q-input filled v-model="link.subDatas[i]" label="Sub Name" color="black" bg-color="gray" style="padding-bottom: 10px;"/>
+            <q-input filled v-model="link[subData]" label="Value" color="black" bg-color="gray" style="padding-bottom: 10px;" />
           </div>
           <q-btn @click="addNewSubInput('link', i)"  label="Add Sub"/>
         </div>
       </div>
 
       <div v-for="(image, i) in imageInputs" :key="i">
-        <q-file filled type="file" v-model="image.data" :label="image.data ? 'Ganti Image' : 'Tambah Image'"
-          color="black" class="q-mt-md" @update:model-value="handleUpload(image.data)" />
-        <q-img :src="image.data?.data || image.data" v-if="image.data" />
-        <div v-for="(subData, i) in image.subDatas" :key="i">
-          <q-input filled v-model="image.subDatas[i]" label="Sub Name" color="black" bg-color="gray" />
-          <q-input filled v-model="image[subData]" label="Value" color="black" bg-color="gray" />
+        <div class="col-grow">
+          <q-separator style="margin: 10px 0;"/>
+          <q-file filled type="file" v-model="image.data" :label="image.data ? 'Ganti Image' : 'Tambah Image'"
+            color="black" class="q-mt-md" @update:model-value="handleUpload(image.data)" style="padding-bottom: 10px;" />
+          <q-img :src="image.data?.data || image.data" v-if="image.data" style="margin-bottom: 10px;" />
+          <div v-for="(subData, i) in image.subDatas" :key="i">
+            <q-input filled v-model="image.subDatas[i]" label="Sub Name" color="black" bg-color="gray" style="padding-bottom: 10px;"/>
+            <q-input filled v-model="image[subData]" label="Value" color="black" bg-color="gray" style="padding-bottom: 10px;"/>
+          </div>
+          <q-btn @click="addNewSubInput('image', i)" label="Add Sub" />
         </div>
-        <q-btn @click="addNewSubInput('image', i)" label="Add Sub" />
       </div>
 
       <q-btn no-caps @click="sendUpdate" style="background: #123b32" text-color="white" label="Save and Update"
-        class="full-width q-mt-md" />
+        class="full-width q-my-md" />
     </div>
     <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
   </div>
