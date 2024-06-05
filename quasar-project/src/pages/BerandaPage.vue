@@ -2,19 +2,17 @@
   <div>
     <navbar />
 
-    <section
-      :style="{
-        'min-height': '100vh',
-        background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-        'background-position': 'center',
-        display: 'flex',
-        'flex-direction': 'column',
-        'align-items': 'center',
-        'justify-content': 'center',
-      }"
-    >
+    <section :style="{
+      'min-height': '100vh',
+      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'background-position': 'center',
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-items': 'center',
+      'justify-content': 'center',
+    }">
       <div class="text-h5 text-center" style="color: #fae084">
         {{ sectionName }}
       </div>
@@ -23,27 +21,23 @@
       </div>
     </section>
 
-    <section
-      :style="{
-        'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
-        'background-position': 'center',
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-        display: 'flex',
-        'justify-content': 'center',
-        'text-align': 'center',
-      }"
-    >
-      <div
-        style="
+    <section :style="{
+      'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      display: 'flex',
+      'justify-content': 'center',
+      'text-align': 'center',
+    }">
+      <div style="
           width: 40rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           padding: 8rem 0;
-        "
-      >
+        ">
         <div style="color: #daa520" class="text-h5">
           {{ sectionName1 }}
         </div>
@@ -57,29 +51,21 @@
     </section>
 
     <section>
-      <q-video
-        :ratio="16 / 9"
-        src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-      />
+      <q-video :ratio="16 / 9" src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" />
     </section>
 
-    <section
-      style="
+    <section style="
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-      "
-      class="background-section-4"
-    >
-      <div
-        style="
+      " class="background-section-4">
+      <div style="
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           padding: 2rem 0;
-        "
-      >
+        ">
         <div style="color: #d9a520" class="text-h5">
           {{ sectionName3 }}
         </div>
@@ -88,46 +74,25 @@
         </div>
 
         <div class="flex q-gutter-xl q-mt-md justify-center">
-          <q-img
-            class="rounded-borders hover-effect"
-            :src="sectionData3?.xi1.data"
-            style="width: 20rem; height: 20rem"
-          />
-
-          <q-img
-            class="rounded-borders hover-effect"
-            :src="sectionData3?.xi2.data"
-            style="width: 20rem; height: 20rem"
-          />
-
-          <q-img
-            class="rounded-borders hover-effect"
-            :src="sectionData3?.xi3.data"
-            style="width: 20rem; height: 20rem"
-          />
+          <q-img class="rounded-borders hover-effect" :src="sejarah.data" v-for="(sejarah, i) in sejarahImages" :key="i"
+            style="width: 20rem; height: 20rem" />
         </div>
 
         <div class="flex items-center justify-center q-mt-xl">
-          <q-btn
-            no-caps
-            icon-right="arrow_right_alt"
-            label="Lihat Selengkapnya"
-            style="background: #123b32; color: white"
-          />
+          <q-btn no-caps icon-right="arrow_right_alt" label="Lihat Selengkapnya" @click="movePage(sectionData3?.xl1.data)"
+            style="background: #123b32; color: white" />
         </div>
       </div>
     </section>
 
-    <section
-      :style="{
-        'min-height': '100vh',
-        'background-image': `url(${currentBackground})`,
-        'background-position': 'center',
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-        'padding-top': '2.5rem',
-      }"
-    >
+    <section :style="{
+      'min-height': '100vh',
+      'background-image': `url(${eventImage})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      'padding-top': '2.5rem',
+    }">
       <div>
         <div style="color: #d9a520" class="text-h5 text-center">
           {{ sectionName4 }}
@@ -137,44 +102,18 @@
         </div>
 
         <div class="flex items-center justify-center q-gutter-md q-mt-xl">
-          <q-img
-            :src="sectionData4?.xi1?.data"
-            spinner-color="white"
-            class="rounded-borders hover-effect"
-            style="width: 20rem; height: 20rem"
-          >
+          <q-img :src="events[eventIndex]?.image" spinner-color="white" v-for="eventIndex in showCounterEvent"
+            :key="eventIndex" @mouseover="eventImage = events[eventIndex].image" class="rounded-borders hover-effect"
+            style="width: 20rem; height: 20rem">
             <div class="absolute-bottom text-subtitle1 text-center">
-              Caption
-            </div>
-          </q-img>
-
-          <q-img
-            :src="sectionData4?.xi2?.data"
-            spinner-color="white"
-            class="rounded-borders hover-effect"
-            style="width: 20rem; height: 20rem"
-          >
-            <div class="absolute-bottom text-subtitle1 text-center">
-              Caption
-            </div>
-          </q-img>
-
-          <q-img
-            :src="sectionData4?.xi3?.data"
-            class="rounded-borders hover-effect"
-            style="width: 20rem; height: 20rem"
-          >
-            <div class="absolute-bottom text-subtitle1 text-center">
-              Caption
+              {{ events[eventIndex]?.name }}
             </div>
           </q-img>
         </div>
 
         <div class="flex items-center justify-center q-mt-md">
           <div class="text-white text-center q-mx-lg" style="font-size: 1.2rem">
-            Hingga saat ini, Keraton Kasepuhan Cirebon tetap mempertahankan
-            keaslian dan tradisi turun menurun dengan rutin melaksanakan upacara
-            adat tradisi mereka.
+            {{ sectionData4?.xs2.data }}
           </div>
         </div>
       </div>
@@ -183,19 +122,10 @@
     <section style="padding: 2rem 0" class="background-news">
       <div style="font-size: 1.75rem; text-align: center">Berita Terkini</div>
 
-      <q-carousel
-        arrows
-        animated
-        height="400px"
-        v-model="currentSlide"
-        class="q-mt-md q-mx-lg"
-      >
-        <q-carousel-slide
-          v-for="(slide, index) in slides"
-          :img-src="slide.imageUrl"
-          :key="index"
-          :name="slide.id"
-        >
+      <q-carousel arrows swipeable animated infinite height="400px" transition-duration="2000" :autoplay="slideAutoplay"
+        transition-next="slide-left" transition-prev="slide-right" @mouseover="slideAutoplay = false"
+        @mouseleave="slideAutoplay = true" v-model="currentSlide" class="q-mt-md q-mx-lg">
+        <q-carousel-slide v-for="(slide, index) in slides" :img-src="slide.imageUrl" :key="index" :name="index">
           <div class="absolute-bottom custom-caption">
             <div class="text-h2">{{ slide.title }}</div>
             <div class="text-subtitle1">{{ slide.summary }}</div>
@@ -221,18 +151,13 @@
       </q-carousel>
     </section>
 
-    <section
-      :style="{
-        'background-image': `url(${sectionimg1})`,
-        'background-position': 'center',
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-      }"
-    >
-      <div
-        style="padding: 3rem 0"
-        class="flex items-center justify-center column"
-      >
+    <section :style="{
+      'background-image': `url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+    }">
+      <div style="padding: 3rem 0" class="flex items-center justify-center column">
         <div style="color: #d9a520" class="text-h5">
           {{ sectionName5 }}
         </div>
@@ -242,37 +167,28 @@
       </div>
     </section>
 
-    <section
-      style="
+    <section style="
         background: linear-gradient(
           90deg,
           rgba(218, 165, 32, 0.5) 0%,
           rgba(18, 59, 50, 0.5) 100%
         );
-      "
-    >
+      ">
       <div style="padding: 2rem 0" class="q-mx-md">
         <div style="font-size: 1.2rem">
           {{ sectionData5?.xs2.data }}
         </div>
-        <q-btn
-          no-caps
-          label="Dapatkan Tiket Sekarang!"
-          style="background: #123b32; color: white"
-          class="q-mt-xl"
-        />
+        <q-btn no-caps label="Dapatkan Tiket Sekarang!" style="background: #123b32; color: white" class="q-mt-xl" />
       </div>
     </section>
 
-    <section
-      :style="{
-        'background-image': `url(${sectionimg1})`,
-        'background-position': 'center',
-        'background-repeat': 'no-repeat',
-        'background-size': 'cover',
-        padding: '2rem 0',
-      }"
-    >
+    <section :style="{
+      'background-image': `url(${sectionimg1})`,
+      'background-position': 'center',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover',
+      padding: '2rem 0',
+    }">
       <div style="color: #d9a520" class="text-h5 text-center">
         {{ sectionName6 }}
       </div>
@@ -280,11 +196,7 @@
         {{ sectionData6?.xs1.data }}
       </div>
       <div class="q-mt-lg">
-        <q-list
-          v-for="(faq, index) in faqs"
-          :key="index"
-          style="margin: 0 5rem"
-        >
+        <q-list v-for="(faq, index) in faqs" :key="index" style="margin: 0 5rem">
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section avatar>
@@ -325,20 +237,25 @@ export default {
       sectionData: ref(),
       slides: ref([]),
       faqs: [],
+      eventImage: ref(),
+      showCounterEvent: ref(3),
+      showCounterSejarah: ref(3),
+      events: ref([]),
+      sejarahImages: ref([]),
+      slideAutoplay: ref(true),
     };
   },
   mounted() {
     this.fetchData();
     this.fetchNews();
+    this.fetchEvents()
   },
   methods: {
     async fetchData() {
-      let rawSection = {};
       try {
         const response = await this.$api.get("page/content/1");
         const dataRest = response?.data?.data[0];
 
-        // Section data assignments
         this.sectionimg = dataRest.contents[0]?.context?.xi1?.data;
         this.sectionData = dataRest.contents[0]?.context;
         this.sectionName = dataRest.contents[0]?.sectionName;
@@ -353,9 +270,9 @@ export default {
 
         this.sectionName3 = dataRest.contents[3]?.sectionName;
         this.sectionData3 = dataRest.contents[3]?.context;
+        this.sejarahImages = this.formatImagesContext(dataRest.contents[3]?.context)
 
         this.sectionName4 = dataRest.contents[4]?.sectionName;
-        this.sectionimg4 = dataRest.contents[4]?.context?.xi1?.data;
         this.sectionData4 = dataRest.contents[4]?.context;
 
         this.sectionName5 = dataRest.contents[5]?.sectionName;
@@ -372,12 +289,10 @@ export default {
             nomor: faqIndex,
             pertanyaan: faqData?.data,
             jawaban: faqData?.sub,
-            active: false,
           });
         }
         faqs.shift();
         this.faqs = faqs;
-        this.currentBackground = this.sectionimg4;
       } catch (err) {
         console.log(err);
       }
@@ -385,19 +300,46 @@ export default {
     async fetchNews() {
       try {
         const response = await this.$api.get("news");
-        console.log(response.data.data);
-        this.slides = response.data.data.map((news) => ({
+        this.slides = response.data.data.map((news, i) => ({
           imageUrl: news.image,
           link: news.link,
           title: news.title,
           summary: news.desc,
         }));
-
-        console.log(this.slides);
       } catch (err) {
         console.log(err);
       }
     },
+    async fetchEvents() {
+      try {
+        const response = await this.$api.post("event/page", {})
+        this.events = this.shuffleArray(response.data.data)
+        this.eventImage = this.events[0].image
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    formatImagesContext(context) {
+      let formatedData = [], contextNames = Object.keys(context)
+      for (let contextName of contextNames) {
+        if (this.takeTwoChars(contextName) != "xi") continue
+        formatedData.push(context[contextName])
+      }
+      return formatedData
+    },
+    movePage(path){
+      this.$router.push(path)
+    },
+    takeTwoChars(str) {
+      return str.slice(0, 2);
+    },
+    shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+      }
+      return array;
+    }
   },
 };
 </script>

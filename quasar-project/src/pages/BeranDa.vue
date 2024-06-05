@@ -490,7 +490,7 @@ export default {
           globalStorageClass.setItem("isAdmin", checkToken.isAdmin);
           globalStorageClass.update();
           //Cart
-          const cart = cartClass.getItem();
+        const cart = cartClass.getItem();
           if (cart) {
             const validateCartResponse = await this.$api.post("cart/validate", {
               carts: cart,
