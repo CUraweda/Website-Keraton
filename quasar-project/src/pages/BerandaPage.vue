@@ -50,7 +50,7 @@
         <div class="text-h2 text-black">
           {{ sectionData1?.xs1?.data }}
         </div>
-        <div class="text-black q-mt-md" style="width: 30rem">
+        <div class="text-black q-mt-md q-mx-md">
           {{ sectionData1?.xs2?.data }}
         </div>
       </div>
@@ -83,7 +83,7 @@
         <div style="color: #d9a520" class="text-h5">
           {{ sectionName3 }}
         </div>
-        <div class="text-h3 text-center" style="width: 30rem">
+        <div class="text-h3 text-center">
           {{ sectionData3?.xs1.data }}
         </div>
 
@@ -171,10 +171,7 @@
         </div>
 
         <div class="flex items-center justify-center q-mt-md">
-          <div
-            class="text-white text-center"
-            style="font-size: 1.2rem; width: 40rem"
-          >
+          <div class="text-white text-center q-mx-lg" style="font-size: 1.2rem">
             Hingga saat ini, Keraton Kasepuhan Cirebon tetap mempertahankan
             keaslian dan tradisi turun menurun dengan rutin melaksanakan upacara
             adat tradisi mereka.
@@ -183,7 +180,7 @@
       </div>
     </section>
 
-    <section style="padding: 2rem" class="background-news">
+    <section style="padding: 2rem 0" class="background-news">
       <div style="font-size: 1.75rem; text-align: center; margin-bottom: 2rem">
         Berita Terkini
       </div>
@@ -253,7 +250,7 @@
       "
     >
       <div style="padding: 2rem 0" class="q-mx-md">
-        <div style="width: 25rem; font-size: 1.2rem">
+        <div style="font-size: 1.2rem">
           {{ sectionData5?.xs2.data }}
         </div>
         <q-btn
@@ -267,12 +264,11 @@
 
     <section
       :style="{
-        'min-height': '100vh',
         'background-image': `url(${sectionimg1})`,
         'background-position': 'center',
         'background-repeat': 'no-repeat',
         'background-size': 'cover',
-        'padding-top': '2rem',
+        padding: '2rem 0',
       }"
     >
       <div style="color: #d9a520" class="text-h5 text-center">
@@ -308,7 +304,9 @@
       </div>
     </section>
 
-    <footerNew />
+    <section>
+      <footerNew class="background-footer" />
+    </section>
   </div>
 </template>
 
@@ -403,6 +401,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap");
+
+* {
+  font-family: Raleway;
+}
+
 .hover-effect {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -414,8 +419,11 @@ export default {
 }
 
 .background-news {
-  min-height: 100vh;
   background-image: url("../assets/images/batik.png"),
     linear-gradient(0deg, #fff9a021, #ffe96e);
+}
+
+.background-footer {
+  background-image: url("../assets/images/batik.png");
 }
 </style>
