@@ -61,302 +61,64 @@
           </q-btn> -->
         </div>
       </div>
-      <div
-        class="col"
-        style="
-          height: fit-content;
-          gap: 10px;
-          width: 100%;
-          display: inline-flex;
-          padding-top: 50px;
-        "
-      >
-        <q-input
-          filled
-          v-model="sectionName"
-          label="Section Name"
-          color="black"
-          bg-color="gray"
-          class="full-width"
-        />
-        <q-input
-          filled
-          v-model="sectionOrder"
-          type="number"
-          label="Order"
-          color="black"
-          bg-color="gray"
-        />
+      <div class="col" style="height: fit-content; gap: 10px; width: 100%; display: inline-flex; padding: 10px 0;">
+        <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" class="full-width" />
+        <q-input filled v-model="sectionOrder" type="number" label="Order" color="black" bg-color="gray" />
       </div>
 
-      <div
-        style="
-          height: fit-content;
-          gap: 10px;
-          width: 100%;
-          display: inlineflex;
-          padding-bottom: 10px 0;
-        "
-      >
-        <q-btn
-          icon="add"
-          color="green"
-          no-caps
-          @click="addNewInput('text')"
-          label="Add Text"
-          style="
-            width: fit-content;
-            justify-content: flex-start;
-            margin-top: 50px;
-          "
-        />
-        <div
-          v-for="(item, i) in textInputs"
-          :key="i"
-          class="full-width"
-          style="gap: 5px"
-        >
+      <div style="height: fit-content; gap: 10px; width: 100%; display: inlineflex; padding-bottom: 10px 0;">
+        <div v-for="(item, itemIndex) in textInputs" :key="itemIndex" class="full-width" style="gap: 5px">
           <div>
-            <q-separator style="margin: 10px 0" />
-            <q-input
-              filled
-              v-model="item.data"
-              label="Text"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-              class="full-width"
-            />
+            <q-separator style="margin: 10px 0;" />
+            <q-input filled v-model="item.data" label="Text" color="black" bg-color="gray" style="padding-bottom: 10px;"
+              class="full-width" />
           </div>
-          <div
-            v-for="(subData, i) in item.subDatas"
-            :key="i"
-            style="
-              height: fit-content;
-              gap: 10px;
-              width: 100%;
-              display: inline-flex;
-            "
-          >
-            <q-input
-              filled
-              v-model="item.subDatas[i]"
-              label="Sub Name"
-              class="full-width"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
-            <q-input
-              filled
-              v-model="item[subData]"
-              label="Value"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
+          <div v-for="(subData, subIndex) in item.subDatas" :key="subIndex">
+            <q-input filled v-model="item.subDatas[subIndex]" label="Sub Name" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-input filled v-model="item[subData]" label="Value" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-btn @click="deleteInput('textInputs', itemIndex, true, subIndex)" label="Delete Sub Data" />
           </div>
-          <div class="button-container">
-            <section>
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Sub"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Text"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-            </section>
-            <section>
-              <q-btn
-                @click="addNewSubInput('text', i)"
-                label="Add Sub"
-                no-caps
-                color="green"
-                style="margin: 5px"
-              />
-            </section>
-          </div>
+          <q-btn @click="addNewSubInput('text', itemIndex)" label="Add Sub" />
+          <q-btn @click="deleteInput('textInputs', itemIndex)" label="Delete Input"/>
         </div>
       </div>
 
-      <q-btn
-        icon="add"
-        color="green"
-        no-caps
-        @click="addNewInput('link')"
-        label="Add Link"
-        style="
-          width: fit-content;
-          justify-content: flex-start;
-          margin-top: 50px;
-        "
-      />
-      <div
-        v-for="(link, i) in linkInputs"
-        :key="i"
-        class="flex full-width"
-        style="gap: 5px"
-      >
+      <div v-for="(link, itemIndex) in linkInputs" :key="itemIndex" class="flex full-width" style="gap: 5px">
         <div class="col-grow">
-          <q-separator style="margin: 10px 0" />
-          <q-input
-            filled
-            v-model="link.data"
-            label="Link"
-            color="black"
-            style="padding-bottom: 10px"
-            bg-color="gray"
-          />
-          <div
-            v-for="(subData, i) in link.subDatas"
-            :key="i"
-            style="
-              height: fit-content;
-              gap: 10px;
-              width: 100%;
-              display: inline-flex;
-            "
-          >
-            <q-input
-              filled
-              class="full-width"
-              v-model="link.subDatas[i]"
-              label="Sub Name"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
-            <q-input
-              filled
-              v-model="link[subData]"
-              label="Value"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
+          <q-separator style="margin: 10px 0;" />
+          <q-input filled v-model="link.data" label="Link" color="black" style="padding-bottom: 10px;"
+            bg-color="gray" />
+          <div v-for="(subData, subIndex) in link.subDatas" :key="subIndex">
+            <q-input filled v-model="link.subDatas[subIndex]" label="Sub Name" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-input filled v-model="link[subData]" label="Value" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-btn @click="deleteInput('textInputs', itemIndex, true, subIndex)" label="Delete Sub Data" />
           </div>
-          <div class="button-container">
-            <section>
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Sub"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Link"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-            </section>
-            <section>
-              <q-btn
-                @click="addNewSubInput('link', i)"
-                label="Add Sub"
-                no-caps
-                color="green"
-                style="margin: 5px"
-              />
-            </section>
-          </div>
+          <q-btn @click="addNewSubInput('link', itemIndex)" label="Add Sub" />
+          <q-btn @click="deleteInput('textInputs', itemIndex)" label="Delete Input"/>
         </div>
       </div>
 
-      <q-btn
-        icon="add"
-        color="green"
-        no-caps
-        @click="addNewInput('image')"
-        label="Add Image"
-        style="
-          width: fit-content;
-          justify-content: flex-start;
-          margin-top: 50px;
-        "
-      />
-      <div v-for="(image, i) in imageInputs" :key="i">
+      <div v-for="(image, itemIndex) in imageInputs" :key="itemIndex">
         <div class="col-grow">
-          <q-separator style="margin: 10px 0" />
-          <q-file
-            filled
-            type="file"
-            v-model="image.data"
-            :label="image.data ? 'Ganti Image' : 'Tambah Image'"
-            color="black"
-            class="q-mt-md"
-            @update:model-value="handleUpload(image.data)"
-            style="padding-bottom: 10px"
-          />
-          <q-img
-            :src="image.data?.data || image.data"
-            v-if="image.data"
-            style="margin-bottom: 10px"
-          />
-          <div
-            v-for="(subData, i) in image.subDatas"
-            :key="i"
-            style="
-              height: fit-content;
-              gap: 10px;
-              width: 100%;
-              display: inline-flex;
-            "
-          >
-            <q-input
-              filled
-              v-model="image.subDatas[i]"
-              label="Sub Name"
-              color="black"
-              class="full-width"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
-            <q-input
-              filled
-              v-model="image[subData]"
-              label="Value"
-              color="black"
-              bg-color="gray"
-              style="padding-bottom: 10px"
-            />
+          <q-separator style="margin: 10px 0;" />
+          <q-file filled type="file" v-model="image.data" :label="image.data ? 'Ganti Image' : 'Tambah Image'"
+            color="black" class="q-mt-md" @update:model-value="handleUpload(image.data)"
+            style="padding-bottom: 10px;" />
+          <q-img :src="image.data?.data || image.data" v-if="image.data" style="margin-bottom: 10px;" />
+          <div v-for="(subData, subIndex) in image.subDatas" :key="subIndex">
+            <q-input filled v-model="image.subDatas[subIndex]" label="Sub Name" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-input filled v-model="image[subData]" label="Value" color="black" bg-color="gray"
+              style="padding-bottom: 10px;" />
+            <q-btn @click="deleteInput('imageInputs', itemIndex, true, subIndex)" label="Delete Sub Data" />
           </div>
-          <div class="button-container">
-            <section>
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Sub"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-              <q-btn
-                @click="DeleteSubInput()"
-                label="Delete Text"
-                no-caps
-                color="red"
-                style="margin: 5px"
-              />
-            </section>
-            <section>
-              <q-btn
-                @click="addNewSubInput('image', i)"
-                label="Add Sub"
-                no-caps
-                color="green"
-                style="margin: 5px"
-              />
-            </section>
-          </div>
+          <q-btn @click="addNewSubInput('image', itemIndex)" label="Add Sub" />
+          <q-btn @click="deleteInput('imageInputs', itemIndex)" label="Delete Input"/>
+
         </div>
       </div>
 
@@ -468,27 +230,43 @@ export default {
     },
     async sendUpdate() {
       try {
-        let textList = [],
-          imageList = [],
-          linkList = [],
-          imageSub = [];
-        for (let text of this.textInputs) textList.push(text);
-        for (let imageIndex in this.imageInputs) {
-          imageList.push(this.imageInputs[imageIndex].data);
-          imageList[imageIndex].sub = "TEST";
-          console.log(imageList);
+        let textList = [], imageList = [], linkList = [], imageSub = {}
+        for (let text of this.textInputs) {
+          delete text.subDatas
+          textList.push(text)
         }
-        for (let link of this.linkInputs)
-          linkList.push({ data: link.data, sub: "" });
-        // const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
-        // const response = await this.$api.post(`/content/${linkIdentifier}`, { pageId: 1, sectionName: this.sectionName, sectionOrder: this.sectionOrder, textList, imageList, linkList }, {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data'
-        //   }
-        // })
-        // if (response.status != 200) throw Error("Error occured");
-        // socket.emit("dashboard", {});
-        // window.location.reload()
+        for (let link of this.linkInputs) {
+          delete link.subDatas
+          linkList.push(link)
+        }
+        for (let imageIndex in this.imageInputs) {
+          const imageData = this.imageInputs[imageIndex]
+          imageList.push(imageData.data)
+          const isAFile = imageData.data instanceof File ? true : false
+          let subData = {}
+          if (imageData.subDatas.length > 0) for (let subName of imageData.subDatas) subData[subName] = imageData[subName]
+          imageSub[imageIndex] = {
+            isAFile, subData
+          }
+        }
+        console.log(textList, imageList, linkList, imageSub)
+        const linkIdentifier = this.contentId ? `edit/${this.contentId}` : 'create/'
+        const response = await this.$api.post(`/content/${linkIdentifier}`, {
+          pageId: 1,
+          sectionName: this.sectionName,
+          sectionOrder: this.sectionOrder,
+          textList,
+          imageList,
+          linkList,
+          imageSub
+        }, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        if (response.status != 200) throw Error("Error occured");
+        socket.emit("dashboard", {});
+        window.location.reload()
       } catch (err) {
         this.showNotif(
           "fatal error please contact the developer immediately",
@@ -504,21 +282,28 @@ export default {
       this.addNewInput("image");
       this.addNewInput("link");
     },
-    DeleteSubInput() {},
+    deleteInput(type, i, sub = false, subI) {
+      console.log(this[type][i])
+      if (!sub) return delete this[type][i]
+      const subName = this[type][i].subDatas[subI]
+      delete this[type][i][subName]
+      this[type][i].subDatas.splice(subI, 1)
+      console.log(this[type][i])
+    },
     addNewSubInput(type, i) {
-      console.log(type, i);
+      console.log(type, i)
       switch (type) {
         case "text":
           this.textInputs[i][""] = undefined;
           this.textInputs[i].subDatas.push("");
           break;
         case "image":
-          this.imageInputs[i][""] = undefined;
-          this.imageInputs[i].subDatas.push("");
+          this.imageInputs[i][''] = undefined
+          this.imageInputs[i].subDatas.push('');
           break;
         case "link":
-          this.linkInputs[i][""] = undefined;
-          this.linkInputs[i].subDatas.push("");
+          this.linkInputs[i][''] = undefined
+          this.linkInputs[i].subDatas.push('');
           break;
         default:
           break;
