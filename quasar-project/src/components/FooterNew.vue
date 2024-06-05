@@ -17,9 +17,9 @@
       </div>
 
       <div class="link">
-        <div class="q-gutter-lg list-head">
+        <div class="list-head">
           <div class="q-gutter-y-sm list">
-            <div class="text-h6">Quick Links</div>
+            <div class="text-h5 text-bold">Quick Links</div>
             <div>Beranda</div>
             <div>Sejarah</div>
             <div>Booking</div>
@@ -27,7 +27,7 @@
           </div>
 
           <div class="q-gutter-y-sm list">
-            <div class="text-h6">Socials</div>
+            <div class="text-h5 text-bold">Socials</div>
             <div>Whatsapp</div>
             <div>Facebook</div>
             <div>Instagram</div>
@@ -35,14 +35,14 @@
           </div>
 
           <div class="q-gutter-y-sm list">
-            <div class="text-h6">Company</div>
+            <div class="text-h5 text-bold">Company</div>
             <div>About Us</div>
             <div>Partners</div>
             <div>Contact</div>
           </div>
         </div>
 
-        <div>
+        <div class="email">
           <div>Subscribes your email for updates!</div>
           <form @submit.prevent="subscribeToKeraton">
             <input
@@ -63,24 +63,14 @@
         </div>
       </div>
 
-      <div>Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>
-
-      <div
-        style="
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div>@ 2024 Keraton Kasepuhan Cirebon</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem">
+      <div class="ctlogo">
+        <section style="font-size: larger">
+          <div>Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>
+          <div>@ 2024 Keraton Kasepuhan Cirebon</div>
+        </section>
+        <div class="imglogo">
           <div>
-            <img
-              src="../assets/images/logo_keraton.png"
-              alt=""
-              class="img-collab"
-            />
+            <img src="../assets/images/logo_keraton.png" alt="" />
           </div>
           <div>
             <img src="../assets/images/1 931.svg" alt="" class="img-collab" />
@@ -103,14 +93,13 @@ export default {};
 
 <style>
 .email-input {
-  width: 35vw;
-  height: 3.5rem;
+  width: 600px;
   padding: 15px;
   border: none;
   border-radius: 10px;
   background-color: #123b32;
   color: white;
-  font-size: 14px;
+  font-size: larger;
   text-align: left;
 }
 
@@ -129,23 +118,28 @@ export default {};
 
 .head-text {
   font-size: x-large;
+  padding-inline: 20px;
 }
 .img {
   width: 80px;
   height: 80px;
 }
-@media (max-width: 600px) {
-  .head-text {
-    font-size: larger;
-  }
-  .link {
-    display: block;
-    flex-wrap: nowrap;
-    justify-content: center;
-    width: 100%;
-  }
+.list-head {
+  display: flex;
+  gap: 60px;
 }
-
+.email {
+  padding: 20px 0;
+  font-size: larger;
+}
+.imglogo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-inline: 20px;
+  justify-content: center;
+  align-items: center;
+}
 .link {
   display: flex;
   flex-wrap: wrap;
@@ -154,10 +148,48 @@ export default {};
 }
 
 .list {
-  font-size: larger;
+  font-size: large;
+  gap: 60px;
 }
 
-.list-head {
-  display: inline-flex;
+.ctlogo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+@media (max-width: 800px) {
+  .head-text {
+    font-size: large;
+  }
+  .ctlogo {
+    justify-content: center;
+    align-items: center;
+  }
+  .email-input {
+    width: 400px;
+  }
+}
+
+@media (max-width: 500px) {
+  .img {
+    width: 50px;
+    height: 50px;
+  }
+  .list {
+    padding: 20px;
+  }
+  .link {
+    display: block;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .list-head {
+    display: block;
+    text-align: center;
+  }
+  .email-input {
+    width: 100%;
+  }
 }
 </style>
