@@ -70,7 +70,11 @@
         </section>
         <div class="imglogo">
           <div>
-            <img src="../assets/images/logo_keraton.png" alt="" />
+            <img
+              src="../assets/images/logo_keraton.png"
+              class="img-collab"
+              alt=""
+            />
           </div>
           <div>
             <img src="../assets/images/1 931.svg" alt="" class="img-collab" />
