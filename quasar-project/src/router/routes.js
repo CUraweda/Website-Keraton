@@ -8,6 +8,7 @@ import Museum from "../pages/MuseumPage.vue";
 import CheckoutKeraton from "../pages/CheckoutKeraton.vue";
 import PilihanPaket from "../pages/PilihanPaket.vue";
 import BeranDa from "../pages/BeranDa.vue";
+import BerandaPage from "../pages/BerandaPage.vue";
 import EventGratis from "../pages/EventGratis.vue";
 import Booking from "../pages/BookingPage.vue";
 import FilterBayar from "../pages/FilterBayar.vue";
@@ -23,6 +24,14 @@ import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 import QrCodePage from "../pages/QrCodePage.vue";
 
 const routes = [
+  {
+    path: "/beranda",
+    name: "Beranda",
+    component: BerandaPage,
+    meta: {
+      preventToken: true,
+    },
+  },
   {
     path: "/admin/home",
     name: "AdminHomePage",
