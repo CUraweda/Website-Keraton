@@ -6,25 +6,19 @@
         flex-direction: column;
         justify-content: space-between;
         min-height: 100vh;
-        margin: 0 5rem;
+        background-color: rgba(0, 0, 0, 0.018);
+        padding: 5%;
       "
     >
-      <div class="flex q-gutter-sm q-mt-sm">
-        <q-img
-          src="../assets/images/logo_keraton 1.png"
-          style="width: 5rem; height: 5rem"
-        />
+      <div class="head">
+        <q-img src="../assets/images/logo_keraton 1.png" class="img" />
 
-        <div class="text-black" style="width: 1rem; font-size: 1.1rem">
-          KERATON KESEPUHAN CIREBON
-        </div>
+        <div class="head-text">KERATON KESEPUHAN CIREBON</div>
       </div>
 
-      <div
-        style="display: flex; flex-wrap: wrap; justify-content: space-between"
-      >
-        <div style="display: flex; flex-wrap: wrap" class="q-gutter-lg">
-          <div class="q-gutter-y-sm">
+      <div class="link">
+        <div class="q-gutter-lg list-head">
+          <div class="q-gutter-y-sm list">
             <div class="text-h6">Quick Links</div>
             <div>Beranda</div>
             <div>Sejarah</div>
@@ -32,7 +26,7 @@
             <div>Objek Wisata</div>
           </div>
 
-          <div class="q-gutter-y-sm">
+          <div class="q-gutter-y-sm list">
             <div class="text-h6">Socials</div>
             <div>Whatsapp</div>
             <div>Facebook</div>
@@ -40,7 +34,7 @@
             <div>Threads</div>
           </div>
 
-          <div class="q-gutter-y-sm">
+          <div class="q-gutter-y-sm list">
             <div class="text-h6">Company</div>
             <div>About Us</div>
             <div>Partners</div>
@@ -123,5 +117,47 @@ export default {};
 .email-input::placeholder {
   color: white; /* White placeholder color */
   font-weight: 600; /* Full opacity for the placeholder text */
+}
+.head {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  justify-content: center;
+  padding: 5px;
+  height: fit-content;
+}
+
+.head-text {
+  font-size: x-large;
+}
+.img {
+  width: 80px;
+  height: 80px;
+}
+@media (max-width: 600px) {
+  .head-text {
+    font-size: larger;
+  }
+  .link {
+    display: block;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.link {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.list {
+  font-size: larger;
+}
+
+.list-head {
+  display: inline-flex;
 }
 </style>
