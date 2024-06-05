@@ -54,10 +54,15 @@
 
             <q-btn
               no-caps
-              v-if="false"
               type="submit"
               label="Submit"
-              style="width: 7rem; margin-left: 4vw"
+              style="
+                width: 7rem;
+                margin-top: 1rem;
+                background: #123b32;
+                color: white;
+              "
+              class="button-submit"
             />
           </form>
         </div>
@@ -92,10 +97,26 @@
 </template>
 
 <script>
-export default {};
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+  data() {
+    return {
+      email: ref(),
+    };
+  },
+  methods: {
+    subscribeToKeraton() {
+      console.log("uhuy");
+    },
+  },
+});
 </script>
 
 <style>
+.button-submit {
+  display: none;
+}
 .email-input {
   width: 600px;
   padding: 15px;
@@ -108,8 +129,8 @@ export default {};
 }
 
 .email-input::placeholder {
-  color: white; /* White placeholder color */
-  font-weight: 600; /* Full opacity for the placeholder text */
+  color: white;
+  font-weight: 600;
 }
 .head {
   display: flex;
@@ -161,7 +182,45 @@ export default {};
   flex-wrap: wrap;
   justify-content: space-between;
 }
+@media (max-width: 1200px) {
+  .button-submit {
+    display: flex;
+  }
+  .head-text {
+    font-size: large;
+  }
+  .ctlogo {
+    justify-content: center;
+    align-items: center;
+  }
+  .email {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .email-input {
+    width: 400px;
+  }
+
+  .list {
+    padding: 20px;
+  }
+  .link {
+    display: block;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .list-head {
+    display: block;
+    text-align: center;
+  }
+}
 @media (max-width: 800px) {
+  .button-submit {
+    display: flex;
+  }
   .head-text {
     font-size: large;
   }
@@ -175,6 +234,9 @@ export default {};
 }
 
 @media (max-width: 500px) {
+  .button-submit {
+    display: flex;
+  }
   .img {
     width: 50px;
     height: 50px;
