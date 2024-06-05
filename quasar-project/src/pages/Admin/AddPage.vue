@@ -32,7 +32,7 @@
                   flat
                   no-caps
                   @click="addNewInput('text')"
-                  label="Add Text Input"
+                  label="Add Text Input" 
                   class="full-width"
                   style="width: 100%; justify-content: flex-start"
                 />
