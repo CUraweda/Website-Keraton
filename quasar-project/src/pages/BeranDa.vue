@@ -16,7 +16,7 @@
   >
     <div class="texthero">
       <h5 style="color: #fae084" font-family="Raleway">{{ sectionName }}</h5>
-      <h2 style="padding: 0 10rem">
+      <h2>
         {{ sectionData?.xs1?.data }}
       </h2>
       <a @click="scrollToTop" class="btn1">
