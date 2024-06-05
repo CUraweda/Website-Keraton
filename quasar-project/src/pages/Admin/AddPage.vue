@@ -1,28 +1,65 @@
 <template>
-  <div v-if="isAdmin" style="margin-top: 50px; justify-content: center;">
-    <div style="margin: auto; width: 90%;">
-      <div style="justify-content: space-between; display: flex; width: 100%; padding: auto; align-items: center;">
-        <div>
-          <div class="text-h6 text-bold q-mt-md">
-            Edit Section {{ sectionName }}
-          </div>
-          <div class="q-mt-sm">Ubah dan alur konten web Keraton</div>
+  <div v-if="isAdmin" style="margin-top: 50px; justify-content: center">
+    <div style="margin: auto" class="wrap">
+      <div
+        style="
+          justify-content: space-between;
+          display: flex;
+          width: 100%;
+          padding: auto;
+          align-items: center;
+        "
+      >
+        <div style="display: flex; align-items: center">
+          <img
+            style="width: 3.2rem; height: 100%; margin-inline: 10px"
+            alt="icon-aplikasi"
+            src="../../assets/images/logo_keraton 1.png"
+            class="app-icon"
+          />
+          <section style="display: block">
+            <div class="text-h6 text-bold">Edit Section {{ sectionName }}</div>
+            <div class="">Ubah dan alur konten web Keraton</div>
+          </section>
         </div>
-        <div style="padding: auto; height: 100%; ">
-          <q-btn auto-close flat size="15px" round icon="more_vert">
+        <div style="padding: auto; height: 100%">
+          <!-- <q-btn auto-close flat size="15px" round icon="more_vert">
             <q-menu>
-              <q-list style="align-content: flex-end; width: 200px;">
-                <q-btn icon="add" flat dense no-caps @click="addNewInput('text')" label="Add Text Input"
-                  class="full-width" style="width: 100%; justify-content: flex-start;" />
-                <q-btn icon="add" flat dense no-caps @click="addNewInput('link')" label="Add Link Input"
-                  class="full-width" style="width: 100%; text-align: left;" />
-                <q-btn icon="add" flat dense no-caps @click="addNewInput('image')" label="Add Image Input"
-                  class="full-width" style="width: 100%; text-align: left;" />
+              <q-list style="align-content: flex-end; width: 200px">
+                <q-btn
+                  icon="add"
+                  color="green"
+                  flat
+                  no-caps
+                  @click="addNewInput('text')"
+                  label="Add Text Input"
+                  class="full-width"
+                  style="width: 100%; justify-content: flex-start"
+                />
+                <q-btn
+                  icon="add"
+                  flat
+                  color="green"
+                  no-caps
+                  @click="addNewInput('link')"
+                  label="Add Link Input"
+                  class="full-width"
+                  style="width: 100%; text-align: left"
+                />
+                <q-btn
+                  icon="add"
+                  color="green"
+                  flat
+                  no-caps
+                  @click="addNewInput('image')"
+                  label="Add Image Input"
+                  class="full-width"
+                  style="width: 100%; text-align: left"
+                />
               </q-list>
             </q-menu>
-          </q-btn>
+          </q-btn> -->
         </div>
-
       </div>
       <div class="col" style="height: fit-content; gap: 10px; width: 100%; display: inline-flex; padding: 10px 0;">
         <q-input filled v-model="sectionName" label="Section Name" color="black" bg-color="gray" class="full-width" />
@@ -85,10 +122,20 @@
         </div>
       </div>
 
-      <q-btn no-caps @click="sendUpdate" style="background: #123b32" text-color="white" label="Save and Update"
-        class="full-width q-my-md" />
+      <q-btn
+        no-caps
+        @click="sendUpdate"
+        style="background: #123b32"
+        text-color="white"
+        label="Save and Update"
+        class="full-width q-my-md"
+      />
     </div>
-    <Notification v-if="notification.message" :message="notification.message" :type="notification.type" />
+    <Notification
+      v-if="notification.message"
+      :message="notification.message"
+      :type="notification.type"
+    />
   </div>
 </template>
 
@@ -146,9 +193,8 @@ export default {
         if (!this.isAdmin) {
           return this.$router.replace("/");
         }
-
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     async fetchData() {
@@ -167,15 +213,17 @@ export default {
         for (let contextKey of contextKeys) {
           rawContext[this.takeTwoChars(contextKey)].push({
             ...context[contextKey],
-            subDatas: Object.keys(context[contextKey]).filter(key => key !== 'data')
-          })
+            subDatas: Object.keys(context[contextKey]).filter(
+              (key) => key !== "data"
+            ),
+          });
         }
 
         this.textInputs = rawContext.xs;
         this.imageInputs = rawContext.xi;
         this.linkInputs = rawContext.xl;
 
-        console.log(this.imageInputs)
+        console.log(this.imageInputs);
       } catch (err) {
         console.log(err);
       }
@@ -220,7 +268,10 @@ export default {
         socket.emit("dashboard", {});
         window.location.reload()
       } catch (err) {
-        this.showNotif("fatal error please contact the developer immediately", "error")
+        this.showNotif(
+          "fatal error please contact the developer immediately",
+          "error"
+        );
         console.log(err);
       }
     },
@@ -243,8 +294,8 @@ export default {
       console.log(type, i)
       switch (type) {
         case "text":
-          this.textInputs[i][''] = undefined
-          this.textInputs[i].subDatas.push('');
+          this.textInputs[i][""] = undefined;
+          this.textInputs[i].subDatas.push("");
           break;
         case "image":
           this.imageInputs[i][''] = undefined
@@ -291,3 +342,37 @@ export default {
   },
 };
 </script>
+<style>
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.button-container section {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrap {
+  width: 80%;
+}
+@media (max-width: 600px) {
+  .wrap {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button-container section {
+    justify-content: left;
+  }
+  .wrap {
+    width: 95%;
+  }
+}
+</style>
