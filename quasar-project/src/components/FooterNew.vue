@@ -43,7 +43,7 @@
         </div>
 
         <div class="email">
-          <div>Subscribes your email for updates!</div>
+          <div class="descct">Subscribes your email for updates!</div>
           <form @submit.prevent="subscribeToKeraton">
             <input
               type="email"
@@ -64,7 +64,7 @@
       </div>
 
       <div class="ctlogo">
-        <section style="font-size: larger">
+        <section class="descct">
           <div>Jalan Kasepuhan 43 Cirebon, Jawa Barat 45114</div>
           <div>@ 2024 Keraton Kasepuhan Cirebon</div>
         </section>
@@ -121,7 +121,7 @@ export default {};
 }
 
 .head-text {
-  font-size: x-large;
+  font-size: xx-large;
   padding-inline: 20px;
 }
 .img {
@@ -152,10 +152,12 @@ export default {};
 }
 
 .list {
-  font-size: large;
+  font-size: x-large;
   gap: 60px;
 }
-
+.descct {
+  font-size: large;
+}
 .ctlogo {
   display: flex;
   flex-wrap: wrap;
@@ -194,6 +196,13 @@ export default {};
   }
   .email-input {
     width: 100%;
+  }
+  .list {
+    font-size: large;
+    gap: 60px;
+  }
+  .descct {
+    font-size: medium;
   }
 }
 </style>

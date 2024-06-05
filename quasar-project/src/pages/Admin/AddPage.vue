@@ -155,13 +155,13 @@
                 label="Sub Name"
                 color="black"
                 bg-color="gray"
-                class="full-width"
                 style="margin-bottom: 10px"
               />
               <q-input
                 filled
                 v-model="item[subData]"
                 label="Value"
+                class="full-width"
                 color="black"
                 bg-color="gray"
                 style="margin-bottom: 10px"
@@ -253,7 +253,6 @@
                   label="Sub Name"
                   color="black"
                   bg-color="gray"
-                  class="full-width"
                   style="margin-bottom: 10px"
                 />
                 <q-input
@@ -262,6 +261,7 @@
                   label="Value"
                   color="black"
                   bg-color="gray"
+                  class="full-width"
                   style="margin-bottom: 10px"
                 />
                 <q-btn
@@ -333,12 +333,25 @@
                 "
               />
             </section>
-
-            <q-img
-              :src="image.data?.data || image.data"
-              v-if="image.data"
-              style="margin-bottom: 10px"
-            />
+            <div
+              style="
+                padding: auto;
+                justify-content: center;
+                margin-bottom: 10px;
+              "
+            >
+              <q-img
+                :src="image.data?.data || image.data"
+                v-if="image.data"
+                style="
+                  margin: auto;
+                  display: flex;
+                  width: 100%;
+                  height: 200px;
+                  border-radius: 8px;
+                "
+              />
+            </div>
             <div v-for="(subData, subIndex) in image.subDatas" :key="subIndex">
               <section
                 style="
@@ -354,13 +367,13 @@
                   label="Sub Name"
                   color="black"
                   bg-color="gray"
-                  class="full-width"
                   style="margin-bottom: 10px"
                 />
                 <q-input
                   filled
                   v-model="image[subData]"
                   label="Value"
+                  class="full-width"
                   color="black"
                   bg-color="gray"
                   style="margin-bottom: 10px"
