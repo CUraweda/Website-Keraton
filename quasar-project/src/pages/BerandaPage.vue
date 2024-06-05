@@ -18,7 +18,7 @@
       <div class="text-h5 text-center" style="color: #fae084">
         {{ sectionName }}
       </div>
-      <div class="text-h2 text-white text-center">
+      <div class="text-h2 text-white text-center q-mx-lg">
         {{ sectionData?.xs1?.data }}
       </div>
     </section>
@@ -50,7 +50,7 @@
         <div class="text-h2 text-black">
           {{ sectionData1?.xs1?.data }}
         </div>
-        <div class="text-black q-mt-md q-mx-md">
+        <div class="text-black q-mt-md q-mx-lg">
           {{ sectionData1?.xs2?.data }}
         </div>
       </div>
@@ -65,11 +65,11 @@
 
     <section
       style="
-        background-image: url('../assets/images/batik.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
       "
+      class="background-section-4"
     >
       <div
         style="
@@ -181,25 +181,28 @@
     </section>
 
     <section style="padding: 2rem 0" class="background-news">
-      <div style="font-size: 1.75rem; text-align: center; margin-bottom: 2rem">
-        Berita Terkini
-      </div>
+      <div style="font-size: 1.75rem; text-align: center">Berita Terkini</div>
 
-      <div style="margin-bottom: 2rem">
-        <q-carousel arrows animated height="400px" v-model="currentSlide">
-          <q-carousel-slide
-            v-for="(slide, index) in slides"
-            :img-src="slide.imageUrl"
-            :key="index"
-            :name="slide.id"
-          >
-            <div class="absolute-bottom custom-caption">
-              <div class="text-h2">{{ slide.title }}</div>
-              <div class="text-subtitle1">{{ slide.summary }}</div>
-            </div>
-          </q-carousel-slide>
+      <q-carousel
+        arrows
+        animated
+        height="400px"
+        v-model="currentSlide"
+        class="q-mt-md q-mx-lg"
+      >
+        <q-carousel-slide
+          v-for="(slide, index) in slides"
+          :img-src="slide.imageUrl"
+          :key="index"
+          :name="slide.id"
+        >
+          <div class="absolute-bottom custom-caption">
+            <div class="text-h2">{{ slide.title }}</div>
+            <div class="text-subtitle1">{{ slide.summary }}</div>
+          </div>
+        </q-carousel-slide>
 
-          <!-- <q-carousel-slide
+        <!-- <q-carousel-slide
             :name="1"
             img-src="https://cdn.quasar.dev/img/mountains.jpg"
           />
@@ -215,8 +218,7 @@
             :name="4"
             img-src="https://cdn.quasar.dev/img/quasar.jpg"
           /> -->
-        </q-carousel>
-      </div>
+      </q-carousel>
     </section>
 
     <section
@@ -424,6 +426,10 @@ export default {
 }
 
 .background-footer {
+  background-image: url("../assets/images/batik.png");
+}
+
+.background-section-4 {
   background-image: url("../assets/images/batik.png");
 }
 </style>
