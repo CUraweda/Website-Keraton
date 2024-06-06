@@ -111,12 +111,11 @@
 
     <section
       :style="{
-        'min-height': '100vh',
         background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${eventImage})`,
         'background-position': 'center',
         'background-repeat': 'no-repeat',
         'background-size': 'cover',
-        'padding-top': '2.5rem',
+        padding: '2.5rem 0',
       }"
     >
       <div>
@@ -148,6 +147,16 @@
             {{ sectionData4?.xs2.data }}
           </div>
         </div>
+
+        <div class="flex items-center justify-center q-mt-xl">
+          <q-btn
+            no-caps
+            icon-right="arrow_right_alt"
+            label="Lihat Selengkapnya"
+            @click="movePage(sectionData4?.xl1.data)"
+            style="background: #123b32; color: white"
+          />
+        </div>
       </div>
     </section>
 
@@ -175,9 +184,11 @@
           :key="index"
           :name="index"
         >
-          <div class="absolute-bottom custom-caption">
-            <div class="text-h2">{{ slide.title }}</div>
-            <div class="text-subtitle1">{{ slide.summary }}</div>
+          <div class="absolute-center custom-caption">
+            <div class="text-h2 text-center text-white">{{ slide.title }}</div>
+            <div class="text-subtitle1 text-center text-white">
+              {{ slide.summary }}
+            </div>
           </div>
         </q-carousel-slide>
 

@@ -55,8 +55,8 @@
 
     <div class="flex justify-center items-center q-gutter-md">
       <div v-for="(item, index) in events" :key="index">
-        <q-card class="my-card" flat bordered style="width: 20rem">
-          <q-img :src="item.image" style="height: 15rem" />
+        <q-card class="my-card" flat bordered>
+          <q-img :src="item.image" class="image-card" />
 
           <q-card-section>
             <div class="flex q-gutter-sm">
@@ -249,6 +249,14 @@ export default {
 }
 .header {
   margin: 0 7rem;
+}
+
+.image-card {
+  height: 15rem;
+}
+
+.my-card {
+  width: 20rem;
 }
 
 @media screen and (max-width: 1200px) {
