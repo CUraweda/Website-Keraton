@@ -24,6 +24,7 @@ import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 import QrCodePage from "../pages/QrCodePage.vue";
 import EventPage from "../pages/EventPage.vue";
 import NewBookingPage from "../pages/NewBookingPage.vue";
+import AdminUserPage from "pages/Admin/UserPage.vue"
 
 const routes = [
   {
@@ -57,6 +58,14 @@ const routes = [
     meta: {
       preventToken: true,
     },
+  },
+  {
+    path: "/admin/user",
+    name: "AdminUserPage",
+    component: AdminUserPage,
+    meta: {
+      preventToken: true
+    }
   },
   {
     path: "/admin/add/:id",
