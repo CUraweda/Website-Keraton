@@ -12,7 +12,11 @@ import NavBar from "../components/NavBar.vue";
             <nav class="navbar">
               <NavBar border />
             </nav>
-            <q-page-sticky v-if="cartData.length > 1" position="bottom-right" :offset="[18, 18]">
+            <q-page-sticky
+              v-if="cartData.length > 0"
+              position="bottom-right"
+              :offset="[18, 18]"
+            >
               <q-btn fab color="primary" to="/user/checkout">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +54,11 @@ import NavBar from "../components/NavBar.vue";
                       <div class="label flex items-center justify-between">
                         <div>
                           <label class="labelharga">
-                            {{ cart.price < 1 ? "Free" : "Rp. " + formatRupiah(cart.price) }}
+                            {{
+                              cart.price < 1
+                                ? "Free"
+                                : "Rp. " + formatRupiah(cart.price)
+                            }}
                           </label>
                           <br />
                         </div>

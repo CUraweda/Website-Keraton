@@ -22,8 +22,26 @@ import Cart from "../pages/CartPage.vue";
 import Template from "../pages/TicketTemplate.vue";
 import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 import QrCodePage from "../pages/QrCodePage.vue";
+import EventPage from "../pages/EventPage.vue";
+import NewBookingPage from "../pages/NewBookingPage.vue";
 
 const routes = [
+  {
+    path: "/new/booking",
+    name: "Booking",
+    component: NewBookingPage,
+    meta: {
+      preventToken: true,
+    },
+  },
+  {
+    path: "/event",
+    name: "Event",
+    component: EventPage,
+    meta: {
+      preventToken: true,
+    },
+  },
   {
     path: "/beranda",
     name: "Beranda",

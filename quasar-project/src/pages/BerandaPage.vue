@@ -59,7 +59,7 @@
     <section>
       <q-video
         :ratio="16 / 9"
-        src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+        src="https://www.youtube.com/embed/q-2tx9iLtDE"
       />
     </section>
 
@@ -416,6 +416,10 @@ export default {
 
 * {
   font-family: Raleway;
+}
+
+i.q-icon.notranslate.material-icons.q-expansion-item__toggle-icon {
+  background: red;
 }
 
 .hover-effect {
