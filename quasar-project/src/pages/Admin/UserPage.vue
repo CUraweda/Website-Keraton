@@ -2,7 +2,12 @@
   <div>
     <navbar />
 
-    <div class="q-mt-xl q-mx-md">
+    <div class="q-mx-md q-mt-md">
+      <div class="text-h6 text-semibold">Edit User</div>
+      <div>Ubah dan atur user di halaman ini</div>
+    </div>
+
+    <div class="q-mt-md q-mx-md">
       <div class="flex items-center justify-between">
         <div></div>
         <q-btn icon="add" color="green" no-caps />
