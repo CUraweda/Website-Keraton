@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <navbar isWhiteText />
+      <navbar />
     </nav>
     <div class="container-title-top">
       <img src="../assets/images/museumPusakaa.png" class="img-title" alt="" />
@@ -138,7 +138,7 @@
 </template>
 
 <script setup>
-import navbar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 </script>
 
 <script>
