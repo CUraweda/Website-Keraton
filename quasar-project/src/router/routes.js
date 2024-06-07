@@ -1,20 +1,14 @@
 import SignIn from "../pages/SignIn.vue";
 import SignUp from "../pages/SignUp.vue";
 import SejarahLP from "../pages/SejarahKeraton.vue";
-import beritaterkini from "../pages/BeritaTerkini.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
 import CheckoutKeraton from "../pages/CheckoutKeraton.vue";
 import PilihanPaket from "../pages/PilihanPaket.vue";
-import BeranDa from "../pages/BeranDa.vue";
 import BerandaPage from "../pages/BerandaPage.vue";
-import EventGratis from "../pages/EventGratis.vue";
-import Booking from "../pages/BookingPage.vue";
-import FilterBayar from "../pages/FilterBayar.vue";
 import AgungDalem from "../pages/AgungDalem.vue";
 import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
-import silsilahDesktop from "../pages/silsilahDesktop.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
 import AdminEventPage from "../pages/Admin/EventPage.vue";
@@ -23,25 +17,10 @@ import Template from "../pages/TicketTemplate.vue";
 import AdminNewsPage from "../pages/Admin/NewsPage.vue";
 import QrCodePage from "../pages/QrCodePage.vue";
 import EventPage from "../pages/EventPage.vue";
-import NewBookingPage from "../pages/NewBookingPage.vue";
-import AdminUserPage from "pages/Admin/UserPage.vue"
+import BookingPage from "../pages/NewBookingPage.vue";
+import AdminUserPage from "pages/Admin/UserPage.vue";
 
 const routes = [
-  {
-    path: "/new/booking",
-    name: "Booking",
-    component: NewBookingPage,
-  },
-  {
-    path: "/event",
-    name: "Event",
-    component: EventPage,
-  },
-  {
-    path: "/beranda",
-    name: "Beranda",
-    component: BerandaPage,
-  },
   {
     path: "/admin/home",
     name: "AdminHomePage",
@@ -55,8 +34,8 @@ const routes = [
     name: "AdminUserPage",
     component: AdminUserPage,
     meta: {
-      preventToken: true
-    }
+      preventToken: true,
+    },
   },
   {
     path: "/admin/add/:id",
@@ -132,8 +111,8 @@ const routes = [
   },
   {
     path: "/",
-    name: "beranda",
-    component: BeranDa,
+    name: "Beranda",
+    component: BerandaPage,
   },
   {
     path: "/user/transaction",
@@ -145,18 +124,13 @@ const routes = [
   },
   {
     path: "/booking/event",
-    name: "eventgratis",
-    component: EventGratis,
+    name: "EventPage",
+    component: EventPage,
   },
   {
     path: "/booking",
     name: "booking",
-    component: Booking,
-  },
-  {
-    path: "/filterbayar",
-    name: "filterbayar",
-    component: FilterBayar,
+    component: BookingPage,
   },
   {
     path: "/wisata/dalemagung",
@@ -169,19 +143,9 @@ const routes = [
     component: sejarahSilsilah,
   },
   {
-    path: "/silsilahdesktop",
-    name: "silsilahktop",
-    component: silsilahDesktop,
-  },
-  {
     path: "/user/carts",
     name: "Cart",
     component: Cart,
-  },
-  {
-    path: "/beritaterkini",
-    name: "beritaterkini",
-    component: beritaterkini,
   },
   {
     path: "/template",

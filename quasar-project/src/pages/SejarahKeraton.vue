@@ -6,7 +6,7 @@
   <div>
     <div>
       <nav>
-        <navbar border is-checkout-page="true" />
+        <navbar />
       </nav>
       <div>
         <q-img
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import navbar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 export default {
   data() {
     return {
@@ -118,7 +118,7 @@ export default {
     };
   },
   components: {
-    navbar
+    navbar,
   },
 };
 </script>

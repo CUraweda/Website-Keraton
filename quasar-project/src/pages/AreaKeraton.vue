@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar isWhiteText />
+    <navbar />
 
     <div class="body">
       <div class="image-container">
@@ -249,7 +249,7 @@
 </template>
 
 <script setup>
-import NavBar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 import { ref } from "vue";
 </script>
 
@@ -268,7 +268,7 @@ const scrollToContent2 = () => {
 
 export default {
   components: {
-    NavBar,
+    navbar,
   },
   data() {
     return {

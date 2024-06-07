@@ -20,18 +20,34 @@
         <div class="list-head">
           <div class="q-gutter-y-sm list">
             <div class="text-h5 text-bold">Quick Links</div>
-            <a href="/">Beranda</a>
-            <a href="/sejarah">Sejarah</a>
-            <a href="/booking">Booking</a>
-            <a href="/wisata/keraton">Objek Wisata</a>
+            <div>
+              <q-btn no-caps flat href="/" label="Beranda" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="/sejarah" label="Sejarah" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="/booking" label="Booking" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="/wisata/keraton" label="Wisata" />
+            </div>
           </div>
 
           <div class="q-gutter-y-sm list">
             <div class="text-h5 text-bold">Socials</div>
-            <a href="">Whatsapp</a>
-            <a href="">Facebook</a>
-            <a href="">Instagram</a>
-            <a href="">Threads</a>
+            <div>
+              <q-btn no-caps flat href="" label="Whatsapp" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="" label="Facebook" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="" label="Instagram" />
+            </div>
+            <div>
+              <q-btn no-caps flat href="" label="Threads" />
+            </div>
           </div>
 
           <!-- <div class="q-gutter-y-sm list">

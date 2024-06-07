@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <navbar isWhiteText />
+      <navbar />
     </nav>
     <div class="container-title-top">
       <img
@@ -135,7 +135,7 @@
 </template>
 
 <script setup>
-import navbar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 </script>
 
 <script>
