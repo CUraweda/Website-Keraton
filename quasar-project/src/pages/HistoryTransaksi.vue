@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import NavBar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import html2canvas from "html2canvas";
@@ -23,14 +23,13 @@ const openMenungguPembayaran = () => {
 const closeMenungguPembayaran = () => {
   cara.value = false;
 };
-
 </script>
 
 <template>
   <div class="all-content">
     <div>
       <nav class="navbar">
-        <NavBar border />
+        <navbar />
       </nav>
       <div class="content">
         <div>
@@ -41,16 +40,33 @@ const closeMenungguPembayaran = () => {
             <div class="search">
               <label for="search" class="search-label">
                 <img src="../assets/svg/search.svg" class="search-icon" />
-                <input type="search" v-model="search.s" id="search" name="search" placeholder="Cari transaksi"
-                  class="Pencarian" />
+                <input
+                  type="search"
+                  v-model="search.s"
+                  id="search"
+                  name="search"
+                  placeholder="Cari transaksi"
+                  class="Pencarian"
+                />
               </label>
             </div>
             <div class="date">
-              <input type="date" v-model="search.d" class="tanggal" placeholder="Pilih tanggal" />
+              <input
+                type="date"
+                v-model="search.d"
+                class="tanggal"
+                placeholder="Pilih tanggal"
+              />
             </div>
             <div class="status">
-              <select name="Status" placeholder="status" value="Status" v-model="search.stat"
-                @change="statusSelected = true" class="custom-select">
+              <select
+                name="Status"
+                placeholder="status"
+                value="Status"
+                v-model="search.stat"
+                @change="statusSelected = true"
+                class="custom-select"
+              >
                 <option value="sudahDigunakan">Sudah digunakan</option>
                 <option value="dapatDigunakan">Dapat digunakan</option>
                 <option value="expired">Expired</option>
@@ -60,11 +76,19 @@ const closeMenungguPembayaran = () => {
           </div>
         </div>
       </div>
-      <div v-for="transaction in historyDatas" :key="transaction.status" class="tabel">
+      <div
+        v-for="transaction in historyDatas"
+        :key="transaction.status"
+        class="tabel"
+      >
         <div :class="transaction.cardClass">
           <div class="tiket">
             <div class="tiket__header-container">
-              <img src="../assets/images/Vector.png" alt="icon-tiket" class="icon-tiket" />
+              <img
+                src="../assets/images/Vector.png"
+                alt="icon-tiket"
+                class="icon-tiket"
+              />
               <p>Tiket</p>
               <label>{{ transaction.date }}</label>
               <p :class="transaction.class">{{ transaction.label }}</p>
@@ -74,12 +98,22 @@ const closeMenungguPembayaran = () => {
               <div class="tiket__content-details">
                 <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
                 <div class="flex items-center q-gutter-xs">
-                  <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data"
-                    :key="i">{{ badge.name }}</q-badge>
+                  <q-badge
+                    rounded
+                    :color="badge.badgeColor"
+                    v-for="(badge, i) in transaction.detailDatas.data"
+                    :key="i"
+                    >{{ badge.name }}</q-badge
+                  >
                 </div>
                 <div class="label">
-                  <label class="labelharga">{{ `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}` }}</label><br />
-                  <label v-if="(transaction.detailDatas.length - 1) != 0">{{ `+${transaction.detailDatas.length - 1} tiket lainnya` }}</label>
+                  <label class="labelharga">{{
+                    `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
+                  }}</label
+                  ><br />
+                  <label v-if="transaction.detailDatas.length - 1 != 0">{{
+                    `+${transaction.detailDatas.length - 1} tiket lainnya`
+                  }}</label>
                 </div>
                 <div class="total">
                   <div class="info">
@@ -93,8 +127,11 @@ const closeMenungguPembayaran = () => {
                       <p class="bantu">Detail Transaksi</p>
                     </a>
                     <p class="bantu">|</p>
-                    <a @click="caraBayar = !caraBayar" class="bantuan"
-                      v-if="transaction.status === 'menungguPembayaran'">
+                    <a
+                      @click="caraBayar = !caraBayar"
+                      class="bantuan"
+                      v-if="transaction.status === 'menungguPembayaran'"
+                    >
                       <p class="bantu">Cara Bayar</p>
                     </a>
                   </div>
@@ -125,7 +162,11 @@ const closeMenungguPembayaran = () => {
           </div>
 
           <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-          <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
+          <div
+            class="flex q-mt-md q-gutter-x-md"
+            v-for="(detailData, i) in detailData.details"
+            :key="i"
+          >
             <q-img :src="detailData.image" style="width: 10rem" />
             <div>
               <div>{{ detailData.name }}</div>
@@ -173,7 +214,11 @@ const closeMenungguPembayaran = () => {
           <q-card-section>
             <div class="q-pa-md">
               <q-list bordered>
-                <q-expansion-item group="somegroup" label="BJB Virtual Account" default-opened>
+                <q-expansion-item
+                  group="somegroup"
+                  label="BJB Virtual Account"
+                  default-opened
+                >
                   <q-card>
                     <q-card-section>
                       <div class="flex justify-between">
@@ -183,10 +228,16 @@ const closeMenungguPembayaran = () => {
                         </div>
 
                         <q-btn flat>
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#DAA520">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#DAA520"
+                          >
                             <path
-                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                            />
                           </svg>
                         </q-btn>
                       </div>
@@ -198,10 +249,16 @@ const closeMenungguPembayaran = () => {
                         </div>
 
                         <q-btn flat>
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#DAA520">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="#DAA520"
+                          >
                             <path
-                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
+                              d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                            />
                           </svg>
                         </q-btn>
                       </div>
@@ -211,7 +268,12 @@ const closeMenungguPembayaran = () => {
 
                 <q-separator />
 
-                <q-expansion-item group="somegroup" icon="perm_identity" label="Second" header-class="text-teal">
+                <q-expansion-item
+                  group="somegroup"
+                  icon="perm_identity"
+                  label="Second"
+                  header-class="text-teal"
+                >
                   <q-card>
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -224,7 +286,12 @@ const closeMenungguPembayaran = () => {
 
                 <q-separator />
 
-                <q-expansion-item group="somegroup" icon="shopping_cart" label="Third" header-class="text-purple">
+                <q-expansion-item
+                  group="somegroup"
+                  icon="shopping_cart"
+                  label="Third"
+                  header-class="text-purple"
+                >
                   <q-card>
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -237,8 +304,13 @@ const closeMenungguPembayaran = () => {
 
                 <q-separator />
 
-                <q-expansion-item group="somegroup" icon="bluetooth" label="Fourth" header-class="bg-teal text-white"
-                  expand-icon-class="text-white">
+                <q-expansion-item
+                  group="somegroup"
+                  icon="bluetooth"
+                  label="Fourth"
+                  header-class="bg-teal text-white"
+                  expand-icon-class="text-white"
+                >
                   <q-card class="bg-teal-2">
                     <q-card-section>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
@@ -284,7 +356,11 @@ const closeMenungguPembayaran = () => {
               </div>
 
               <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-              <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
+              <div
+                class="flex q-mt-md q-gutter-x-md"
+                v-for="(detailData, i) in detailData.details"
+                :key="i"
+              >
                 <q-img :src="detailData.image" style="width: 10rem" />
                 <div>
                   <div>{{ detailData.name }}</div>
@@ -328,8 +404,9 @@ const closeMenungguPembayaran = () => {
           <div class="popup-content">
             <div class="header">
               <div class="Text-h2 text-bold">Cara Pembayaran</div>
-              <span class="close" @click="closeMenungguPembayaran"><img src="../assets/images/close.png"
-                  class="Icon" /></span>
+              <span class="close" @click="closeMenungguPembayaran"
+                ><img src="../assets/images/close.png" class="Icon"
+              /></span>
             </div>
             <div class="isi">
               <div class="bjb">
@@ -379,15 +456,16 @@ const closeMenungguPembayaran = () => {
     </div>
   </div>
   <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
+    v-if="notification.message"
+    :message="notification.message"
+    :type="notification.type"
+  />
 </template>
 
 <script>
 import Notification from "components/NotificationAlert.vue"; // Make sure to adjust the path
 export default {
+  components: { navbar },
   data() {
     return {
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
@@ -412,7 +490,7 @@ export default {
     this.fetchData();
   },
   components: {
-    Notification
+    Notification,
   },
   watch: {
     "search.s": "fetchData",
@@ -437,7 +515,7 @@ export default {
           scale: 0.8,
         },
       });
-      this.openDetailDialog()
+      this.openDetailDialog();
     },
     async fetchData() {
       try {
@@ -484,7 +562,7 @@ export default {
             // ]
           });
         }
-        console.log(this.historyDatas)
+        console.log(this.historyDatas);
       } catch (err) {
         console.log(err);
       }
@@ -501,8 +579,10 @@ export default {
           }
         );
         if (response.status != 200) throw Error(response.data.message);
-        this.showNotif(`Email sedang dikirimkan ke ${this.user.email}, mohon ditunggu`)
-        this.openDetailDialog()
+        this.showNotif(
+          `Email sedang dikirimkan ke ${this.user.email}, mohon ditunggu`
+        );
+        this.openDetailDialog();
       } catch (err) {
         console.log(err);
       }
@@ -528,7 +608,11 @@ export default {
           return {
             image: itemData.image,
             name: itemData.name,
-            price: `${detail.amount} x ${itemData.price < 1 ? "Free" : "Rp" + this.formatRupiah(itemData.price)}`
+            price: `${detail.amount} x ${
+              itemData.price < 1
+                ? "Free"
+                : "Rp" + this.formatRupiah(itemData.price)
+            }`,
           };
         }),
       };
@@ -545,14 +629,16 @@ export default {
         let contentToPush = {};
         if (detailData.order) {
           const orderData = detailData.order;
-          contentToPush["price"] = this.formatRupiah(orderData.price),
-          contentToPush["quantity"] = detailData.amount;
+          (contentToPush["price"] = this.formatRupiah(orderData.price)),
+            (contentToPush["quantity"] = detailData.amount);
           contentToPush["name"] = orderData.name;
-          contentToPush["badgeColor"] = orderData.orderSubTypeId ? "blue" : "orange";
+          contentToPush["badgeColor"] = orderData.orderSubTypeId
+            ? "blue"
+            : "orange";
         } else {
           const eventData = detailData.event;
-          contentToPush["price"] = this.formatRupiah(eventData.price),
-          contentToPush["quantity"] = detailData.amount;
+          (contentToPush["price"] = this.formatRupiah(eventData.price)),
+            (contentToPush["quantity"] = detailData.amount);
           contentToPush["name"] = eventData.name;
           contentToPush["badgeColor"] = "green";
         }
@@ -1016,7 +1102,7 @@ small.label-card1 {
   padding-top: 15px;
 }
 
-.flex-container>div {
+.flex-container > div {
   display: flex;
   justify-content: space-between;
   padding-bottom: 10px;
@@ -1211,11 +1297,13 @@ h6.detailtiket {
   height: 2px;
   width: 100%;
   margin: 20px auto;
-  background-image: repeating-linear-gradient(to right,
-      #d9d9d9,
-      #d9d9d9 7px,
-      transparent 5px,
-      transparent 10px);
+  background-image: repeating-linear-gradient(
+    to right,
+    #d9d9d9,
+    #d9d9d9 7px,
+    transparent 5px,
+    transparent 10px
+  );
 }
 
 .total-biaya {

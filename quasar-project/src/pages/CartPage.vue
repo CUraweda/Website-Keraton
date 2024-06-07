@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import NavBar from "../components/NavBar.vue";
+import navbar from "../components/NavbarNew.vue";
 </script>
 
 <template>
@@ -10,7 +10,7 @@ import NavBar from "../components/NavBar.vue";
         <div class="all-content">
           <div>
             <nav class="navbar">
-              <NavBar border />
+              <navbar />
             </nav>
             <q-page-sticky
               v-if="cartData.length > 0"
@@ -129,6 +129,8 @@ import carts from "../stores/carts";
 import cookieHandler from "src/cookieHandler";
 
 export default {
+  components: { navbar },
+
   data() {
     return {
       cartClass: new carts(),
