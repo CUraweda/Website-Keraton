@@ -1,5 +1,8 @@
 <template>
-  <q-toolbar class="text-white background-white q-pa-sm">
+  <q-toolbar
+    class="text-white background-white q-pa-sm"
+    style="position: sticky; top: 0; z-index: 1000; background: white"
+  >
     <div class="flex q-gutter-sm">
       <q-img
         src="../assets/images/logo_keraton 1.png"
