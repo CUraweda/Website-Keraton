@@ -263,7 +263,7 @@ export default {
 }
 
 .header {
-  margin: 0 7rem;
+  margin: 0 1rem;
 }
 
 .image-card {
