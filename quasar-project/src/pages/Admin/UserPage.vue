@@ -8,7 +8,7 @@
         <div>Ubah dan atur user di halaman ini</div>
       </div>
 
-      <q-btn icon="add" color="green" no-caps />
+      <q-btn icon="add" color="green" no-caps @click="handleDialog" />
     </div>
 
     <div class="q-mt-md q-mx-md">
@@ -37,6 +37,7 @@
                 flat
                 color="green"
                 no-caps
+                @click="handleDialog(props.row)"
                 style="background-color: rgba(0, 255, 0, 0.102)"
               ></q-btn>
               <q-btn
@@ -51,6 +52,62 @@
         </template>
       </q-table>
     </div>
+
+    <q-dialog v-model="addUserDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{ titleDialog }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section class="q-gutter-y-md">
+          <q-input
+            filled
+            v-model="userData.name"
+            label="Title"
+            color="black"
+            bg-color="gray"
+          />
+          <q-input
+            v-model="userData.email"
+            filled
+            type="email"
+            label="Email"
+            color="black"
+            bg-color="gray"
+          />
+
+          <q-input
+            v-if="!this.currentId"
+            v-model="userData.password"
+            filled
+            :type="isPwd ? 'password' : 'text'"
+            label="Password"
+            color="black"
+            bg-color="gray"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+
+          <q-input
+            filled
+            v-model="userData.role"
+            label="Role"
+            color="black"
+            bg-color="gray"
+          />
+
+          <q-btn no-caps :label="labelButton" @click="updateCreate" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -64,6 +121,10 @@ export default {
   components: { navbar },
   data() {
     return {
+      labelButton: ref("Submit"),
+      isPwd: ref(true),
+      titleDialog: ref("Add User"),
+      addUserDialog: ref(false),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       userDialog: ref(false),
       currentId: ref(),
@@ -142,8 +203,8 @@ export default {
       }
     },
     handleDialog(data) {
-      this.userDialog = !this.userDialog;
-      if (this.userDialog && data) {
+      this.addUserDialog = !this.addUserDialog;
+      if (this.addUserDialog && data) {
         this.currentId = data.id;
         this.userData = data;
       }

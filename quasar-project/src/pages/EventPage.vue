@@ -25,33 +25,39 @@
           </q-item>
         </template>
       </q-select> -->
+      <q-btn outlined label="Pelaksanaan" no-caps>
+        <q-menu>
+          <q-list>
+            <q-item clickable>
+              <q-item-section>
+                <q-checkbox
+                  v-for="(iterat, i) in pelaksanaanOptions"
+                  :key="i"
+                  v-model="jenisPelaksanaan"
+                  :val="iterat.value"
+                  :label="iterat.label"
+              /></q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
 
-      <q-checkbox
-        v-for="(iterat, i) in pelaksanaanOptions"
-        :key="i"
-        v-model="jenisPelaksanaan"
-        :val="iterat.value"
-        :label="iterat.label"
-      />
-      <q-checkbox
-        v-for="(type, i) in jenisEventOptions"
-        :key="i"
-        v-model="jenisEvent"
-        :val="type.value"
-        :label="type.label"
-      />
-
-      <!-- <q-select outlined v-model="jenisEvent" :options="jenisEventOptions" label="Jenis Event" style="width: 10rem">
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section avatar>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select> -->
+      <q-btn outlined label="Jenis Event" no-caps>
+        <q-menu>
+          <q-list>
+            <q-item clickable>
+              <q-item-section>
+                <q-checkbox
+                  v-for="(type, i) in jenisEventOptions"
+                  :key="i"
+                  v-model="jenisEvent"
+                  :val="type.value"
+                  :label="type.label"
+              /></q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
     </div>
 
     <div class="flex justify-center items-center q-gutter-md">
