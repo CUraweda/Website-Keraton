@@ -1,25 +1,15 @@
 <template>
-  <q-toolbar
-    class="text-white background-white q-pa-sm"
-    style="position: sticky; top: 0; z-index: 1000; background: white"
-  >
+  <q-toolbar class="text-white background-white q-pa-sm"
+    style="position: sticky; top: 0; z-index: 1000; background: white">
     <div class="flex q-gutter-sm">
-      <q-img
-        src="../assets/images/logo_keraton 1.png"
-        style="width: 3.5rem; height: 3.5rem"
-      />
+      <q-img src="../assets/images/logo_keraton 1.png" style="width: 3.5rem; height: 3.5rem" />
       <div class="text-black name-logo" style="width: 1rem">
         KERATON KESEPUHAN CIREBON
       </div>
     </div>
     <q-space />
 
-    <q-btn
-      icon="menu"
-      class="drawer-dialog"
-      color="primary"
-      @click="navbarDialog = true"
-    />
+    <q-btn icon="menu" class="drawer-dialog" color="primary" @click="navbarDialog = true" />
 
     <q-dialog v-model="navbarDialog" position="top">
       <q-card>
@@ -50,39 +40,19 @@
                 </q-list>
               </q-menu>
             </q-btn>
-            <q-btn
-              flat
-              no-caps
-              label="Objek Wisata"
-              color="black"
-              class="col-grow"
-            >
+            <q-btn flat no-caps label="Objek Wisata" color="black" class="col-grow">
               <q-menu>
                 <q-list>
-                  <q-item
-                    clickable
-                    :to="objekWisata.value"
-                    :key="i"
-                    v-for="(objekWisata, i) in sessionData.wisataOption"
-                  >
+                  <q-item clickable  v-for="(objekWisata, i) in sessionData.wisataOption" :to="objekWisata.value" :key="i">
                     <q-item-section>{{ objekWisata.label }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
             </q-btn>
-            <q-btn
-              v-if="!sessionData?.isLogin"
-              no-caps
-              style="background: #123b32; color: white; padding-inline: 30px"
-            >
+            <q-btn v-if="!sessionData?.isLogin" no-caps style="background: #123b32; color: white; padding-inline: 30px">
               <span class="text-bold">Dapatkan Tiket</span>
             </q-btn>
-            <q-expansion-item
-              v-if="sessionData?.isLogin"
-              label="Account"
-              clickable
-              expand-separator
-            >
+            <q-expansion-item v-if="sessionData?.isLogin" label="Account" clickable expand-separator>
               <q-list>
                 <q-item clickable @click="logOut">
                   <q-item-section>Logout</q-item-section>
@@ -104,56 +74,21 @@
     </q-dialog>
 
     <div class="component-navbar-admin" v-if="isAdmin">
-      <q-btn
-        flat
-        no-caps
-        label="Beranda"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/home"
-      />
+      <q-btn flat no-caps label="Beranda" :color="isTransparent ? 'white' : 'black'" to="/admin/home" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Tiket"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/event"
-      />
+      <q-btn flat no-caps label="Tiket" :color="isTransparent ? 'white' : 'black'" to="/admin/event" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Berita"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/news"
-      />
+      <q-btn flat no-caps label="Berita" :color="isTransparent ? 'white' : 'black'" to="/admin/news" />
 
-      <q-btn
-        flat
-        no-caps
-        label="User"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/user"
-      />
+      <q-btn flat no-caps label="User" :color="isTransparent ? 'white' : 'black'" to="/admin/user" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Langganan"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/home"
-      />
+      <q-btn flat no-caps label="Langganan" :color="isTransparent ? 'white' : 'black'" to="/admin/home" />
 
       <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">
         <q-avatar size="2.2rem">
           <img src="../assets/svg/user.svg" />
         </q-avatar>
-        <q-menu
-          fit
-          anchor="bottom left"
-          self="top left"
-          style="max-width: 320px"
-        >
+        <q-menu fit anchor="bottom left" self="top left" style="max-width: 320px">
           <q-item clickable to="/user/carts">
             <q-item-section>Keranjang</q-item-section>
           </q-item>
@@ -177,19 +112,8 @@
     </div>
 
     <div class="component-navbar" v-if="!isAdmin">
-      <q-btn
-        flat
-        no-caps
-        label="Beranda"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/"
-      ></q-btn>
-      <q-btn
-        flat
-        label="Sejarah"
-        no-caps
-        :color="isTransparent ? 'white' : 'black'"
-      >
+      <q-btn flat no-caps label="Beranda" :color="isTransparent ? 'white' : 'black'" to="/"></q-btn>
+      <q-btn flat label="Sejarah" no-caps :color="isTransparent ? 'white' : 'black'">
         <q-menu>
           <q-list>
             <q-item clickable to="/sejarah">
@@ -201,12 +125,7 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        flat
-        no-caps
-        label="Booking"
-        :color="isTransparent ? 'white' : 'black'"
-      >
+      <q-btn flat no-caps label="Booking" :color="isTransparent ? 'white' : 'black'">
         <q-menu>
           <q-list>
             <q-item clickable to="/booking">
@@ -218,32 +137,17 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        flat
-        no-caps
-        label="Objek Wisata"
-        :color="isTransparent ? 'white' : 'black'"
-        class="col-grow"
-      >
+      <q-btn flat no-caps label="Objek Wisata" :color="isTransparent ? 'white' : 'black'" class="col-grow">
         <q-menu>
           <q-list>
-            <q-item
-              clickable
-              :to="objekWisata.value"
-              :key="i"
-              v-for="(objekWisata, i) in sessionData.wisataOption"
-            >
+            <q-item clickable v-for="(objekWisata, i) in sessionData.wisataOption" :to="objekWisata.value" :key="i">
               <q-item-section>{{ objekWisata.label }}</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        v-if="!sessionData?.isLogin"
-        no-caps
-        to="/signin"
-        style="background: #123b32; color: white; padding-inline: 30px"
-      >
+      <q-btn v-if="!sessionData?.isLogin" no-caps to="/signin"
+        style="background: #123b32; color: white; padding-inline: 30px">
         <span class="text-bold">Dapatkan Tiket</span>
       </q-btn>
 
@@ -251,12 +155,7 @@
         <q-avatar size="2.2rem">
           <img src="../assets/svg/user.svg" />
         </q-avatar>
-        <q-menu
-          fit
-          anchor="bottom left"
-          self="top left"
-          style="max-width: 320px"
-        >
+        <q-menu fit anchor="bottom left" self="top left" style="max-width: 320px">
           <q-item clickable to="/user/carts">
             <q-item-section>Keranjang</q-item-section>
           </q-item>
@@ -289,7 +188,7 @@ import "simple-notify/dist/simple-notify.css";
 import cookieHandler from "src/cookieHandler";
 import Carts from "src/stores/carts";
 import { decrypt } from "src/stores/encryption";
-const cartClass  = new Carts()
+const cartClass = new Carts()
 
 export default {
   props: {
@@ -327,7 +226,7 @@ export default {
         cartClass.clearCart().updateItem();
         window.location.reload();
         this.showNotif('Berhasil Log Out', 'success')
-        } catch (err) {
+      } catch (err) {
         this.showNotif(err.message, 'error')
         console.log(err)
       }
@@ -349,6 +248,7 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
+
   .name-logo,
   .component-navbar {
     display: none;

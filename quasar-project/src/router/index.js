@@ -24,8 +24,9 @@ function alreadyHasToken() {
 async function setDefaultAndCheck() {
   let dataToStore = {}
   try {
-    console.log('Im Here NIGDHJBASDJBHSDBHJCJASDBJ')
     const storageAlreadyExist = sessionStorage.getItem(env.GLOBAL_STORAGE)
+    const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+    if(!token) cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
     if (storageAlreadyExist) return
     const cartClass = new Carts();
     const checkToken = await verifyToken();
@@ -53,7 +54,6 @@ async function setDefaultAndCheck() {
     const availableWisata = await fetch(env.BASE_URL + "/keraton/wisata");
     const wisataData = await availableWisata.json()
     if (availableWisata.status != 200) throw Error(wisataData.message);
-    console.log(wisataData)
     dataToStore["wisataOption"] = wisataData.data.wisataData.map(
       (wisata) => ({
         label: wisata.label,

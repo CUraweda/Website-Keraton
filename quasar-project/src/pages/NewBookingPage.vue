@@ -151,6 +151,9 @@ import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+
 export default {
   components: { navbar },
   data() {
@@ -169,6 +172,12 @@ export default {
     this.fetchData();
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async storeCartToDatabase() {
       this.cart.updateToDB();
     },
@@ -269,8 +278,10 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
-      } catch (err) {
+        } catch (err) {
+        this.showNotif(err.message, "error");
         console.log(err);
       }
     },
