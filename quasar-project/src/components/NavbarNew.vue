@@ -245,6 +245,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap");
+
+* {
+  font-family: Raleway;
+}
+
 .drawer-dialog {
   display: none;
 }
