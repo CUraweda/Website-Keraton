@@ -2,17 +2,19 @@
   <div>
     <navbar />
 
-    <section :style="{
-      'min-height': '100vh',
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover',
-      'background-position': 'center',
-      display: 'flex',
-      'flex-direction': 'column',
-      'align-items': 'center',
-      'justify-content': 'center',
-    }">
+    <section
+      :style="{
+        'min-height': '100vh',
+        background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${sectionimg})`,
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        'background-position': 'center',
+        display: 'flex',
+        'flex-direction': 'column',
+        'align-items': 'center',
+        'justify-content': 'center',
+      }"
+    >
       <div class="text-h5 text-center" style="color: #fae084">
         {{ sectionName }}
       </div>
@@ -21,23 +23,27 @@
       </div>
     </section>
 
-    <section :style="{
-      'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
-      'background-position': 'center',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover',
-      display: 'flex',
-      'justify-content': 'center',
-      'text-align': 'center',
-    }">
-      <div style="
+    <section
+      :style="{
+        'background-image': `linear-gradient(transparent, #fff9a0, #ffe96e),url(${sectionimg1})`,
+        'background-position': 'center',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        display: 'flex',
+        'justify-content': 'center',
+        'text-align': 'center',
+      }"
+    >
+      <div
+        style="
           width: 40rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           padding: 8rem 0;
-        ">
+        "
+      >
         <div style="color: #daa520" class="text-h5">
           {{ sectionName1 }}
         </div>
@@ -51,21 +57,29 @@
     </section>
 
     <section>
-      <q-video :ratio="16 / 9" src="https://www.youtube.com/embed/q-2tx9iLtDE" />
+      <q-video
+        :ratio="16 / 9"
+        src="https://www.youtube.com/embed/q-2tx9iLtDE"
+      />
     </section>
 
-    <section style="
+    <section
+      style="
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-      " class="background-section-4">
-      <div style="
+      "
+      class="background-section-4"
+    >
+      <div
+        style="
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           padding: 2rem 0;
-        ">
+        "
+      >
         <div style="color: #d9a520" class="text-h5">
           {{ sectionName3 }}
         </div>
@@ -74,24 +88,36 @@
         </div>
 
         <div class="flex q-gutter-xl q-mt-md justify-center">
-          <q-img class="rounded-borders hover-effect" :src="sejarah.data" v-for="(sejarah, i) in sejarahImages" :key="i"
-            style="width: 20rem; height: 20rem" />
+          <q-img
+            class="rounded-borders hover-effect"
+            :src="sejarah.data"
+            v-for="(sejarah, i) in sejarahImages"
+            :key="i"
+            style="width: 20rem; height: 20rem"
+          />
         </div>
 
         <div class="flex items-center justify-center q-mt-xl">
-          <q-btn no-caps icon-right="arrow_right_alt" label="Lihat Selengkapnya"
-            @click="movePage(sectionData3?.xl1.data)" style="background: #123b32; color: white" />
+          <q-btn
+            no-caps
+            icon-right="arrow_right_alt"
+            label="Lihat Selengkapnya"
+            @click="movePage(sectionData3?.xl1.data)"
+            style="background: #123b32; color: white"
+          />
         </div>
       </div>
     </section>
 
-    <section :style="{
-      background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${eventImage})`,
-      'background-position': 'center',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover',
-      padding: '2.5rem 0',
-    }">
+    <section
+      :style="{
+        background: `linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${eventImage})`,
+        'background-position': 'center',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        padding: '2.5rem 0',
+      }"
+    >
       <div>
         <div style="color: #d9a520" class="text-h5 text-center">
           {{ sectionName4 }}
@@ -101,9 +127,15 @@
         </div>
 
         <div class="flex items-center justify-center q-gutter-md q-mt-xl">
-          <q-img :src="events[eventIndex]?.image" spinner-color="white" v-for="eventIndex in showCounterEvent"
-            :key="eventIndex" @mouseover="eventImage = events[eventIndex].image" class="rounded-borders hover-effect"
-            style="width: 20rem; height: 20rem">
+          <q-img
+            :src="events[eventIndex]?.image"
+            spinner-color="white"
+            v-for="eventIndex in showCounterEvent"
+            :key="eventIndex"
+            @mouseover="eventImage = events[eventIndex].image"
+            class="rounded-borders hover-effect"
+            style="width: 20rem; height: 20rem"
+          >
             <div class="absolute-bottom text-subtitle1 text-center">
               {{ events[eventIndex]?.name }}
             </div>
@@ -117,8 +149,13 @@
         </div>
 
         <div class="flex items-center justify-center q-mt-xl">
-          <q-btn no-caps icon-right="arrow_right_alt" label="Lihat Selengkapnya"
-            @click="movePage(sectionData4?.xl1.data)" style="background: #123b32; color: white" />
+          <q-btn
+            no-caps
+            icon-right="arrow_right_alt"
+            label="Lihat Selengkapnya"
+            @click="movePage(sectionData4?.xl1.data)"
+            style="background: #123b32; color: white"
+          />
         </div>
       </div>
     </section>
@@ -126,10 +163,27 @@
     <section style="padding: 2rem 0" class="background-news">
       <div style="font-size: 1.75rem; text-align: center">Berita Terkini</div>
 
-      <q-carousel arrows swipeable animated infinite height="40rem" transition-duration="2000" :autoplay="slideAutoplay"
-        transition-next="slide-left" transition-prev="slide-right" @mouseover="slideAutoplay = false"
-        @mouseleave="slideAutoplay = true" v-model="currentSlide" class="q-mt-md q-mx-lg">
-        <q-carousel-slide v-for="(slide, index) in slides" :img-src="slide.imageUrl" :key="index" :name="index">
+      <q-carousel
+        arrows
+        swipeable
+        animated
+        infinite
+        height="40rem"
+        transition-duration="2000"
+        :autoplay="slideAutoplay"
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        @mouseover="slideAutoplay = false"
+        @mouseleave="slideAutoplay = true"
+        v-model="currentSlide"
+        class="q-mt-md q-mx-lg"
+      >
+        <q-carousel-slide
+          v-for="(slide, index) in slides"
+          :img-src="slide.imageUrl"
+          :key="index"
+          :name="index"
+        >
           <div class="absolute-center custom-caption">
             <div
               style="
@@ -142,7 +196,7 @@
                 height: 100%;
               "
             >
-              <div class="text-h2 text-center text-white">
+              <div class="text-h5 text-bold text-center text-white">
                 {{ slide.title }}
               </div>
               <div class="text-subtitle1 text-center text-white">
@@ -171,13 +225,18 @@
       </q-carousel>
     </section>
 
-    <section :style="{
-      'background-image': `url(${sectionimg1})`,
-      'background-position': 'center',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover',
-    }">
-      <div style="padding: 3rem 0" class="flex items-center justify-center column">
+    <section
+      :style="{
+        'background-image': `url(${sectionimg1})`,
+        'background-position': 'center',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+      }"
+    >
+      <div
+        style="padding: 3rem 0"
+        class="flex items-center justify-center column"
+      >
         <div style="color: #d9a520" class="text-h5">
           {{ sectionName5 }}
         </div>
@@ -187,28 +246,37 @@
       </div>
     </section>
 
-    <section style="
+    <section
+      style="
         background: linear-gradient(
           90deg,
           rgba(218, 165, 32, 0.5) 0%,
           rgba(18, 59, 50, 0.5) 100%
         );
-      ">
+      "
+    >
       <div style="padding: 2rem 0" class="q-mx-md">
         <div style="font-size: 1.2rem">
           {{ sectionData5?.xs2.data }}
         </div>
-        <q-btn no-caps label="Dapatkan Tiket Sekarang!" style="background: #123b32; color: white" class="q-mt-xl" />
+        <q-btn
+          no-caps
+          label="Dapatkan Tiket Sekarang!"
+          style="background: #123b32; color: white"
+          class="q-mt-xl"
+        />
       </div>
     </section>
 
-    <section :style="{
-      'background-image': `url(${sectionimg1})`,
-      'background-position': 'center',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover',
-      padding: '2rem 0',
-    }">
+    <section
+      :style="{
+        'background-image': `url(${sectionimg1})`,
+        'background-position': 'center',
+        'background-repeat': 'no-repeat',
+        'background-size': 'cover',
+        padding: '2rem 0',
+      }"
+    >
       <div style="color: #d9a520" class="text-h5 text-center">
         {{ sectionName6 }}
       </div>
@@ -272,7 +340,7 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.fetchEvents();
-    this.setDefaultAndCheck()
+    this.setDefaultAndCheck();
   },
   methods: {
     async fetchData() {
@@ -346,17 +414,19 @@ export default {
       }
     },
     async setDefaultAndCheck() {
-      let dataToStore = {}
+      let dataToStore = {};
       try {
-        const storageAlreadyExist = sessionStorage.getItem(environment.GLOBAL_STORAGE)
-        if(storageAlreadyExist) return 
+        const storageAlreadyExist = sessionStorage.getItem(
+          environment.GLOBAL_STORAGE
+        );
+        if (storageAlreadyExist) return;
 
         const cartClass = new Carts();
         const checkToken = await verifyToken();
         if (checkToken.isLogin) {
           //Globalcn
-          dataToStore["isLogin"] = checkToken.isLogin
-          dataToStore["isAdmin"] = checkToken.isAdmin
+          dataToStore["isLogin"] = checkToken.isLogin;
+          dataToStore["isAdmin"] = checkToken.isAdmin;
           //Cart
           const cart = cartClass.getItem();
           if (cart) {
@@ -371,14 +441,18 @@ export default {
           }
         }
         const availableWisata = await this.$api.get("wisata");
-        if (availableWisata.status != 200) throw Error(availableWisata.data.message);
+        if (availableWisata.status != 200)
+          throw Error(availableWisata.data.message);
         dataToStore["wisataOption"] = availableWisata.data.data.wisataData.map(
           (wisata) => ({
             label: wisata.label,
             value: wisata.to,
           })
         );
-        sessionStorage.setItem(environment.GLOBAL_STORAGE,  JSON.stringify(dataToStore))
+        sessionStorage.setItem(
+          environment.GLOBAL_STORAGE,
+          JSON.stringify(dataToStore)
+        );
       } catch (err) {
         console.log(err);
       }
