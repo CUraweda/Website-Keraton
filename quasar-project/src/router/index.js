@@ -3,6 +3,8 @@ import { createRouter, createMemoryHistory, createWebHistory, createWebHashHisto
 import routes from './routes'
 import env from 'stores/environment'
 import cookieHandler from 'src/cookieHandler'
+import Carts from "src/stores/carts";
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
