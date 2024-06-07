@@ -103,7 +103,80 @@
       </q-card>
     </q-dialog>
 
-    <div class="component-navbar">
+    <div class="component-navbar-admin" v-if="isAdmin">
+      <q-btn
+        flat
+        no-caps
+        label="Beranda"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/home"
+      />
+
+      <q-btn
+        flat
+        no-caps
+        label="Tiket"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/event"
+      />
+
+      <q-btn
+        flat
+        no-caps
+        label="Berita"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/news"
+      />
+
+      <q-btn
+        flat
+        no-caps
+        label="User"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/user"
+      />
+
+      <q-btn
+        flat
+        no-caps
+        label="Langganan"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/home"
+      />
+
+      <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">
+        <q-avatar size="2.2rem">
+          <img src="../assets/svg/user.svg" />
+        </q-avatar>
+        <q-menu
+          fit
+          anchor="bottom left"
+          self="top left"
+          style="max-width: 320px"
+        >
+          <q-item clickable to="/user/carts">
+            <q-item-section>Keranjang</q-item-section>
+          </q-item>
+          <q-item clickable to="/user/transaction">
+            <q-item-section>Pembelian</q-item-section>
+          </q-item>
+          <q-item v-if="sessionData.isAdmin" clickable to="/admin/home">
+            <q-item-section>Admin Page</q-item-section>
+          </q-item>
+          <q-item clickable class="text-negative" @click="logOut">
+            <q-item-section avatar>
+              <q-icon name="logout" />
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label class="rounded-borders">Logout</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-menu>
+      </q-btn>
+    </div>
+
+    <div class="component-navbar" v-if="!isAdmin">
       <q-btn
         flat
         no-caps
@@ -219,6 +292,12 @@ import { decrypt } from "src/stores/encryption";
 const cartClass  = new Carts()
 
 export default {
+  props: {
+    isAdmin: {
+      type: Boolean,
+      required: true,
+    },
+  },
   setup() {
     return {
       navbarDialog: ref(false),

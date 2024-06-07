@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="true" />
     <div style="margin-top: 150px" class="q-px-xl">
       <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
       <div>Ubah dan atur konten di halaman beranda web</div>
@@ -32,10 +32,9 @@
   </div>
 </template>
 
-
 <script>
 import { verifyToken } from "src/auth/auth";
-import navbar from "src/components/NavBar.vue";
+import navbar from "../../components/NavbarNew.vue";
 import { ref } from "vue";
 
 const columns = [

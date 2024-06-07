@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="false" />
 
     <div class="body">
       <div class="image-container">

@@ -6,7 +6,7 @@
   <div>
     <div>
       <nav>
-        <navbar />
+        <navbar :isAdmin="false" />
       </nav>
       <div>
         <q-img
