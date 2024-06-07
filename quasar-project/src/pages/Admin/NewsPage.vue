@@ -1,14 +1,17 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="true" />
     <q-btn label="Create News" @click="handleDialog" />
     <div class="q-gutter-xs q-mt-md">
-      <div class="flex col-grow q-gutter-md" style="
+      <div
+        class="flex col-grow q-gutter-md"
+        style="
           overflow-x: auto;
           flex-wrap: nowrap;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        ">
+        "
+      >
         <div v-for="(data, i) in newsDatas" :key="i">
           <q-card class="my-card" flat bordered style="width: 20rem">
             <q-img :src="data.image" style="height: 15rem" />
@@ -22,16 +25,29 @@
 
             <q-card-actions>
               <q-btn flat @click="handleDialog(data)">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                  fill="green">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="green"
+                >
                   <path
-                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                  />
                 </svg>
               </q-btn>
-              <q-btn flat @click="deleteData(data.id)"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                  viewBox="0 -960 960 960" width="24px" fill="red">
+              <q-btn flat @click="deleteData(data.id)"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="red"
+                >
                   <path
-                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                  />
                 </svg>
               </q-btn>
               <q-space />
@@ -51,19 +67,49 @@
 
         <q-card-section class="flex q-gutter-md">
           <div>
-            <q-input filled v-model="newsData.title" label="Title" color="black" bg-color="gray" />
-            <q-input filled v-model="newsData.desc" label="Description" color="black" bg-color="gray" class="q-mt-md" />
-            <q-input filled v-model="newsData.link" label="Link" color="black" bg-color="gray" class="q-mt-md" />
+            <q-input
+              filled
+              v-model="newsData.title"
+              label="Title"
+              color="black"
+              bg-color="gray"
+            />
+            <q-input
+              filled
+              v-model="newsData.desc"
+              label="Description"
+              color="black"
+              bg-color="gray"
+              class="q-mt-md"
+            />
+            <q-input
+              filled
+              v-model="newsData.link"
+              label="Link"
+              color="black"
+              bg-color="gray"
+              class="q-mt-md"
+            />
           </div>
 
-          <div style="
+          <div
+            style="
               display: flex;
               flex-direction: column;
               justify-content: space-between;
-            ">
+            "
+          >
             <div>
-              <q-file filled type="file" v-model="newsData.image" label="Tambahkan Image" color="black" class="ellipsis"
-                style="width: 10rem" @update:model-value="handleUploadNews()" />
+              <q-file
+                filled
+                type="file"
+                v-model="newsData.image"
+                label="Tambahkan Image"
+                color="black"
+                class="ellipsis"
+                style="width: 10rem"
+                @update:model-value="handleUploadNews()"
+              />
               <q-img :src="imgURLNews" v-if="imgURLNews" />
             </div>
             <div>
@@ -84,7 +130,7 @@
 
 <script>
 import { ref } from "vue";
-import navbar from "../../components/NavbarAdmin.vue";
+import navbar from "../../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "src/stores/environment";
 // import Notification from "components/NotificationAlert.vue";
@@ -143,13 +189,13 @@ export default {
       try {
         let url = "news/action";
         if (this.currentId) url += `/${this.currentId}`;
-        console.log(this.newsData)
+        console.log(this.newsData);
         const requestBody = {
           link: this.newsData.link,
           desc: this.newsData.desc,
           title: this.newsData.title,
           image: this.newsData.image,
-        }
+        };
         const response = await this.$api.post(url, requestBody, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -157,7 +203,7 @@ export default {
         });
         if (response.status != 200) throw Error(response.data.message);
         this.newsDialog = false;
-        this.fetchData()
+        this.fetchData();
         this.showNotif(response.data.message, success);
       } catch (err) {
         console.log(err);
@@ -190,8 +236,8 @@ export default {
       }
     },
     resetDefault() {
-      this.imgURLNews = undefined
-      this.currentId = undefined
+      this.imgURLNews = undefined;
+      this.currentId = undefined;
       this.newsData = {
         iterationId: null,
         price: null,

@@ -1,11 +1,11 @@
 <template>
   <div>
     <navbar :isAdmin="true" />
-    <div style="margin-top: 150px" class="q-px-xl">
+    <div class="q-mx-md q-mt-md">
       <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
       <div>Ubah dan atur konten di halaman beranda web</div>
-      <div class="q-mt-xl">
-        <q-btn
+      <div>
+        <!-- <q-btn
           color="positive"
           label="News"
           href="#/admin/news"
@@ -16,15 +16,17 @@
           label="Event"
           href="#/admin/event"
           class="q-mb-md"
-        />
+        /> -->
         <q-table :rows="rows" :columns="columns" row-key="name">
           <template v-slot:body-cell-Action="scope">
-            <q-btn
-              color="positive"
-              :label="'Edit '"
-              :href="'#/admin/add/' + scope.row.id"
-              @click="scope.selected = scope.row.id"
-            />
+            <div class="flex items-center justify-center">
+              <q-btn
+                color="positive"
+                :label="'Edit '"
+                :href="'#/admin/add/' + scope.row.id"
+                @click="scope.selected = scope.row.id"
+              />
+            </div>
           </template>
         </q-table>
       </div>
@@ -49,21 +51,18 @@ const columns = [
     align: "center",
     label: "Section ",
     field: "sectionName",
-    sortable: true,
   },
   {
     name: "Page",
     align: "center",
     label: "Page",
     field: "pageName",
-    sortable: true,
   },
   {
     name: "Updated At",
     align: "center",
     label: "Updated At",
     field: "updatedAt",
-    sortable: true,
   },
   {
     name: "Action",

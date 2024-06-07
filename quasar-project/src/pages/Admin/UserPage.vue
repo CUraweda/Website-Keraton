@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="true" />
 
     <div class="q-mx-md q-mt-md flex items-center justify-between">
       <div>
@@ -12,7 +12,14 @@
     </div>
 
     <div class="q-mt-md q-mx-md">
-      <q-table bordered :rows="userDatas" :columns="columns" row-key="name" hide-bottom class="q-mt-md">
+      <q-table
+        bordered
+        :rows="userDatas"
+        :columns="columns"
+        row-key="name"
+        hide-bottom
+        class="q-mt-md"
+      >
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="Name" :props="props">
@@ -25,8 +32,14 @@
               {{ props.row.role }}
             </q-td>
             <q-td class="q-gutter-x-sm flex items-center justify-center">
-              <q-btn icon="edit" flat color="green" no-caps @click="handleDialog(props.row)"
-                style="background-color: rgba(0, 255, 0, 0.102)"></q-btn>
+              <q-btn
+                icon="edit"
+                flat
+                color="green"
+                no-caps
+                @click="handleDialog(props.row)"
+                style="background-color: rgba(0, 255, 0, 0.102)"
+              ></q-btn>
               <!-- <q-btn icon="delete" flat color="red" no-caps style="background-color: rgba(255, 0, 0, 0.102)" /> -->
             </q-td>
           </q-tr>
@@ -43,17 +56,46 @@
         </q-card-section>
 
         <q-card-section class="q-gutter-y-md">
-          <q-input filled v-model="userData.name" label="Name" color="black" bg-color="gray" />
-          <q-input v-model="userData.email" filled type="email" label="Email" color="black" bg-color="gray" />
+          <q-input
+            filled
+            v-model="userData.name"
+            label="Name"
+            color="black"
+            bg-color="gray"
+          />
+          <q-input
+            v-model="userData.email"
+            filled
+            type="email"
+            label="Email"
+            color="black"
+            bg-color="gray"
+          />
 
-          <q-input v-if="!this.currentId" v-model="userData.password" filled :type="isPwd ? 'password' : 'text'"
-            label="Password" color="black" bg-color="gray">
+          <q-input
+            v-if="!this.currentId"
+            v-model="userData.password"
+            filled
+            :type="isPwd ? 'password' : 'text'"
+            label="Password"
+            color="black"
+            bg-color="gray"
+          >
             <template v-slot:append>
-              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
             </template>
           </q-input>
 
-          <q-select filled v-model="userData.role" :options="userRoleOptions" label="Role" />
+          <q-select
+            filled
+            v-model="userData.role"
+            :options="userRoleOptions"
+            label="Role"
+          />
 
           <q-btn no-caps :label="labelButton" @click="updateCreate" />
         </q-card-section>
@@ -63,7 +105,7 @@
 </template>
 
 <script>
-import navbar from "../../components/NavbarAdmin.vue";
+import navbar from "../../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import { ref } from "vue";
@@ -131,20 +173,25 @@ export default {
     async updateCreate() {
       try {
         const url = this.currentId ? `user/${this.currentId}` : "user";
-        const response = await this.$api.post(url, {
-          name: this.userData.name,
-          email: this.userData.email,
-          role: this.userData.role?.value ? this.userData.role.value : this.userData.role,
-          ...(this.userData && { password: this.userData.password })
-
-        }, {
-          headers: {
-            Authorization: `Bearer ${this.token}`,
+        const response = await this.$api.post(
+          url,
+          {
+            name: this.userData.name,
+            email: this.userData.email,
+            role: this.userData.role?.value
+              ? this.userData.role.value
+              : this.userData.role,
+            ...(this.userData && { password: this.userData.password }),
           },
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
         if (response.status != 200) throw Error(response.data.message);
-        this.handleDialog()
-        this.fetchData()
+        this.handleDialog();
+        this.fetchData();
       } catch (err) {
         console.log(err);
       }
@@ -157,8 +204,8 @@ export default {
           },
         });
         if (response.status != 200) throw Error(response.data.message);
-        this.handleDialog()
-        this.fetchData()
+        this.handleDialog();
+        this.fetchData();
       } catch (err) {
         console.log(err);
       }
