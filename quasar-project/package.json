@@ -24,6 +24,7 @@
     "jspdf": "^2.5.1",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
+    "simple-notify": "^1.0.4",
     "socket.io-client": "^4.7.5",
     "vue": "^3.0.0",
     "vue-barcode-reader": "^1.0.3",

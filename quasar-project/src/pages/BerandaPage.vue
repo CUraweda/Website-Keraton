@@ -185,9 +185,23 @@
           :name="index"
         >
           <div class="absolute-center custom-caption">
-            <div class="text-h2 text-center text-white">{{ slide.title }}</div>
-            <div class="text-subtitle1 text-center text-white">
-              {{ slide.summary }}
+            <div
+              style="
+                background: linear-gradient(
+                  0deg,
+                  rgba(0, 0, 0, 0.4),
+                  rgba(0, 0, 0, 0.4)
+                );
+                width: 100%;
+                height: 100%;
+              "
+            >
+              <div class="text-h2 text-center text-white">
+                {{ slide.title }}
+              </div>
+              <div class="text-subtitle1 text-center text-white">
+                {{ slide.summary }}
+              </div>
             </div>
           </div>
         </q-carousel-slide>
@@ -472,5 +486,44 @@ i.q-icon.notranslate.material-icons.q-expansion-item__toggle-icon {
   .faqs {
     margin: 0 1rem;
   }
+}
+
+.notify-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  width: auto;
+  max-width: 300px;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.notify-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.notify-text {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.notify-success {
+  border-color: #4caf50;
+  background-color: #dff0d8;
+}
+
+.notify-error {
+  border-color: #f44336;
+  background-color: #f2dede;
+}
+
+.notify-warning {
+  border-color: #ff9800;
+  background-color: #fcf8e3;
 }
 </style>

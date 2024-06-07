@@ -94,7 +94,11 @@
 
             <q-space />
 
-            <q-btn dense no-caps style="background: #fae084"
+            <q-btn
+              dense
+              no-caps
+              style="background: #fae084"
+              @click="addToCart(item)"
               ><span class="text-bold">Tambah</span
               ><span
                 ><q-img
@@ -115,6 +119,9 @@ import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+
 export default {
   components: { navbar },
   data() {
@@ -144,16 +151,14 @@ export default {
     this.fetchData();
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async storeCartToDatabase() {
       this.cart.updateToDB();
-    },
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
     },
     async fetchData() {
       let freeOptions, iterationOptions;
@@ -207,7 +212,8 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
-        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
+        // this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
+        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
       } catch (err) {
         this.showNotif(err.message, "error");
