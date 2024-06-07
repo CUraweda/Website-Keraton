@@ -110,6 +110,7 @@ export default {
         cartClass.setNew(cartData);
         cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
+        sessionStorage.removeItem(env.GLOBAL_STORAGE)
         this.$router.go(-1);
       } catch (err) {
         console.log(err);

@@ -27,6 +27,7 @@ const routes = [
     component: AdminHomePage,
     meta: {
       preventToken: true,
+      onlyAdmin: true
     },
   },
   {
@@ -35,6 +36,7 @@ const routes = [
     component: AdminUserPage,
     meta: {
       preventToken: true,
+      onlyAdmin: true
     },
   },
   {
@@ -43,6 +45,7 @@ const routes = [
     component: AdminAddPage,
     meta: {
       preventToken: true,
+      onlyAdmin: true
     },
   },
   {
@@ -51,6 +54,7 @@ const routes = [
     component: AdminNewsPage,
     meta: {
       preventToken: true,
+      onlyAdmin: true
     },
   },
   {
@@ -59,6 +63,7 @@ const routes = [
     component: AdminEventPage,
     meta: {
       preventToken: true,
+      onlyAdmin: true
     },
   },
 

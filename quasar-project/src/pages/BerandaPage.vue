@@ -316,9 +316,6 @@
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
 import footerNew from "../components/FooterNew.vue";
-import Carts from "src/stores/carts";
-import { verifyToken } from "src/auth/auth";
-import environment from "src/stores/environment";
 
 export default {
   components: { navbar, footerNew },
@@ -340,7 +337,6 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.fetchEvents();
-    this.setDefaultAndCheck();
   },
   methods: {
     async fetchData() {
@@ -409,50 +405,6 @@ export default {
         const response = await this.$api.post("event/page", {});
         this.events = this.shuffleArray(response.data.data);
         this.eventImage = this.events[0].image;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async setDefaultAndCheck() {
-      let dataToStore = {};
-      try {
-        const storageAlreadyExist = sessionStorage.getItem(
-          environment.GLOBAL_STORAGE
-        );
-        if (storageAlreadyExist) return;
-
-        const cartClass = new Carts();
-        const checkToken = await verifyToken();
-        if (checkToken.isLogin) {
-          //Globalcn
-          dataToStore["isLogin"] = checkToken.isLogin;
-          dataToStore["isAdmin"] = checkToken.isAdmin;
-          //Cart
-          const cart = cartClass.getItem();
-          if (cart) {
-            const validateCartResponse = await this.$api.post("cart/validate", {
-              carts: cart,
-            });
-            if (validateCartResponse.status != 200) {
-              cartClass.clearCart();
-              throw Error(validateCartResponse.data.message);
-            }
-            cartClass.setNew(Object.values(validateCartResponse.data.data));
-          }
-        }
-        const availableWisata = await this.$api.get("wisata");
-        if (availableWisata.status != 200)
-          throw Error(availableWisata.data.message);
-        dataToStore["wisataOption"] = availableWisata.data.data.wisataData.map(
-          (wisata) => ({
-            label: wisata.label,
-            value: wisata.to,
-          })
-        );
-        sessionStorage.setItem(
-          environment.GLOBAL_STORAGE,
-          JSON.stringify(dataToStore)
-        );
       } catch (err) {
         console.log(err);
       }

@@ -125,28 +125,6 @@ export default {
         this.notification.type = "";
       }, 4000);
     },
-    async verifyToken() {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        this.isLogin = false;
-        return;
-      }
-
-      try {
-        const response = await fetch(env.BASE_URL + "/keraton/auth/auth", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        const data = await response.json();
-        this.isLogin = true;
-        this.$router.push("/");
-      } catch (error) {
-        console.error("Failed to verify token:", error);
-        localStorage.removeItem("token");
-        this.isLogin = false;
-      }
-    },
     async submitForm() {
       this.emailError = !this.email.trim();
       this.passwordError = !this.password.trim();
@@ -188,6 +166,7 @@ export default {
         this.cartClass.setNew(cartData);
         cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
+        sessionStorage.removeItem(env.GLOBAL_STORAGE)
 
         this.showNotif("Register Successfuly", "info");
         this.$router.push("/");

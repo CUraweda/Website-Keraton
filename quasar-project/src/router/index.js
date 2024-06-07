@@ -4,6 +4,9 @@ import routes from './routes'
 import env from 'stores/environment'
 import cookieHandler from 'src/cookieHandler'
 import Carts from "src/stores/carts";
+import { verifyToken } from "src/auth/auth";
+import { encrypt } from "src/stores/encryption";
+
 
 /*
  * If not building with SSR mode, you can
@@ -14,8 +17,53 @@ import Carts from "src/stores/carts";
  * with the Router instance.
  */
 
-function alreadyHasToken (){
+function alreadyHasToken() {
   return cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
+}
+
+async function setDefaultAndCheck() {
+  let dataToStore = {}
+  try {
+    console.log('Im Here NIGDHJBASDJBHSDBHJCJASDBJ')
+    const storageAlreadyExist = sessionStorage.getItem(env.GLOBAL_STORAGE)
+    if (storageAlreadyExist) return
+    const cartClass = new Carts();
+    const checkToken = await verifyToken();
+    console.log(checkToken)
+    if (checkToken.isLogin) {
+      //Globalcn
+      dataToStore["isLogin"] = checkToken.isLogin
+      dataToStore["isAdmin"] = checkToken.isAdmin
+      //Cart
+      const cart = cartClass.getItem();
+      if (cart && Object.keys(cart).length > 0) {
+        const validateCartResponse = await fetch(env.BASE_URL + "/keraton/cart/validate", {
+          method: "POST", headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ carts: cart })
+        });
+        const validateCartResponseData = await validateCartResponse.json()
+        if (validateCartResponse.status != 200) {
+          cartClass.clearCart();
+        }
+        cartClass.setNew(Object.values(validateCartResponseData.data));
+      }
+    }
+    const availableWisata = await fetch(env.BASE_URL + "/keraton/wisata");
+    const wisataData = await availableWisata.json()
+    if (availableWisata.status != 200) throw Error(wisataData.message);
+    console.log(wisataData)
+    dataToStore["wisataOption"] = wisataData.data.wisataData.map(
+      (wisata) => ({
+        label: wisata.label,
+        value: wisata.to,
+      })
+    );
+    sessionStorage.setItem(env.GLOBAL_STORAGE, encrypt(JSON.stringify(dataToStore)))
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export default route(function (/* { store, ssrContext } */) {
@@ -33,10 +81,15 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
-  Router.beforeEach((to, from , next) => {
-    if(to.meta.preventToken){
+  Router.beforeEach(async (to, from, next) => {
+    await setDefaultAndCheck()
+    if (to.meta.preventToken) {
       const token = alreadyHasToken()
-      if(!token) next(from.path)
+      if (!token) next(from.path)
+        if(to.meta.onlyAdmin){
+          const { isAdmin } = await verifyToken()
+          if(!isAdmin) next(from.path)
+        }
     }
     next()
   })

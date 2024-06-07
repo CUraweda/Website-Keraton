@@ -210,17 +210,28 @@
 
 <script>
 import { ref } from "vue";
-import env from "stores/environment";
+import env from 'stores/environment'
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 import cookieHandler from "src/cookieHandler";
+import Carts from "src/stores/carts";
+import { decrypt } from "src/stores/encryption";
+const cartClass  = new Carts()
 
 export default {
   setup() {
     return {
       navbarDialog: ref(false),
-      sessionData: ref(JSON.parse(sessionStorage.getItem(env.GLOBAL_STORAGE))),
+      sessionData: ref(JSON.parse(decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)))),
     };
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async logOut() {
       try {
         const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
@@ -236,8 +247,10 @@ export default {
         sessionStorage.removeItem(env.GLOBAL_STORAGE);
         cartClass.clearCart().updateItem();
         window.location.reload();
-      } catch (err) {
-        console.log(err);
+        this.showNotif('Berhasil Log Out', 'success')
+        } catch (err) {
+        this.showNotif(err.message, 'error')
+        console.log(err)
       }
     },
   },

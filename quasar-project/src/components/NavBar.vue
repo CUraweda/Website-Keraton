@@ -347,6 +347,7 @@ export default {
       }
       localStorage.removeItem(env.USER_STORAGE_NAME);
       cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
+      sessionStorage.removeItem(env.GLOBAL_STORAGE)
       cartClass.clearCart().updateItem()
       window.location.reload();
       return (this.isLogin = false); // Set isLogin ke false saat logout
