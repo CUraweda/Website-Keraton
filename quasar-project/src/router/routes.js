@@ -31,25 +31,16 @@ const routes = [
     path: "/new/booking",
     name: "Booking",
     component: NewBookingPage,
-    meta: {
-      preventToken: true,
-    },
   },
   {
     path: "/event",
     name: "Event",
     component: EventPage,
-    meta: {
-      preventToken: true,
-    },
   },
   {
     path: "/beranda",
     name: "Beranda",
     component: BerandaPage,
-    meta: {
-      preventToken: true,
-    },
   },
   {
     path: "/admin/home",
@@ -87,15 +78,6 @@ const routes = [
     path: "/admin/event",
     name: "AdminEventPage",
     component: AdminEventPage,
-    meta: {
-      preventToken: true,
-    },
-  },
-
-  {
-    path: "/admin/news",
-    name: "AdminNewsPage",
-    component: AdminNewsPage,
     meta: {
       preventToken: true,
     },

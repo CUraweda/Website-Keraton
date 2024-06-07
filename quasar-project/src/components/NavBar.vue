@@ -99,7 +99,7 @@
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn
+        <q-btn
             no-caps
             style="background: #123b32; color: white; padding-inline: 30px"
             v-if="!isLogin"

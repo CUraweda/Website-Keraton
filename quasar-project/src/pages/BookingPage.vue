@@ -37,7 +37,7 @@
   </div>
 
   <div v-for="(item, index) in paketItems" :key="index">
-    <a class="judul1">{{ paketNameItems[index].name + `(minimal ${paketNameItems[index].minimumUnit} orang)` }}</a>
+    <a class="judul1">{{ `${paketNameItems[index].name} (minimal ${paketNameItems[index].minimumUnit} orang)` }}</a>
     <div class="container">
       <div class="ni" v-for="(data, i) in item" :key="i">
         <img class="image" :src="data.image ? getImageURL(data.image) : defaultImageUrl" alt="Gambar" />
@@ -248,20 +248,10 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
-        this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         return this.cart.updateItem();
       } catch (err) {
-        this.showNotif(err.message, "error");
         console.log(err);
       }
-    },
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
     },
   },
 };
