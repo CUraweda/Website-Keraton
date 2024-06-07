@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <navbar />
+      <navbar :isAdmin="false" />
     </nav>
     <div class="container-title-top">
       <img

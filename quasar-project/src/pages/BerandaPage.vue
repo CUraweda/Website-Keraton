@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="false" />
 
     <section
       :style="{

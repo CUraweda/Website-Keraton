@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <navbar />
+    <navbar :isAdmin="false" />
     <div class="cover">
       <img src="../assets/images/SilsilahSejarah.png" />
       <p class="top-title">Warisan Leluhur Cirebon</p>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar />
+    <navbar :isAdmin="false" />
 
     <div class="background-header">
       <div class="header">
