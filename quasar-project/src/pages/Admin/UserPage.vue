@@ -96,12 +96,11 @@
             </template>
           </q-input>
 
-          <q-input
+          <q-select
             filled
             v-model="userData.role"
+            :options="userRoleOptions"
             label="Role"
-            color="black"
-            bg-color="gray"
           />
 
           <q-btn no-caps :label="labelButton" @click="updateCreate" />

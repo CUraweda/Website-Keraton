@@ -13,19 +13,12 @@
     </div>
 
     <div class="style-select">
-      <!-- <q-select outlined v-model="pelaksanaan" :options="pelaksanaanOptions" label="Pelaksanaan" style="width: 10rem">
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section avatar>
-              <q-checkbox v-model="val" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ scope.opt.label }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select> -->
-      <q-btn outlined label="Pelaksanaan" no-caps>
+      <q-btn
+        outlined
+        label="Pelaksanaan"
+        no-caps
+        icon-right="keyboard_arrow_down"
+      >
         <q-menu>
           <q-list>
             <q-item clickable>
@@ -42,7 +35,12 @@
         </q-menu>
       </q-btn>
 
-      <q-btn outlined label="Jenis Event" no-caps>
+      <q-btn
+        outlined
+        label="Jenis Event"
+        no-caps
+        icon-right="keyboard_arrow_down"
+      >
         <q-menu>
           <q-list>
             <q-item clickable>
