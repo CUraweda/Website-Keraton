@@ -196,7 +196,7 @@
                 height: 100%;
               "
             >
-              <div class="text-h5 text-bold text-center text-white">
+              <div class="text-h2 text-bold text-center text-white">
                 {{ slide.title }}
               </div>
               <div class="text-subtitle1 text-center text-white">
