@@ -1,7 +1,6 @@
 <template>
   <div>
     <navbar />
-
     <div class="background-header">
       <div class="header">
         <q-breadcrumbs active-color="black">
@@ -14,13 +13,7 @@
     </div>
 
     <div class="style-select">
-      <q-select
-        outlined
-        v-model="pelaksanaan"
-        :options="pelaksanaanOptions"
-        label="Pelaksanaan"
-        style="width: 10rem"
-      >
+      <!-- <q-select outlined v-model="pelaksanaan" :options="pelaksanaanOptions" label="Pelaksanaan" style="width: 10rem">
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section avatar>
@@ -31,26 +24,34 @@
             </q-item-section>
           </q-item>
         </template>
-      </q-select>
+      </q-select> -->
 
-      <q-select
-        outlined
+      <q-checkbox
+        v-for="(iterat, i) in pelaksanaanOptions"
+        :key="i"
+        v-model="jenisPelaksanaan"
+        :val="iterat.value"
+        :label="iterat.label"
+      />
+      <q-checkbox
+        v-for="(type, i) in jenisEventOptions"
+        :key="i"
         v-model="jenisEvent"
-        :options="jenisEventOptions"
-        label="Jenis Event"
-        style="width: 10rem"
-      >
+        :val="type.value"
+        :label="type.label"
+      />
+
+      <!-- <q-select outlined v-model="jenisEvent" :options="jenisEventOptions" label="Jenis Event" style="width: 10rem">
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section avatar>
-              <q-checkbox v-model="val" />
             </q-item-section>
             <q-item-section>
               <q-item-label>{{ scope.opt.label }}</q-item-label>
             </q-item-section>
           </q-item>
         </template>
-      </q-select>
+      </q-select> -->
     </div>
 
     <div class="flex justify-center items-center q-gutter-md">
@@ -91,14 +92,12 @@
             <div class="text-subtitle1 text-weight-medium">
               {{ item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }}
             </div>
-
             <q-space />
-
             <q-btn
               dense
+              @click="addToCart(item)"
               no-caps
               style="background: #fae084"
-              @click="addToCart(item)"
               ><span class="text-bold">Tambah</span
               ><span
                 ><q-img
@@ -126,13 +125,10 @@ export default {
   components: { navbar },
   data() {
     return {
-      jenisEvent: ref(),
-      pelaksanaan: ref(),
+      jenisEvent: ref([]),
+      jenisPelaksanaan: ref([]),
       jenisEventOptions: [
-        {
-          label: "Gratis",
-          value: 1,
-        },
+        { label: "Gratis", value: 1 },
         { label: "Bayar", value: 2 },
       ],
       pelaksanaanOptions: [
@@ -150,6 +146,18 @@ export default {
   mounted() {
     this.fetchData();
   },
+  watch: {
+    jenisPelaksanaan: {
+      handler() {
+        this.fetchData();
+      },
+    },
+    jenisEvent: {
+      handler() {
+        this.fetchData();
+      },
+    },
+  },
   methods: {
     showNotif(msg, status) {
       new SimpleNotify({
@@ -161,21 +169,16 @@ export default {
       this.cart.updateToDB();
     },
     async fetchData() {
-      let freeOptions, iterationOptions;
       try {
-        if (this.selectedOptions)
-          iterationOptions = Object.values(this.selectedOptions);
-        if (this.selectedOptions2)
-          freeOptions = Object.values(this.selectedOptions2);
         const eventResponse = await this.$api.post("event/page", {
-          ...(iterationOptions &&
-            iterationOptions.length != 0 && {
-              iterat: Object.values(this.selectedOptions),
+          ...(this.jenisPelaksanaan &&
+            this.jenisPelaksanaan.length > 0 && {
+              iterat: this.jenisPelaksanaan,
             }),
-          ...(freeOptions &&
-            freeOptions.length < 2 &&
-            freeOptions.length != 0 && {
-              free: freeOptions[0] != 0 ? true : false,
+          ...(this.jenisEvent &&
+            this.jenisEvent.length < 2 &&
+            this.jenisEvent.length > 0 && {
+              free: this.jenisEvent[0] != 0 ? true : false,
             }),
         });
         const iterationResponse = await this.$api.get("iteration");
@@ -243,6 +246,7 @@ export default {
   gap: 0 1rem;
   margin: 1rem 2rem;
 }
+
 .background-header {
   background: linear-gradient(
     90deg,
@@ -253,6 +257,7 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .header {
   margin: 0 7rem;
 }

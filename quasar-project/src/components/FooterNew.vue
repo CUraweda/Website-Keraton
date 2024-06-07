@@ -20,26 +20,26 @@
         <div class="list-head">
           <div class="q-gutter-y-sm list">
             <div class="text-h5 text-bold">Quick Links</div>
-            <div>Beranda</div>
-            <div>Sejarah</div>
-            <div>Booking</div>
-            <div>Objek Wisata</div>
+            <a href="/">Beranda</a>
+            <a href="/sejarah">Sejarah</a>
+            <a href="/booking">Booking</a>
+            <a href="/wisata/keraton">Objek Wisata</a>
           </div>
 
           <div class="q-gutter-y-sm list">
             <div class="text-h5 text-bold">Socials</div>
-            <div>Whatsapp</div>
-            <div>Facebook</div>
-            <div>Instagram</div>
-            <div>Threads</div>
+            <a href="">Whatsapp</a>
+            <a href="">Facebook</a>
+            <a href="">Instagram</a>
+            <a href="">Threads</a>
           </div>
 
-          <div class="q-gutter-y-sm list">
+          <!-- <div class="q-gutter-y-sm list">
             <div class="text-h5 text-bold">Company</div>
             <div>About Us</div>
             <div>Partners</div>
             <div>Contact</div>
-          </div>
+          </div> -->
         </div>
 
         <div class="email">
@@ -106,8 +106,15 @@ export default defineComponent({
     };
   },
   methods: {
-    subscribeToKeraton() {
-      console.log("uhuy");
+    async subscribeToKeraton() {
+      try {
+        const response = await this.$api.post("subscribe", {
+          email: this.email,
+        });
+        if (response.status != 200) throw Error(response.data.message);
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 });
