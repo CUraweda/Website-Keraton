@@ -175,8 +175,8 @@
       </q-btn>
 
       <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">
-        <q-avatar size="26px">
-          <img src="../assets/images/arah_kanan.png" />
+        <q-avatar size="2.2rem">
+          <img src="../assets/svg/user.svg" />
         </q-avatar>
         <q-menu
           fit
