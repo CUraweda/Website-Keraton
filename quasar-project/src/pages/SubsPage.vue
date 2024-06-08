@@ -1,29 +1,31 @@
 <template>
   <div>
     <navbar :isAdmin="true" />
-    <q-table
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      selection="multiple"
-      v-model:selected="selected"
-      class="q-mt-md"
-    >
-      <template v-slot:body-cell-Action>
-        <div class="flex items-center justify-center">
-          <q-btn
-            icon="edit"
-            flat
-            color="green"
-            no-caps
-            @click="handleDialog(props.row)"
-            style="background-color: rgba(0, 255, 0, 0.102)"
-          ></q-btn>
-        </div>
-      </template>
-    </q-table>
+    <div>
+      <q-table
+        :rows="rows"
+        :columns="columns"
+        row-key="name"
+        selection="multiple"
+        v-model:selected="selected"
+        class="q-mt-md"
+      >
+        <template v-slot:body-cell-Action>
+          <div class="flex items-center justify-center">
+            <q-btn
+              icon="edit"
+              flat
+              color="green"
+              no-caps
+              @click="handleDialog(props.row)"
+              style="background-color: rgba(0, 255, 0, 0.102)"
+            ></q-btn>
+          </div>
+        </template>
+      </q-table>
 
-    <div>testdsajdsalkjdlskaj</div>
+      <div></div>
+    </div>
 
     <!-- <q-table
       bordered
@@ -62,7 +64,7 @@
 import { ref } from "vue";
 import env from "stores/environment";
 import cookieHandler from "src/cookieHandler";
-import navbar from "../../components/NavbarNew.vue";
+import navbar from "../components/NavbarNew.vue";
 
 export default {
   components: { navbar },

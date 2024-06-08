@@ -31,7 +31,8 @@
         'background-size': 'cover',
         display: 'flex',
         'justify-content': 'center',
-        'text-align': 'center',e
+        'text-align': 'center',
+        e,
       }"
     >
       <div
@@ -289,7 +290,7 @@
           <q-expansion-item>
             <template v-slot:header>
               <q-item-section avatar>
-                <div style="font-size: 1rem">{{ faq.nomor +"." }}</div>
+                <div style="font-size: 1rem">{{ faq.nomor + "." }}</div>
               </q-item-section>
 
               <q-item-section class="question-faqs">

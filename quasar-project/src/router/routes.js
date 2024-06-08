@@ -20,8 +20,18 @@ import EventPage from "../pages/EventPage.vue";
 import BookingPage from "../pages/NewBookingPage.vue";
 import AdminUserPage from "pages/Admin/UserPage.vue";
 import AdminSubsPage from "pages/admin/SubscribePage.vue";
+import SubsPage from "../pages/SubsPage.vue";
 
 const routes = [
+  {
+    path: "/admin/langganan",
+    name: "SubsPage",
+    component: SubsPage,
+    meta: {
+      preventToken: true,
+      onlyAdmin: true,
+    },
+  },
   {
     path: "/admin/subs",
     name: "AdminSubsPage",

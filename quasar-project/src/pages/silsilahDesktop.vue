@@ -1,40 +1,269 @@
 <template>
-  <nav>
+  <div>
     <navbar :isAdmin="false" />
-    <div class="cover">
-      <img src="../assets/images/SilsilahSejarah.png" />
-      <p class="top-title">Warisan Leluhur Cirebon</p>
-      <p class="title">Mengenal Lebih Dekat dengan Silsilah Kesultanan</p>
-    </div>
-  </nav>
 
-  <div class="seluruh">
-    <div class="line-container">
-      <div class="line"></div>
-    </div>
-    <div v-for="sultan in sultans" :key="sultan.name" class="row">
-      <div class="side">
-        <div class="line-content-container">
-          <div class="content">
-            <h3 class="sultan-title">{{ sultan.name }}</h3>
-            <p class="description">{{ sultan.description }}</p>
-            <div class="image-container">
-              <img class="circle" src="../assets/images/buled.jpeg" />
-              <span class="gold-text">{{ sultan.year }}</span>
-            </div>
-            <p class="details">{{ sultan.details }}</p>
-            <div>
-              <img
-                v-for="(image, index) in sultan.images"
-                :key="index"
-                :src="image"
-                class="additional-image"
-              />
-            </div>
-          </div>
-        </div>
+    <section class="background-silsilah">
+      <div class="text-h5 text-center" style="color: #daa520">
+        Warisan Leluhur Cirebon
       </div>
-    </div>
+      <div class="text-h2 text-center text-white">
+        Mengenal Lebih Dekat dengan Silsilah Kesultanan
+      </div>
+    </section>
+
+    <q-timeline color="orange" style="width: 70rem" class="q-mx-md q-mt-md">
+      <q-timeline-entry heading> Sultan Sepuh I </q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh I, yang bernama asli Pangeran Raja Adipati Syamsuddin
+          Martawijaya, dinobatkan sebagai sultan pada tahun 1662 M."
+        subtitle="1662 M"
+      >
+        <div>
+          Beliau adalah putra dari Pangeran Aria Wirasaba, putra dari Pangeran
+          Cakrabuana. Sultan Sepuh I merupakan sultan pertama yang memerintah
+          Kesultanan Kasepuhan. Beliau memerintah selama 35 tahun dan wafat pada
+          tahun 1697.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh II </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh II memerintah selama 23 tahun dan wafat pada tahun 1720."
+        subtitle="1697 M"
+      >
+        <div>
+          Sultan Sepuh II, yang bernama asli Pangeran Raja Adipati Muhammad
+          Arifin, dinobatkan sebagai sultan pada tahun 1697. Beliau adalah putra
+          dari Sultan Sepuh I.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh III </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh III memerintah selama 30 tahun dan wafat pada tahun 1750."
+        subtitle="1720 M"
+      >
+        <div>
+          Sultan Sepuh III, yang bernama asli Pangeran Raja Adipati Abdul Jalil,
+          dinobatkan sebagai sultan pada tahun 1720. Beliau adalah putra dari
+          Sultan Sepuh II.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh IV </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh IV memerintah selama 30 tahun dan wafat pada tahun 1780."
+        subtitle="1750 M"
+      >
+        <div>
+          Sultan Sepuh IV, yang bernama asli Pangeran Raja Adipati Abdul Gani,
+          dinobatkan sebagai sultan pada tahun 1750. Beliau adalah putra dari
+          Sultan Sepuh III.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh V </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh V memerintah selama 25 tahun dan wafat pada tahun 1805."
+        subtitle="1778 M"
+      >
+        <div>
+          Sultan Sepuh V, yang bernama asli Pangeran Raja Adipati Suryanegara,
+          dinobatkan sebagai sultan pada tahun 1780. Beliau adalah putra dari
+          Sultan Sepuh IV.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh VI </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh VI memerintah selama 20 tahun dan wafat pada tahun 1825."
+        subtitle="1784 M"
+      >
+        <div>
+          Sultan Sepuh VI, yang bernama asli Pangeran Raja Adipati Arifudin,
+          dinobatkan sebagai sultan pada tahun 1805. Beliau adalah putra dari
+          Sultan Sepuh V.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh VII </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh VII memerintah selama 15 tahun dan wafat pada tahun 1840."
+        subtitle="1790 M"
+      >
+        <div>
+          Sultan Sepuh VII, yang bernama asli Pangeran Raja Adipati Syafiuddin,
+          dinobatkan sebagai sultan pada tahun 1825. Beliau adalah putra dari
+          Sultan Sepuh VI.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh VIII </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh VIII memerintah selama 20 tahun dan wafat pada tahun 1860."
+        subtitle="1816 M"
+      >
+        <div>
+          Sultan Sepuh VIII, yang bernama asli Pangeran Raja Adipati Zainuddin,
+          dinobatkan sebagai sultan pada tahun 1840. Beliau adalah putra dari
+          Sultan Sepuh VII.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh IX </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh IX memerintah selama 25 tahun dan wafat pada tahun 1885."
+        subtitle="1845 M"
+      >
+        <div>
+          Sultan Sepuh IX, yang bernama asli Pangeran Raja Adipati Abdul Fattah,
+          dinobatkan sebagai sultan pada tahun 1860. Beliau adalah putra dari
+          Sultan Sepuh VIII.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh IX </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh IX memerintah selama 25 tahun dan wafat pada tahun 1885."
+        subtitle="1845 M"
+      >
+        <div>
+          Sultan Sepuh IX, yang bernama asli Pangeran Raja Adipati Abdul Fattah,
+          dinobatkan sebagai sultan pada tahun 1860. Beliau adalah putra dari
+          Sultan Sepuh VIII.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh X </q-timeline-entry>
+      <q-timeline-entry
+        title="Sultan Sepuh X memerintah selama 30 tahun dan wafat pada tahun 1915."
+        subtitle="1890 M"
+      >
+        <div>
+          Sultan Sepuh X, yang bernama asli Pangeran Raja Adipati Sulaiman,
+          dinobatkan sebagai sultan pada tahun 1885. Beliau adalah putra dari
+          Sultan Sepuh IX.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh XI </q-timeline-entry>
+      <q-timeline-entry heading>
+        <q-img
+          src="../assets/images/sultan sepuh xi.png"
+          style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+      /></q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh XI memerintah selama 25 tahun dan wafat pada tahun 1940."
+        subtitle="1899 M"
+      >
+        <div>
+          Sultan Sepuh XI, yang bernama asli Pangeran Raja Adipati Abdul Karim,
+          dinobatkan sebagai sultan pada tahun 1915. Beliau adalah putra dari
+          Sultan Sepuh X.
+        </div>
+      </q-timeline-entry>
+      <q-timeline-entry heading> Sultan Sepuh XII </q-timeline-entry>
+      <q-timeline-entry heading>
+        <q-img
+          src="../assets/images/sultan sepuh xii.jpg"
+          style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+      /></q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh XII memerintah selama 30 tahun dan wafat pada tahun 1970."
+        subtitle="1942 M"
+      >
+        <div>
+          Sultan Sepuh XII, yang bernama asli Pangeran Raja Adipati Muhammad
+          Djalaluddin, dinobatkan sebagai sultan pada tahun 1940. Beliau adalah
+          putra dari Sultan Sepuh XI.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh XIII </q-timeline-entry>
+      <q-timeline-entry heading>
+        <q-img
+          src="../assets/images/sultan sepuh xiii.jpg"
+          style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+      /></q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh XIII memerintah selama 25 tahun dan wafat pada tahun 1995."
+        subtitle="1969 M"
+      >
+        <div>
+          Sultan Sepuh XIII, yang bernama asli Pangeran Raja Adipati Abdul
+          Rahman, dinobatkan sebagai sultan pada tahun 1970. Beliau adalah putra
+          dari Sultan Sepuh XII.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh XIV </q-timeline-entry>
+      <q-timeline-entry heading>
+        <div class="flex items-center q-gutter-x-md">
+          <q-img
+            src="../assets/images/sultan sepuh xiv.jpg"
+            style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+          />
+          <q-img
+            src="../assets/images/sultan sepuh xiv 2.jpg"
+            style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+          />
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh XIV memerintah selama 20 tahun dan wafat pada tahun 2015."
+        subtitle="2010 M"
+      >
+        <div>
+          Sultan Sepuh XIV, yang bernama asli Pangeran Raja Adipati Muhammad
+          Abdullah, dinobatkan sebagai sultan pada tahun 1995. Beliau adalah
+          putra dari Sultan Sepuh XIII.
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry heading> Sultan Sepuh XV </q-timeline-entry>
+      <q-timeline-entry heading>
+        <div class="flex items-center q-gutter-x-md">
+          <q-img
+            src="../assets/images/sultan sepuh xv.jpg"
+            style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+          />
+          <q-img
+            src="../assets/images/sultan sepuh xv 2.jpg"
+            style="width: 20rem; height: 15rem; border-radius: 0.2rem"
+          />
+        </div>
+      </q-timeline-entry>
+
+      <q-timeline-entry
+        title="Sultan Sepuh XV memerintah dari tahun 2015 hingga sekarang."
+        subtitle="2020 M"
+      >
+        <div>
+          Sultan Sepuh XV, yang bernama asli Pangeran Raja Adipati Luqman
+          Zulkaedin, dinobatkan sebagai sultan pada tahun 2015. Beliau adalah
+          putra dari Sultan Sepuh XIV.
+        </div>
+      </q-timeline-entry>
+    </q-timeline>
+
+    <!-- <div v-for="(item, index) in sultans" :key="index">
+      <q-timeline color="secondary">
+        <q-timeline-entry
+          :title="item.name"
+          avatar="https://cdn.quasar.dev/img/avatar2.jpg"
+        >
+          <div>
+            {{ item.description }}
+          </div>
+          <div>{{ item.details }}</div>
+        </q-timeline-entry>
+      </q-timeline>
+    </div> -->
   </div>
 </template>
 
@@ -200,139 +429,19 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 
-.footer {
-  width: 100%;
-  height: 100%;
+* {
+  font-family: Raleway;
 }
 
-.top-title {
-  position: absolute;
-  margin-top: -30vw;
-  margin-left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fae084;
-  font-size: 2vw;
-  white-space: nowrap;
-  font-family: "Raleway";
-}
-
-.title {
-  position: absolute;
-  margin-top: -24vw;
-  margin-left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff6e0;
-  font-size: 3.5vw;
-  font-weight: 400;
-  width: 45vw;
-  text-align: center;
-  font-family: "Raleway";
-}
-
-.cover img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.seluruh {
+.background-silsilah {
+  background: url("../assets/images/SilsilahSejarah.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  position: relative;
-}
-
-.line-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin-left: -81.8vw;
-  transform: translateX(-50%);
-  width: 0.3%;
-  height: 99%;
-  background-color: #daa520;
-  z-index: -1;
-  margin-top: 6.5vh;
-}
-
-.line-content-container {
-  display: flex;
-  position: relative;
-}
-
-.row {
-  display: flex;
   justify-content: center;
-}
-
-.side {
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-left: 6.6vw; /* Adjust to position the content on the right side of the line */
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  position: relative;
-  font-family: "Raleway";
-}
-
-.sultan-title {
-  font-size: 3.1vw;
-  font-weight: bold;
-  margin-bottom: 1.5%;
-}
-
-.description {
-  color: #000;
-  font-family: "Inter";
-  font-size: 1vw;
-  line-height: 3vh;
-  text-align: left;
-}
-
-.image-container {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-  position: relative;
-}
-
-.circle {
-  width: 2.5vw;
-  height: auto;
-  position: absolute;
-  margin-left: -66%; /* Adjust to place the circle on top of the line */
-  z-index: 1;
-  background-color: white; /* White background */
-  border: 0.7vw solid white; /* Thick white border */
-  border-radius: none; /* Makes it round */
-}
-
-.gold-text {
-  color: #daa520;
-  font-size: 1.5vw;
-  font-weight: bold;
-  /* Adjust to position the text next to the circle */
-}
-
-.details {
-  margin-top: 1.5vh;
-  font-family: "Inter";
-  font-size: 1.1vw;
-  line-height: 1.5vw;
-  color: #000;
-  text-align: left;
-}
-
-.additional-image {
-  width: 32vw;
-  margin-left: -4vw;
-  border: 2vw solid white;
-  height: auto;
 }
 </style>
