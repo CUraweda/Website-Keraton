@@ -141,7 +141,7 @@
         no-caps
         label="Langganan"
         :color="isTransparent ? 'white' : 'black'"
-        to="/admin/home"
+        to="/admin/subs"
       />
 
       <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">

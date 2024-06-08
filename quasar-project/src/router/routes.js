@@ -19,15 +19,25 @@ import QrCodePage from "../pages/QrCodePage.vue";
 import EventPage from "../pages/EventPage.vue";
 import BookingPage from "../pages/NewBookingPage.vue";
 import AdminUserPage from "pages/Admin/UserPage.vue";
+import AdminSubsPage from "pages/admin/SubscribePage.vue";
 
 const routes = [
+  {
+    path: "/admin/subs",
+    name: "AdminSubsPage",
+    component: AdminSubsPage,
+    meta: {
+      preventToken: true,
+      onlyAdmin: true,
+    },
+  },
   {
     path: "/admin/home",
     name: "AdminHomePage",
     component: AdminHomePage,
     meta: {
       preventToken: true,
-      onlyAdmin: true
+      onlyAdmin: true,
     },
   },
   {
@@ -36,7 +46,7 @@ const routes = [
     component: AdminUserPage,
     meta: {
       preventToken: true,
-      onlyAdmin: true
+      onlyAdmin: true,
     },
   },
   {
@@ -45,7 +55,7 @@ const routes = [
     component: AdminAddPage,
     meta: {
       preventToken: true,
-      onlyAdmin: true
+      onlyAdmin: true,
     },
   },
   {
@@ -54,7 +64,7 @@ const routes = [
     component: AdminNewsPage,
     meta: {
       preventToken: true,
-      onlyAdmin: true
+      onlyAdmin: true,
     },
   },
   {
@@ -63,7 +73,7 @@ const routes = [
     component: AdminEventPage,
     meta: {
       preventToken: true,
-      onlyAdmin: true
+      onlyAdmin: true,
     },
   },
 
