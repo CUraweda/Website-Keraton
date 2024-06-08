@@ -8,7 +8,7 @@ import CheckoutKeraton from "../pages/CheckoutKeraton.vue";
 import PilihanPaket from "../pages/PilihanPaket.vue";
 import BerandaPage from "../pages/BerandaPage.vue";
 import AgungDalem from "../pages/AgungDalem.vue";
-import sejarahSilsilah from "../pages/sejarahSilsilah.vue";
+import SejarahSilsilah from "../pages/SejarahSilsilah.vue";
 import AdminHomePage from "../pages/Admin/HomePage.vue";
 import AdminAddPage from "../pages/Admin/AddPage.vue";
 import AdminEventPage from "../pages/Admin/EventPage.vue";
@@ -165,7 +165,7 @@ const routes = [
   {
     path: "/sejarah/silsilah",
     name: "sejarahsilsilah",
-    component: sejarahSilsilah,
+    component: SejarahSilsilah,
   },
   {
     path: "/user/carts",
