@@ -13,6 +13,7 @@ import navbar from "../components/NavbarNew.vue";
               <navbar />
             </nav>
             <q-page-sticky
+              style="z-index: 100"
               v-if="cartData.length > 0"
               position="bottom-right"
               :offset="[18, 18]"
@@ -32,7 +33,7 @@ import navbar from "../components/NavbarNew.vue";
               </q-btn>
             </q-page-sticky>
 
-            <div class="text-h1 text-center">Keranjang</div>
+            <div class="text-h3 text-center">Keranjang</div>
 
             <div class="q-mt-xl">
               <div

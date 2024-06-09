@@ -23,8 +23,8 @@
     <div class="ni" v-for="(item, index) in tiketItems" :key="index">
       <img class="image" :src="item.image ? getImageURL(item.image) : defaultImageUrl" alt="Gambar" />
       <div class="buttonaji"></div>
-      <h2 class="judul-sedang">{{ item.titleMedium }}</h2>
-      <h1 class="judul-besar">{{ item.titleBig }}</h1>
+      <h2 class="judul-sedang">{{ item.titleBig }}</h2>
+      <h1 class="judul-besar">{{ item.titleMedium }}</h1>
       <div class="tengah">
         <h3 class="judul-kecil">
           {{ `Rp. ${formatRupiah(item.price)} / ${item.unit}` }}
@@ -42,8 +42,8 @@
       <div class="ni" v-for="(data, i) in item" :key="i">
         <img class="image" :src="data.image ? getImageURL(data.image) : defaultImageUrl" alt="Gambar" />
         <div class="buttonaji"></div>
-        <h2 class="judul-sedang">{{ data.titleMedium }}</h2>
-        <h1 class="judul-besar">{{ data.titleBig }}</h1>
+        <h2 class="judul-sedang">{{ data.titleBig }}</h2>
+        <h1 class="judul-besar">{{ data.titleMedium }}</h1>
         <div class="tengah">
           <h3 class="judul-kecil">{{ "Rp. " + formatRupiah(data.price) + "/" + data.unit }}</h3>
           <button class="tambah" @click="addToCart(data)">
