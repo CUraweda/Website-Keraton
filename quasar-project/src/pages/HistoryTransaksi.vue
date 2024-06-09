@@ -331,6 +331,7 @@ const closeMenungguPembayaran = () => {
           <q-card-section class="row items-center q-pb-none">
             <div class="text-h6">Detail Transaksi</div>
             <q-space />
+            <q-btn icon="qr_code_2" flat round dense @click="dialogQr" />
             <q-btn icon="local_activity" flat round dense @click="printPDF" />
             <q-btn icon="mail" flat round dense @click="sendEmail" />
             <q-btn icon="close" flat round dense v-close-popup />
@@ -361,7 +362,10 @@ const closeMenungguPembayaran = () => {
                 v-for="(detailData, i) in detailData.details"
                 :key="i"
               >
-                <q-img :src="detailData.image" style="width: 10rem" />
+                <q-img
+                  :src="detailData.image"
+                  style="width: 10rem; height: 10rem"
+                />
                 <div>
                   <div>{{ detailData.name }}</div>
                   <div>{{ detailData.price }}</div>

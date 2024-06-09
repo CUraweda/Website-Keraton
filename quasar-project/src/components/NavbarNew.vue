@@ -267,10 +267,6 @@
             <q-item-section>Admin Page</q-item-section>
           </q-item>
           <q-item clickable class="text-negative" @click="logOut">
-            <q-item-section avatar>
-              <q-icon name="logout" />
-            </q-item-section>
-
             <q-item-section>
               <q-item-label class="rounded-borders">Logout</q-item-label>
             </q-item-section>
