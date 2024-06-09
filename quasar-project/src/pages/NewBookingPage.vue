@@ -16,59 +16,40 @@
     <div class="text-h5 text-bold q-mx-md q-my-md">
       Tiket Masuk Keraton & Bundling
     </div>
-    <div
-      class="flex q-gutter-md q-mx-md"
-      style="
+    <div class="flex q-gutter-md q-mx-md" style="
         overflow-x: auto;
         flex-wrap: nowrap;
         -ms-overflow-style: none;
         scrollbar-width: none;
-      "
-    >
+      ">
       <div v-for="(item, index) in tiketItems" :key="index">
         <q-card class="my-card" flat bordered>
           <q-img :src="item.image || defaultImageUrl" class="image-card" />
 
           <q-card-section>
-            <div
-              class="text-h6 q-mt-sm q-mb-xs"
-              style="
+            <div class="text-h6 q-mt-sm q-mb-xs" style="
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-              "
-            >
+              ">
               {{ item.titleBig }}
             </div>
-            <div
-              class="text-caption text-grey"
-              style="
+            <div class="text-caption text-grey" style="
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-              "
-            >
+              ">
               {{ item.titleMedium }}
             </div>
           </q-card-section>
 
           <q-card-actions>
             <div class="text-subtitle1 text-weight-medium">
-              {{ item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }}
-            </div>
-            <q-space />
-            <q-btn
-              @click="addToCart(item)"
-              dense
-              no-caps
-              style="background: #fae084"
-              ><span class="text-bold">Tambah</span
-              ><span
-                ><q-img
-                  src="../assets/Frame.svg"
-                  style="width: 1rem; height: 1rem"
-                  class="q-mx-xs" /></span
-            ></q-btn>
+              {{ item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }} </div>
+                <q-space />
+                <q-btn @click="addToCart(item)" dense no-caps style="background: #fae084"><span
+                    class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
+                      style="width: 1rem; height: 1rem" class="q-mx-xs" /></span></q-btn>
           </q-card-actions>
         </q-card>
       </div>
@@ -77,42 +58,33 @@
     <div v-for="(item, index) in paketItems" :key="index">
       <div class="text-h5 text-bold q-mx-md q-my-md">
         {{
-          paketNameItems[index].name +
-          ` (minimal ${paketNameItems[index].minimumUnit} orang)`
-        }}
+      paketNameItems[index].name +
+      ` (minimal ${paketNameItems[index].minimumUnit} orang)`
+    }}
       </div>
-      <div
-        class="flex q-gutter-md q-mx-md"
-        style="
+      <div class="flex q-gutter-md q-mx-md" style="
           overflow-x: auto;
           flex-wrap: nowrap;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        "
-      >
+        ">
         <div v-for="(data, index) in item" :key="index">
           <q-card class="my-card" flat bordered>
             <q-img :src="data.image" class="image-card" />
 
             <q-card-section>
-              <div
-                class="text-h6 q-mt-sm q-mb-xs"
-                style="
+              <div class="text-h6 q-mt-sm q-mb-xs" style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                "
-              >
+                ">
                 {{ data.titleBig }}
               </div>
-              <div
-                class="text-caption text-grey"
-                style="
+              <div class="text-caption text-grey" style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                "
-              >
+                ">
                 {{ data.titleMedium }}
               </div>
             </q-card-section>
@@ -120,23 +92,11 @@
             <q-card-actions>
               <div class="text-subtitle1 text-weight-medium">
                 {{
-                  data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price)
-                }}
-              </div>
-              <q-space />
-              <q-btn
-                @click="addToCart(data)"
-                dense
-                no-caps
-                style="background: #fae084"
-                class="text-bold"
-                ><span class="text-bold">Tambah</span
-                ><span
-                  ><q-img
-                    src="../assets/Frame.svg"
-                    style="width: 1rem; height: 1rem"
-                    class="q-mx-xs" /></span
-              ></q-btn>
+      data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price) }} </div>
+                  <q-space />
+                  <q-btn @click="addToCart(data)" dense no-caps style="background: #fae084" class="text-bold"><span
+                      class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
+                        style="width: 1rem; height: 1rem" class="q-mx-xs" /></span></q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -196,8 +156,8 @@ export default {
                 tikets.push({
                   id: order.id,
                   image: order.image,
-                  titleMedium: order.name,
-                  titleBig: order.desc,
+                  titleMedium: order.desc,
+                  titleBig: order.name,
                   subType: subType.orderTypeId,
                   quantity: 0,
                   price: order.price,
@@ -206,9 +166,8 @@ export default {
               }
               break;
             case 2: //Paket Type
-              const subTypeName = `${subType.name}|${
-                subType.minimumUnits ? subType.minimumUnits : undefined
-              }`;
+              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined
+                }`;
               if (!pakets[subTypeName]) {
                 pakets[subTypeName] = [];
               }
@@ -217,8 +176,8 @@ export default {
                 pakets[subTypeName].push({
                   id: order.id,
                   image: order.image,
-                  titleMedium: order.name,
-                  titleBig: order.desc,
+                  titleMedium: order.desc,
+                  titleBig: order.name,
                   minimumUnit: subType.minimumUnits,
                   quantity: 0,
                   price: order.price,
@@ -246,18 +205,6 @@ export default {
         return this.$api.get(`uploads/${image}`);
       }
     },
-    countPrice(normalPrice, secondPrice, thirdPrice) {
-      let returnedPrice = `Rp. ${this.formatRupiah(normalPrice)}`;
-      const prices = [normalPrice, secondPrice, thirdPrice]
-        .filter((price) => price !== null)
-        .sort((a, b) => a - b);
-      if (prices.length > 1) {
-        returnedPrice = `Rp. ${this.formatRupiah(
-          prices[0]
-        )} - ${this.formatRupiah(prices[prices.length - 1])}`;
-      }
-      return returnedPrice;
-    },
     formatRupiah(price) {
       return (price / 1000).toLocaleString("en-US", {
         minimumFractionDigits: 3,
@@ -269,7 +216,7 @@ export default {
         if (!tokenExist) throw Error("Anda Masih Belum Log In!");
         const storedData = {
           id: rowData.id,
-          name: rowData.titleMedium,
+          name: rowData.titleBig,
           image: rowData.image,
           quantity: 1,
           minimumUnit: rowData.minimumUnit,
@@ -280,7 +227,7 @@ export default {
         if (!cartData) throw Error("Error Occured");
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
-        } catch (err) {
+      } catch (err) {
         this.showNotif(err.message, "error");
         console.log(err);
       }
@@ -298,11 +245,9 @@ export default {
 }
 
 .background-header {
-  background: linear-gradient(
-    90deg,
-    rgba(218, 165, 32, 0.5) 0%,
-    rgba(18, 59, 50, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(218, 165, 32, 0.5) 0%,
+      rgba(18, 59, 50, 0.5) 100%);
   height: 5.5rem;
   display: flex;
   align-items: center;

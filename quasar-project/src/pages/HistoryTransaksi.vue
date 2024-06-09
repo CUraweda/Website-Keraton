@@ -60,17 +60,15 @@ const closeMenungguPembayaran = () => {
             </div>
             <div class="status">
               <select
-                name="Status"
-                placeholder="status"
-                value="Status"
                 v-model="search.stat"
                 @change="statusSelected = true"
                 class="custom-select"
               >
-                <option value="sudahDigunakan">Sudah digunakan</option>
-                <option value="dapatDigunakan">Dapat digunakan</option>
-                <option value="expired">Expired</option>
-                <option value="menungguPembayaran">Menunggu pembayaran</option>
+                <option value="ALL">Semua Status</option>
+                <option value="SUDAH_DIGUNAKAN">Sudah digunakan</option>
+                <option value="DAPAT_DIGUNAKAN">Dapat digunakan</option>
+                <option value="EXPIRED">Expired</option>
+                <option value="MENUNGGU_PEMBAYARAN">Menunggu pembayaran</option>
               </select>
             </div>
           </div>
@@ -96,7 +94,7 @@ const closeMenungguPembayaran = () => {
             <div class="tiket__content">
               <img src="../assets/images/img-1.jpg" alt="" />
               <div class="tiket__content-details">
-                <h6>Tiket Masuk Keraton Kasepuhan Cirebon+Museum+...</h6>
+                <h6>{{ transaction.detailDatas.titles }}</h6>
                 <div class="flex items-center q-gutter-xs">
                   <q-badge
                     rounded
@@ -271,7 +269,7 @@ const closeMenungguPembayaran = () => {
                 <q-expansion-item
                   group="somegroup"
                   icon="perm_identity"
-                  label="Second"
+                  label="BCA"
                   header-class="text-teal"
                 >
                   <q-card>
@@ -289,7 +287,7 @@ const closeMenungguPembayaran = () => {
                 <q-expansion-item
                   group="somegroup"
                   icon="shopping_cart"
-                  label="Third"
+                  label="Mandiri"
                   header-class="text-purple"
                 >
                   <q-card>
@@ -307,7 +305,7 @@ const closeMenungguPembayaran = () => {
                 <q-expansion-item
                   group="somegroup"
                   icon="bluetooth"
-                  label="Fourth"
+                  label="Dana"
                   header-class="bg-teal text-white"
                   expand-icon-class="text-white"
                 >
@@ -361,7 +359,7 @@ const closeMenungguPembayaran = () => {
                 v-for="(detailData, i) in detailData.details"
                 :key="i"
               >
-                <q-img :src="detailData.image" style="width: 10rem" />
+                <q-img :src="detailData.image" style="width: 10rem; height: 5rem" />
                 <div>
                   <div>{{ detailData.name }}</div>
                   <div>{{ detailData.price }}</div>
@@ -478,7 +476,7 @@ export default {
       search: ref({
         s: undefined,
         d: undefined,
-        stat: undefined,
+        stat: "ALL",
       }),
       notification: {
         message: "",
@@ -521,8 +519,8 @@ export default {
       try {
         let endpointLink = "trans?";
         if (this.search.s) endpointLink += `s=${this.search.s}&`;
-        if (this.search.d) endpointLink += `d=${this.search.d}&`;
-        if (this.search.stat) endpointLink += `stat=${this.search.stat}&`;
+        if (this.search.d) endpointLink += `d=${new Date(this.search.d).toISOString()}&`;
+        if (this.search.stat && this.search.stat != "ALL") endpointLink += `stat=${this.search.stat}&`;
 
         // Menghapus karakter & terakhir jika ada
         if (endpointLink.endsWith("&")) {
@@ -624,26 +622,28 @@ export default {
       let detailDatas = {
         length: 0,
         data: [],
+        titles: '',
       };
       for (let detailData of detail) {
         let contentToPush = {};
         if (detailData.order) {
           const orderData = detailData.order;
-          (contentToPush["price"] = this.formatRupiah(orderData.price)),
-            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["price"] = this.formatRupiah(orderData.price)
+          contentToPush["quantity"] = detailData.amount
           contentToPush["name"] = orderData.name;
-          contentToPush["badgeColor"] = orderData.orderSubTypeId
-            ? "blue"
-            : "orange";
-        } else {
-          const eventData = detailData.event;
-          (contentToPush["price"] = this.formatRupiah(eventData.price)),
-            (contentToPush["quantity"] = detailData.amount);
+          contentToPush["badgeColor"] = orderData.orderSubTypeId ? "blue" : "orange";
+          detailDatas.titles += orderData.name + " + "
+          } else {
+            const eventData = detailData.event;
+          contentToPush["price"] = this.formatRupiah(eventData.price)
+          contentToPush["quantity"] = detailData.amount
           contentToPush["name"] = eventData.name;
           contentToPush["badgeColor"] = "green";
+          detailDatas.titles += eventData.name + " + "
         }
         detailDatas.data.push(contentToPush);
       }
+      detailDatas.titles = detailDatas.titles.slice(0, -2)
       detailDatas.length = detail.length;
       return { detailDatas };
     },
