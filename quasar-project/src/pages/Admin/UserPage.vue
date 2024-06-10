@@ -17,7 +17,6 @@
         :rows="userDatas"
         :columns="columns"
         row-key="name"
-        hide-bottom
         class="q-mt-md"
       >
         <template v-slot:body="props">

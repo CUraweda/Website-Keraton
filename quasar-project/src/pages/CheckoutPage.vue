@@ -1,0 +1,438 @@
+<template>
+  <div>
+    <navbar />
+
+    <div class="q-mx-xl">
+      <div class="flex items-center q-gutter-x-xl">
+        <div class="flex column justify-evenly" style="height: 100vh; flex: 1">
+          <div>
+            <div class="text-h5">Pesan Tiket Langsung</div>
+            <div class="flex items-center q-gutter-md q-mt-xs">
+              <q-icon name="paid" color="orange" size="2rem" />
+              <div class="text-h6">
+                Pastikan pesanan anda
+                <span class="text-bold">BENAR</span> sebelum checkout ya!
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center q-gutter-md">
+              <q-icon name="person" color="orange" size="2rem" />
+
+              <div>Detail Pemesanan</div>
+            </div>
+
+            <div class="flex items-center q-gutter-md">
+              <div class="text-h6 text-bold">{{ user.name }}</div>
+              <div class="text-h6">{{ "- (" + user.email + ")" }}</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center q-gutter-md">
+              <q-icon name="confirmation_number" color="orange" size="2rem" />
+              <div>Detail Tiket</div>
+            </div>
+
+            <q-input
+              outlined
+              dense
+              v-model="dateInputLabel"
+              label="Date"
+              class="q-mt-xs"
+              style="width: 15rem"
+            >
+              <template v-slot:append>
+                <q-icon name="event" color="orange" class="cursor-pointer">
+                  <q-popup-proxy>
+                    <q-date
+                      v-model="dateInput"
+                      style="width: 300px"
+                      mask="YYYY-MM-DD HH:mm"
+                    />
+                    <q-time
+                      v-model="dateInput"
+                      mask="YYYY-MM-DD HH:mm"
+                      style="width: 300px"
+                    />
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
+
+          <div v-for="(cart, index) in carts" :key="index">
+            <div class="text-h6">{{ cart.name }}</div>
+
+            <div class="flex items-center q-gutter-md">
+              <q-btn
+                size="xs"
+                dense
+                @click="changeQuantity('min', cart, index)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="15px"
+                  viewBox="0 -960 960 960"
+                  width="15px"
+                  fill="black"
+                >
+                  <path d="M200-440v-80h560v80H200Z" />
+                </svg>
+              </q-btn>
+              <div>
+                {{ cart.quantity }}
+              </div>
+              <q-btn
+                size="xs"
+                dense
+                @click="changeQuantity('plus', cart, index)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="15px"
+                  viewBox="0 -960 960 960"
+                  width="15px"
+                  fill="black"
+                >
+                  <path
+                    d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                  />
+                </svg>
+              </q-btn>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex: 1">
+          <div class="flex items-center q-gutter-md">
+            <q-icon name="account_balance_wallet" color="orange" size="2rem" />
+            <div>{{ paymentMethod || "Pilih Pembayaran" }}</div>
+          </div>
+          <q-btn no-caps class="q-mt-sm" @click="caraPembayaran = true">
+            <div class="q-gutter-x-md flex items-center">
+              <q-icon name="warning" size="1.5rem" color="red" />
+              <div>
+                {{
+                  paymentMethod
+                    ? "Ganti Metode Pembayaran"
+                    : "Anda Belum Memilih Metode Pembayaran"
+                }}
+              </div>
+            </div>
+          </q-btn>
+
+          <div class="q-mt-md">
+            <q-card class="my-card">
+              <q-card-section>
+                <div class="text-h6">Ringkasan Booking</div>
+
+                <div>
+                  <div>
+                    <div class="text-h6 text-bold q-mt-lg">Total Pemesanan</div>
+                    <div>
+                      <div class="flex items-center justify-between">
+                        <div>Total Harga ({{ ticketTotal }} Tiket)</div>
+                        <div>Rp. {{ formatRupiah(checkoutTotal) }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="q-mt-lg">
+                    <div class="text-h6 text-bold">Biaya Transaksi</div>
+                    <div v-for="(tax, i) in taxes" :key="i">
+                      <div class="flex items-center justify-between">
+                        <div>{{ tax.label }}</div>
+                        <div>Rp. {{ formatRupiah(tax.price) }}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="q-mt-lg">
+                    <q-separator color="black" />
+                    <div class="flex items-center justify-between">
+                      <div class="text-h5 text-bold">Total Tagihan</div>
+                      <div class="text-h5 text-bold">
+                        Rp. {{ formatRupiah(totalTagihan) }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+
+            <q-btn
+              no-caps
+              class="full-width q-mt-md q-py-md"
+              color="orange"
+              @click="checkOut"
+            >
+              <div class="flex items-center justify-between full-width">
+                <div class="text-bold text-h6">Checkout</div>
+                <q-icon
+                  name="arrow_forward"
+                  color="orange"
+                  style="background: white; border-radius: 100%"
+                />
+              </div>
+            </q-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+    <q-dialog v-model="caraPembayaran">
+      <q-card style="width: 30rem; max-width: 100vw">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Pilih Pembayaran</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <q-list bordered class="rounded-borders">
+            <q-expansion-item
+              expand-separator
+              class="text-h6"
+              label="Kartu Kredit/Debit"
+            >
+              <q-card>
+                <q-card-section>
+                  <div v-for="instance in instances" :key="instance.value">
+                    <div
+                      class="cursor-pointer q-mt-md"
+                      @click="payWith(instance)"
+                    >
+                      <div class="flex items-center q-gutter-md">
+                        <img
+                          :src="instance.icon"
+                          style="width: 4rem; height: 2rem"
+                        />
+                        <div>{{ instance.label }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </q-list>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import Cart from "stores/carts";
+import cookieHandler from "src/cookieHandler";
+import env from "stores/environment";
+import navbar from "../components/NavbarNew.vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+import logobjb from "../assets/svg/logo_bjb.svg";
+import logobca from "../assets/svg/logo_bca.svg";
+import logomandiri from "../assets/svg/logo_mandiri.svg";
+import logobni from "../assets/svg/logo_bni.svg";
+
+export default {
+  components: { navbar },
+  data() {
+    return {
+      caraPembayaran: ref(false),
+      input: ref(),
+      carts: ref([]),
+      token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
+      user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
+      showPopup: ref(false),
+      taxes: ref([]),
+      cartClass: new Cart(),
+      dateInput: ref(),
+      dateInputLabel: ref(),
+      dateLabel: ref(new Date().toISOString()),
+      paymentMethod: ref(),
+      ticketTotal: ref(0),
+      checkoutTotal: ref(0),
+      totalTagihan: ref(0),
+      instances: ref([
+        {
+          label: "Bank BJB",
+          value: "BJB",
+          icon: [logobjb],
+        },
+        {
+          label: "Bank BCA",
+          value: "BCA",
+          icon: [logobca],
+        },
+        {
+          label: "Bank Mandiri",
+          value: "MANDIRI",
+          icon: [logomandiri],
+        },
+        {
+          label: "Bank BNI",
+          value: "BNI",
+          icon: [logobni],
+        },
+      ]),
+    };
+  },
+  mounted() {
+    this.setCartData().then(() => {
+      this.validateCartData();
+      this.countTagihan();
+    });
+    this.setDate();
+  },
+  watch: {
+    dateInput: {
+      handler(val) {
+        this.dateInputLabel = new Intl.DateTimeFormat("id-ID", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }).format(new Date(val));
+      },
+    },
+  },
+  beforeUnmount() {
+    this.storeCartToDatabase();
+  },
+  methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
+    setDate() {
+      const date = new Date().toISOString();
+      this.dateInput = date;
+    },
+    async storeCartToDatabase() {
+      this.cartClass.updateToDB();
+    },
+    async setCartData() {
+      try {
+        const rawCart = Object.values(this.cartClass.getItem());
+        console.log(rawCart);
+        if (rawCart.length < 1) {
+          const response = await this.$api.get("cart", {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          });
+
+          if (response.status != 200) throw Error(response.data.message);
+          rawCart = response.data.data;
+        }
+        const paramResponse = await this.$api.get("param/checkout", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+        if (paramResponse.status === 200)
+          this.taxes = Object.values(paramResponse.data.data.data);
+
+        this.carts = rawCart.map((cart) => {
+          this.ticketTotal += cart.quantity;
+          this.checkoutTotal += cart.price * cart.quantity;
+          return cart;
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async validateCartData() {
+      try {
+        console.log(this.carts);
+        const response = await this.$api.post("cart/validate", {
+          carts: this.carts,
+        });
+        if (response.status != 200) throw Error(response.data.message);
+        this.carts = response.data.data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    changeQuantity(indicator, rowData, indexData) {
+      if (indicator != "min") {
+        this.carts[indexData].quantity = rowData.quantity + 1;
+        this.ticketTotal = this.ticketTotal + 1;
+        this.checkoutTotal = this.checkoutTotal + rowData.price;
+        this.totalTagihan = this.totalTagihan + rowData.price;
+      } else {
+        this.carts[indexData].quantity = rowData.quantity - 1;
+        this.ticketTotal = this.ticketTotal - 1;
+        this.checkoutTotal = this.checkoutTotal - rowData.price;
+        this.totalTagihan = this.totalTagihan - rowData.price;
+      }
+      return this.changeStorageQuantity(this.carts[indexData]);
+    },
+    changeStorageQuantity(rowData) {
+      try {
+        const itemId = `${rowData.type}|${rowData.id}`;
+        this.carts = this.cartClass.changeQuantity(
+          itemId,
+          rowData.quantity
+        ).userCart;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async checkOut() {
+      try {
+        const response = await this.$api.post(
+          "trans",
+          {
+            carts: this.carts,
+            plannedDate: new Date(this.dateInput).toISOString(),
+            method: this.paymentMethod,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.token}`,
+            },
+          }
+        );
+        if (response.status != 200) throw Error(response.data.message);
+        this.showNotif("Transaksi Sukses", "info");
+        this.cartClass.clearCart().updateItem();
+        this.$router.replace("/user/transaction");
+      } catch (err) {
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "info"
+        );
+        console.log(err);
+      }
+    },
+    countTagihan() {
+      let taxTotal = 0;
+      for (let tax of this.taxes) taxTotal += tax.price;
+      this.totalTagihan = this.checkoutTotal + taxTotal;
+    },
+    formatRupiah(price) {
+      if (price === 0) return "Free";
+      return (price / 1000).toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+      });
+    },
+    payWith(indicator) {
+      this.paymentMethod = indicator.value;
+      this.caraPembayaran = false; //Clos Payment Mehod Pop Up
+    },
+  },
+};
+</script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
+
+div {
+  font-family: Raleway;
+}
+</style>

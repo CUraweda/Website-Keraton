@@ -23,8 +23,6 @@
           </div>
         </template>
       </q-table>
-
-      <div></div>
     </div>
 
     <!-- <q-table

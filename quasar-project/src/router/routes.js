@@ -4,7 +4,6 @@ import SejarahLP from "../pages/SejarahKeraton.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
-import CheckoutKeraton from "../pages/CheckoutKeraton.vue";
 import PilihanPaket from "../pages/PilihanPaket.vue";
 import BerandaPage from "../pages/BerandaPage.vue";
 import AgungDalem from "../pages/AgungDalem.vue";
@@ -21,6 +20,7 @@ import BookingPage from "../pages/NewBookingPage.vue";
 import AdminUserPage from "pages/Admin/UserPage.vue";
 import AdminSubsPage from "pages/admin/SubscribePage.vue";
 import SubsPage from "../pages/SubsPage.vue";
+import CheckoutPage from "../pages/CheckoutPage.vue";
 
 const routes = [
   {
@@ -124,7 +124,7 @@ const routes = [
   {
     path: "/user/checkout",
     name: "checkout",
-    component: CheckoutKeraton,
+    component: CheckoutPage,
     meta: {
       preventToken: true,
     },

@@ -17,8 +17,24 @@
             <q-img :src="data.image" style="height: 15rem" />
 
             <q-card-section>
-              <div class="text-h5">{{ data.title }}</div>
-              <div class="text-caption text-grey">
+              <div
+                class="text-h5"
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+              >
+                {{ data.title }}
+              </div>
+              <div
+                class="text-caption text-grey"
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+              >
                 {{ data.desc }}
               </div>
             </q-card-section>
