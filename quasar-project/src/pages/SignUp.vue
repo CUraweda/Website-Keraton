@@ -74,22 +74,15 @@
         </div>
       </form>
     </div>
-    <Notification
-      v-if="notification.message"
-      :message="notification.message"
-      :type="notification.type"
-    />
   </div>
 </template>
 
 <script>
-import { BASE_URL } from "src/auth/config";
-import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
-import { ref } from "vue"
-import { useRouter } from "vue-router";
-import Carts from "../stores/carts"
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+import Carts from "../stores/carts";
 import cookieHandler from "src/cookieHandler";
-import env from "stores/environment"
+import env from "stores/environment";
 
 export default {
   data() {
@@ -113,17 +106,13 @@ export default {
       },
     };
   },
-  mounted() {
-    
-  },
+  mounted() {},
   methods: {
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
     },
     async submitForm() {
       this.emailError = !this.email.trim();
@@ -137,17 +126,18 @@ export default {
         this.nameError ||
         this.passmatchError
       ) {
-        this.showNotif("fill in all fields please", "error");
+        this.showNotif("Tolong isi semua input yang ada", "error");
         return;
       }
 
       if (this.password !== this.passmatch) {
         this.passmatchError = true;
-        this.showNotif("password didn't match", "error");
+        this.showNotif("Password tidak sama", "error");
         return;
       }
 
-      if (this.password.length < 6) return this.showNotif("password must be more than 6 characters or more", "error")
+      if (this.password.length < 6)
+        return this.showNotif("Password harus 6 karakter atau lebih", "error");
 
       const payload = {
         email: this.email,
@@ -166,21 +156,18 @@ export default {
         this.cartClass.setNew(cartData);
         cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
-        sessionStorage.removeItem(env.GLOBAL_STORAGE)
+        sessionStorage.removeItem(env.GLOBAL_STORAGE);
 
-        this.showNotif("Register Successfuly", "info");
+        this.showNotif("Anda berhasil melakukan pendaftaran", "success");
         this.$router.push("/");
       } catch (err) {
         console.log("Error:", err);
         this.showNotif(
-        err.response ? err.response.data.message : err.message,
+          err.response ? err.response.data.message : err.message,
           "error"
         );
       }
     },
-  },
-  components: {
-    Notification,
   },
 };
 </script>

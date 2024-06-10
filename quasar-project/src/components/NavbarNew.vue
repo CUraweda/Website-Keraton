@@ -327,8 +327,10 @@ export default {
         cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
         sessionStorage.removeItem(env.GLOBAL_STORAGE);
         cartClass.clearCart().updateItem();
-        window.location.reload();
-        this.showNotif("Berhasil Log Out", "success");
+        this.showNotif("Anda berhasil Log Out", "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
       } catch (err) {
         this.showNotif(err.message, "error");
         console.log(err);

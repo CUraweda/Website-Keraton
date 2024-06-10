@@ -114,6 +114,8 @@
 
 <script>
 import { defineComponent, ref } from "vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 export default defineComponent({
   data() {
@@ -122,13 +124,25 @@ export default defineComponent({
     };
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async subscribeToKeraton() {
       try {
         const response = await this.$api.post("subscribe", {
           email: this.email,
         });
-        if (response.status != 200) throw Error(response.data.message);
+        if (response.status == 200) {
+          this.showNotif(
+            `Anda sudah berhasil berlangganan, email akan dikirim kepada ${this.email} mohon dintunggu`,
+            "success"
+          );
+        }
       } catch (err) {
+        this.showNotif("Anda gagal untuk berlangganan", "error");
         console.log(err);
       }
     },

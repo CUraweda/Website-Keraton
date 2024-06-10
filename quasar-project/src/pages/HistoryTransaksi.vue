@@ -147,15 +147,15 @@ const statusSelected = ref(false);
 
         <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
         <div
-          class="flex q-mt-md q-gutter-x-md"
+          class="q-mt-md"
           v-for="(detailData, i) in detailData.details"
           :key="i"
         >
-          <q-img :src="detailData.image" style="width: 10rem; height: 10rem" />
+          <!-- <img :src="detailData.image" style="width: 10rem; height: 10rem" /> -->
           <div>
             <div>{{ detailData.name }}</div>
             <div>{{ detailData.price }}</div>
-            <div>dsajkldsajlkdsa</div>
+            <div>test</div>
           </div>
         </div>
 
@@ -198,7 +198,7 @@ const statusSelected = ref(false);
         </q-card-section>
 
         <q-card-section>
-          <div ref="data">
+          <div>
             <div class="flex items-center justify-between">
               <div>No. Transaksi</div>
               <div>{{ detailData.transactionNo }}</div>
@@ -222,7 +222,7 @@ const statusSelected = ref(false);
               v-for="(detailData, i) in detailData.details"
               :key="i"
             >
-              <q-img
+              <img
                 :src="detailData.image"
                 style="width: 10rem; height: 10rem"
               />
@@ -453,7 +453,6 @@ export default {
           format: "a4",
           orientation: "portrait",
           putOnlyUsedFonts: true,
-          // Sesuaikan skala jika diperlukan
           scale: 0.8,
         },
       });

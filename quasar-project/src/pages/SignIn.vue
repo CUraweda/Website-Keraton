@@ -52,7 +52,8 @@
 import cookieHandler from "src/cookieHandler";
 import env from "../stores/environment";
 import Cart from "stores/carts";
-import Notification from "../components/NotificationAlert.vue"; // Make sure to adjust the path
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 const cartClass = new Cart();
 
 export default {
@@ -72,13 +73,11 @@ export default {
     };
   },
   methods: {
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
     },
     async submitForm() {
       this.emailError = !this.email.trim();
@@ -106,15 +105,18 @@ export default {
         const cartData = Object.values(user.carts);
         delete user.carts;
 
-        this.showNotif("Login Successfuly", "info");
+        this.showNotif("Anda berhasil login", "success");
         cartClass.setNew(cartData);
         cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
-        sessionStorage.removeItem(env.GLOBAL_STORAGE)
+        sessionStorage.removeItem(env.GLOBAL_STORAGE);
         this.$router.go(-1);
       } catch (err) {
         console.log(err);
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
       }
     },
   },

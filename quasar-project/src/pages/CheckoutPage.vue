@@ -405,7 +405,7 @@ export default {
       } catch (err) {
         this.showNotif(
           err.response ? err.response.data.message : err.message,
-          "info"
+          "error"
         );
         console.log(err);
       }
