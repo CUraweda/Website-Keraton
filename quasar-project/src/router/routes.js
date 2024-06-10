@@ -4,7 +4,6 @@ import SejarahLP from "../pages/SejarahKeraton.vue";
 import HistoryTransaksi from "../pages/HistoryTransaksi.vue";
 import AreaKeraton from "../pages/AreaKeraton.vue";
 import Museum from "../pages/MuseumPage.vue";
-import PilihanPaket from "../pages/PilihanPaket.vue";
 import BerandaPage from "../pages/BerandaPage.vue";
 import AgungDalem from "../pages/AgungDalem.vue";
 import SejarahSilsilah from "../pages/SejarahSilsilah.vue";
@@ -128,11 +127,6 @@ const routes = [
     meta: {
       preventToken: true,
     },
-  },
-  {
-    path: "/pilihanpaket",
-    name: "pilihanpaket",
-    component: PilihanPaket,
   },
   {
     path: "/",

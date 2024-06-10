@@ -73,9 +73,9 @@
             <q-btn
               v-if="!sessionData?.isLogin"
               no-caps
+              label="Dapatkan Tiket"
               style="background: #123b32; color: white; padding-inline: 30px"
             >
-              <span class="text-bold">Dapatkan Tiket</span>
             </q-btn>
             <q-expansion-item
               v-if="sessionData?.isLogin"
@@ -84,9 +84,6 @@
               expand-separator
             >
               <q-list>
-                <q-item clickable @click="logOut">
-                  <q-item-section>Logout</q-item-section>
-                </q-item>
                 <q-item clickable to="/user/carts">
                   <q-item-section>Keranjang</q-item-section>
                 </q-item>
@@ -95,6 +92,9 @@
                 </q-item>
                 <q-item v-if="sessionData.isAdmin" clickable to="/admin/home">
                   <q-item-section>Admin Page</q-item-section>
+                </q-item>
+                <q-item clickable @click="logOut" class="text-negative">
+                  <q-item-section>Logout</q-item-section>
                 </q-item>
               </q-list>
             </q-expansion-item>
@@ -267,9 +267,9 @@
             <q-item-section>Admin Page</q-item-section>
           </q-item>
           <q-item clickable class="text-negative" @click="logOut">
-            <!-- <q-item-section avatar>
+            <q-item-section avatar>
               <q-icon name="logout" />
-            </q-item-section> -->
+            </q-item-section>
 
             <q-item-section>
               <q-item-label class="rounded-borders">Logout</q-item-label>
@@ -344,7 +344,7 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap");
 
-* {
+div {
   font-family: Raleway;
 }
 
@@ -352,7 +352,7 @@ export default {
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1200px) {
   .name-logo,
   .component-navbar {
     display: none;
