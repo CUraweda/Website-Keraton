@@ -54,7 +54,7 @@ const statusSelected = ref(false);
     <div
       v-for="transaction in historyDatas"
       :key="transaction.status"
-      class="card-history"
+      class="card-history shadow-2"
     >
       <div class="q-mt-xl">
         <q-card class="my-card q-mt-md" flat bordered>
@@ -69,7 +69,7 @@ const statusSelected = ref(false);
             </div>
           </q-card-section>
 
-          <q-card-section horizontal>
+          <q-card-section horizontal class="q-py-md">
             <q-img src="../assets/images/img-1.jpg" class="image-card" />
 
             <div class="q-mx-md" style="width: 100%">
@@ -110,7 +110,6 @@ const statusSelected = ref(false);
                     >
                       Detail Transaksi
                     </div>
-                    <div>|</div>
                     <div
                       class="cursor-pointer"
                       @click="caraBayar = !caraBayar"
@@ -678,6 +677,7 @@ option:selected {
 .image-card {
   width: 15rem;
   height: 7rem;
+  margin: 0 1rem;
 }
 
 .title-card {
