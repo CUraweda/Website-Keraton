@@ -37,7 +37,18 @@
                 <div>Kamu bisa masuk disini</div>
               </div>
 
-              <div>cenah mah iyeu jeng link</div>
+              <div>
+                <q-select
+                  dense
+                  outlined
+                  label="Select"
+                  :option="selectOption"
+                  v-model="select"
+                  style="width: 10rem"
+                />
+
+                <q-btn no-caps class="q-mt-md full-width" label="Button" />
+              </div>
             </div>
           </q-card-section>
         </q-card>
