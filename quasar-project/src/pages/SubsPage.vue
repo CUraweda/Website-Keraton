@@ -9,6 +9,7 @@
         selection="multiple"
         v-model:selected="selected"
         class="q-mt-md col-grow"
+        style="height: 50rem"
       >
         <template v-slot:body-cell-Action="props">
           <div class="flex items-center justify-center">
