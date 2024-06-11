@@ -17,7 +17,7 @@
           href="#/admin/event"
           class="q-mb-md"
         /> -->
-        <q-table :rows="rows" :columns="columns" row-key="name">
+        <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-md">
           <template v-slot:body-cell-Action="scope">
             <div class="flex items-center justify-center">
               <q-btn

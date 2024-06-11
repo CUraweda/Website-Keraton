@@ -17,7 +17,7 @@
     <q-btn
       icon="menu"
       class="drawer-dialog"
-      color="primary"
+      color="orange"
       @click="navbarDialog = true"
     />
 
@@ -354,6 +354,7 @@ div {
 
 @media screen and (max-width: 1200px) {
   .name-logo,
+  .component-navbar-admin,
   .component-navbar {
     display: none;
   }

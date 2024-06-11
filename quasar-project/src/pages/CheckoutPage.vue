@@ -65,44 +65,46 @@
           <q-card style="width: fit-content">
             <q-card-section>
               <div v-for="(cart, index) in carts" :key="index">
-                <div class="text-h6">{{ cart.name }}</div>
+                <div class="q-mt-md">
+                  <div class="text-h6">{{ cart.name }}</div>
 
-                <div class="flex items-center q-gutter-md">
-                  <q-btn
-                    size="xs"
-                    dense
-                    @click="changeQuantity('min', cart, index)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="15px"
-                      viewBox="0 -960 960 960"
-                      width="15px"
-                      fill="black"
+                  <div class="flex items-center q-gutter-md">
+                    <q-btn
+                      size="xs"
+                      dense
+                      @click="changeQuantity('min', cart, index)"
                     >
-                      <path d="M200-440v-80h560v80H200Z" />
-                    </svg>
-                  </q-btn>
-                  <div>
-                    {{ cart.quantity }}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="15px"
+                        viewBox="0 -960 960 960"
+                        width="15px"
+                        fill="black"
+                      >
+                        <path d="M200-440v-80h560v80H200Z" />
+                      </svg>
+                    </q-btn>
+                    <div>
+                      {{ cart.quantity }}
+                    </div>
+                    <q-btn
+                      size="xs"
+                      dense
+                      @click="changeQuantity('plus', cart, index)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="15px"
+                        viewBox="0 -960 960 960"
+                        width="15px"
+                        fill="black"
+                      >
+                        <path
+                          d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                        />
+                      </svg>
+                    </q-btn>
                   </div>
-                  <q-btn
-                    size="xs"
-                    dense
-                    @click="changeQuantity('plus', cart, index)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="15px"
-                      viewBox="0 -960 960 960"
-                      width="15px"
-                      fill="black"
-                    >
-                      <path
-                        d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
-                      />
-                    </svg>
-                  </q-btn>
                 </div>
               </div>
             </q-card-section>
@@ -403,7 +405,7 @@ export default {
           }
         );
         if (response.status != 200) throw Error(response.data.message);
-        this.showNotif("Transaksi Sukses", "info");
+        this.showNotif("Transaksi sukses", "success");
         this.cartClass.clearCart().updateItem();
         this.$router.replace("/user/transaction");
       } catch (err) {
