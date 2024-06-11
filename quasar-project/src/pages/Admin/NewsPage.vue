@@ -1,8 +1,8 @@
 <template>
   <div>
     <navbar :isAdmin="true" />
-    <q-btn label="Create News" @click="handleDialog" />
-    <div class="q-gutter-xs q-mt-md">
+    <q-btn class="q-mx-md" label="Create News" @click="handleDialog" />
+    <div class="q-gutter-xs q-mt-md q-mx-md">
       <div
         class="flex col-grow q-gutter-md"
         style="

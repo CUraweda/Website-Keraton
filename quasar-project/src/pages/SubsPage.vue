@@ -1,60 +1,31 @@
 <template>
   <div>
     <navbar :isAdmin="true" />
-    <div>
+    <div class="flex q-gutter-md full-width">
       <q-table
-        :rows="rows"
+        :rows="subscriberDatas"
         :columns="columns"
         row-key="name"
         selection="multiple"
         v-model:selected="selected"
-        class="q-mt-md"
+        class="q-mt-md col-grow"
       >
         <template v-slot:body-cell-Action>
           <div class="flex items-center justify-center">
             <q-btn
-              icon="edit"
+              icon="delete"
               flat
-              color="green"
+              color="red"
               no-caps
-              @click="handleDialog(props.row)"
-              style="background-color: rgba(0, 255, 0, 0.102)"
+              @click="deleteSubscriber(subscriberDatas.id)"
+              style="background-color: rgba(255, 0, 0, 0.102)"
             ></q-btn>
           </div>
         </template>
       </q-table>
-    </div>
 
-    <!-- <q-table
-      bordered
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      hide-bottom
-      selection="multiple"
-      v-model:selected="selected"
-      class="q-mt-md"
-    >
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td :props="props"> </q-td>
-          <q-td key="Email" :props="props">
-            {{ props.row.email }}
-          </q-td>
-          <q-td class="q-gutter-x-sm flex items-center justify-center">
-            <q-btn
-              icon="edit"
-              flat
-              color="green"
-              no-caps
-              @click="handleDialog(props.row)"
-              style="background-color: rgba(0, 255, 0, 0.102)"
-            ></q-btn>
-            <q-btn icon="delete" flat color="red" no-caps style="background-color: rgba(255, 0, 0, 0.102)" />
-          </q-td>
-        </q-tr>
-      </template>
-    </q-table> -->
+      <div class="col-grow">test</div>
+    </div>
   </div>
 </template>
 
@@ -71,24 +42,6 @@ export default {
       columns: [
         { name: "Email", align: "center", label: "Email", field: "email" },
         { name: "Action", align: "center", label: "Action", field: "" },
-      ],
-
-      rows: [
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
       ],
       selected: ref(),
       openDialog: ref(false),
@@ -115,8 +68,13 @@ export default {
     async fetchData() {
       try {
         const subscriptionResponse = await this.$api.get("subscribe");
-        if (subscriptionResponse.status != 200) throw Error(response.data.message);
-        this.subscriberDatas = subscriptionResponse.data.data;
+        if (subscriptionResponse.status != 200)
+          throw Error(response.data.message);
+        this.subscriberDatas = subscriptionResponse.data.data.map((subs) => ({
+          id: subs.id,
+          email: subs.email,
+        }));
+
         if (this.eventDatas.length < 1) {
           const eventResponse = await this.$api.get("event/page");
           this.eventDatas = eventResponse.data.data;
