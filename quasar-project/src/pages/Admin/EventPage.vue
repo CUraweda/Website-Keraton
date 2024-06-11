@@ -719,7 +719,7 @@ export default {
       }
     },
     async sendUpdate(type) {
-      let url, requestBody;
+      let url, requestBody, useMultipart = false;
       try {
         switch (type) {
           case "event":
@@ -730,6 +730,7 @@ export default {
             requestBody = this.event;
             delete requestBody.id;
             delete requestBody.iteration;
+            useMultipart = true
             break;
           case "tiket":
             url = `items/update`;
@@ -745,6 +746,7 @@ export default {
             if (requestBody.subTypeId.value)
               requestBody.subTypeId = requestBody.subTypeId.value;
             delete requestBody.subType;
+            useMultipart = true
             break;
           case "type":
             url = `type/${this.currentId}`;
@@ -768,9 +770,11 @@ export default {
             break;
         }
         const response = await this.$api.post(url, requestBody, {
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
+          ...(useMultipart && {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
         });
         if (response.status != 200) throw Error("Error Occured");
         this.addNewEvent = false;
@@ -818,7 +822,7 @@ export default {
     },
 
     async sendCreate(type) {
-      let url, requestBody;
+      let url, requestBody, useMultipart = false;
       try {
         switch (type) {
           case "event":
@@ -826,6 +830,7 @@ export default {
             this.event.isFree = this.event.price < 1 ? true : false;
             this.event.iterationId = this.event.iterationId.value;
             requestBody = this.event;
+            useMultipart = true
             break;
           case "tiket":
             url = `items/create`;
@@ -837,6 +842,7 @@ export default {
             requestBody.units = requestBody.units.value;
             requestBody.categoryId = requestBody.categoryId.value;
             requestBody.subTypeId = requestBody.subTypeId.value;
+            useMultipart = true
             break;
           case "type":
             url = `type`;
@@ -857,9 +863,11 @@ export default {
             break;
         }
         const response = await this.$api.post(url, requestBody, {
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
+          ...(useMultipart && {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
         });
         if (response.status != 200) throw Error("Error Occured");
         this.addNewEvent = false;
@@ -969,12 +977,12 @@ export default {
         image: null,
         subTypeId: undefined,
       };
-      (this.type = {
-        name: "",
-      }),
-        (this.category = {
-          name: "",
-        });
+      this.type = {
+        name: ''
+      },
+        this.category = {
+          name: ''
+        }
       this.subType = {
         name: "",
         minimumUnits: 0,

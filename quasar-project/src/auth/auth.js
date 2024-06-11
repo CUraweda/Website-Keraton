@@ -22,6 +22,7 @@ export async function verifyToken() {
     cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME)
     localStorage.removeItem(env.CART_STORAGE_NAME)
     localStorage.removeItem(env.USER_STORAGE_NAME)
+    sessionStorage.removeItem(env.GLOBAL_STORAGE)
     return data
   }
 }

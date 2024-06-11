@@ -5,7 +5,7 @@
       <q-table
         :rows="subscriberDatas"
         :columns="columns"
-        row-key="name"
+        row-key="email"
         selection="multiple"
         v-model:selected="selected"
         class="q-mt-md col-grow"
@@ -24,7 +24,116 @@
         </template>
       </q-table>
 
-      <div class="col-grow">test</div>
+      <div class="col-grow">
+        <q-card>
+          <q-card-section>
+            <div class="flex justify-between">
+              <q-img
+                src="../assets/images/bedug.png"
+                style="width: 12rem; height: 8rem"
+              />
+              <div>
+                <div class="text-h6 text-bold">Tiket Masuk</div>
+                <div>Kamu bisa masuk disini</div>
+              </div>
+
+              <div>cenah mah iyeu jeng link</div>
+            </div>
+          </q-card-section>
+        </q-card>
+
+        <q-card class="q-mt-xs">
+          <q-card-section>
+            <q-input
+              outlined
+              v-model="searchEvent"
+              type="search"
+              label="Search"
+              style="width: 15rem"
+            >
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </q-card-section>
+
+          <q-card-section>
+            <div class="text-h6 text-bold">Event</div>
+            <div
+              v-for="(item, index) in eventDatas"
+              :key="index"
+              class="flex justify-between q-mt-md"
+            >
+              <q-img :src="item.image" style="width: 12rem; height: 8rem" />
+
+              <div>
+                <div
+                  class="text-h6 text-bold"
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ item.name }}
+                </div>
+                <div
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ item.desc }}
+                </div>
+              </div>
+
+              <div>
+                <q-btn no-caps label="Promote" />
+              </div>
+            </div>
+
+            <div class="text-h6 text-bold q-mt-md">Tiket / Paket</div>
+            <div
+              v-for="(item, index) in tiketDatas"
+              :key="index"
+              class="flex justify-between q-mt-md"
+            >
+              <q-img :src="item.image" style="width: 12rem; height: 8rem" />
+
+              <div>
+                <div
+                  class="text-h6 text-bold"
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ item.name }}
+                </div>
+                <div
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ item.desc }}
+                </div>
+              </div>
+
+              <div>
+                <q-btn no-caps label="Promote" />
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +152,7 @@ export default {
         { name: "Email", align: "center", label: "Email", field: "email" },
         { name: "Action", align: "center", label: "Action", field: "" },
       ],
+      searchEvent: ref(),
       selected: ref(),
       openDialog: ref(false),
       selectedItem: ref(),
@@ -76,7 +186,7 @@ export default {
         }));
 
         if (this.eventDatas.length < 1) {
-          const eventResponse = await this.$api.get("event/page");
+          const eventResponse = await this.$api.get("event");
           this.eventDatas = eventResponse.data.data;
         }
         if (this.tiketDatas.length < 1) {
