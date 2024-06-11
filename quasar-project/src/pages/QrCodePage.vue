@@ -38,6 +38,7 @@ export default {
         if(this.delayLogs[text]){
           const currentTime = new Date()
           const logsExist = new Date(this.delayLogs[text])
+          console.log(logsExist)
           const differenceInMilliseconds = currentTime.getTime() - logsExist.getTime();
           if (differenceInMilliseconds < 2000) throw Error('Please wait a second nigga')
         }
