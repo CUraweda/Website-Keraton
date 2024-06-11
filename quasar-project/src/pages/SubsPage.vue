@@ -121,6 +121,7 @@ export default {
   data() {
     return {
       columns: [
+        { name: "id", field: "id" },
         { name: "Email", align: "center", label: "Email", field: "email" },
         { name: "Action", align: "center", label: "Action", field: "" },
       ],
