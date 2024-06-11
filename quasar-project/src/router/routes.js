@@ -17,24 +17,14 @@ import QrCodePage from "../pages/QrCodePage.vue";
 import EventPage from "../pages/EventPage.vue";
 import BookingPage from "../pages/NewBookingPage.vue";
 import AdminUserPage from "pages/Admin/UserPage.vue";
-import AdminSubsPage from "pages/admin/SubscribePage.vue";
 import SubsPage from "../pages/SubsPage.vue";
 import CheckoutPage from "../pages/CheckoutPage.vue";
 
 const routes = [
   {
-    path: "/admin/langganan",
+    path: "/admin/subs",
     name: "SubsPage",
     component: SubsPage,
-    meta: {
-      preventToken: true,
-      onlyAdmin: true,
-    },
-  },
-  {
-    path: "/admin/subs",
-    name: "AdminSubsPage",
-    component: AdminSubsPage,
     meta: {
       preventToken: true,
       onlyAdmin: true,

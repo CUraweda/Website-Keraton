@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbar :isAdmin="true" />
-    <div class="flex q-gutter-md full-width">
+    <div class="flex q-gutter-md">
       <q-table
         :rows="subscriberDatas"
         :columns="columns"
@@ -9,6 +9,7 @@
         selection="multiple"
         v-model:selected="selected"
         class="q-mt-md col-grow"
+        style="height: 50rem"
       >
         <template v-slot:body-cell-Action="props">
           <div class="flex items-center justify-center">
@@ -33,8 +34,27 @@
                 style="width: 12rem; height: 8rem"
               />
               <div>
-                <div class="text-h6 text-bold">{{ selectedItem.name || "--------" }}</div>
-                <div>{{ selectedItem.desc || '-------------' }}</div>
+                <div
+                  class="text-h6 text-bold"
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ selectedItem.name || "--------" }}
+                </div>
+                <div
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    width: 20rem;
+                  "
+                >
+                  {{ selectedItem.desc || "-------------" }}
+                </div>
               </div>
 
               <div>
@@ -44,7 +64,7 @@
                   label="Link To Direct"
                   :options="linkList"
                   v-model="selectedItem.link"
-                  style="width: 10rem"
+                  style="width: 15rem"
                 />
                 <q-btn no-caps class="q-mt-md full-width" label="Send Email" />
               </div>
@@ -53,18 +73,19 @@
         </q-card>
 
         <q-card class="q-mt-xs">
-          <q-card-section>
+          <q-card-section class="flex items-center q-gutter-xs">
             <q-input
               outlined
               v-model="searchEvent"
               type="search"
               label="Search"
-              style="width: 15rem"
             >
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
             </q-input>
+
+            <q-input v-model="limitOrder" outlined type="number" label="Show" />
           </q-card-section>
 
           <q-card-section>
@@ -114,7 +135,7 @@ import { ref } from "vue";
 import env from "stores/environment";
 import cookieHandler from "src/cookieHandler";
 import navbar from "../components/NavbarNew.vue";
-import routeList from 'src/router/routes'
+import routeList from "src/router/routes";
 
 export default {
   components: { navbar },
@@ -131,9 +152,9 @@ export default {
       selectedItem: ref({
         image: undefined,
         ident: undefined,
-        name: '',
-        desc: '',
-        link: undefined
+        name: "",
+        desc: "",
+        link: undefined,
       }),
       selectedUsers: ref([]),
       subscriberDatas: ref([]),
@@ -158,7 +179,8 @@ export default {
     async fetchData() {
       try {
         const subscriptionResponse = await this.$api.get("subscribe");
-        if (subscriptionResponse.status != 200) throw Error(response.data.message);
+        if (subscriptionResponse.status != 200)
+          throw Error(response.data.message);
         this.subscriberDatas = subscriptionResponse.data.data.map((subs) => ({
           id: subs.id,
           email: subs.email,
@@ -167,51 +189,55 @@ export default {
         if (this.itemDatas.length < 1) {
           const eventResponse = await this.$api.get("event");
           const tiketResponse = await this.$api.get("items");
-          let currentLength = 0
-          for(let data of eventResponse.data.data){
-            if(currentLength === this.showManyData) break
-            currentLength++
-          this.itemDatas.push({
-            ident: "event",
-            id: data.id,
-            image: data.image,
-            name: data.name,
-              desc: data.desc
-              })
-              for(let data of tiketResponse.data.data){
-                if(currentLength === this.showManyData) break
-                currentLength++
-                this.itemDatas.push({
-              ident: "tiket",
+          let currentLength = 0;
+          for (let data of eventResponse.data.data) {
+            if (currentLength === this.showManyData) break;
+            currentLength++;
+            this.itemDatas.push({
+              ident: "event",
               id: data.id,
               image: data.image,
               name: data.name,
-              desc: data.desc
-            })
-          }
+              desc: data.desc,
+            });
+            for (let data of tiketResponse.data.data) {
+              if (currentLength === this.showManyData) break;
+              currentLength++;
+              this.itemDatas.push({
+                ident: "tiket",
+                id: data.id,
+                image: data.image,
+                name: data.name,
+                desc: data.desc,
+              });
+            }
           }
         }
-        if(this.linkList.length < 1){
+        if (this.linkList.length < 1) {
           this.linkList = routeList.map((link) => ({
             label: `${link.name} - ${link.path}`,
-            path: link.path
-          }))
+            path: link.path,
+          }));
         }
-        console.log(this.linkList)
-        if(this.itemDatas.length > 0) this.selectedItem = { ...this.itemDatas[0] } 
+        console.log(this.linkList);
+        if (this.itemDatas.length > 0)
+          this.selectedItem = { ...this.itemDatas[0] };
       } catch (err) {
         console.log(err);
       }
     },
     async sendPromoteEmail() {
       try {
-        if(this.selectedUsers.length < 1) throw Error('Pilih User Terlebih Dahulu')
+        if (this.selectedUsers.length < 1)
+          throw Error("Pilih User Terlebih Dahulu");
         const response = await this.$api.post(
           "email/subscription/promote",
           {
             identifier: this.selectedItem.ident,
             id: this.selectedItem.id,
-            sendTo: this.selectedUsers.map(user => {return user.email}),
+            sendTo: this.selectedUsers.map((user) => {
+              return user.email;
+            }),
             promoteLink: `${env.FRONTEND_URL}${this.selectedItem.link.path}`,
           },
           {
@@ -229,17 +255,16 @@ export default {
       try {
         const response = await this.$api.delete(`subscribe/${id}`);
         if (response.status != 200) throw Error(response.data.message);
-        } catch (err) {
-          console.log(err);
-          }
-        },
-    },
-    setPromotedItem(data){
-      try{
-
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
+    },
+  },
+  setPromotedItem(data) {
+    try {
+    } catch (err) {
+      console.log(err);
     }
-          };
+  },
+};
 </script>
