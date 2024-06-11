@@ -14,6 +14,11 @@
     </div>
     <q-space />
 
+    <q-toggle v-if="sessionData?.isAdmin"
+      v-model="toggleNavbar"
+      :color="green"
+    />
+
     <q-btn
       icon="menu"
       class="drawer-dialog"
@@ -103,7 +108,7 @@
       </q-card>
     </q-dialog>
 
-    <div class="component-navbar-admin" v-if="isAdmin">
+    <div class="component-navbar-admin" v-if="toggleNavbar">
       <q-btn
         flat
         no-caps
@@ -176,7 +181,7 @@
       </q-btn>
     </div>
 
-    <div class="component-navbar" v-if="!isAdmin">
+    <div class="component-navbar" v-if="!toggleNavbar">
       <q-btn
         flat
         no-caps
@@ -298,13 +303,19 @@ export default {
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     return {
       navbarDialog: ref(false),
+      toggleNavbar: ref(props.isAdmin),
       sessionData: ref(
         JSON.parse(decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)))
       ),
     };
+  },
+  watch: {
+    toggleNavbar: {
+      handler(val) { console.log(val) }
+    }
   },
   methods: {
     showNotif(msg, status) {

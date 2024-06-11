@@ -3,11 +3,11 @@
     <navbar :isAdmin="true" />
     <div>
       <q-table
-        :rows="rows"
+        :rows="subscriberDatas"
         :columns="columns"
-        row-key="name"
+        row-key="email"
         selection="multiple"
-        v-model:selected="selected"
+        v-model:selected="selectedUsers"
         class="q-mt-md"
       >
         <template v-slot:body-cell-Action>
@@ -73,23 +73,23 @@ export default {
         { name: "Action", align: "center", label: "Action", field: "" },
       ],
 
-      rows: [
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-        {
-          email: "razan.kaka@gmail.com",
-        },
-      ],
+      // rows: [
+      //   {
+      //     email: "razan.kaka@gmail.com",
+      //   },
+      //   {
+      //     email: "razan.kaka@gmail.com",
+      //   },
+      //   {
+      //     email: "razan.kaka@gmail.com",
+      //   },
+      //   {
+      //     email: "razan.kaka@gmail.com",
+      //   },
+      //   {
+      //     email: "razan.kaka@gmail.com",
+      //   },
+      // ],
       selected: ref(),
       openDialog: ref(false),
       selectedItem: ref(),
@@ -118,7 +118,7 @@ export default {
         if (subscriptionResponse.status != 200) throw Error(response.data.message);
         this.subscriberDatas = subscriptionResponse.data.data;
         if (this.eventDatas.length < 1) {
-          const eventResponse = await this.$api.get("event/page");
+          const eventResponse = await this.$api.get("event");
           this.eventDatas = eventResponse.data.data;
         }
         if (this.tiketDatas.length < 1) {
