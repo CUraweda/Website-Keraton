@@ -3,8 +3,12 @@
     <navbar :isAdmin="true" />
     <div class="flex items-center justify-between wrap full-width">
       <div class="q-gutter-xs q-mx-xs">
-        <q-btn class="text-capitalize" @click="openDialog('event')">Add New Event</q-btn>
-        <q-btn class="text-capitalize" @click="openDialog('tiketPaket')">Add New Tiket / Paket</q-btn>
+        <q-btn class="text-capitalize" @click="openDialog('event')"
+          >Add New Event</q-btn
+        >
+        <q-btn class="text-capitalize" @click="openDialog('tiketPaket')"
+          >Add New Tiket / Paket</q-btn
+        >
       </div>
 
       <div class="q-gutter-x-xs q-mx-xs">
@@ -14,10 +18,27 @@
               <q-item>
                 <q-item-section class="q-gutter-y-md">
                   <q-btn icon="add" @click="handleDialog('type')" />
-                  <q-card-section v-for="(type, i) in typeOptionsRaw" :key="i" class="flex">
-                    <p>{{ type.name }}</p>
-                    <q-btn flat icon="edit" @click="handleDialog('type', type)" />
-                    <q-btn flat icon="delete" @click="sendDelete('type', type.id)" />
+                  <q-card-section
+                    style="width: 15rem"
+                    v-for="(type, i) in typeOptionsRaw"
+                    :key="i"
+                    class="flex items-center justify-between"
+                  >
+                    <div>{{ type.name }}</div>
+                    <div class="flex items-center">
+                      <q-btn
+                        flat
+                        color="green"
+                        icon="edit"
+                        @click="handleDialog('type', type)"
+                      />
+                      <q-btn
+                        flat
+                        color="red"
+                        icon="delete"
+                        @click="sendDelete('type', type.id)"
+                      />
+                    </div>
                   </q-card-section>
                 </q-item-section>
               </q-item>
@@ -25,16 +46,37 @@
           </q-menu>
         </q-btn>
 
-        <q-btn outlined label="Sub Tipe" no-caps icon-right="keyboard_arrow_down">
+        <q-btn
+          outlined
+          label="Sub Tipe"
+          no-caps
+          icon-right="keyboard_arrow_down"
+        >
           <q-menu>
             <q-list>
               <q-item>
                 <q-item-section class="q-gutter-y-md">
                   <q-btn icon="add" @click="handleDialog('subType')" />
-                  <q-card-section v-for="(subType, i) in subTypeOptionsRaw" :key="i" class="flex">
-                    <p>{{ subType.name }}</p>
-                    <q-btn flat icon="edit" @click="handleDialog('subType', subType)" />
-                    <q-btn flat icon="delete" @click="sendDelete('subType', subType.id)" />
+                  <q-card-section
+                    v-for="(subType, i) in subTypeOptionsRaw"
+                    :key="i"
+                    class="flex items-center justify-between"
+                  >
+                    <div>{{ subType.name }}</div>
+                    <div>
+                      <q-btn
+                        flat
+                        color="green"
+                        icon="edit"
+                        @click="handleDialog('subType', subType)"
+                      />
+                      <q-btn
+                        flat
+                        color="red"
+                        icon="delete"
+                        @click="sendDelete('subType', subType.id)"
+                      />
+                    </div>
                   </q-card-section>
                 </q-item-section>
               </q-item>
@@ -42,16 +84,37 @@
           </q-menu>
         </q-btn>
 
-        <q-btn outlined label="Jenis Event" no-caps icon-right="keyboard_arrow_down">
+        <q-btn
+          outlined
+          label="Jenis Event"
+          no-caps
+          icon-right="keyboard_arrow_down"
+        >
           <q-menu>
             <q-list>
               <q-item>
                 <q-item-section class="q-gutter-y-md">
                   <q-btn icon="add" @click="handleDialog('category')" />
-                  <q-card-section v-for="(category, i) in categoryOptions" :key="i" class="flex">
-                    <p>{{ category.name }}</p>
-                    <q-btn flat icon="edit" @click="handleDialog('category', category)" />
-                    <q-btn flat icon="delete" @click="sendDelete('category', category.id)" />
+                  <q-card-section
+                    v-for="(category, i) in categoryOptions"
+                    :key="i"
+                    class="flex items-center justify-between"
+                  >
+                    <div>{{ category.name }}</div>
+                    <div>
+                      <q-btn
+                        flat
+                        color="green"
+                        icon="edit"
+                        @click="handleDialog('category', category)"
+                      />
+                      <q-btn
+                        flat
+                        color="red"
+                        icon="delete"
+                        @click="sendDelete('category', category.id)"
+                      />
+                    </div>
                   </q-card-section>
                 </q-item-section>
               </q-item>
@@ -70,9 +133,12 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input v-model="type.name" label="Name" />
-          <q-btn :label="currentId ? 'Update' : 'Create'"
-            @click="currentId ? sendUpdate('type') : sendCreate('type')" />
+          <q-input class="q-mx-sx" v-model="type.name" label="Name" />
+          <q-btn
+            :label="currentId ? 'Update' : 'Create'"
+            @click="currentId ? sendUpdate('type') : sendCreate('type')"
+            class="q-mt-md"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -86,11 +152,24 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input v-model="subType.name" label="Name" />
-          <q-input v-model="subType.minimumUnits" type="number" label="Min Units" />
-          <q-select v-model="subType.orderTypeId" :options="typeOptions" label="Type" />
-          <q-btn :label="currentId ? 'Update' : 'Create'"
-            @click="currentId ? sendUpdate('subType') : sendCreate('subType')" />
+          <q-input class="q-mx-sx" v-model="subType.name" label="Name" />
+          <q-input
+            v-model="subType.minimumUnits"
+            type="number"
+            label="Min Units"
+            class="q-mx-sx q-mt-md"
+          />
+          <q-select
+            v-model="subType.orderTypeId"
+            :options="typeOptions"
+            label="Type"
+            class="q-mx-sx q-mt-md"
+          />
+          <q-btn
+            :label="currentId ? 'Update' : 'Create'"
+            @click="currentId ? sendUpdate('subType') : sendCreate('subType')"
+            class="q-mt-md"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -104,9 +183,12 @@
         </q-card-section>
 
         <q-card-section>
-          <q-input v-model="category.name" label="Name" />
-          <q-btn :label="currentId ? 'Update' : 'Create'"
-            @click="currentId ? sendUpdate('category') : sendCreate('category')" />
+          <q-input class="q-mx-xs" v-model="category.name" label="Name" />
+          <q-btn
+            :label="currentId ? 'Update' : 'Create'"
+            @click="currentId ? sendUpdate('category') : sendCreate('category')"
+            class="q-mt-md"
+          />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -122,19 +204,58 @@
         <q-card-section class="flex q-gutter-md">
           <div>
             <div class="flex">
-              <q-select filled v-model="event.iterationId" :options="iterations" class="col-grow" label="Iteration" />
+              <q-select
+                filled
+                v-model="event.iterationId"
+                :options="iterations"
+                class="col-grow"
+                label="Iteration"
+              />
             </div>
-            <q-input filled v-model="event.name" label="Name" color="black" bg-color="gray" class="q-mt-md" />
-            <q-input filled v-model="event.desc" label="Description" color="black" bg-color="gray" class="q-mt-md" />
+            <q-input
+              filled
+              v-model="event.name"
+              label="Name"
+              color="black"
+              bg-color="gray"
+              class="q-mt-md"
+            />
+            <q-input
+              filled
+              v-model="event.desc"
+              label="Description"
+              color="black"
+              bg-color="gray"
+              class="q-mt-md"
+            />
 
             <div class="flex items-center q-mt-md q-gutter-md">
-              <q-btn no-caps :label="currentId ? 'Update' : 'Create'" @click="actionHandler('event')" />
-              <q-input filled v-model="event.price" type="number" label="Rp." color="black" bg-color="gray" />
+              <q-btn
+                no-caps
+                :label="currentId ? 'Update' : 'Create'"
+                @click="actionHandler('event')"
+              />
+              <q-input
+                filled
+                v-model="event.price"
+                type="number"
+                label="Rp."
+                color="black"
+                bg-color="gray"
+              />
             </div>
           </div>
           <div style="display: flex; flex-direction: column">
-            <q-file filled type="file" v-model="event.image" label="Tambahkan Image" color="black" class="ellipsis"
-              style="width: 10rem" @update:model-value="handleUploadEvent()" />
+            <q-file
+              filled
+              type="file"
+              v-model="event.image"
+              label="Tambahkan Image"
+              color="black"
+              class="ellipsis"
+              style="width: 10rem"
+              @update:model-value="handleUploadEvent()"
+            />
             <q-img :src="imgURLEvent" v-if="imgURLEvent" />
           </div>
         </q-card-section>
@@ -152,35 +273,99 @@
         <q-card-section class="flex items-center justify-center">
           <div class="flex q-gutter-md">
             <div>
-              <q-input filled v-model="tikets.name" label="Name" color="black" bg-color="gray" />
-              <q-input filled v-model="tikets.desc" label="Description" type="textarea" color="black" class="q-mt-md"
-                bg-color="gray" />
+              <q-input
+                filled
+                v-model="tikets.name"
+                label="Name"
+                color="black"
+                bg-color="gray"
+              />
+              <q-input
+                filled
+                v-model="tikets.desc"
+                label="Description"
+                type="textarea"
+                color="black"
+                class="q-mt-md"
+                bg-color="gray"
+              />
             </div>
 
             <div>
               <p>Relasi Objek Wisata</p>
-              <q-checkbox v-model="tikets.wisataRelation" :val="wisata.value" :label="wisata.label" color="teal"
-                v-for="(wisata, i) in wisataRelationsOptions" :key="i" />
-              <q-input filled v-model="tikets.wisataDesc" label="Wisata Description" type="textarea" color="black"
-                class="q-mt-md" />
+              <q-checkbox
+                v-model="tikets.wisataRelation"
+                :val="wisata.value"
+                :label="wisata.label"
+                color="teal"
+                v-for="(wisata, i) in wisataRelationsOptions"
+                :key="i"
+              />
+              <q-input
+                filled
+                v-model="tikets.wisataDesc"
+                label="Wisata Description"
+                type="textarea"
+                color="black"
+                class="q-mt-md"
+              />
             </div>
 
             <div>
-              <q-input filled v-model="tikets.price" type="number" label="Price" color="black" bg-color="gray" />
-              <q-select filled v-model="tikets.units" :options="unitOptions" label="Unit" class="q-mt-md" />
-              <q-select filled v-model="tikets.categoryId" :options="categoryOptions" label="Unit" class="q-mt-md" />
-              <q-select filled v-model="tikets.subTypeId" :options="subTypeOptions" label="Sub Type" class="q-mt-md" />
+              <q-input
+                filled
+                v-model="tikets.price"
+                type="number"
+                label="Price"
+                color="black"
+                bg-color="gray"
+              />
+              <q-select
+                filled
+                v-model="tikets.units"
+                :options="unitOptions"
+                label="Unit"
+                class="q-mt-md"
+              />
+              <q-select
+                filled
+                v-model="tikets.categoryId"
+                :options="categoryOptions"
+                label="Unit"
+                class="q-mt-md"
+              />
+              <q-select
+                filled
+                v-model="tikets.subTypeId"
+                :options="subTypeOptions"
+                label="Sub Type"
+                class="q-mt-md"
+              />
             </div>
 
-            <div style="
+            <div
+              style="
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-              ">
-              <q-file filled type="file" v-model="tikets.image" label="Tambahkan Image" color="black" class="ellipsis"
-                style="width: 10rem" @update:model-value="handleUploadTiket()" />
+              "
+            >
+              <q-file
+                filled
+                type="file"
+                v-model="tikets.image"
+                label="Tambahkan Image"
+                color="black"
+                class="ellipsis"
+                style="width: 10rem"
+                @update:model-value="handleUploadTiket()"
+              />
               <q-img :src="imgURLTiket" v-if="imgURLTiket" />
-              <q-btn no-caps :label="currentId ? 'Update' : 'Create'" @click="actionHandler('tiket')" />
+              <q-btn
+                no-caps
+                :label="currentId ? 'Update' : 'Create'"
+                @click="actionHandler('tiket')"
+              />
             </div>
           </div>
         </q-card-section>
@@ -189,12 +374,15 @@
 
     <div class="q-gutter-md q-mt-md">
       <div class="text-h5 q-mx-lg q-mt-md">Event</div>
-      <div class="flex col-grow q-gutter-md" style="
+      <div
+        class="flex col-grow q-gutter-md"
+        style="
           overflow-x: auto;
           flex-wrap: nowrap;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        ">
+        "
+      >
         <div v-for="(event, index) in events" :key="index">
           <q-card class="my-card" flat bordered style="width: 20rem">
             <q-img :src="event.image" style="height: 15rem" />
@@ -203,21 +391,27 @@
               <div class="flex q-gutter-sm">
                 <q-badge color="blue">{{ event.iteration }}</q-badge>
                 <q-badge color="blue">{{
-      event.isFree ? "Free" : "Paid"
-    }}</q-badge>
+                  event.isFree ? "Free" : "Paid"
+                }}</q-badge>
               </div>
-              <div class="text-h6 q-mt-sm q-mb-xs" style="
+              <div
+                class="text-h6 q-mt-sm q-mb-xs"
+                style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                ">
+                "
+              >
                 {{ event.name }}
               </div>
-              <div class="text-caption text-grey" style="
+              <div
+                class="text-caption text-grey"
+                style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                ">
+                "
+              >
                 {{ event.desc }}
               </div>
             </q-card-section>
@@ -225,24 +419,38 @@
             <q-card-actions>
               <div class="text-subtitle1 text-weight-medium">
                 {{
-      event.price < 1 ? "Free" : "Rp. " + formatRupiah(event.price) }} </div>
+                  event.price < 1 ? "Free" : "Rp. " + formatRupiah(event.price)
+                }}
+              </div>
 
-                  <q-space />
+              <q-space />
 
-                  <q-btn flat @click="openDialog('event', event)">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                      fill="green">
-                      <path
-                        d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-                    </svg>
-                  </q-btn>
-                  <q-btn flat @click="sendDelete('event', event.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                      fill="red">
-                      <path
-                        d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                    </svg>
-                  </q-btn>
+              <q-btn flat @click="openDialog('event', event)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="green"
+                >
+                  <path
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                  />
+                </svg>
+              </q-btn>
+              <q-btn flat @click="sendDelete('event', event.id)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="red"
+                >
+                  <path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                  />
+                </svg>
+              </q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -250,29 +458,38 @@
 
       <div class="text-h5 q-mt-md q-mx-lg">Tiket & Paket</div>
 
-      <div class="flex col-grow q-gutter-md" style="
+      <div
+        class="flex col-grow q-gutter-md"
+        style="
           overflow-x: auto;
           flex-wrap: nowrap;
           -ms-overflow-style: none;
           scrollbar-width: none;
-        ">
+        "
+      >
         <div v-for="(tiket, index) in tiketPakets" :key="index">
           <q-card class="my-card" flat bordered style="width: 20rem">
             <q-img :src="tiket.image" style="height: 15rem" />
 
             <q-card-section>
-              <div class="text-h6 q-mt-sm q-mb-xs" style="
+              <div
+                class="text-h6 q-mt-sm q-mb-xs"
+                style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                ">
+                "
+              >
                 {{ tiket.name }}
               </div>
-              <div class="text-caption text-grey" style="
+              <div
+                class="text-caption text-grey"
+                style="
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                ">
+                "
+              >
                 {{ tiket.desc }}
               </div>
             </q-card-section>
@@ -280,23 +497,38 @@
             <q-card-actions>
               <div class="text-subtitle1 text-weight-medium">
                 {{
-      tiket.price < 1 ? "Free" : "Rp. " + formatRupiah(tiket.price) }} </div>
+                  tiket.price < 1 ? "Free" : "Rp. " + formatRupiah(tiket.price)
+                }}
+              </div>
 
-                  <q-space />
+              <q-space />
 
-                  <q-btn flat @click="openDialog('tiket', tiket)">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                      fill="green">
-                      <path
-                        d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-                    </svg>
-                  </q-btn>
-                  <q-btn flat @click="sendDelete('tiket', tiket.id)"><svg xmlns="http://www.w3.org/2000/svg"
-                      height="24px" viewBox="0 -960 960 960" width="24px" fill="red">
-                      <path
-                        d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                    </svg>
-                  </q-btn>
+              <q-btn flat @click="openDialog('tiket', tiket)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="green"
+                >
+                  <path
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"
+                  />
+                </svg>
+              </q-btn>
+              <q-btn flat @click="sendDelete('tiket', tiket.id)"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="red"
+                >
+                  <path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                  />
+                </svg>
+              </q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -354,15 +586,15 @@ export default {
         subTypeId: undefined,
       }),
       type: ref({
-        name: ''
+        name: "",
       }),
       category: ref({
-        name: ''
+        name: "",
       }),
       subType: ref({
-        name: '',
+        name: "",
         minimumUnits: 0,
-        orderTypeId: undefined
+        orderTypeId: undefined,
       }),
       imgURLEvent: ref(),
       imgURLTiket: ref(),
@@ -393,19 +625,19 @@ export default {
     },
     typeDialog: {
       handler(val) {
-        if (!val) this.resetDefault()
-      }
+        if (!val) this.resetDefault();
+      },
     },
     subTypeDialog: {
       handler(val) {
-        if (!val) this.resetDefault()
-      }
+        if (!val) this.resetDefault();
+      },
     },
     categoryDialog: {
       handler(val) {
-        if (!val) this.resetDefault()
-      }
-    }
+        if (!val) this.resetDefault();
+      },
+    },
   },
   methods: {
     handleUploadEvent() {
@@ -467,19 +699,19 @@ export default {
           value: type.id,
         }));
 
-        this.subTypeOptionsRaw = helper.data.data.subTypes.map(subType => ({
+        this.subTypeOptionsRaw = helper.data.data.subTypes.map((subType) => ({
           id: subType.id,
           name: subType.name,
           minimumUnits: subType.minimumUnits,
-          orderTypeId: subType.orderTypeId
-        }))
-        this.typeOptionsRaw = helper.data.data.types.map(type => ({
+          orderTypeId: subType.orderTypeId,
+        }));
+        this.typeOptionsRaw = helper.data.data.types.map((type) => ({
           id: type.id,
-          name: type.name
-        }))
+          name: type.name,
+        }));
         this.categoryOptions = helper.data.data.category.map((category) => ({
           id: category.id,
-          name: category.name
+          name: category.name,
         }));
         this.subTypes = helper.data.data.subTypes;
       } catch (err) {
@@ -504,29 +736,35 @@ export default {
             url = `items/update`;
             let wisataRelation = "";
             requestBody = this.tikets;
-            for (let relationIdentifier of requestBody.wisataRelation) wisataRelation += `${relationIdentifier} `;
+            for (let relationIdentifier of requestBody.wisataRelation)
+              wisataRelation += `${relationIdentifier} `;
             requestBody.wisataRelation = wisataRelation;
-            if (requestBody.units.value) requestBody.units = requestBody.units.value;
-            if (requestBody.categoryId.value) requestBody.categoryId = requestBody.categoryId.value;
-            if (requestBody.subTypeId.value) requestBody.subTypeId = requestBody.subTypeId.value;
+            if (requestBody.units.value)
+              requestBody.units = requestBody.units.value;
+            if (requestBody.categoryId.value)
+              requestBody.categoryId = requestBody.categoryId.value;
+            if (requestBody.subTypeId.value)
+              requestBody.subTypeId = requestBody.subTypeId.value;
             delete requestBody.subType;
             useMultipart = true
             break;
           case "type":
-            url = `type/${this.currentId}`
-            requestBody = this.type
-            delete requestBody.id
+            url = `type/${this.currentId}`;
+            requestBody = this.type;
+            delete requestBody.id;
             break;
           case "category":
-            url = `category/${this.currentId}`
-            requestBody = this.category
-            delete requestBody.id
+            url = `category/${this.currentId}`;
+            requestBody = this.category;
+            delete requestBody.id;
             break;
           case "subType":
-            url = `subtype/${this.currentId}`
-            requestBody = this.subType
-            requestBody.orderTypeId = requestBody.orderTypeId?.value ? requestBody.orderTypeId.value : requestBody.orderTypeId
-            delete requestBody.id
+            url = `subtype/${this.currentId}`;
+            requestBody = this.subType;
+            requestBody.orderTypeId = requestBody.orderTypeId?.value
+              ? requestBody.orderTypeId.value
+              : requestBody.orderTypeId;
+            delete requestBody.id;
             break;
           default:
             break;
@@ -541,9 +779,9 @@ export default {
         if (response.status != 200) throw Error("Error Occured");
         this.addNewEvent = false;
         this.addNewTiketPaket = false;
-        this.typeDialog = false
-        this.subTypeDialog = false
-        this.categoryDialog = false
+        this.typeDialog = false;
+        this.subTypeDialog = false;
+        this.categoryDialog = false;
         socket.emit("event");
         this.fetchData();
       } catch (err) {
@@ -562,14 +800,14 @@ export default {
             url = `items/${id}`;
             break;
           case "type":
-            url = `type/${id}`
+            url = `type/${id}`;
             break;
           case "subType":
-            url = `subtype/${id}`
+            url = `subtype/${id}`;
             break;
           case "category":
-            url = `category/${id}`
-            break
+            url = `category/${id}`;
+            break;
           default:
             break;
         }
@@ -607,17 +845,19 @@ export default {
             useMultipart = true
             break;
           case "type":
-            url = `type`
-            requestBody = this.type
+            url = `type`;
+            requestBody = this.type;
             break;
           case "category":
-            url = `category`
-            requestBody = this.category
+            url = `category`;
+            requestBody = this.category;
             break;
           case "subType":
-            url = `subtype`
-            requestBody = this.subType
-            requestBody.orderTypeId = requestBody.orderTypeId?.value ? requestBody.orderTypeId.value : requestBody.orderTypeId
+            url = `subtype`;
+            requestBody = this.subType;
+            requestBody.orderTypeId = requestBody.orderTypeId?.value
+              ? requestBody.orderTypeId.value
+              : requestBody.orderTypeId;
             break;
           default:
             break;
@@ -632,9 +872,9 @@ export default {
         if (response.status != 200) throw Error("Error Occured");
         this.addNewEvent = false;
         this.addNewTiketPaket = false;
-        this.typeDialog = false
-        this.subTypeDialog = false
-        this.categoryDialog = false
+        this.typeDialog = false;
+        this.subTypeDialog = false;
+        this.categoryDialog = false;
         this.fetchData();
       } catch (err) {
         console.log(err);
@@ -675,18 +915,18 @@ export default {
       switch (type) {
         case "type":
           this.typeDialog = true;
-          this.currentId = itemData.id
-          if (itemData) this.type = { ...itemData }
+          this.currentId = itemData.id;
+          if (itemData) this.type = { ...itemData };
           break;
         case "subType":
           this.subTypeDialog = true;
-          this.currentId = itemData.id
-          if (itemData) this.subType = { ...itemData }
+          this.currentId = itemData.id;
+          if (itemData) this.subType = { ...itemData };
           break;
         case "category":
           this.categoryDialog = true;
-          this.currentId = itemData.id
-          if (itemData) this.category = { ...itemData }
+          this.currentId = itemData.id;
+          if (itemData) this.category = { ...itemData };
           break;
         default:
           break;
@@ -744,10 +984,10 @@ export default {
           name: ''
         }
       this.subType = {
-        name: '',
+        name: "",
         minimumUnits: 0,
-        orderTypeId: undefined
-      }
+        orderTypeId: undefined,
+      };
     },
   },
 };
