@@ -14,9 +14,12 @@
     </div>
     <q-space />
 
-    <q-toggle v-if="sessionData?.isAdmin"
+    <q-toggle
+      v-if="sessionData?.isAdmin"
       v-model="toggleNavbar"
-      :color="green"
+      color="orange"
+      checked-icon="check"
+      unchecked-icon="clear"
     />
 
     <q-btn
@@ -26,11 +29,14 @@
       @click="navbarDialog = true"
     />
 
-    <q-dialog v-model="navbarDialog" position="top">
+    <q-dialog full-width v-model="navbarDialog" position="top">
       <q-card>
-        <q-card-section>
-          <div style="width: 10rem">
+        <q-card-section v-if="!toggleNavbar">
+          <div>
             <q-btn flat no-caps label="Beranda" color="black" to="/" />
+          </div>
+
+          <div>
             <q-btn flat label="Sejarah" no-caps color="black">
               <q-menu>
                 <q-list>
@@ -43,6 +49,9 @@
                 </q-list>
               </q-menu>
             </q-btn>
+          </div>
+
+          <div>
             <q-btn flat no-caps label="Booking" color="black">
               <q-menu>
                 <q-list>
@@ -55,6 +64,9 @@
                 </q-list>
               </q-menu>
             </q-btn>
+          </div>
+
+          <div>
             <q-btn
               flat
               no-caps
@@ -75,6 +87,9 @@
                 </q-list>
               </q-menu>
             </q-btn>
+          </div>
+
+          <div>
             <q-btn
               v-if="!sessionData?.isLogin"
               no-caps
@@ -82,28 +97,72 @@
               style="background: #123b32; color: white; padding-inline: 30px"
             >
             </q-btn>
-            <q-expansion-item
-              v-if="sessionData?.isLogin"
-              label="Account"
-              clickable
-              expand-separator
-            >
-              <q-list>
-                <q-item clickable to="/user/carts">
-                  <q-item-section>Keranjang</q-item-section>
-                </q-item>
-                <q-item clickable to="/user/transaction">
-                  <q-item-section>Pembelian</q-item-section>
-                </q-item>
-                <q-item v-if="sessionData.isAdmin" clickable to="/admin/home">
-                  <q-item-section>Admin Page</q-item-section>
-                </q-item>
-                <q-item clickable @click="logOut" class="text-negative">
-                  <q-item-section>Logout</q-item-section>
-                </q-item>
-              </q-list>
-            </q-expansion-item>
           </div>
+
+          <q-expansion-item
+            v-if="sessionData?.isLogin"
+            label="Account"
+            clickable
+            expand-separator
+          >
+            <q-list>
+              <q-item clickable to="/user/carts">
+                <q-item-section>Keranjang</q-item-section>
+              </q-item>
+              <q-item clickable to="/user/transaction">
+                <q-item-section>Pembelian</q-item-section>
+              </q-item>
+              <q-item v-if="sessionData.isAdmin" clickable to="/admin/home">
+                <q-item-section>Admin Page</q-item-section>
+              </q-item>
+              <q-item clickable @click="logOut" class="text-negative">
+                <q-item-section>Logout</q-item-section>
+              </q-item>
+            </q-list>
+          </q-expansion-item>
+        </q-card-section>
+
+        <q-card-section v-if="toggleNavbar">
+          <div>
+            <q-btn flat no-caps href="/admin/home" label="Beranda" />
+          </div>
+
+          <div>
+            <q-btn flat no-caps href="/admin/event" label="Tiket" />
+          </div>
+
+          <div>
+            <q-btn flat no-caps href="/admin/news" label="Berita" />
+          </div>
+
+          <div>
+            <q-btn flat no-caps href="/admin/user" label="User" />
+          </div>
+
+          <div>
+            <q-btn flat no-caps href="/admin/subs" label="Langganan" />
+          </div>
+          <q-expansion-item
+            v-if="sessionData?.isLogin"
+            label="Account"
+            clickable
+            expand-separator
+          >
+            <q-list>
+              <q-item clickable to="/user/carts">
+                <q-item-section>Keranjang</q-item-section>
+              </q-item>
+              <q-item clickable to="/user/transaction">
+                <q-item-section>Pembelian</q-item-section>
+              </q-item>
+              <q-item v-if="sessionData.isAdmin" clickable to="/admin/home">
+                <q-item-section>Admin Page</q-item-section>
+              </q-item>
+              <q-item clickable @click="logOut" class="text-negative">
+                <q-item-section>Logout</q-item-section>
+              </q-item>
+            </q-list>
+          </q-expansion-item>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -314,8 +373,10 @@ export default {
   },
   watch: {
     toggleNavbar: {
-      handler(val) { console.log(val) }
-    }
+      handler(val) {
+        console.log(val);
+      },
+    },
   },
   methods: {
     showNotif(msg, status) {

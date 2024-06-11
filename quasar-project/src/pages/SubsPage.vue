@@ -10,14 +10,14 @@
         v-model:selected="selected"
         class="q-mt-md col-grow"
       >
-        <template v-slot:body-cell-Action>
+        <template v-slot:body-cell-Action="props">
           <div class="flex items-center justify-center">
             <q-btn
               icon="delete"
               flat
               color="red"
               no-caps
-              @click="deleteSubscriber(subscriberDatas.id)"
+              @click="deleteSubscriber(props.row.id)"
               style="background-color: rgba(255, 0, 0, 0.102)"
             ></q-btn>
           </div>
@@ -160,6 +160,7 @@ export default {
   data() {
     return {
       columns: [
+        { name: "id", field: "id" },
         { name: "Email", align: "center", label: "Email", field: "email" },
         { name: "Action", align: "center", label: "Action", field: "" },
       ],
