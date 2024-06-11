@@ -64,7 +64,7 @@
                   label="Link To Direct"
                   :options="linkList"
                   v-model="selectedItem.link"
-                  style="width: 10rem"
+                  style="width: 15rem"
                 />
                 <q-btn no-caps class="q-mt-md full-width" label="Send Email" />
               </div>
@@ -73,18 +73,19 @@
         </q-card>
 
         <q-card class="q-mt-xs">
-          <q-card-section>
+          <q-card-section class="flex items-center q-gutter-xs">
             <q-input
               outlined
               v-model="searchEvent"
               type="search"
               label="Search"
-              style="width: 15rem"
             >
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
             </q-input>
+
+            <q-input v-model="limitOrder" outlined type="number" label="Show" />
           </q-card-section>
 
           <q-card-section>
