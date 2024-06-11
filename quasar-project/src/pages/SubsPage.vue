@@ -30,25 +30,24 @@
           <q-card-section>
             <div class="flex justify-between">
               <q-img
-                src="../assets/images/bedug.png"
+                :src="selectedItem.image || ''"
                 style="width: 12rem; height: 8rem"
               />
               <div>
-                <div class="text-h6 text-bold">Tiket Masuk</div>
-                <div>Kamu bisa masuk disini</div>
+                <div class="text-h6 text-bold">{{ selectedItem.name || "--------" }}</div>
+                <div>{{ selectedItem.desc || '-------------' }}</div>
               </div>
 
               <div>
                 <q-select
                   dense
                   outlined
-                  label="Select"
-                  :option="selectOption"
-                  v-model="select"
+                  label="Link To Direct"
+                  :options="linkList"
+                  v-model="selectedItem.link"
                   style="width: 10rem"
                 />
-
-                <q-btn no-caps class="q-mt-md full-width" label="Button" />
+                <q-btn no-caps class="q-mt-md full-width" label="Send Email" />
               </div>
             </div>
           </q-card-section>
@@ -70,10 +69,9 @@
           </q-card-section>
 
           <q-card-section>
-            <div class="text-h6 text-bold">Event</div>
             <div
-              v-for="(item, index) in eventDatas"
-              :key="index"
+              v-for="(item, i) in itemDatas"
+              :key="i"
               class="flex justify-between q-mt-md"
             >
               <q-img :src="item.image" style="width: 12rem; height: 8rem" />
@@ -101,44 +99,6 @@
                   {{ item.desc }}
                 </div>
               </div>
-
-              <div>
-                <q-btn no-caps label="Promote" />
-              </div>
-            </div>
-
-            <div class="text-h6 text-bold q-mt-md">Tiket / Paket</div>
-            <div
-              v-for="(item, index) in tiketDatas"
-              :key="index"
-              class="flex justify-between q-mt-md"
-            >
-              <q-img :src="item.image" style="width: 12rem; height: 8rem" />
-
-              <div>
-                <div
-                  class="text-h6 text-bold"
-                  style="
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    width: 20rem;
-                  "
-                >
-                  {{ item.name }}
-                </div>
-                <div
-                  style="
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    width: 20rem;
-                  "
-                >
-                  {{ item.desc }}
-                </div>
-              </div>
-
               <div>
                 <q-btn no-caps label="Promote" />
               </div>
@@ -155,6 +115,7 @@ import { ref } from "vue";
 import env from "stores/environment";
 import cookieHandler from "src/cookieHandler";
 import navbar from "../components/NavbarNew.vue";
+import routeList from 'src/router/routes'
 
 export default {
   components: { navbar },
@@ -168,12 +129,19 @@ export default {
       searchEvent: ref(),
       selected: ref(),
       openDialog: ref(false),
-      selectedItem: ref(),
+      selectedItem: ref({
+        image: undefined,
+        ident: undefined,
+        name: '',
+        desc: '',
+        link: undefined
+      }),
       selectedUsers: ref([]),
       subscriberDatas: ref([]),
-      eventDatas: ref([]),
-      tiketDatas: ref([]),
+      itemDatas: ref([]),
+      showManyData: ref(5),
       promoteLinkInput: ref(),
+      linkList: ref([]),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
     };
   },
@@ -191,34 +159,61 @@ export default {
     async fetchData() {
       try {
         const subscriptionResponse = await this.$api.get("subscribe");
-        if (subscriptionResponse.status != 200)
-          throw Error(response.data.message);
+        if (subscriptionResponse.status != 200) throw Error(response.data.message);
         this.subscriberDatas = subscriptionResponse.data.data.map((subs) => ({
           id: subs.id,
           email: subs.email,
         }));
 
-        if (this.eventDatas.length < 1) {
+        if (this.itemDatas.length < 1) {
           const eventResponse = await this.$api.get("event");
-          this.eventDatas = eventResponse.data.data;
-        }
-        if (this.tiketDatas.length < 1) {
           const tiketResponse = await this.$api.get("items");
-          this.tiketDatas = tiketResponse.data.data;
+          let currentLength = 0
+          for(let data of eventResponse.data.data){
+            if(currentLength === this.showManyData) break
+            currentLength++
+          this.itemDatas.push({
+            ident: "event",
+            id: data.id,
+            image: data.image,
+            name: data.name,
+              desc: data.desc
+              })
+              for(let data of tiketResponse.data.data){
+                if(currentLength === this.showManyData) break
+                currentLength++
+                this.itemDatas.push({
+              ident: "tiket",
+              id: data.id,
+              image: data.image,
+              name: data.name,
+              desc: data.desc
+            })
+          }
+          }
         }
+        if(this.linkList.length < 1){
+          this.linkList = routeList.map((link) => ({
+            label: `${link.name} - ${link.path}`,
+            path: link.path
+          }))
+        }
+        console.log(this.linkList)
+        if(this.itemDatas.length > 0) this.selectedItem = { ...this.itemDatas[0] } 
       } catch (err) {
         console.log(err);
       }
     },
     async sendPromoteEmail() {
       try {
+        if(this.selectedUsers.length < 1) throw Error('Pilih User Terlebih Dahulu')
         const response = await this.$api.post(
           "email/subscription/promote",
           {
-            identifier: this.selectedItem.type,
+            identifier: this.selectedItem.ident,
             id: this.selectedItem.id,
-            sendTo: this.selectedUsers,
-            promoteLink: this.promoteLinkInput,
+            sendTo: this.selectedUsers.map(user => {return user.email}),
+            promoteLink: `${env.FRONTEND_URL}${this.selectedItem.link.path}`,
           },
           {
             headers: {
@@ -235,10 +230,17 @@ export default {
       try {
         const response = await this.$api.delete(`subscribe/${id}`);
         if (response.status != 200) throw Error(response.data.message);
-      } catch (err) {
-        console.log(err);
-      }
+        } catch (err) {
+          console.log(err);
+          }
+        },
     },
-  },
-};
+    setPromotedItem(data){
+      try{
+
+      }catch(err){
+        console.log(err)
+      }
+    }
+          };
 </script>
