@@ -7,7 +7,7 @@
         :columns="columns"
         row-key="email"
         selection="multiple"
-        v-model:selected="selected"
+        v-model:selected="selectedUsers"
         class="q-mt-md col-grow"
         style="height: 50rem"
       >
@@ -66,7 +66,7 @@
                   v-model="selectedItem.link"
                   style="width: 15rem"
                 />
-                <q-btn no-caps class="q-mt-md full-width" label="Send Email" />
+                <q-btn no-caps class="q-mt-md full-width" label="Send Email" @click="sendPromoteEmail" />
               </div>
             </div>
           </q-card-section>
@@ -85,18 +85,18 @@
               </template>
             </q-input>
 
-            <q-input v-model="limitOrder" outlined type="number" label="Show" />
+            <q-input v-model="showManyData" outlined type="number" label="Show" />
           </q-card-section>
 
-          <q-card-section>
+          <q-card-section v-if="itemDatas.length > 0">
             <div
-              v-for="(item, i) in itemDatas"
-              :key="i"
+              v-for="index in showManyData"
+              :key="index"
               class="flex justify-between q-mt-md"
-            >
-              <q-img :src="item.image" style="width: 12rem; height: 8rem" />
-
-              <div>
+              >
+              <q-img :src="itemDatas[index]?.image" style="width: 12rem; height: 8rem" />
+              
+              <div v-if="itemDatas[index]">
                 <div
                   class="text-h6 text-bold"
                   style="
@@ -106,7 +106,7 @@
                     width: 20rem;
                   "
                 >
-                  {{ item.name }}
+                  {{ itemDatas[index]?.name }}
                 </div>
                 <div
                   style="
@@ -116,10 +116,10 @@
                     width: 20rem;
                   "
                 >
-                  {{ item.desc }}
+                  {{ itemDatas[index]?.desc }}
                 </div>
               </div>
-              <div>
+              <div v-if="itemDatas[index]">
                 <q-btn no-caps label="Promote" />
               </div>
             </div>
@@ -171,6 +171,17 @@ export default {
         this.openDialog = val.length > 0 ? true : false;
       },
     },
+    showManyData: {
+      handler(val){
+        this.showManyData = +this.showManyData
+      }
+    },
+    searchEvent: {
+      handler(val){
+        console.log(val)
+        this.fetchData()
+      }
+    }
   },
   mounted() {
     this.fetchData();
@@ -186,32 +197,33 @@ export default {
           email: subs.email,
         }));
 
-        if (this.itemDatas.length < 1) {
-          const eventResponse = await this.$api.get("event");
-          const tiketResponse = await this.$api.get("items");
-          let currentLength = 0;
+        if (this.searchEvent || this.itemDatas.length < 1) {
+          let eventUrl = "event", tiketUrl = "items", itemData = []
+          if(this.searchEvent){
+            eventUrl += `?search=${this.searchEvent}`
+            tiketUrl += `?search=${this.searchEvent}`
+          } 
+          const eventResponse = await this.$api.get(eventUrl);
+          const tiketResponse = await this.$api.get(tiketUrl);
           for (let data of eventResponse.data.data) {
-            if (currentLength === this.showManyData) break;
-            currentLength++;
-            this.itemDatas.push({
+            itemData.push({
               ident: "event",
               id: data.id,
               image: data.image,
               name: data.name,
               desc: data.desc,
             });
-            for (let data of tiketResponse.data.data) {
-              if (currentLength === this.showManyData) break;
-              currentLength++;
-              this.itemDatas.push({
-                ident: "tiket",
-                id: data.id,
-                image: data.image,
-                name: data.name,
-                desc: data.desc,
-              });
             }
-          }
+              for (let data of tiketResponse.data.data) {
+                itemData.push({
+                  ident: "tiket",
+                  id: data.id,
+                  image: data.image,
+                  name: data.name,
+                  desc: data.desc,
+                });
+              }
+          this.itemDatas = itemData
         }
         if (this.linkList.length < 1) {
           this.linkList = routeList.map((link) => ({
@@ -219,7 +231,6 @@ export default {
             path: link.path,
           }));
         }
-        console.log(this.linkList);
         if (this.itemDatas.length > 0)
           this.selectedItem = { ...this.itemDatas[0] };
       } catch (err) {
