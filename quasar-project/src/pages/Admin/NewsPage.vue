@@ -136,12 +136,6 @@
       </q-card>
     </q-dialog>
   </div>
-
-  <!-- <Notification
-    v-if="notification.message"
-    :message="notification.message"
-    :type="notification.type"
-  /> -->
 </template>
 
 <script>
@@ -149,11 +143,10 @@ import { ref } from "vue";
 import navbar from "../../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "src/stores/environment";
-// import Notification from "components/NotificationAlert.vue";
-
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 export default {
   components: {
-    // Notification,
     navbar,
   },
   data() {
@@ -187,6 +180,12 @@ export default {
     this.fetchData();
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     handleUploadNews() {
       if (this.newsData.image) {
         this.imgURLNews = URL.createObjectURL(this.newsData.image);
@@ -220,8 +219,9 @@ export default {
         if (response.status != 200) throw Error(response.data.message);
         this.newsDialog = false;
         this.fetchData();
-        this.showNotif(response.data.message, success);
+        this.showNotif(response.data.message, "success");
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
@@ -230,18 +230,11 @@ export default {
         const response = await this.$api.delete(`news/${id}`);
         if (response.status != 200) throw Error(response.data.message);
         this.fetchData();
-        this.showNotif(response.data.message, success);
+        this.showNotif(response.data.message, "success");
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
-    },
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
     },
     handleDialog(data) {
       this.newsDialog = !this.newsDialog;

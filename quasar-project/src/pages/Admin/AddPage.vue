@@ -422,7 +422,8 @@
 import { verifyToken } from "src/auth/auth";
 import socket from "src/socket";
 import { ref } from "vue";
-import Notification from "../../components/NotificationAlert.vue"; // Make sure to adjust the path
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 export default {
   setup() {
@@ -457,13 +458,11 @@ export default {
     socket.disconnect();
   },
   methods: {
-    showNotif(mes, type) {
-      this.notification.message = mes;
-      this.notification.type = type;
-      setTimeout(() => {
-        this.notification.message = "";
-        this.notification.type = "";
-      }, 4000);
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
     },
     async verifyAdmin() {
       try {
@@ -555,6 +554,9 @@ export default {
             },
           }
         );
+        if (response.status == 200) {
+          this.showNotif(response.data.message, "success");
+        }
         if (response.status != 200) throw Error("Error occured");
         socket.emit("dashboard", {});
         window.location.reload();
