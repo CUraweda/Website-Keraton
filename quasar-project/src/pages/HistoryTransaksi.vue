@@ -192,8 +192,12 @@ const statusSelected = ref(false);
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Detail Transaksi</div>
           <q-space />
-          <q-btn icon="local_activity" flat round dense @click="printPDF" />
-          <q-btn icon="mail" flat round dense @click="sendEmail" />
+          <q-btn icon="local_activity" flat round dense @click="printPDF">
+            <q-tooltip> Generate PDF </q-tooltip>
+          </q-btn>
+          <q-btn icon="mail" flat round dense @click="sendEmail">
+            <q-tooltip> Send to Email </q-tooltip>
+          </q-btn>
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
