@@ -25,8 +25,16 @@ import navbar from "../components/NavbarNew.vue";
             <div class="text-h3 text-center">Keranjang</div>
 
             <div class="q-mt-xl">
-              <div v-for="(cart, i) in cartData" :key="cart.id" class="flex column justify-center items-center"
-                style="overflow-x: scroll">
+              <div
+                v-for="(cart, i) in cartData"
+                :key="cart.id"
+                class="flex column justify-center items-center"
+                style="
+                  overflow-x: scroll;
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
+                "
+              >
                 <q-card class="my-card q-mt-md" flat bordered>
                   <q-card-section horizontal>
                     <q-img :src="cart.image" class="image-card" />

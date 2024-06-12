@@ -541,6 +541,9 @@
 import socket from "src/socket";
 import navbar from "../../components/NavbarNew.vue";
 import { ref } from "vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
+
 export default {
   components: { navbar },
   setup() {
@@ -640,6 +643,12 @@ export default {
     },
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     handleUploadEvent() {
       if (this.event.image) {
         this.imgURLEvent = URL.createObjectURL(this.event.image);
@@ -719,7 +728,9 @@ export default {
       }
     },
     async sendUpdate(type) {
-      let url, requestBody, useMultipart = false;
+      let url,
+        requestBody,
+        useMultipart = false;
       try {
         switch (type) {
           case "event":
@@ -730,7 +741,7 @@ export default {
             requestBody = this.event;
             delete requestBody.id;
             delete requestBody.iteration;
-            useMultipart = true
+            useMultipart = true;
             break;
           case "tiket":
             url = `items/update`;
@@ -746,7 +757,7 @@ export default {
             if (requestBody.subTypeId.value)
               requestBody.subTypeId = requestBody.subTypeId.value;
             delete requestBody.subType;
-            useMultipart = true
+            useMultipart = true;
             break;
           case "type":
             url = `type/${this.currentId}`;
@@ -774,9 +785,10 @@ export default {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          })
+          }),
         });
         if (response.status != 200) throw Error("Error Occured");
+        this.showNotif(response.data.message, "success");
         this.addNewEvent = false;
         this.addNewTiketPaket = false;
         this.typeDialog = false;
@@ -785,6 +797,7 @@ export default {
         socket.emit("event");
         this.fetchData();
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
@@ -813,16 +826,20 @@ export default {
         }
         const response = await this.$api.delete(url);
         if (response.status == 200) {
+          this.showNotif(response.data.message, "success");
           this.fetchData();
           socket.emit("event");
         }
       } catch (err) {
+        this.showNotif(err, "error");
         console.error(err);
       }
     },
 
     async sendCreate(type) {
-      let url, requestBody, useMultipart = false;
+      let url,
+        requestBody,
+        useMultipart = false;
       try {
         switch (type) {
           case "event":
@@ -830,7 +847,7 @@ export default {
             this.event.isFree = this.event.price < 1 ? true : false;
             this.event.iterationId = this.event.iterationId.value;
             requestBody = this.event;
-            useMultipart = true
+            useMultipart = true;
             break;
           case "tiket":
             url = `items/create`;
@@ -842,7 +859,7 @@ export default {
             requestBody.units = requestBody.units.value;
             requestBody.categoryId = requestBody.categoryId.value;
             requestBody.subTypeId = requestBody.subTypeId.value;
-            useMultipart = true
+            useMultipart = true;
             break;
           case "type":
             url = `type`;
@@ -867,9 +884,10 @@ export default {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          })
+          }),
         });
         if (response.status != 200) throw Error("Error Occured");
+        this.showNotif(response.data.message, "success");
         this.addNewEvent = false;
         this.addNewTiketPaket = false;
         this.typeDialog = false;
@@ -877,6 +895,7 @@ export default {
         this.categoryDialog = false;
         this.fetchData();
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
@@ -977,12 +996,12 @@ export default {
         image: null,
         subTypeId: undefined,
       };
-      this.type = {
-        name: ''
-      },
-        this.category = {
-          name: ''
-        }
+      (this.type = {
+        name: "",
+      }),
+        (this.category = {
+          name: "",
+        });
       this.subType = {
         name: "",
         minimumUnits: 0,

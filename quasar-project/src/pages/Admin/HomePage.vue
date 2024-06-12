@@ -23,7 +23,7 @@
               <q-btn
                 color="positive"
                 :label="'Edit '"
-                :href="'#/admin/add/' + scope.row.id"
+                :href="'/admin/add/' + scope.row.id"
                 @click="scope.selected = scope.row.id"
               />
             </div>

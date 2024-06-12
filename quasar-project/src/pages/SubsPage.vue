@@ -149,6 +149,8 @@ import env from "stores/environment";
 import cookieHandler from "src/cookieHandler";
 import navbar from "../components/NavbarNew.vue";
 import routeList from "src/router/routes";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 export default {
   components: { navbar },
@@ -200,6 +202,12 @@ export default {
     this.fetchData();
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async fetchData() {
       try {
         const subscriptionResponse = await this.$api.get("subscribe");
@@ -273,7 +281,9 @@ export default {
           }
         );
         if (response.status != 200) throw Error(response.data.message);
+        this.showNotif(response.data.message, "success");
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
@@ -281,7 +291,9 @@ export default {
       try {
         const response = await this.$api.delete(`subscribe/${id}`);
         if (response.status != 200) throw Error(response.data.message);
+        this.showNotif(response.data.message, "success");
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },

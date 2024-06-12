@@ -96,7 +96,7 @@
               bersejarah<br />
               yang penting di kota ini.
             </p>
-            <a class="Hiasan" href="/#/wisata/dalemagung"
+            <a class="Hiasan" href="/wisata/dalemagung"
               ><img src="../assets/images/Content.svg" class="img-att-down"
             /></a>
           </div>
@@ -141,7 +141,7 @@
               satu koleksi yang paling terkenal adalah kereta kencana Singa
               Barong, yang merupakan kereta kencana Sunan Gunung Jati.
             </p>
-            <a class="Hiasan" href="/#/wisata/museum"
+            <a class="Hiasan" href="/wisata/museum"
               ><img src="../assets/images/Content.svg" class="img-att-down"
             /></a>
           </div>
@@ -314,7 +314,7 @@ export default {
         },
       ],
       wisataName: ref(),
-      currentIndex: 2,
+      currentIndex: ref(2),
     };
   },
   computed: {

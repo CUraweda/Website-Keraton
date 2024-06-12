@@ -1,73 +1,29 @@
 <template>
   <div>
-    <navbar />
+    <div>
+      <navbar />
+    </div>
 
     <div class="q-mx-xl">
-      <div class="flex items-center q-gutter-x-xl">
-        <div class="flex column justify-evenly" style="height: 100vh; flex: 1">
-          <div>
+      <div class="flex q-gutter-x-xl">
+        <!-- Left Content -->
+        <div class="flex-1">
+          <div class="q-mt-md">
             <div class="text-h5">Pesan Tiket Langsung</div>
             <div class="flex items-center q-gutter-md q-mt-xs">
               <q-icon name="paid" color="orange" size="2rem" />
-              <div class="text-h6">
+              <div class="title-checkout">
                 Pastikan pesanan anda
                 <span class="text-bold">BENAR</span> sebelum checkout ya!
               </div>
             </div>
           </div>
 
-          <div>
-            <div class="flex items-center q-gutter-md">
-              <q-icon name="person" color="orange" size="2rem" />
-
-              <div>Detail Pemesanan</div>
-            </div>
-
-            <div class="flex items-center q-gutter-md">
-              <div class="text-h6 text-bold">{{ user.name }}</div>
-              <div class="text-h6">{{ "- (" + user.email + ")" }}</div>
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center q-gutter-md">
-              <q-icon name="confirmation_number" color="orange" size="2rem" />
-              <div>Detail Tiket</div>
-            </div>
-
-            <q-input
-              outlined
-              dense
-              v-model="dateInputLabel"
-              label="Date"
-              class="q-mt-xs"
-              style="width: 15rem"
-            >
-              <template v-slot:append>
-                <q-icon name="event" color="orange" class="cursor-pointer">
-                  <q-popup-proxy>
-                    <q-date
-                      v-model="dateInput"
-                      style="width: 300px"
-                      mask="YYYY-MM-DD HH:mm"
-                    />
-                    <q-time
-                      v-model="dateInput"
-                      mask="YYYY-MM-DD HH:mm"
-                      style="width: 300px"
-                    />
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </div>
-
-          <q-card style="width: fit-content">
-            <q-card-section>
+          <q-card style="width: fit-content" class="q-mt-md">
+            <q-card-section class="card-item">
               <div v-for="(cart, index) in carts" :key="index">
-                <div class="q-mt-md">
-                  <div class="text-h6">{{ cart.name }}</div>
-
+                <div>
+                  <div class="text-h6 q-mt-xs">{{ cart.name }}</div>
                   <div class="flex items-center q-gutter-md">
                     <q-btn
                       size="xs"
@@ -111,82 +67,148 @@
           </q-card>
         </div>
 
-        <div style="flex: 1">
-          <div class="flex items-center q-gutter-md">
-            <q-icon name="account_balance_wallet" color="orange" size="2rem" />
-            <div>{{ paymentMethod || "Pilih Pembayaran" }}</div>
-          </div>
-          <q-btn no-caps class="q-mt-sm" @click="caraPembayaran = true">
-            <div class="q-gutter-x-md flex items-center">
-              <q-icon name="warning" size="1.5rem" color="red" />
-              <div>
-                {{
-                  paymentMethod
-                    ? "Ganti Metode Pembayaran"
-                    : "Anda Belum Memilih Metode Pembayaran"
-                }}
+        <!-- Sticky Right Content -->
+        <div class="sticky-container q-mt-md" style="flex: 1">
+          <div class="sticky-div q-gutter-y-md">
+            <div>
+              <div class="flex items-center q-gutter-md">
+                <q-icon name="person" color="orange" size="2rem" />
+                <div>Detail Pemesanan</div>
+              </div>
+
+              <div class="flex items-center q-gutter-md">
+                <div class="text-bold" style="font-size: 1rem">
+                  {{ user.name }}
+                </div>
+                <div style="font-size: 1rem">
+                  {{ "- (" + user.email + ")" }}
+                </div>
               </div>
             </div>
-          </q-btn>
 
-          <div class="q-mt-md">
-            <q-card class="my-card">
-              <q-card-section>
-                <div class="text-h6">Ringkasan Booking</div>
-
-                <div>
-                  <div>
-                    <div class="text-h6 text-bold q-mt-lg">Total Pemesanan</div>
-                    <div>
-                      <div class="flex items-center justify-between">
-                        <div>Total Harga ({{ ticketTotal }} Tiket)</div>
-                        <div>Rp. {{ formatRupiah(checkoutTotal) }}</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="q-mt-lg">
-                    <div class="text-h6 text-bold">Biaya Transaksi</div>
-                    <div v-for="(tax, i) in taxes" :key="i">
-                      <div class="flex items-center justify-between">
-                        <div>{{ tax.label }}</div>
-                        <div>Rp. {{ formatRupiah(tax.price) }}</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="q-mt-lg">
-                    <q-separator color="black" />
-                    <div class="flex items-center justify-between">
-                      <div class="text-h5 text-bold">Total Tagihan</div>
-                      <div class="text-h5 text-bold">
-                        Rp. {{ formatRupiah(totalTagihan) }}
-                      </div>
-                    </div>
-                  </div>
+            <div class="flex items-center justify-between q-gutter-md">
+              <div>
+                <div class="flex items-center q-gutter-md">
+                  <q-icon
+                    name="account_balance_wallet"
+                    color="orange"
+                    size="2rem"
+                  />
+                  <div>{{ paymentMethod || "Pilih Pembayaran" }}</div>
                 </div>
-              </q-card-section>
-            </q-card>
-
-            <q-btn
-              no-caps
-              class="full-width q-mt-md q-py-md"
-              color="orange"
-              @click="checkOut"
-            >
-              <div class="flex items-center justify-between full-width">
-                <div class="text-bold text-h6">Checkout</div>
-                <q-icon
-                  name="arrow_forward"
-                  color="orange"
-                  style="background: white; border-radius: 100%"
-                />
+                <q-btn no-caps class="q-mt-sm" @click="caraPembayaran = true">
+                  <div class="q-gutter-x-md flex items-center justify-center">
+                    <q-icon name="warning" size="1.5rem" color="red" />
+                    <div>
+                      {{
+                        paymentMethod
+                          ? "Ganti Metode Pembayaran"
+                          : "Anda Belum Memilih Metode Pembayaran"
+                      }}
+                    </div>
+                  </div>
+                </q-btn>
               </div>
-            </q-btn>
+
+              <div>
+                <div class="flex items-center q-gutter-md">
+                  <q-icon
+                    name="confirmation_number"
+                    color="orange"
+                    size="2rem"
+                  />
+                  <div>Detail Tiket</div>
+                </div>
+                <q-input
+                  outlined
+                  dense
+                  v-model="dateInputLabel"
+                  label="Date"
+                  class="q-mt-xs"
+                  style="width: 13rem"
+                >
+                  <template v-slot:append>
+                    <q-icon name="event" color="orange" class="cursor-pointer">
+                      <q-popup-proxy>
+                        <q-date
+                          v-model="dateInput"
+                          style="width: 300px"
+                          mask="YYYY-MM-DD HH:mm"
+                        />
+                        <q-time
+                          v-model="dateInput"
+                          mask="YYYY-MM-DD HH:mm"
+                          style="width: 300px"
+                        />
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+              </div>
+            </div>
+
+            <div class="q-mt-md">
+              <q-card class="my-card">
+                <q-card-section>
+                  <div class="text-h6">Ringkasan Booking</div>
+
+                  <div>
+                    <div>
+                      <div class="text-h6 text-bold q-mt-lg">
+                        Total Pemesanan
+                      </div>
+                      <div>
+                        <div class="flex items-center justify-between">
+                          <div>Total Harga ({{ ticketTotal }} Tiket)</div>
+                          <div>Rp. {{ formatRupiah(checkoutTotal) }}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="q-mt-lg">
+                      <div class="text-h6 text-bold">Biaya Transaksi</div>
+                      <div v-for="(tax, i) in taxes" :key="i">
+                        <div class="flex items-center justify-between">
+                          <div>{{ tax.label }}</div>
+                          <div>Rp. {{ formatRupiah(tax.price) }}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="q-mt-lg">
+                      <q-separator color="black" />
+                      <div class="flex items-center justify-between">
+                        <div class="text-h5 text-bold">Total Tagihan</div>
+                        <div class="text-h5 text-bold">
+                          Rp. {{ formatRupiah(totalTagihan) }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+
+              <q-btn
+                no-caps
+                class="full-width q-mt-md q-py-md"
+                color="orange"
+                @click="checkOut"
+              >
+                <div class="flex items-center justify-between full-width">
+                  <div class="text-bold text-h6">Checkout</div>
+                  <q-icon
+                    name="arrow_forward"
+                    color="orange"
+                    style="background: white; border-radius: 100%"
+                  />
+                </div>
+              </q-btn>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
     <q-dialog v-model="caraPembayaran">
       <q-card style="width: 30rem; max-width: 100vw">
         <q-card-section class="row items-center q-pb-none">
@@ -201,6 +223,7 @@
               expand-separator
               class="text-h6"
               label="Kartu Kredit/Debit"
+              default-opened
             >
               <q-card>
                 <q-card-section>
@@ -390,13 +413,18 @@ export default {
       }
     },
     async checkOut() {
+      let plannedDate = this.dateInput
       try {
+        if(!this.dateInput.split('T')[1]){
+          const rawDateConvert = this.dateInput + ":00+00:00" //Used to convert date
+          plannedDate = new Date(rawDateConvert).toISOString()
+        }
         const response = await this.$api.post(
           "trans",
           {
             carts: this.carts,
-            plannedDate: new Date(this.dateInput).toISOString(),
             method: this.paymentMethod,
+            plannedDate,
           },
           {
             headers: {
@@ -440,5 +468,37 @@ export default {
 
 div {
   font-family: Raleway;
+}
+
+.title-checkout {
+  font-size: 1rem;
+}
+
+.sticky-container {
+  display: flex;
+  flex-direction: column;
+  width: 20rem; /* Adjust based on desired width */
+}
+
+.sticky-div {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media screen and (max-width: 1200px) {
+  .title-checkout {
+    font-size: 1rem;
+    width: 14rem;
+  }
+
+  .card-item {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    height: 15rem;
+  }
 }
 </style>

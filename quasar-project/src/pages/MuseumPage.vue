@@ -356,7 +356,7 @@ export default {
   display: flex;
   transition: transform 0.3s ease;
   align-items: center;
-  margin-left: 11vw;
+  margin-left: 70px;
 }
 
 .slider img {
@@ -440,6 +440,10 @@ export default {
 
 .container-title2 {
   margin-top: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .img-pagination {

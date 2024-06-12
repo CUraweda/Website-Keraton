@@ -108,6 +108,8 @@ import navbar from "../../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import { ref } from "vue";
+import SimpleNotify from "simple-notify";
+import "simple-notify/dist/simple-notify.css";
 
 export default {
   components: { navbar },
@@ -151,6 +153,12 @@ export default {
     this.fetchData();
   },
   methods: {
+    showNotif(msg, status) {
+      new SimpleNotify({
+        text: `${msg}`,
+        status: `${status}`,
+      });
+    },
     async fetchData() {
       try {
         const response = await this.$api.get("user", {
@@ -189,9 +197,11 @@ export default {
           }
         );
         if (response.status != 200) throw Error(response.data.message);
+        this.showNotif(response.data.message, "success");
         this.handleDialog();
         this.fetchData();
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
@@ -203,9 +213,11 @@ export default {
           },
         });
         if (response.status != 200) throw Error(response.data.message);
+        this.showNotif(response.data.message, "success");
         this.handleDialog();
         this.fetchData();
       } catch (err) {
+        this.showNotif(err, "error");
         console.log(err);
       }
     },
