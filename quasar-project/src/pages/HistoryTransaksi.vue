@@ -155,7 +155,7 @@ const statusSelected = ref(false);
           <div>
             <div>{{ detailData.name }}</div>
             <div>{{ detailData.price }}</div>
-            <div>test</div>
+            <!-- <div>test</div> -->
           </div>
         </div>
 
