@@ -146,16 +146,32 @@ const statusSelected = ref(false);
         </div>
 
         <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-        <div
-          class="q-mt-md"
-          v-for="(detailData, i) in detailData.details"
-          :key="i"
-        >
+        <div class="q-mt-md">
           <!-- <img :src="detailData.image" style="width: 10rem; height: 10rem" /> -->
           <div>
-            <div>{{ detailData.name }}</div>
-            <div>{{ detailData.price }}</div>
-            <!-- <div>test</div> -->
+            <!-- <div>{{ detailData.name }}</div>
+            <div>{{ detailData.price }}</div> -->
+
+            <q-table
+              bordered
+              :rows="detailData.details"
+              :columns="columns"
+              hide-bottom
+              :rows-per-page-options="[0]"
+              row-key="name"
+              class="q-mt-md"
+            >
+              <template v-slot:body="props">
+                <q-tr :props="props">
+                  <q-td key="Name" :props="props">
+                    {{ props.row.name }}
+                  </q-td>
+                  <q-td key="Price" :props="props">
+                    {{ props.row.price }}
+                  </q-td>
+                </q-tr>
+              </template>
+            </q-table>
           </div>
         </div>
 
@@ -408,6 +424,25 @@ export default {
   components: { navbar },
   data() {
     return {
+      rows: [
+        {
+          name: "razan",
+          price: 100000000,
+        },
+        {
+          name: "razan",
+          price: 12039180293,
+        },
+      ],
+      columns: [
+        { name: "Name", align: "left", label: "Name", field: "name" },
+        {
+          name: "Price",
+          align: "left",
+          label: "Qty - Price",
+          field: "price",
+        },
+      ],
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
       caraBayar: false,
       detailDialog: ref(false),
