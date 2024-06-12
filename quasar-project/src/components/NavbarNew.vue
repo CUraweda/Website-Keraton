@@ -1,33 +1,18 @@
 <template>
-  <q-toolbar
-    class="text-white background-white q-pa-sm"
-    style="position: sticky; top: 0; z-index: 1000; background: white"
-  >
+  <q-toolbar class="text-white background-white q-pa-sm"
+    style="position: sticky; top: 0; z-index: 1000; background: white">
     <div class="flex q-gutter-sm">
-      <q-img
-        src="../assets/images/logo_keraton 1.png"
-        style="width: 3.5rem; height: 3.5rem"
-      />
+      <q-img src="../assets/images/logo_keraton 1.png" style="width: 3.5rem; height: 3.5rem" />
       <div class="text-black name-logo" style="width: 1rem">
         KERATON KESEPUHAN CIREBON
       </div>
     </div>
     <q-space />
 
-    <q-toggle
-      v-if="sessionData?.isAdmin"
-      v-model="toggleNavbar"
-      color="orange"
-      checked-icon="check"
-      unchecked-icon="clear"
-    />
+    <q-toggle v-if="sessionData?.isAdmin" v-model="toggleNavbar" color="orange" checked-icon="check"
+      unchecked-icon="clear" />
 
-    <q-btn
-      icon="menu"
-      class="drawer-dialog"
-      color="orange"
-      @click="navbarDialog = true"
-    />
+    <q-btn icon="menu" class="drawer-dialog" color="orange" @click="navbarDialog = true" />
 
     <q-dialog full-width v-model="navbarDialog" position="top">
       <q-card>
@@ -67,21 +52,11 @@
           </div>
 
           <div>
-            <q-btn
-              flat
-              no-caps
-              label="Objek Wisata"
-              color="black"
-              class="col-grow"
-            >
+            <q-btn flat no-caps label="Objek Wisata" color="black" class="col-grow">
               <q-menu>
                 <q-list>
-                  <q-item
-                    clickable
-                    v-for="(objekWisata, i) in sessionData.wisataOption"
-                    :to="objekWisata.value"
-                    :key="i"
-                  >
+                  <q-item clickable v-for="(objekWisata, i) in sessionData.wisataOption" :to="objekWisata.value"
+                    :key="i">
                     <q-item-section>{{ objekWisata.label }}</q-item-section>
                   </q-item>
                 </q-list>
@@ -90,21 +65,12 @@
           </div>
 
           <div>
-            <q-btn
-              v-if="!sessionData?.isLogin"
-              no-caps
-              label="Dapatkan Tiket"
-              style="background: #123b32; color: white; padding-inline: 30px"
-            >
+            <q-btn v-if="!sessionData?.isLogin" no-caps label="Dapatkan Tiket"
+              style="background: #123b32; color: white; padding-inline: 30px">
             </q-btn>
           </div>
 
-          <q-expansion-item
-            v-if="sessionData?.isLogin"
-            label="Account"
-            clickable
-            expand-separator
-          >
+          <q-expansion-item v-if="sessionData?.isLogin" label="Account" clickable expand-separator>
             <q-list>
               <q-item clickable to="/user/carts">
                 <q-item-section>Keranjang</q-item-section>
@@ -142,12 +108,7 @@
           <div>
             <q-btn flat no-caps href="/admin/subs" label="Langganan" />
           </div>
-          <q-expansion-item
-            v-if="sessionData?.isLogin"
-            label="Account"
-            clickable
-            expand-separator
-          >
+          <q-expansion-item v-if="sessionData?.isLogin" label="Account" clickable expand-separator>
             <q-list>
               <q-item clickable to="/user/carts">
                 <q-item-section>Keranjang</q-item-section>
@@ -168,56 +129,21 @@
     </q-dialog>
 
     <div class="component-navbar-admin" v-if="toggleNavbar">
-      <q-btn
-        flat
-        no-caps
-        label="Beranda"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/home"
-      />
+      <q-btn flat no-caps label="Beranda" :color="isTransparent ? 'white' : 'black'" to="/admin/home" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Tiket"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/event"
-      />
+      <q-btn flat no-caps label="Tiket" :color="isTransparent ? 'white' : 'black'" to="/admin/event" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Berita"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/news"
-      />
+      <q-btn flat no-caps label="Berita" :color="isTransparent ? 'white' : 'black'" to="/admin/news" />
 
-      <q-btn
-        flat
-        no-caps
-        label="User"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/user"
-      />
+      <q-btn flat no-caps label="User" :color="isTransparent ? 'white' : 'black'" to="/admin/user" />
 
-      <q-btn
-        flat
-        no-caps
-        label="Langganan"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/admin/subs"
-      />
+      <q-btn flat no-caps label="Langganan" :color="isTransparent ? 'white' : 'black'" to="/admin/subs" />
 
       <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">
         <q-avatar size="2.2rem">
           <img src="../assets/svg/user.svg" />
         </q-avatar>
-        <q-menu
-          fit
-          anchor="bottom left"
-          self="top left"
-          style="max-width: 320px"
-        >
+        <q-menu fit anchor="bottom left" self="top left" style="max-width: 320px">
           <q-item clickable to="/user/carts">
             <q-item-section>Keranjang</q-item-section>
           </q-item>
@@ -241,19 +167,8 @@
     </div>
 
     <div class="component-navbar" v-if="!toggleNavbar">
-      <q-btn
-        flat
-        no-caps
-        label="Beranda"
-        :color="isTransparent ? 'white' : 'black'"
-        to="/"
-      ></q-btn>
-      <q-btn
-        flat
-        label="Sejarah"
-        no-caps
-        :color="isTransparent ? 'white' : 'black'"
-      >
+      <q-btn flat no-caps label="Beranda" :color="isTransparent ? 'white' : 'black'" to="/"></q-btn>
+      <q-btn flat label="Sejarah" no-caps :color="isTransparent ? 'white' : 'black'">
         <q-menu>
           <q-list>
             <q-item clickable to="/sejarah">
@@ -265,12 +180,7 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        flat
-        no-caps
-        label="Booking"
-        :color="isTransparent ? 'white' : 'black'"
-      >
+      <q-btn flat no-caps label="Booking" :color="isTransparent ? 'white' : 'black'">
         <q-menu>
           <q-list>
             <q-item clickable to="/booking">
@@ -282,32 +192,17 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        flat
-        no-caps
-        label="Objek Wisata"
-        :color="isTransparent ? 'white' : 'black'"
-        class="col-grow"
-      >
+      <q-btn flat no-caps label="Objek Wisata" :color="isTransparent ? 'white' : 'black'" class="col-grow">
         <q-menu>
           <q-list>
-            <q-item
-              clickable
-              v-for="(objekWisata, i) in sessionData.wisataOption"
-              :to="objekWisata.value"
-              :key="i"
-            >
+            <q-item clickable v-for="(objekWisata, i) in sessionData.wisataOption" :to="objekWisata.value" :key="i">
               <q-item-section>{{ objekWisata.label }}</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
       </q-btn>
-      <q-btn
-        v-if="!sessionData?.isLogin"
-        no-caps
-        to="/signin"
-        style="background: #123b32; color: white; padding-inline: 30px"
-      >
+      <q-btn v-if="!sessionData?.isLogin" no-caps to="/signin"
+        style="background: #123b32; color: white; padding-inline: 30px">
         <span class="text-bold">Dapatkan Tiket</span>
       </q-btn>
 
@@ -315,12 +210,7 @@
         <q-avatar size="2.2rem">
           <img src="../assets/svg/user.svg" />
         </q-avatar>
-        <q-menu
-          fit
-          anchor="bottom left"
-          self="top left"
-          style="max-width: 320px"
-        >
+        <q-menu fit anchor="bottom left" self="top left" style="max-width: 320px">
           <q-item clickable to="/user/carts">
             <q-item-section>Keranjang</q-item-section>
           </q-item>
@@ -395,17 +285,18 @@ export default {
           },
         });
         if (response.status != 200) throw Error(response.data.message);
-        localStorage.removeItem(env.USER_STORAGE_NAME);
-        cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
-        sessionStorage.removeItem(env.GLOBAL_STORAGE);
-        cartClass.clearCart().updateItem();
-          window.location.reload().then(() => {
-            this.showNotif("Anda berhasil Log Out", "success");
-          });
+
       } catch (err) {
         this.showNotif(err.message, "error");
         console.log(err);
       }
+      localStorage.removeItem(env.USER_STORAGE_NAME);
+      cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
+      sessionStorage.removeItem(env.GLOBAL_STORAGE);
+      cartClass.clearCart().updateItem();
+      window.location.reload().then(() => {
+        this.showNotif("Anda berhasil Log Out", "success");
+      });
     },
   },
 };
@@ -424,6 +315,7 @@ div {
 }
 
 @media screen and (max-width: 1200px) {
+
   .name-logo,
   .component-navbar-admin,
   .component-navbar {

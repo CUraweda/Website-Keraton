@@ -19,7 +19,7 @@
             </div>
           </div>
 
-          <q-card style="width: fit-content" class="q-mt-md">
+          <q-card class="q-mt-md">
             <q-card-section class="card-item">
               <div v-for="(cart, index) in carts" :key="index">
                 <div>
