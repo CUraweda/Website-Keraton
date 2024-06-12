@@ -60,7 +60,7 @@
     <section>
       <q-video
         :ratio="16 / 9"
-        src="https://www.youtube.com/embed/q-2tx9iLtDE"
+        :src="sectionData2?.xl1.data"
       />
     </section>
 

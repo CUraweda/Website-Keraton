@@ -142,7 +142,7 @@ export default defineComponent({
           );
         }
       } catch (err) {
-        this.showNotif("Anda gagal untuk berlangganan", "error");
+        this.showNotif(err?.response.data.message, "error");
         console.log(err);
       }
     },

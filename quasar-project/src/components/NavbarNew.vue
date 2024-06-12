@@ -399,10 +399,9 @@ export default {
         cookieHandler.removeCookie(env.TOKEN_STORAGE_NAME);
         sessionStorage.removeItem(env.GLOBAL_STORAGE);
         cartClass.clearCart().updateItem();
-        this.showNotif("Anda berhasil Log Out", "success");
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
+          window.location.reload().then(() => {
+            this.showNotif("Anda berhasil Log Out", "success");
+          });
       } catch (err) {
         this.showNotif(err.message, "error");
         console.log(err);
