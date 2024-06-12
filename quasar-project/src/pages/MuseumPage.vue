@@ -39,7 +39,6 @@
         <div class="slider" ref="slider">
           <img
             v-for="(card, index) in cards"
-            :src="card.content"
             :key="index"
             :id="'card-' + index"
             :class="{ cardd: true, active: index === currentIndex }"
@@ -77,7 +76,7 @@
       </div>
       <div class="fasilitas-img1">
         <div v-for="(elemen, index) in fasilitaselement" :key="index">
-          <img :src="elemen.img1" alt="" />
+          <img alt="" />
           <div class="text-fasilitas">
             {{ elemen.text1 }}
           </div>
@@ -89,7 +88,7 @@
           v-for="(imgFasilitas2, index2) in imgFasilitass2"
           :key="index2"
         >
-          <img :src="imgFasilitas2.img2" class="img-fasilitas" alt="" />
+          <img class="img-fasilitas" alt="" />
           <div class="con-txt-img-fasilitas">
             <div class="txt-img-fasilitas">
               {{ imgFasilitas2.text }}

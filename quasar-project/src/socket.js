@@ -1,8 +1,8 @@
 import io from "socket.io-client";
 
 const socket = io(
-  // "https://api-prmn.curaweda.com:3031", //Production
-  "http://localhost:3000", //Development
+  "https://api-prmn.curaweda.com:3031", //Production
+  // "http://localhost:3000", //Development
   {
     transports: ["websocket"],
   }
