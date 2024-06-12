@@ -154,21 +154,20 @@ export default {
   margin-top: -30vw;
   margin-left: 50%;
   transform: translate(-50%, -50%);
-  color: #fae084;
-  font-size: 2vw;
+  color: #daa520;
+  font-size: 1.5rem;
   white-space: nowrap;
   font-family: "Raleway";
 }
 
 .upper-2 {
   position: absolute;
-  margin-top: -24vw;
+  margin-top: -23.5vw;
   margin-left: 50%;
   transform: translate(-50%, -50%);
-  color: #fff6e0;
-  font-size: 3.5vw;
-  font-weight: 400;
-  width: 40vw;
+  color: #ffffff;
+  width: 60vw;
+  font-size: 3.5rem;
   text-align: center;
   font-family: "Raleway";
 }
@@ -433,5 +432,30 @@ h4 {
   gap: 4vw;
   width: 40vw;
   justify-content: center;
+}
+
+@media screen and (max-width: 1200px) {
+  .upper {
+    position: absolute;
+    margin-top: -38vw;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    color: #daa520;
+    font-size: 1rem;
+    white-space: nowrap;
+    font-family: "Raleway";
+  }
+
+  .upper-2 {
+    position: absolute;
+    margin-top: -23.5vw;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    width: 60vw;
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: "Raleway";
+  }
 }
 </style>

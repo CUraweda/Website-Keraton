@@ -66,7 +66,12 @@
                   v-model="selectedItem.link"
                   style="width: 15rem"
                 />
-                <q-btn no-caps class="q-mt-md full-width" label="Send Email" @click="sendPromoteEmail" />
+                <q-btn
+                  no-caps
+                  class="q-mt-md full-width"
+                  label="Send Email"
+                  @click="sendPromoteEmail"
+                />
               </div>
             </div>
           </q-card-section>
@@ -85,7 +90,12 @@
               </template>
             </q-input>
 
-            <q-input v-model="showManyData" outlined type="number" label="Show" />
+            <q-input
+              v-model="showManyData"
+              outlined
+              type="number"
+              label="Show"
+            />
           </q-card-section>
 
           <q-card-section v-if="itemDatas.length > 0">
@@ -93,9 +103,12 @@
               v-for="index in showManyData"
               :key="index"
               class="flex justify-between q-mt-md"
-              >
-              <q-img :src="itemDatas[index]?.image" style="width: 12rem; height: 8rem" />
-              
+            >
+              <q-img
+                :src="itemDatas[index]?.image"
+                style="width: 12rem; height: 8rem"
+              />
+
               <div v-if="itemDatas[index]">
                 <div
                   class="text-h6 text-bold"
@@ -142,7 +155,7 @@ export default {
   data() {
     return {
       columns: [
-        { name: "id", label:"Id", field: "id" },
+        { name: "id", label: "Id", field: "id" },
         { name: "Email", align: "center", label: "Email", field: "email" },
         { name: "Action", align: "center", label: "Action", field: "" },
       ],
@@ -172,16 +185,16 @@ export default {
       },
     },
     showManyData: {
-      handler(val){
-        this.showManyData = +this.showManyData
-      }
+      handler(val) {
+        this.showManyData = +this.showManyData;
+      },
     },
     searchEvent: {
-      handler(val){
-        console.log(val)
-        this.fetchData()
-      }
-    }
+      handler(val) {
+        console.log(val);
+        this.fetchData();
+      },
+    },
   },
   mounted() {
     this.fetchData();
@@ -198,11 +211,13 @@ export default {
         }));
 
         if (this.searchEvent || this.itemDatas.length < 1) {
-          let eventUrl = "event", tiketUrl = "items", itemData = []
-          if(this.searchEvent){
-            eventUrl += `?search=${this.searchEvent}`
-            tiketUrl += `?search=${this.searchEvent}`
-          } 
+          let eventUrl = "event",
+            tiketUrl = "items",
+            itemData = [];
+          if (this.searchEvent) {
+            eventUrl += `?search=${this.searchEvent}`;
+            tiketUrl += `?search=${this.searchEvent}`;
+          }
           const eventResponse = await this.$api.get(eventUrl);
           const tiketResponse = await this.$api.get(tiketUrl);
           for (let data of eventResponse.data.data) {
@@ -213,17 +228,17 @@ export default {
               name: data.name,
               desc: data.desc,
             });
-            }
-              for (let data of tiketResponse.data.data) {
-                itemData.push({
-                  ident: "tiket",
-                  id: data.id,
-                  image: data.image,
-                  name: data.name,
-                  desc: data.desc,
-                });
-              }
-          this.itemDatas = itemData
+          }
+          for (let data of tiketResponse.data.data) {
+            itemData.push({
+              ident: "tiket",
+              id: data.id,
+              image: data.image,
+              name: data.name,
+              desc: data.desc,
+            });
+          }
+          this.itemDatas = itemData;
         }
         if (this.linkList.length < 1) {
           this.linkList = routeList.map((link) => ({

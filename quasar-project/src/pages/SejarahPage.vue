@@ -3,8 +3,12 @@
     <div class="halatas">
       <div class="container-gambar">
         <div class="atas">
-          <h6>Warisan Leluhur Cirebon</h6>
-          <h4>Mengenal Lebih Dekat dengan Sejarah Keraton</h4>
+          <div class="text-h5 text-center" style="color: #daa520">
+            Warisan Leluhur Cirebon
+          </div>
+          <div class="text-h2 text-center text-white">
+            Mengenal Lebih Dekat dengan Sejarah Keraton
+          </div>
         </div>
       </div>
 
