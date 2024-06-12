@@ -292,6 +292,7 @@ export default {
         const response = await this.$api.delete(`subscribe/${id}`);
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif(response.data.message, "success");
+        this.fetchData();
       } catch (err) {
         this.showNotif(err, "error");
         console.log(err);

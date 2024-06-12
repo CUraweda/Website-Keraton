@@ -424,16 +424,6 @@ export default {
   components: { navbar },
   data() {
     return {
-      rows: [
-        {
-          name: "razan",
-          price: 100000000,
-        },
-        {
-          name: "razan",
-          price: 12039180293,
-        },
-      ],
       columns: [
         { name: "Name", align: "left", label: "Name", field: "name" },
         {
