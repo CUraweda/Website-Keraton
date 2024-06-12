@@ -344,13 +344,12 @@ export default {
 }
 
 .container-slider {
-  width: 95vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   overflow-x: hidden;
   height: 40vw;
   align-items: center;
-  margin-left: -3vw;
 }
 
 .slider {
@@ -432,7 +431,6 @@ export default {
 }
 
 .container-title2 div:last-child {
-  width: 67vw;
   text-align: center;
   font-size: 1.5vw;
   margin: 0 auto;
