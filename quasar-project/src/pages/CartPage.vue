@@ -40,7 +40,11 @@ import navbar from "../components/NavbarNew.vue";
                 v-for="(cart, i) in cartData"
                 :key="cart.id"
                 class="flex column justify-center items-center"
-                style="overflow-x: scroll"
+                style="
+                  overflow-x: scroll;
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
+                "
               >
                 <q-card class="my-card q-mt-md" flat bordered>
                   <q-card-section horizontal>
@@ -194,13 +198,17 @@ export default {
       }
     },
     changeQuantity(indicator, rowData, indexData) {
-      this.cartData[indexData].quantity = indicator != "min" ? rowData.quantity + 1 : rowData.quantity - 1;
+      this.cartData[indexData].quantity =
+        indicator != "min" ? rowData.quantity + 1 : rowData.quantity - 1;
       return this.changeStorageQuantity(this.cartData[indexData]);
     },
     changeStorageQuantity(rowData) {
       try {
         const itemId = `${rowData.type}|${rowData.id}`;
-        this.cartData = this.cartClass.changeQuantity(itemId,rowData.quantity).userCart;
+        this.cartData = this.cartClass.changeQuantity(
+          itemId,
+          rowData.quantity
+        ).userCart;
         return this.cartClass.updateItem();
       } catch (err) {
         console.log(err);

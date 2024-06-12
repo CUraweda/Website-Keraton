@@ -440,6 +440,10 @@ export default {
 
 .container-title2 {
   margin-top: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .img-pagination {
