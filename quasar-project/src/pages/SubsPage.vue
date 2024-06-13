@@ -133,7 +133,7 @@
                 </div>
               </div>
               <div v-if="itemDatas[index]">
-                <q-btn no-caps label="Promote" />
+                <q-btn no-caps label="Promote" @click="setPromotedItem(itemDatas[index])" />
               </div>
             </div>
           </q-card-section>
@@ -298,12 +298,13 @@ export default {
         console.log(err);
       }
     },
-  },
   setPromotedItem(data) {
     try {
+      this.selectedItem = { ...data }
     } catch (err) {
       console.log(err);
     }
+  }
   },
 };
 </script>
