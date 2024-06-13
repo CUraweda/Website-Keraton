@@ -331,7 +331,7 @@
                 filled
                 v-model="tikets.categoryId"
                 :options="categoryOptions"
-                label="Unit"
+                label="Category"
                 class="q-mt-md"
               />
               <q-select
@@ -719,6 +719,8 @@ export default {
           name: type.name,
         }));
         this.categoryOptions = helper.data.data.category.map((category) => ({
+          label: category.name,
+          value: category.id,
           id: category.id,
           name: category.name,
         }));

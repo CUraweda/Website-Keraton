@@ -39,10 +39,29 @@
       <div class="container-slider">
         <div class="slider" ref="slider">
           <img
-            v-for="(card, index) in cards"
-            :key="index"
-            :id="'card-' + index"
-            :class="{ cardd: true, active: index === currentIndex }"
+            src="../assets/images/objekwisataslider1.png"
+            id="card-0"
+            :class="{ cardd: true, active: 0 === currentIndex }"
+          />
+          <img
+            src="../assets/images/objekwisataslider2.png"
+            id="card-1"
+            :class="{ cardd: true, active: 1 === currentIndex }"
+          />
+          <img
+            src="../assets/images/objekwisataslider3.png"
+            id="card-2"
+            :class="{ cardd: true, active: 2 === currentIndex }"
+          />
+          <img
+            src="../assets/images/objekwisataslider4.png"
+            id="card-3"
+            :class="{ cardd: true, active: 3 === currentIndex }"
+          />
+          <img
+            src="../assets/images/objekwisataslider5.jpg"
+            id="card-4"
+            :class="{ cardd: true, active: 4 === currentIndex }"
           />
         </div>
       </div>
@@ -185,7 +204,7 @@
           v-for="(imgFasilitas, index) in imgFasilitass"
           :key="index"
         >
-          <img class="img-fasilitas" alt="" />
+          <img :src="imgFasilitas.img" class="img-fasilitas" alt="" />
           <div class="con-txt-img-fasilitas">
             <div class="txt-img-fasilitas">
               {{ imgFasilitas.text }}
@@ -199,7 +218,7 @@
           v-for="(imgFasilitas2, index2) in imgFasilitass2"
           :key="index2"
         >
-          <img class="img-fasilitas" alt="" />
+          <img :src="imgFasilitas2.img2" class="img-fasilitas" alt="" />
           <div class="con-txt-img-fasilitas">
             <div class="txt-img-fasilitas">
               {{ imgFasilitas2.text }}
@@ -224,7 +243,7 @@
         />
       </div>
 
-      <a href="/#/booking"
+      <a href="/booking"
         ><div class="container-tiket-kunjungan">
           <div
             class="tiket-kunjungan"
@@ -238,7 +257,7 @@
             </div>
             <img
               class="img-tiket-kunjungan"
-              src="../assets/images/tiketkunjungan.png"
+              :src="element.img"
               alt=""
             />
           </div></div
@@ -272,21 +291,21 @@ export default {
   data() {
     return {
       cards: [
-        { content: "../src/assets/images/objekwisataslider1.png" },
-        { content: "../src/assets/images/objekwisataslider2.png" },
-        { content: "../src/assets/images/objekwisataslider3.png" },
-        { content: "../src/assets/images/objekwisataslider4.png" },
-        { content: "../src/assets/images/objekwisataslider5.jpg" },
+        { content: "src/assets/images/objekwisataslider1.png" },
+        { content: "src/assets/images/objekwisataslider2.png" },
+        { content: "src/assets/images/objekwisataslider3.png" },
+        { content: "src/assets/images/objekwisataslider4.png" },
+        { content: "src/assets/images/objekwisataslider5.jpg" },
         // Add more cards as needed
       ],
       imgFasilitass: [
-        { img: "../src/assets/images/areaparkir.png", text: "Area Parkir" },
-        { img: "../src/assets/images/tempatibadah.png", text: "Tempat Ibadah" },
+        { img: "../assets/images/areaparkir.png", text: "Area Parkir" },
+        { img: "../assets/images/tempatibadah.png", text: "Tempat Ibadah" },
       ],
       imgFasilitass2: [
-        { img2: "../src/assets/images/toilet.png", text: "Toilet" },
+        { img2: "../assets/images/toilet.png", text: "Toilet" },
         {
-          img2: "../src/assets/images/tempatpenjualan.png",
+          img2: "../assets/images/tempatpenjualan.png",
           text: "Tempat Penjualan Souvenir",
         },
       ],
