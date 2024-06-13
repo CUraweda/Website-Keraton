@@ -201,7 +201,7 @@
       <div class="fasilitas-content1-1">
         <div
           class="fasilitas-content1"
-          v-for="(imgFasilitas, index) in imgFasilitass"
+          v-for="(imgFasilitas, index) of imgFasilitass"
           :key="index"
         >
           <img :src="imgFasilitas.img" class="img-fasilitas" alt="" />
@@ -255,11 +255,7 @@
               <p class="text-harga">{{ element.text2 }}</p>
               <p class="text-harga" id="text-area">{{ element.text3 }}</p>
             </div>
-            <img
-              class="img-tiket-kunjungan"
-              :src="element.img"
-              alt=""
-            />
+            <img class="img-tiket-kunjungan" :src="element.img" alt="" />
           </div></div
       ></a>
     </div>
@@ -299,13 +295,13 @@ export default {
         // Add more cards as needed
       ],
       imgFasilitass: [
-        { img: "../assets/images/areaparkir.png", text: "Area Parkir" },
-        { img: "../assets/images/tempatibadah.png", text: "Tempat Ibadah" },
+        { img: "../src/assets/images/areaparkir.png", text: "Area Parkir" },
+        { img: "../src/assets/images/tempatibadah.png", text: "Tempat Ibadah" },
       ],
       imgFasilitass2: [
-        { img2: "../assets/images/toilet.png", text: "Toilet" },
+        { img2: "../src/assets/images/toilet.png", text: "Toilet" },
         {
-          img2: "../assets/images/tempatpenjualan.png",
+          img2: "../src/assets/images/tempatpenjualan.png",
           text: "Tempat Penjualan Souvenir",
         },
       ],
@@ -691,6 +687,7 @@ export default {
 
 .img-fasilitas {
   width: 100%;
+  height: 100%;
 }
 
 .con-txt-img-fasilitas {
