@@ -373,9 +373,10 @@ export default {
       this.addNewInput("link");
     },
     deleteInput(type, i, sub = false, subI) {
-      if (!sub) return delete this[type][i];
+      if (!sub) return this[type].splice(i, 1)
       const subName = this[type][i].subDatas[subI];
       delete this[type][i][subName];
+      if ((this[type][i].subDatas.length - 1) < 1) return this[type][i].subDatas = []
       this[type][i].subDatas.splice(subI, 1);
     },
     addNewSubInput(type, i) {

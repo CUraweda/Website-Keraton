@@ -225,6 +225,7 @@ export default {
           pakets = {};
 
         for (let subType of response.data.data) {
+          if(subType.orders.length < 1) continue
           switch (subType.orderTypeId) {
             case 1: //Tiket Type
               for (let order of subType.orders) {
@@ -241,12 +242,8 @@ export default {
               }
               break;
             case 2: //Paket Type
-              const subTypeName = `${subType.name}|${
-                subType.minimumUnits ? subType.minimumUnits : undefined
-              }`;
-              if (!pakets[subTypeName]) {
-                pakets[subTypeName] = [];
-              }
+              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined}`;
+              if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
                 pakets[subTypeName].push({
@@ -289,10 +286,10 @@ export default {
     addToCart(rowData) {
       try {
         const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
-        if (!tokenExist) {
-          this.$router.push("/signin");
-          throw Error("Anda Masih Belum Log In!");
-        }
+        if (!tokenExist){
+          this.$router.push('/signin')
+          throw Error("Anda Masih belum Log In!");
+        } 
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
