@@ -200,6 +200,22 @@ const statusSelected = ref(false);
           <div>Total Biaya</div>
           <div>{{ detailData.totalTransaction }}</div>
         </div>
+
+        <div class="flex items-center justify-between">
+          <div></div>
+          <div class="flex items-center q-gutter-lg q-mt-md q-mx-md">
+            <div>
+              <img src="../assets/images/1 931.svg" alt="" class="img-collab" />
+            </div>
+            <div>
+              <img
+                src="../assets/images/telkom.svg"
+                alt=""
+                class="img-collab"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

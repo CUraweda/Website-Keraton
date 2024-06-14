@@ -36,7 +36,7 @@
                         flat
                         color="red"
                         icon="delete"
-                        @click="sendDelete('type', type.id)"
+                        @click="confirmDelete('type', type.id)"
                       />
                     </div>
                   </q-card-section>
@@ -74,7 +74,7 @@
                         flat
                         color="red"
                         icon="delete"
-                        @click="sendDelete('subType', subType.id)"
+                        @click="confirmDelete('subType', subType.id)"
                       />
                     </div>
                   </q-card-section>
@@ -112,7 +112,7 @@
                         flat
                         color="red"
                         icon="delete"
-                        @click="sendDelete('category', category.id)"
+                        @click="confirmDelete('category', category.id)"
                       />
                     </div>
                   </q-card-section>
@@ -438,7 +438,7 @@
                   />
                 </svg>
               </q-btn>
-              <q-btn flat @click="sendDelete('event', event.id)">
+              <q-btn flat @click="confirmDelete('event', event.id)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -516,7 +516,7 @@
                   />
                 </svg>
               </q-btn>
-              <q-btn flat @click="sendDelete('tiket', tiket.id)"
+              <q-btn flat @click="confirmDelete('tiket', tiket.id)"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -538,6 +538,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import socket from "src/socket";
 import navbar from "../../components/NavbarNew.vue";
 import { ref } from "vue";
@@ -644,10 +645,14 @@ export default {
   },
   methods: {
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
     handleUploadEvent() {
       if (this.event.image) {
@@ -799,11 +804,29 @@ export default {
         socket.emit("event");
         this.fetchData();
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },
 
+    confirmDelete(type, id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.sendDelete(type, id);
+        }
+      });
+    },
     async sendDelete(type, id) {
       let url;
       try {
@@ -833,7 +856,10 @@ export default {
           socket.emit("event");
         }
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.error(err);
       }
     },
@@ -897,7 +923,10 @@ export default {
         this.categoryDialog = false;
         this.fetchData();
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },

@@ -53,7 +53,7 @@
                   />
                 </svg>
               </q-btn>
-              <q-btn flat @click="deleteData(data.id)"
+              <q-btn flat @click="confirmDelete(data.id)"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -139,6 +139,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { ref } from "vue";
 import navbar from "../../components/NavbarNew.vue";
 import cookieHandler from "src/cookieHandler";
@@ -180,11 +181,30 @@ export default {
     this.fetchData();
   },
   methods: {
+    confirmDelete(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteData(id);
+        }
+      });
+    },
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
     handleUploadNews() {
       if (this.newsData.image) {
@@ -221,7 +241,10 @@ export default {
         this.fetchData();
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },
@@ -232,7 +255,10 @@ export default {
         this.fetchData();
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },

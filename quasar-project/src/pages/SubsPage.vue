@@ -18,7 +18,7 @@
               flat
               color="red"
               no-caps
-              @click="deleteSubscriber(props.row.id)"
+              @click="confirmDelete(props.row.id)"
               style="background-color: rgba(255, 0, 0, 0.102)"
             ></q-btn>
           </div>
@@ -133,7 +133,11 @@
                 </div>
               </div>
               <div v-if="itemDatas[index]">
-                <q-btn no-caps label="Promote" @click="setPromotedItem(itemDatas[index])" />
+                <q-btn
+                  no-caps
+                  label="Promote"
+                  @click="setPromotedItem(itemDatas[index])"
+                />
               </div>
             </div>
           </q-card-section>
@@ -144,6 +148,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { ref } from "vue";
 import env from "stores/environment";
 import cookieHandler from "src/cookieHandler";
@@ -202,11 +207,30 @@ export default {
     this.fetchData();
   },
   methods: {
+    confirmDelete(id) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.deleteSubscriber(id);
+        }
+      });
+    },
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
     async fetchData() {
       try {
@@ -283,7 +307,10 @@ export default {
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },
@@ -294,17 +321,20 @@ export default {
         this.showNotif(response.data.message, "success");
         this.fetchData();
       } catch (err) {
-        this.showNotif(err.response ? err.response.data.message : err.message, "error");
+        this.showNotif(
+          err.response ? err.response.data.message : err.message,
+          "error"
+        );
         console.log(err);
       }
     },
-  setPromotedItem(data) {
-    try {
-      this.selectedItem = { ...data }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+    setPromotedItem(data) {
+      try {
+        this.selectedItem = { ...data };
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>

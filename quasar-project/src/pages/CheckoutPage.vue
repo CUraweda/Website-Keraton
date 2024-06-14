@@ -332,10 +332,14 @@ export default {
   },
   methods: {
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
     setDate() {
       const date = new Date().toISOString();
@@ -413,11 +417,11 @@ export default {
       }
     },
     async checkOut() {
-      let plannedDate = this.dateInput
+      let plannedDate = this.dateInput;
       try {
-        if(!this.dateInput.split('T')[1]){
-          const rawDateConvert = this.dateInput + ":00+00:00" //Used to convert date
-          plannedDate = new Date(rawDateConvert).toISOString()
+        if (!this.dateInput.split("T")[1]) {
+          const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
+          plannedDate = new Date(rawDateConvert).toISOString();
         }
         const response = await this.$api.post(
           "trans",

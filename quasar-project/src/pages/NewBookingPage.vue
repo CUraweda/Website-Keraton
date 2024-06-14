@@ -12,6 +12,7 @@
             v-if="currentCartLength > 0"
           >
             <q-btn fab color="primary" to="/user/checkout">
+              <q-badge color="orange" floating>{{ currentCartLength }}</q-badge>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -214,10 +215,14 @@ export default {
   },
   methods: {
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
     async storeCartToDatabase() {
       this.cart.updateToDB();
@@ -231,7 +236,7 @@ export default {
           pakets = {};
 
         for (let subType of response.data.data) {
-          if(subType.orders.length < 1) continue
+          if (subType.orders.length < 1) continue;
           switch (subType.orderTypeId) {
             case 1: //Tiket Type
               for (let order of subType.orders) {
@@ -248,7 +253,9 @@ export default {
               }
               break;
             case 2: //Paket Type
-              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined}`;
+              const subTypeName = `${subType.name}|${
+                subType.minimumUnits ? subType.minimumUnits : undefined
+              }`;
               if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
@@ -272,9 +279,9 @@ export default {
           const [name, minimumUnit] = paket.split("|");
           return { name, minimumUnit };
         });
-        if(this.sessionData?.isLogin){
-          const cart = Object.values(this.cart.getItem())
-          this.currentCartLength = cart.length
+        if (this.sessionData?.isLogin) {
+          const cart = Object.values(this.cart.getItem());
+          this.currentCartLength = cart.length;
         }
       } catch (err) {
         console.log(err);
@@ -295,10 +302,10 @@ export default {
     addToCart(rowData) {
       try {
         const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
-        if (!tokenExist){
-          this.$router.push('/signin')
+        if (!tokenExist) {
+          this.$router.push("/signin");
           throw Error("Anda Masih belum Log In!");
-        } 
+        }
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,

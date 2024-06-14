@@ -12,6 +12,7 @@
             v-if="currentCartLength > 0"
           >
             <q-btn fab color="primary" to="/user/checkout">
+              <q-badge color="orange" floating>{{ currentCartLength }}</q-badge>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="24px"
@@ -201,13 +202,16 @@ export default {
   },
   methods: {
     showNotif(msg, status) {
-      new SimpleNotify({
+      const myNotify = new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
-        speed: 10,
-        autotimeout: 700,
+        autoclose: false,
       });
+      setTimeout(() => {
+        myNotify.close();
+      }, 3000);
     },
+
     async storeCartToDatabase() {
       this.cart.updateToDB();
     },
@@ -240,9 +244,9 @@ export default {
           label: iterat.name,
           value: iterat.id,
         }));
-        if(this.sessionData?.isLogin){
-          const cart = Object.values(this.cart.getItem())
-          this.currentCartLength = cart.length
+        if (this.sessionData?.isLogin) {
+          const cart = Object.values(this.cart.getItem());
+          this.currentCartLength = cart.length;
         }
       } catch (err) {
         console.log(err);
@@ -287,6 +291,10 @@ export default {
 
 * {
   font-family: Raleway;
+}
+
+.sn-notifications-container {
+  --sn-success-progress-color: black;
 }
 
 .style-select {
