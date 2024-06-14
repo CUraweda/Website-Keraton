@@ -221,7 +221,7 @@ export default {
         this.fetchData();
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },
@@ -232,7 +232,7 @@ export default {
         this.fetchData();
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },

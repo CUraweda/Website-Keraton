@@ -283,7 +283,7 @@ export default {
         if (response.status != 200) throw Error(response.data.message);
         this.showNotif(response.data.message, "success");
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },
@@ -294,7 +294,7 @@ export default {
         this.showNotif(response.data.message, "success");
         this.fetchData();
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },

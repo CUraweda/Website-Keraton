@@ -9,6 +9,7 @@
             style="z-index: 100"
             position="bottom-right"
             :offset="[18, 18]"
+            v-if="currentCartLength > 0"
           >
             <q-btn fab color="primary" to="/user/checkout">
               <svg
@@ -154,6 +155,7 @@ import env from "stores/environment";
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
 import SimpleNotify from "simple-notify";
+import { decrypt } from "src/stores/encryption";
 import "simple-notify/dist/simple-notify.css";
 
 export default {
@@ -173,6 +175,10 @@ export default {
       ],
       cart: new Carts(),
       events: ref([]),
+      currentCartLength: 0,
+      sessionData: ref(
+        JSON.parse(decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)))
+      ),
     };
   },
   beforeUnmount() {
@@ -234,6 +240,10 @@ export default {
           label: iterat.name,
           value: iterat.id,
         }));
+        if(this.sessionData?.isLogin){
+          const cart = Object.values(this.cart.getItem())
+          this.currentCartLength = cart.length
+        }
       } catch (err) {
         console.log(err);
       }

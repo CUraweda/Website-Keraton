@@ -799,7 +799,7 @@ export default {
         socket.emit("event");
         this.fetchData();
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },
@@ -833,7 +833,7 @@ export default {
           socket.emit("event");
         }
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.error(err);
       }
     },
@@ -897,7 +897,7 @@ export default {
         this.categoryDialog = false;
         this.fetchData();
       } catch (err) {
-        this.showNotif(err, "error");
+        this.showNotif(err.response ? err.response.data.message : err.message, "error");
         console.log(err);
       }
     },
