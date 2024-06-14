@@ -58,10 +58,7 @@
     </section>
 
     <section>
-      <q-video
-        :ratio="16 / 9"
-        :src="sectionData2?.xl1.data"
-      />
+      <q-video :ratio="16 / 9" :src="sectionData2?.xl1.data" />
     </section>
 
     <section

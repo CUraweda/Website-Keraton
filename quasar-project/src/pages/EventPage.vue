@@ -1,119 +1,150 @@
 <template>
-  <div>
-    <navbar :isAdmin="false" />
-    <div class="background-header">
-      <div class="header">
-        <q-breadcrumbs active-color="black">
-          <q-breadcrumbs-el label="Booking" />
-          <q-breadcrumbs-el label="Tiket Event" />
-        </q-breadcrumbs>
+  <q-layout>
+    <q-page-container>
+      <q-page>
+        <div>
+          <navbar :isAdmin="false" />
 
-        <div class="text-h5 text-bold">Tiket Event Keraton</div>
-      </div>
-    </div>
+          <q-page-sticky
+            style="z-index: 100"
+            position="bottom-right"
+            :offset="[18, 18]"
+          >
+            <q-btn fab color="primary" to="/user/checkout">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#e8eaed"
+              >
+                <path
+                  d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
+                />
+              </svg>
+            </q-btn>
+          </q-page-sticky>
 
-    <div class="style-select">
-      <q-btn
-        outlined
-        label="Pelaksanaan"
-        no-caps
-        icon-right="keyboard_arrow_down"
-      >
-        <q-menu>
-          <q-list>
-            <q-item clickable>
-              <q-item-section>
-                <q-checkbox
-                  v-for="(iterat, i) in pelaksanaanOptions"
-                  :key="i"
-                  v-model="jenisPelaksanaan"
-                  :val="iterat.value"
-                  :label="iterat.label"
-              /></q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
+          <div class="background-header">
+            <div class="header">
+              <q-breadcrumbs active-color="black">
+                <q-breadcrumbs-el label="Booking" />
+                <q-breadcrumbs-el label="Tiket Event" />
+              </q-breadcrumbs>
 
-      <q-btn
-        outlined
-        label="Jenis Event"
-        no-caps
-        icon-right="keyboard_arrow_down"
-      >
-        <q-menu>
-          <q-list>
-            <q-item clickable>
-              <q-item-section>
-                <q-checkbox
-                  v-for="(type, i) in jenisEventOptions"
-                  :key="i"
-                  v-model="jenisEvent"
-                  :val="type.value"
-                  :label="type.label"
-              /></q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-    </div>
-
-    <div class="flex justify-center items-center q-gutter-md">
-      <div v-for="(item, index) in events" :key="index">
-        <q-card class="my-card" flat bordered>
-          <q-img :src="item.image" class="image-card" />
-
-          <q-card-section>
-            <div class="flex q-gutter-sm">
-              <q-badge color="blue">{{ item.buttonText1 }}</q-badge>
-              <q-badge color="blue">{{
-                item.isFree ? "Free" : "Paid"
-              }}</q-badge>
+              <div class="text-h5 text-bold">Tiket Event Keraton</div>
             </div>
-            <div
-              class="text-h6 q-mt-sm q-mb-xs"
-              style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              "
-            >
-              {{ item.titleBig }}
-            </div>
-            <div
-              class="text-caption text-grey"
-              style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              "
-            >
-              {{ item.titleMedium }}
-            </div>
-          </q-card-section>
+          </div>
 
-          <q-card-actions>
-            <div class="text-subtitle1 text-weight-medium">
-              {{ item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }}
-            </div>
-            <q-space />
+          <div class="style-select">
             <q-btn
-              dense
-              @click="addToCart(item)"
+              outlined
+              label="Pelaksanaan"
               no-caps
-              style="background: #fae084"
-              ><span class="text-bold">Tambah</span
-              ><span
-                ><q-img
-                  src="../assets/Frame.svg"
-                  style="width: 1rem; height: 1rem"
-                  class="q-mx-xs" /></span
-            ></q-btn>
-          </q-card-actions>
-        </q-card>
-      </div>
-    </div>
-  </div>
+              icon-right="keyboard_arrow_down"
+            >
+              <q-menu>
+                <q-list>
+                  <q-item clickable>
+                    <q-item-section>
+                      <q-checkbox
+                        v-for="(iterat, i) in pelaksanaanOptions"
+                        :key="i"
+                        v-model="jenisPelaksanaan"
+                        :val="iterat.value"
+                        :label="iterat.label"
+                    /></q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+
+            <q-btn
+              outlined
+              label="Jenis Event"
+              no-caps
+              icon-right="keyboard_arrow_down"
+            >
+              <q-menu>
+                <q-list>
+                  <q-item clickable>
+                    <q-item-section>
+                      <q-checkbox
+                        v-for="(type, i) in jenisEventOptions"
+                        :key="i"
+                        v-model="jenisEvent"
+                        :val="type.value"
+                        :label="type.label"
+                    /></q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </div>
+
+          <div class="flex justify-center items-center q-gutter-md">
+            <div v-for="(item, index) in events" :key="index">
+              <q-card class="my-card" flat bordered>
+                <q-img :src="item.image" class="image-card" />
+
+                <q-card-section>
+                  <div class="flex q-gutter-sm">
+                    <q-badge color="blue">{{ item.buttonText1 }}</q-badge>
+                    <q-badge color="blue">{{
+                      item.isFree ? "Free" : "Paid"
+                    }}</q-badge>
+                  </div>
+                  <div
+                    class="text-h6 q-mt-sm q-mb-xs"
+                    style="
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ item.titleBig }}
+                  </div>
+                  <div
+                    class="text-caption text-grey"
+                    style="
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ item.titleMedium }}
+                  </div>
+                </q-card-section>
+
+                <q-card-actions>
+                  <div class="text-subtitle1 text-weight-medium">
+                    {{
+                      item.price < 1
+                        ? "Free"
+                        : "Rp. " + formatRupiah(item.price)
+                    }}
+                  </div>
+                  <q-space />
+                  <q-btn
+                    dense
+                    @click="addToCart(item)"
+                    no-caps
+                    style="background: #fae084"
+                    ><span class="text-bold">Tambah</span
+                    ><span
+                      ><q-img
+                        src="../assets/Frame.svg"
+                        style="width: 1rem; height: 1rem"
+                        class="q-mx-xs" /></span
+                  ></q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+          </div>
+        </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
@@ -167,6 +198,8 @@ export default {
       new SimpleNotify({
         text: `${msg}`,
         status: `${status}`,
+        speed: 10,
+        autotimeout: 700,
       });
     },
     async storeCartToDatabase() {
@@ -208,7 +241,10 @@ export default {
     addToCart(rowData) {
       try {
         const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
-        if (!tokenExist) throw Error("Anda Masih Belum Log In!");
+        if (!tokenExist) {
+          this.$router.push("/signin");
+          throw Error("Anda masih belum login");
+        }
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
@@ -219,7 +255,6 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
-        // this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "info");
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
       } catch (err) {

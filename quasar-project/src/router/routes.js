@@ -19,8 +19,26 @@ import BookingPage from "../pages/NewBookingPage.vue";
 import AdminUserPage from "pages/Admin/UserPage.vue";
 import SubsPage from "../pages/SubsPage.vue";
 import CheckoutPage from "../pages/CheckoutPage.vue";
+import BllArti from "../pages/NewBaluarti.vue";
+import Musm from "../pages/NewMuseum.vue";
+import Agng from "../pages/NewAgungDalem.vue";
 
 const routes = [
+  {
+    path: "/agungdalem",
+    name: "AgungDalem",
+    component: Agng,
+  },
+  {
+    path: "/museum",
+    name: "Museum",
+    component: Musm,
+  },
+  {
+    path: "/baluarti",
+    name: "Baluarti",
+    component: BllArti,
+  },
   {
     path: "/admin/subs",
     name: "SubsPage",

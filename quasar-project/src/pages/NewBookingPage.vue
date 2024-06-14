@@ -1,148 +1,183 @@
 <template>
-  <div>
-    <navbar :isAdmin="false" />
+  <q-layout>
+    <q-page-container>
+      <q-page>
+        <div>
+          <navbar :isAdmin="false" />
 
-    <div class="background-header">
-      <div class="header">
-        <q-breadcrumbs active-color="black">
-          <q-breadcrumbs-el label="Booking" />
-          <q-breadcrumbs-el label="Paket Keraton" />
-        </q-breadcrumbs>
+          <q-page-sticky
+            style="z-index: 100"
+            position="bottom-right"
+            :offset="[18, 18]"
+          >
+            <q-btn fab color="primary" to="/user/checkout">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="#e8eaed"
+              >
+                <path
+                  d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
+                />
+              </svg>
+            </q-btn>
+          </q-page-sticky>
 
-        <div class="text-h5 text-bold">Paket Keraton</div>
-      </div>
-    </div>
+          <div class="background-header">
+            <div class="header">
+              <q-breadcrumbs active-color="black">
+                <q-breadcrumbs-el label="Booking" />
+                <q-breadcrumbs-el label="Paket Keraton" />
+              </q-breadcrumbs>
 
-    <div class="text-h5 text-bold q-mx-md q-my-md">
-      Tiket Masuk Keraton & Bundling
-    </div>
-    <div
-      class="flex q-gutter-md q-mx-md"
-      style="
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      "
-    >
-      <div v-for="(item, index) in tiketItems" :key="index">
-        <q-card class="my-card" flat bordered>
-          <q-img :src="item.image || defaultImageUrl" class="image-card" />
+              <div class="text-h5 text-bold">Paket Keraton</div>
+            </div>
+          </div>
 
-          <q-card-section>
+          <div class="text-h5 text-bold q-mx-md q-my-md">
+            Tiket Masuk Keraton & Bundling
+          </div>
+          <div
+            class="flex q-gutter-md q-mx-md"
+            style="
+              overflow-x: auto;
+              flex-wrap: nowrap;
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            "
+          >
+            <div v-for="(item, index) in tiketItems" :key="index">
+              <q-card class="my-card" flat bordered>
+                <q-img
+                  :src="item.image || defaultImageUrl"
+                  class="image-card"
+                />
+
+                <q-card-section>
+                  <div
+                    class="text-h6 q-mt-sm q-mb-xs"
+                    style="
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ item.titleBig }}
+                  </div>
+                  <div
+                    class="text-caption text-grey"
+                    style="
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    {{ item.titleMedium }}
+                  </div>
+                </q-card-section>
+
+                <q-card-actions>
+                  <div class="text-subtitle1 text-weight-medium">
+                    {{
+                      item.price < 1
+                        ? "Free"
+                        : "Rp. " + formatRupiah(item.price)
+                    }}
+                  </div>
+                  <q-space />
+                  <q-btn
+                    @click="addToCart(item)"
+                    dense
+                    no-caps
+                    style="background: #fae084"
+                    ><span class="text-bold">Tambah</span
+                    ><span
+                      ><q-img
+                        src="../assets/Frame.svg"
+                        style="width: 1rem; height: 1rem"
+                        class="q-mx-xs" /></span
+                  ></q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+          </div>
+
+          <div v-for="(item, index) in paketItems" :key="index">
+            <div class="text-h5 text-bold q-mx-md q-my-md">
+              {{
+                paketNameItems[index].name +
+                ` (minimal ${paketNameItems[index].minimumUnit} orang)`
+              }}
+            </div>
             <div
-              class="text-h6 q-mt-sm q-mb-xs"
+              class="flex q-gutter-md q-mx-md"
               style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
               "
             >
-              {{ item.titleBig }}
-            </div>
-            <div
-              class="text-caption text-grey"
-              style="
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              "
-            >
-              {{ item.titleMedium }}
-            </div>
-          </q-card-section>
+              <div v-for="(data, index) in item" :key="index">
+                <q-card class="my-card" flat bordered>
+                  <q-img :src="data.image" class="image-card" />
 
-          <q-card-actions>
-            <div class="text-subtitle1 text-weight-medium">
-              {{ item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }}
-            </div>
-            <q-space />
-            <q-btn
-              @click="addToCart(item)"
-              dense
-              no-caps
-              style="background: #fae084"
-              ><span class="text-bold">Tambah</span
-              ><span
-                ><q-img
-                  src="../assets/Frame.svg"
-                  style="width: 1rem; height: 1rem"
-                  class="q-mx-xs" /></span
-            ></q-btn>
-          </q-card-actions>
-        </q-card>
-      </div>
-    </div>
+                  <q-card-section>
+                    <div
+                      class="text-h6 q-mt-sm q-mb-xs"
+                      style="
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      "
+                    >
+                      {{ data.titleBig }}
+                    </div>
+                    <div
+                      class="text-caption text-grey"
+                      style="
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                      "
+                    >
+                      {{ data.titleMedium }}
+                    </div>
+                  </q-card-section>
 
-    <div v-for="(item, index) in paketItems" :key="index">
-      <div class="text-h5 text-bold q-mx-md q-my-md">
-        {{
-          paketNameItems[index].name +
-          ` (minimal ${paketNameItems[index].minimumUnit} orang)`
-        }}
-      </div>
-      <div
-        class="flex q-gutter-md q-mx-md"
-        style="
-          overflow-x: auto;
-          flex-wrap: nowrap;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        "
-      >
-        <div v-for="(data, index) in item" :key="index">
-          <q-card class="my-card" flat bordered>
-            <q-img :src="data.image" class="image-card" />
-
-            <q-card-section>
-              <div
-                class="text-h6 q-mt-sm q-mb-xs"
-                style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                "
-              >
-                {{ data.titleBig }}
+                  <q-card-actions>
+                    <div class="text-subtitle1 text-weight-medium">
+                      {{
+                        data.price < 1
+                          ? "Free"
+                          : "Rp. " + formatRupiah(data.price)
+                      }}
+                    </div>
+                    <q-space />
+                    <q-btn
+                      @click="addToCart(data)"
+                      dense
+                      no-caps
+                      style="background: #fae084"
+                      class="text-bold"
+                      ><span class="text-bold">Tambah</span
+                      ><span
+                        ><q-img
+                          src="../assets/Frame.svg"
+                          style="width: 1rem; height: 1rem"
+                          class="q-mx-xs" /></span
+                    ></q-btn>
+                  </q-card-actions>
+                </q-card>
               </div>
-              <div
-                class="text-caption text-grey"
-                style="
-                  white-space: nowrap;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                "
-              >
-                {{ data.titleMedium }}
-              </div>
-            </q-card-section>
-
-            <q-card-actions>
-              <div class="text-subtitle1 text-weight-medium">
-                {{
-                  data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price)
-                }}
-              </div>
-              <q-space />
-              <q-btn
-                @click="addToCart(data)"
-                dense
-                no-caps
-                style="background: #fae084"
-                class="text-bold"
-                ><span class="text-bold">Tambah</span
-                ><span
-                  ><q-img
-                    src="../assets/Frame.svg"
-                    style="width: 1rem; height: 1rem"
-                    class="q-mx-xs" /></span
-              ></q-btn>
-            </q-card-actions>
-          </q-card>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
@@ -254,7 +289,10 @@ export default {
     addToCart(rowData) {
       try {
         const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);
-        if (!tokenExist) throw Error("Anda Masih Belum Log In!");
+        if (!tokenExist) {
+          this.$router.push("/signin");
+          throw Error("Anda Masih Belum Log In!");
+        }
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
