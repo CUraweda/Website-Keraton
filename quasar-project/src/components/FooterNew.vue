@@ -251,12 +251,13 @@ export default defineComponent({
   }
   .link {
     display: block;
-    flex-wrap: nowrap;
     justify-content: center;
     width: 100%;
   }
   .list-head {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
   }
 }

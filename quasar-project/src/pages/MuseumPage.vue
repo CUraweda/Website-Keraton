@@ -129,9 +129,13 @@
               :key="index"
             >
               <div class="text-tiket-kunjungan">
-                <div class="text-tiket">{{ element.text1 }}</div>
-                <p class="text-harga">{{ element.text2 }}</p>
-                <p class="text-harga" id="text-area">{{ element.text3 }}</p>
+                <div class="text-h5 text-bold text-black text-1">
+                  {{ element.text1 }}
+                </div>
+                <div class="text-h6 text-2">{{ element.text2 }}</div>
+                <div class="text-h6 text-3" id="text-area">
+                  {{ element.text3 }}
+                </div>
               </div>
               <img class="img-tiket-kunjungan" :src="element.img" alt="" />
             </div>
@@ -240,6 +244,7 @@ a {
 }
 
 .img-tiket-kunjungan {
+  width: 15rem;
   height: 10rem;
   cursor: pointer;
 }
@@ -278,8 +283,10 @@ a {
 
 .background-baluarti {
   background: url("../src/assets/images/museumPusakaa.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
-  padding: 9.5rem 0;
+  padding: 10rem 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -329,7 +336,7 @@ a {
   width: 35rem;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1200px) {
   .img-card {
     width: 6rem;
     height: 8.5rem;
@@ -356,6 +363,23 @@ a {
 
   .content-masjid {
     order: 1;
+  }
+
+  .img-tiket-kunjungan {
+    height: 5rem;
+    width: 10rem;
+  }
+
+  .text-1 {
+    font-size: 1rem;
+  }
+
+  .text-2 {
+    font-size: 0.8rem;
+  }
+
+  .text-3 {
+    font-size: 0.8rem;
   }
 }
 </style>

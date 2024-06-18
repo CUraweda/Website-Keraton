@@ -125,7 +125,7 @@
                   v-model="dateInputLabel"
                   label="Date"
                   class="q-mt-xs"
-                  style="width: 13rem"
+                  style="width: 15rem"
                 >
                   <template v-slot:append>
                     <q-icon name="event" color="orange" class="cursor-pointer">

@@ -126,7 +126,7 @@ const statusSelected = ref(false);
       </div>
     </div>
 
-    <div style="display: none">
+    <div>
       <div ref="data" v-if="detailData.transactionNo">
         <div class="flex items-center justify-between">
           <div>No. Transaksi</div>
@@ -197,13 +197,18 @@ const statusSelected = ref(false);
         </div>
 
         <div class="flex items-center justify-between q-mt-xl">
-          <div>Total Biaya</div>
+          <div class="text-bold">Total Biaya</div>
           <div>{{ detailData.totalTransaction }}</div>
         </div>
 
-        <div class="flex items-center justify-between">
-          <div></div>
-          <div class="flex items-center q-gutter-lg q-mt-md q-mx-md">
+        <div class="flex column justify-center items-center">
+          <div>Affiliated By:</div>
+          <div
+            class="flex items-center q-gutter-md justify-center q-mt-md q-mx-md"
+          >
+            <div>
+              <img src="../assets/images/bjb.svg" alt="" class="img-collab" />
+            </div>
             <div>
               <img src="../assets/images/1 931.svg" alt="" class="img-collab" />
             </div>
