@@ -73,7 +73,7 @@
             <div>
               <div class="flex items-center q-gutter-md">
                 <q-icon name="person" color="orange" size="2rem" />
-                <div>Detail Pemesanan</div>
+                <div>Detail Pemesan</div>
               </div>
 
               <div class="flex items-center q-gutter-md">
@@ -123,7 +123,7 @@
                   outlined
                   dense
                   v-model="dateInputLabel"
-                  label="Date"
+                  label="Tanggal Pesanan"
                   class="q-mt-xs"
                   style="width: 13rem"
                 >
@@ -158,6 +158,10 @@
                         Total Pemesanan
                       </div>
                       <div>
+                        <div v-for="(data, index) in carts" :key="index" class="flex items-center justify-between">
+                          <div>{{ data.name + ` (${data.quantity} Tiket)` }}</div>
+                          <div>Rp. {{ formatRupiah(data.quantity * data.price) }}</div>
+                        </div>
                         <div class="flex items-center justify-between">
                           <div>Total Harga ({{ ticketTotal }} Tiket)</div>
                           <div>Rp. {{ formatRupiah(checkoutTotal) }}</div>
@@ -381,7 +385,6 @@ export default {
     },
     async validateCartData() {
       try {
-        console.log(this.carts);
         const response = await this.$api.post("cart/validate", {
           carts: this.carts,
         });

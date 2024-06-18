@@ -775,6 +775,8 @@ export default {
             url = `category/${this.currentId}`;
             requestBody = this.category;
             delete requestBody.id;
+            delete requestBody.label
+            delete requestBody.value
             break;
           case "subType":
             url = `subtype/${this.currentId}`;

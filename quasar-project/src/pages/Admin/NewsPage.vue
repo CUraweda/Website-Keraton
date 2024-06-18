@@ -129,7 +129,7 @@
               <q-img :src="imgURLNews" v-if="imgURLNews" />
             </div>
             <div>
-              <q-btn label="Create" @click="createUpdateData" />
+              <q-btn :label="currentId ? 'Update': 'Create'" @click="createUpdateData" />
             </div>
           </div>
         </q-card-section>

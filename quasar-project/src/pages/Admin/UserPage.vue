@@ -123,6 +123,7 @@ export default {
       userDialog: ref(false),
       currentId: ref(),
       userDatas: ref([]),
+      defaultUserData: ref({}),
       userData: ref({
         name: "",
         email: "",
@@ -184,10 +185,8 @@ export default {
           url,
           {
             name: this.userData.name,
-            email: this.userData.email,
-            role: this.userData.role?.value
-              ? this.userData.role.value
-              : this.userData.role,
+            ...(this.defaultUserData ? this.defaultUserData.email === this.userData.email ? {} : { email: this.userData.email } : { email: this.userData.email }),
+            role: this.userData.role?.value ? this.userData.role.value : this.userData.role,
             ...(this.userData && { password: this.userData.password }),
           },
           {
@@ -225,6 +224,7 @@ export default {
       this.addUserDialog = !this.addUserDialog;
       if (this.addUserDialog && data) {
         this.currentId = data.id;
+        this.defaultUserData = { ...data }
         this.userData = { ...data };
       }
     },

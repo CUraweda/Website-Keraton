@@ -209,7 +209,7 @@ export default {
       });
       setTimeout(() => {
         myNotify.close();
-      }, 3000);
+      }, 5000);
     },
 
     async storeCartToDatabase() {
@@ -269,6 +269,7 @@ export default {
         };
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
+        this.currentCartLength = Object.values(cartData).length
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
       } catch (err) {
