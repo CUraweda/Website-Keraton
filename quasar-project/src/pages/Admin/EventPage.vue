@@ -604,6 +604,7 @@ export default {
       imgURLTiket: ref(),
       addNewEvent: ref(),
       addNewTiketPaket: ref(),
+      defaultSubType: ref({}),
       typeDialog: ref(false),
       subTypeDialog: ref(false),
       categoryDialog: ref(false),
@@ -781,9 +782,7 @@ export default {
           case "subType":
             url = `subtype/${this.currentId}`;
             requestBody = this.subType;
-            requestBody.orderTypeId = requestBody.orderTypeId?.value
-              ? requestBody.orderTypeId.value
-              : requestBody.orderTypeId;
+            requestBody.orderTypeId = requestBody.orderTypeId?.value ? requestBody.orderTypeId.value : requestBody.orderTypeId;
             delete requestBody.id;
             break;
           default:
@@ -974,7 +973,10 @@ export default {
         case "subType":
           this.subTypeDialog = true;
           this.currentId = itemData.id;
-          if (itemData) this.subType = { ...itemData };
+          if (itemData){
+            this.defaultSubType = itemData
+            this.subType = { ...itemData };
+          } 
           break;
         case "category":
           this.categoryDialog = true;

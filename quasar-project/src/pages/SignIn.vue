@@ -111,7 +111,9 @@ export default {
 
         this.showNotif("Anda berhasil login", "success");
         cartClass.setNew(cartData);
-        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token);
+        cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token, {
+          expires:  new Date(Date.now() + 86400000) 
+        });
         localStorage.setItem(env.USER_STORAGE_NAME, JSON.stringify(user));
         sessionStorage.removeItem(env.GLOBAL_STORAGE);
         this.$router.go(-1);
