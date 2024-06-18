@@ -93,6 +93,7 @@
             <q-btn
               v-if="!sessionData?.isLogin"
               no-caps
+              to="/signin"
               label="SignIn"
               style="background: #123b32; color: white; padding-inline: 30px"
             >

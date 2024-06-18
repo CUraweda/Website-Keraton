@@ -187,6 +187,7 @@ import Carts from "../stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
 import { ref } from "vue";
+import socket from "src/socket";
 import navbar from "../components/NavbarNew.vue";
 import SimpleNotify from "simple-notify";
 import { decrypt } from "src/stores/encryption";
@@ -212,8 +213,15 @@ export default {
   },
   mounted() {
     this.fetchData();
+    this.socketConnection()
   },
   methods: {
+    socketConnection(){
+      socket.connect()
+      socket.on('tiket', () => {
+        this.fetchData()
+      })
+    },
     showNotif(msg, status) {
       const myNotify = new SimpleNotify({
         text: `${msg}`,

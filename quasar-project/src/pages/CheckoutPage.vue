@@ -98,7 +98,7 @@
                 </div>
                 <q-btn no-caps class="q-mt-sm" @click="caraPembayaran = true">
                   <div class="q-gutter-x-md flex items-center justify-center">
-                    <q-icon name="warning" size="1.5rem" color="red" />
+                    <q-icon :name="paymentMethod ? 'info' : 'warning'" size="1.5rem" :color="paymentMethod ? 'orange' : 'red'" />
                     <div>
                       {{
                         paymentMethod
@@ -260,6 +260,7 @@ import { ref } from "vue";
 import Cart from "stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
+import socket from 'src/socket'
 import navbar from "../components/NavbarNew.vue";
 import SimpleNotify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
@@ -316,6 +317,7 @@ export default {
       this.validateCartData();
       this.countTagihan();
     });
+    this.socketConnection()
     this.setDate();
   },
   watch: {
@@ -335,6 +337,12 @@ export default {
     this.storeCartToDatabase();
   },
   methods: {
+    socketConnection(){
+      socket.connect()
+      socket.on('tiket', () => {
+        this.validateCartData()
+      })
+    },
     showNotif(msg, status) {
       const myNotify = new SimpleNotify({
         text: `${msg}`,
@@ -355,7 +363,6 @@ export default {
     async setCartData() {
       try {
         const rawCart = Object.values(this.cartClass.getItem());
-        console.log(rawCart);
         if (rawCart.length < 1) {
           const response = await this.$api.get("cart", {
             headers: {
@@ -389,7 +396,8 @@ export default {
           carts: this.carts,
         });
         if (response.status != 200) throw Error(response.data.message);
-        this.carts = response.data.data;
+        this.carts = response.data.data
+        this.cartClass.setNewData(response.data.data)
       } catch (err) {
         console.log(err);
       }

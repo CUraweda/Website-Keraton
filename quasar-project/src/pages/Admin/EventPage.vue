@@ -803,7 +803,7 @@ export default {
         this.typeDialog = false;
         this.subTypeDialog = false;
         this.categoryDialog = false;
-        socket.emit("event");
+        socket.emit("tiket");
         this.fetchData();
       } catch (err) {
         this.showNotif(
@@ -855,7 +855,7 @@ export default {
         if (response.status == 200) {
           this.showNotif(response.data.message, "success");
           this.fetchData();
-          socket.emit("event");
+          socket.emit("tiket");
         }
       } catch (err) {
         this.showNotif(
@@ -923,6 +923,7 @@ export default {
         this.typeDialog = false;
         this.subTypeDialog = false;
         this.categoryDialog = false;
+        socket.emit('tiket')
         this.fetchData();
       } catch (err) {
         this.showNotif(
