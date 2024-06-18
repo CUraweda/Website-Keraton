@@ -21,6 +21,7 @@ export default class Carts {
 
     updateItem() {
         localStorage.setItem(env.CART_STORAGE_NAME, JSON.stringify(this.userCart))
+        console.log(this.userCart)
         return this
     }
 
@@ -45,6 +46,14 @@ export default class Carts {
     setNew(listOfData = [{ id, name, image, price, minimumUnit , quantity, event }]) {
         if (listOfData.length < 1) return this
         for(let data of listOfData) this.userCart[`${data.type}|${data.id}`] = { ...data }
+        return this.updateItem()
+    }
+    
+    setNewData(listOfData){
+        if (listOfData.length < 1) return this
+        let userCart = {}
+        for(let data of listOfData) userCart[`${data.type}|${data.id}`] = { ...data }
+        this.userCart = userCart
         return this.updateItem()
     }
 

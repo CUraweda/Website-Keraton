@@ -1,6 +1,6 @@
 export default {
-  TOKEN_STORAGE_NAME: "token",
-  CART_STORAGE_NAME: "carts",
+  TOKEN_STORAGE_NAME: "WEB_TOKEN",
+  CART_STORAGE_NAME: "WEB_CARTS",
   USER_STORAGE_NAME: "user",
   WISATA_STORAGE_NAME: "wisata",
   GLOBAL_STORAGE: "global",

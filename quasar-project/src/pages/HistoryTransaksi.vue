@@ -126,7 +126,7 @@ const statusSelected = ref(false);
       </div>
     </div>
 
-    <div>
+    <div style="display: none">
       <div ref="data" v-if="detailData.transactionNo">
         <div class="flex items-center justify-between">
           <div>No. Transaksi</div>
@@ -333,6 +333,7 @@ const statusSelected = ref(false);
                           height="24px"
                           viewBox="0 -960 960 960"
                           width="24px"
+                          @click="salinNomor('1892379812732189')"
                           fill="#DAA520"
                         >
                           <path
@@ -342,7 +343,7 @@ const statusSelected = ref(false);
                       </q-btn>
                     </div>
 
-                    <div class="flex q-mt-md justify-between">
+                    <!-- <div class="flex q-mt-md justify-between">
                       <div class="flex items-center">
                         <q-icon name="mdi-help-circle" />
                         <p class="text-caption text-grey q-ml-xs">
@@ -350,7 +351,7 @@ const statusSelected = ref(false);
                         </p>
                       </div>
                       <q-btn flat class="text-red">Salin</q-btn>
-                    </div>
+                    </div> -->
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
@@ -370,6 +371,7 @@ const statusSelected = ref(false);
                           height="24px"
                           viewBox="0 -960 960 960"
                           width="24px"
+                          @click="salinNomor('1892379812732189')"
                           fill="#DAA520"
                         >
                           <path
@@ -379,7 +381,7 @@ const statusSelected = ref(false);
                       </q-btn>
                     </div>
 
-                    <div class="flex q-mt-md justify-between">
+                    <!-- <div class="flex q-mt-md justify-between">
                       <div class="flex items-center">
                         <q-icon name="mdi-help-circle" />
                         <p class="text-caption text-grey q-ml-xs">
@@ -387,7 +389,7 @@ const statusSelected = ref(false);
                         </p>
                       </div>
                       <q-btn flat class="text-red">Salin</q-btn>
-                    </div>
+                    </div> -->
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
@@ -411,6 +413,7 @@ const statusSelected = ref(false);
                           height="24px"
                           viewBox="0 -960 960 960"
                           width="24px"
+                          @click="salinNomor('1892379812732189')"
                           fill="#DAA520"
                         >
                           <path
@@ -420,7 +423,7 @@ const statusSelected = ref(false);
                       </q-btn>
                     </div>
 
-                    <div class="flex q-mt-md justify-between">
+                    <!-- <div class="flex q-mt-md justify-between">
                       <div class="flex items-center">
                         <q-icon name="mdi-help-circle" />
                         <p class="text-caption text-grey q-ml-xs">
@@ -428,7 +431,7 @@ const statusSelected = ref(false);
                         </p>
                       </div>
                       <q-btn flat class="text-red">Salin</q-btn>
-                    </div>
+                    </div> -->
                   </q-card-section>
                 </q-card>
               </q-expansion-item>
@@ -507,6 +510,15 @@ export default {
         },
       });
       this.openDetailDialog();
+    },
+    salinNomor(payload) {
+      try {
+        navigator.clipboard.writeText(payload).then(() => {
+          this.showNotif("Nomor Virtual telah disalin", "success");
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
     async fetchData() {
       try {

@@ -11,7 +11,6 @@ const socket = io(
 export default {
   connect() {
     return new Promise((resolve, reject) => {
-      console.log(resolve, reject);
       socket.on("connect", () => {
         console.log("Connected to WS");
         resolve();
@@ -29,7 +28,6 @@ export default {
   },
 
   on(event, callback) {
-    console.log(event);
     socket.on(event, callback);
   },
 
@@ -38,7 +36,6 @@ export default {
   },
 
   emit(event, data) {
-    console.log(event);
     socket.emit(event, data);
   },
 };

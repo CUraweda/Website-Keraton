@@ -315,6 +315,7 @@
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
 import footerNew from "../components/FooterNew.vue";
+import socket from "src/socket"
 
 export default {
   components: { navbar, footerNew },
@@ -336,8 +337,15 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.fetchEvents();
+    this.socketConnection()
   },
   methods: {
+    socketConnection(){
+      socket.connect()
+      socket.on('dashboard', () => {
+        this.fetchData()
+      })
+    },
     async fetchData() {
       try {
         const response = await this.$api.get("page/content/1");

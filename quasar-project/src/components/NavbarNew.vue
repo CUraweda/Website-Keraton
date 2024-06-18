@@ -93,7 +93,8 @@
             <q-btn
               v-if="!sessionData?.isLogin"
               no-caps
-              label="Sign In"
+              to="/signin"
+              label="SignIn"
               style="background: #123b32; color: white; padding-inline: 30px"
             >
             </q-btn>
@@ -308,7 +309,7 @@
         to="/signin"
         style="background: #123b32; color: white; padding-inline: 30px"
       >
-        <span class="text-bold">Sign In</span>
+        <span class="text-bold">SignIn</span>
       </q-btn>
 
       <q-btn round dense flat v-if="sessionData?.isLogin" class="profile-float">
