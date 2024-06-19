@@ -110,7 +110,7 @@ export default {
         delete user.carts;
 
         this.showNotif("Anda berhasil login", "success");
-        cartClass.setNew(cartData);
+        cartClass.setNewData(cartData);
         cookieHandler.setCookie(env.TOKEN_STORAGE_NAME, token, {
           expires:  new Date(Date.now() + 86400000) 
         });
