@@ -23,13 +23,7 @@ const statusSelected = ref(false);
     </div>
     <div class="flex items-center justify-center q-mt-md">
       <div class="flex wrap items-center justify-center q-gutter-md">
-        <q-input
-          outlined
-          v-model="search.s"
-          type="search"
-          label="Search"
-          style="width: 15rem"
-        >
+        <q-input outlined v-model="search.s" type="search" label="Search" style="width: 15rem">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -37,11 +31,7 @@ const statusSelected = ref(false);
 
         <q-input outlined v-model="search.d" type="date" style="width: 15rem" />
 
-        <select
-          v-model="search.stat"
-          @change="statusSelected = true"
-          class="custom-select"
-        >
+        <select v-model="search.stat" @change="statusSelected = true" class="custom-select">
           <option value="ALL">Semua Status</option>
           <option value="SUDAH_DIGUNAKAN">Sudah digunakan</option>
           <option value="DAPAT_DIGUNAKAN">Dapat digunakan</option>
@@ -51,11 +41,7 @@ const statusSelected = ref(false);
       </div>
     </div>
 
-    <div
-      v-for="transaction in historyDatas"
-      :key="transaction.status"
-      class="card-history shadow-2"
-    >
+    <div v-for="transaction in historyDatas" :key="transaction.status" class="card-history shadow-2">
       <div class="q-mt-xl">
         <q-card class="my-card q-mt-md" flat bordered>
           <q-card-section>
@@ -64,8 +50,8 @@ const statusSelected = ref(false);
               <div class="text-bold">Tiket</div>
               <div style="color: #5e5e5e">{{ transaction.date }}</div>
               <q-badge :color="transaction.class">{{
-                transaction.label
-              }}</q-badge>
+          transaction.label
+        }}</q-badge>
             </div>
           </q-card-section>
 
@@ -77,17 +63,13 @@ const statusSelected = ref(false);
                 <div class="text-h6 title-card">
                   {{ transaction.detailDatas.titles }}
                 </div>
-                <q-badge
-                  rounded
-                  :color="badge.badgeColor"
-                  v-for="(badge, i) in transaction.detailDatas.data"
-                  :key="i"
-                  >{{ badge.name }}</q-badge
-                >
+                <q-badge rounded :color="badge.badgeColor" v-for="(badge, i) in transaction.detailDatas.data"
+                  :key="i">{{
+          badge.name }}</q-badge>
                 <div>
                   {{
-                    `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
-                  }}
+          `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
+        }}
                 </div>
 
                 <div v-if="transaction.detailDatas.length - 1 != 0">
@@ -103,18 +85,11 @@ const statusSelected = ref(false);
                   </div>
 
                   <div class="flex items-center q-gutter-md">
-                    <div
-                      style="color: #daa520"
-                      class="cursor-pointer"
-                      @click="openDetailDialog(transaction)"
-                    >
+                    <div style="color: #daa520" class="cursor-pointer" @click="openDetailDialog(transaction)">
                       Detail Transaksi
                     </div>
-                    <div
-                      class="cursor-pointer"
-                      @click="caraBayar = !caraBayar"
-                      v-if="transaction.status === 'menungguPembayaran'"
-                    >
+                    <div class="cursor-pointer" @click="caraBayar = !caraBayar"
+                      v-if="transaction.status === 'menungguPembayaran'">
                       Cara Bayar
                     </div>
                   </div>
@@ -126,7 +101,7 @@ const statusSelected = ref(false);
       </div>
     </div>
 
-    <div style="display: none">
+    <div ref="printSection" style="display: none">
       <div ref="data" v-if="detailData.transactionNo">
         <div class="flex items-center justify-between">
           <div>No. Transaksi</div>
@@ -152,15 +127,8 @@ const statusSelected = ref(false);
             <!-- <div>{{ detailData.name }}</div>
             <div>{{ detailData.price }}</div> -->
 
-            <q-table
-              bordered
-              :rows="detailData.details"
-              :columns="columns"
-              hide-bottom
-              :rows-per-page-options="[0]"
-              row-key="name"
-              class="q-mt-md"
-            >
+            <q-table bordered :rows="detailData.details" :columns="columns" hide-bottom :rows-per-page-options="[0]"
+              row-key="name" class="q-mt-md">
               <template v-slot:body="props">
                 <q-tr :props="props">
                   <q-td key="Name" :props="props">
@@ -203,9 +171,7 @@ const statusSelected = ref(false);
 
         <div class="flex column justify-center items-center">
           <div>Affiliated By:</div>
-          <div
-            class="flex items-center q-gutter-md justify-center q-mt-md q-mx-md"
-          >
+          <div class="flex items-center q-gutter-md justify-center q-mt-md q-mx-md">
             <div>
               <img src="../assets/images/bjb.svg" alt="" class="img-collab" />
             </div>
@@ -213,11 +179,7 @@ const statusSelected = ref(false);
               <img src="../assets/images/1 931.svg" alt="" class="img-collab" />
             </div>
             <div>
-              <img
-                src="../assets/images/telkom.svg"
-                alt=""
-                class="img-collab"
-              />
+              <img src="../assets/images/telkom.svg" alt="" class="img-collab" />
             </div>
           </div>
         </div>
@@ -258,15 +220,8 @@ const statusSelected = ref(false);
             </div>
 
             <div class="text-h6 text-bold q-mt-xl">Detail Tiket</div>
-            <div
-              class="flex q-mt-md q-gutter-x-md"
-              v-for="(detailData, i) in detailData.details"
-              :key="i"
-            >
-              <img
-                :src="detailData.image"
-                style="width: 10rem; height: 10rem"
-              />
+            <div class="flex q-mt-md q-gutter-x-md" v-for="(detailData, i) in detailData.details" :key="i">
+              <img :src="detailData.image" style="width: 10rem; height: 10rem" />
               <div>
                 <div>{{ detailData.name }}</div>
                 <div>{{ detailData.price }}</div>
@@ -314,11 +269,7 @@ const statusSelected = ref(false);
         <q-card-section>
           <div class="q-pa-md">
             <q-list bordered>
-              <q-expansion-item
-                group="somegroup"
-                label="BJB Virtual Account"
-                default-opened
-              >
+              <q-expansion-item group="somegroup" label="BJB Virtual Account" default-opened>
                 <q-card>
                   <q-card-section>
                     <div class="flex justify-between">
@@ -328,17 +279,10 @@ const statusSelected = ref(false);
                       </div>
 
                       <q-btn flat>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 -960 960 960"
-                          width="24px"
-                          @click="salinNomor('1892379812732189')"
-                          fill="#DAA520"
-                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                          @click="salinNomor('1892379812732189')" fill="#DAA520">
                           <path
-                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                          />
+                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
                         </svg>
                       </q-btn>
                     </div>
@@ -366,17 +310,10 @@ const statusSelected = ref(false);
                       </div>
 
                       <q-btn flat>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 -960 960 960"
-                          width="24px"
-                          @click="salinNomor('1892379812732189')"
-                          fill="#DAA520"
-                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                          @click="salinNomor('1892379812732189')" fill="#DAA520">
                           <path
-                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                          />
+                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
                         </svg>
                       </q-btn>
                     </div>
@@ -394,11 +331,7 @@ const statusSelected = ref(false);
                 </q-card>
               </q-expansion-item>
 
-              <q-expansion-item
-                group="somegroup"
-                label="Bank Permata"
-                :default-opened="false"
-              >
+              <q-expansion-item group="somegroup" label="Bank Permata" :default-opened="false">
                 <q-card>
                   <q-card-section>
                     <div class="flex justify-between">
@@ -408,17 +341,10 @@ const statusSelected = ref(false);
                       </div>
 
                       <q-btn flat>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 -960 960 960"
-                          width="24px"
-                          @click="salinNomor('1892379812732189')"
-                          fill="#DAA520"
-                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                          @click="salinNomor('1892379812732189')" fill="#DAA520">
                           <path
-                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
-                          />
+                            d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
                         </svg>
                       </q-btn>
                     </div>
@@ -495,8 +421,7 @@ export default {
     },
     printPDF() {
       const element = this.$refs.data;
-
-      html2pdf(element, {
+      const options = {
         margin: 2,
         filename: `Report ${new Date().toISOString().split("T")[0]}.pdf`,
         image: { type: "jpeg", quality: 0.98 },
@@ -508,8 +433,11 @@ export default {
           putOnlyUsedFonts: true,
           scale: 0.8,
         },
+      }
+      html2pdf().from(element).set(options).outputPdf().get('pdf').then(pdfObj => {
+        pdfObj.autoPrint();
+        window.open(pdfObj.output("bloburl"))
       });
-      this.openDetailDialog();
     },
     salinNomor(payload) {
       try {
@@ -614,11 +542,10 @@ export default {
           return {
             image: itemData.image,
             name: itemData.name,
-            price: `${detail.amount} x ${
-              itemData.price < 1
-                ? "Free"
-                : "Rp" + this.formatRupiah(itemData.price)
-            }`,
+            price: `${detail.amount} x ${itemData.price < 1
+              ? "Free"
+              : "Rp" + this.formatRupiah(itemData.price)
+              }`,
           };
         }),
       };
@@ -712,6 +639,7 @@ export default {
 div {
   font-family: Raleway;
 }
+
 select {
   width: 15rem;
   height: 3.6rem;

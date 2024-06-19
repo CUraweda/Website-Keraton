@@ -319,7 +319,6 @@ export default {
         for (let imageIndex in this.imageInputs) {
           const imageData = this.imageInputs[imageIndex];
           imageList.push(imageData.data);
-          console.log(imageList)
           const isAFile = imageData.data instanceof File ? true : false;
           let subData = {};
           if (imageData.subDatas && imageData.subDatas.length > 0) for (let subName of imageData.subDatas) subData[subName] = imageData[subName];
@@ -345,7 +344,7 @@ export default {
           {
             ...(imageList.length > 0 && {
               headers: {
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "multipart/form-data",v
               },
             })
           }
