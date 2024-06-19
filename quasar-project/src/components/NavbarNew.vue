@@ -428,7 +428,7 @@ div {
   display: none;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .name-logo,
   .component-navbar-admin,
   .component-navbar {

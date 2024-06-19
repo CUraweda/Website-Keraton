@@ -51,11 +51,33 @@
       <div class="q-mt-xl">
         <div class="flex items-center justify-center q-gutter-md">
           <q-img
-            v-for="(image, index) in images"
-            :key="index"
-            :src="image.src"
-            :id="'card-' + index"
-            :class="{ cardd: true, active: index === currentIndex }"
+            src="../assets/images/sejarahslider1.png"
+            id="card-0"
+            :class="{ cardd: true, active: currentIndex === 0 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/sejarahslider2.png"
+            id="card-1"
+            :class="{ cardd: true, active: currentIndex === 1 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/sejarahslider3.png"
+            id="card-2"
+            :class="{ cardd: true, active: currentIndex === 2 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/sejarahslider4.png"
+            id="card-3"
+            :class="{ cardd: true, active: currentIndex === 3 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/sejarahslider5.png"
+            id="card-4"
+            :class="{ cardd: true, active: currentIndex === 4 }"
             class="img-card"
           />
         </div>
@@ -64,10 +86,24 @@
           <q-btn flat icon="arrow_back" @click="prevImage" />
           <div class="indicators">
             <span
-              v-for="(image, index) in images"
-              :key="index"
-              :class="{ active: index === currentIndex }"
-              @click="setCurrentIndex(index)"
+              :class="{ active: currentIndex === 0 }"
+              @click="setCurrentIndex(0)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 1 }"
+              @click="setCurrentIndex(1)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 2 }"
+              @click="setCurrentIndex(2)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 3 }"
+              @click="setCurrentIndex(3)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 4 }"
+              @click="setCurrentIndex(4)"
             ></span>
           </div>
           <q-btn flat icon="arrow_forward" @click="nextImage" />
@@ -88,10 +124,31 @@
       </div>
 
       <div class="flex items-center justify-center q-gutter-md q-mt-xl">
-        <div v-for="(item, index) in imgFasilitas" :key="index">
-          <q-img :src="item.img" class="img-fasilitas">
+        <div>
+          <q-img src="../assets/images/image33.png" class="img-fasilitas">
             <div class="absolute-bottom text-subtitle1 text-center">
-              {{ item.text }}
+              Ruang Pameran
+            </div>
+          </q-img>
+        </div>
+        <div>
+          <q-img src="../assets/images/card2.png" class="img-fasilitas">
+            <div class="absolute-bottom text-subtitle1 text-center">
+              Ruang Audio Visual
+            </div>
+          </q-img>
+        </div>
+        <div>
+          <q-img src="../assets/images/card3.png" class="img-fasilitas">
+            <div class="absolute-bottom text-subtitle1 text-center">
+              Ruang Kelas
+            </div>
+          </q-img>
+        </div>
+        <div>
+          <q-img src="../assets/images/card4Museum.png" class="img-fasilitas">
+            <div class="absolute-bottom text-subtitle1 text-center">
+              Tempat Penjualan Souvenir
             </div>
           </q-img>
         </div>
@@ -156,21 +213,11 @@ export default {
       wisataName: ref(),
       currentIndex: 2,
       images: [
-        { src: "../src/assets/images/sejarahslider1.png" },
         { src: "../src/assets/images/sejarahslider2.png" },
+        { src: "../src/assets/images/sejarahslider1.png" },
         { src: "../src/assets/images/sejarahslider3.png" },
         { src: "../src/assets/images/sejarahslider4.png" },
         { src: "../src/assets/images/sejarahslider5.png" },
-      ],
-
-      imgFasilitas: [
-        { img: "../src/assets/images/image33.png", text: "Ruang Pameran" },
-        { img: "../src/assets/images/card2.png", text: "Ruang Audio Visual" },
-        { img: "../src/assets/images/card3.png", text: "Ruang Kelas" },
-        {
-          img: "../src/assets/images/card4Museum.png",
-          text: "Tempat Penjualan Souvenir",
-        },
       ],
     };
   },
@@ -180,10 +227,15 @@ export default {
   methods: {
     prevImage() {
       this.currentIndex =
-        (this.currentIndex - 1 + this.images.length) % this.images.length;
+        this.currentIndex === 0
+          ? this.images.length - 1
+          : this.currentIndex - 1;
     },
     nextImage() {
-      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+      this.currentIndex =
+        this.currentIndex === this.images.length - 1
+          ? 0
+          : this.currentIndex + 1;
     },
     setCurrentIndex(index) {
       this.currentIndex = index;
@@ -282,7 +334,7 @@ a {
 }
 
 .background-baluarti {
-  background: url("../src/assets/images/museumPusakaa.png");
+  background: url("../assets/images/museumPusakaa.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

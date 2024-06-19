@@ -51,11 +51,33 @@
       <div class="q-mt-xl">
         <div class="flex items-center justify-center q-gutter-md">
           <q-img
-            v-for="(image, index) in images"
-            :key="index"
-            :src="image.src"
-            :id="'card-' + index"
-            :class="{ cardd: true, active: index === currentIndex }"
+            src="../assets/images/objekwisataslider1.png"
+            id="card-0"
+            :class="{ cardd: true, active: currentIndex === 0 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/objekwisataslider2.png"
+            id="card-1"
+            :class="{ cardd: true, active: currentIndex === 1 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/objekwisataslider3.png"
+            id="card-2"
+            :class="{ cardd: true, active: currentIndex === 2 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/objekwisataslider4.png"
+            id="card-3"
+            :class="{ cardd: true, active: currentIndex === 3 }"
+            class="img-card"
+          />
+          <q-img
+            src="../assets/images/objekwisataslider5.jpg"
+            id="card-4"
+            :class="{ cardd: true, active: currentIndex === 4 }"
             class="img-card"
           />
         </div>
@@ -64,10 +86,24 @@
           <q-btn flat icon="arrow_back" @click="prevImage" />
           <div class="indicators">
             <span
-              v-for="(image, index) in images"
-              :key="index"
-              :class="{ active: index === currentIndex }"
-              @click="setCurrentIndex(index)"
+              :class="{ active: currentIndex === 0 }"
+              @click="setCurrentIndex(0)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 1 }"
+              @click="setCurrentIndex(1)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 2 }"
+              @click="setCurrentIndex(2)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 3 }"
+              @click="setCurrentIndex(3)"
+            ></span>
+            <span
+              :class="{ active: currentIndex === 4 }"
+              @click="setCurrentIndex(4)"
             ></span>
           </div>
           <q-btn flat icon="arrow_forward" @click="nextImage" />
@@ -240,10 +276,32 @@
       </div>
 
       <div class="flex items-center justify-center q-gutter-md q-mt-xl">
-        <div v-for="(item, index) in imgFasilitas" :key="index">
-          <q-img :src="item.img" class="img-fasilitas">
+        <div>
+          <q-img src="../assets/images/areaparkir.png" class="img-fasilitas">
             <div class="absolute-bottom text-subtitle1 text-center">
-              {{ item.text }}
+              Area Parkir
+            </div>
+          </q-img>
+        </div>
+        <div>
+          <q-img src="../assets/images/tempatibadah.png" class="img-fasilitas">
+            <div class="absolute-bottom text-subtitle1 text-center">
+              Tempat Ibadah
+            </div>
+          </q-img>
+        </div>
+        <div>
+          <q-img src="../assets/images/toilet.png" class="img-fasilitas">
+            <div class="absolute-bottom text-subtitle1 text-center">Toilet</div>
+          </q-img>
+        </div>
+        <div>
+          <q-img
+            src="../assets/images/tempatpenjualan.png"
+            class="img-fasilitas"
+          >
+            <div class="absolute-bottom text-subtitle1 text-center">
+              Tempat Penjualan Souvenir
             </div>
           </q-img>
         </div>
@@ -306,15 +364,14 @@ export default {
   data() {
     return {
       wisataName: ref(),
-      currentIndex: 2,
       images: [
-        { src: "../src/assets/images/objekwisataslider1.png" },
-        { src: "../src/assets/images/objekwisataslider2.png" },
-        { src: "../src/assets/images/objekwisataslider3.png" },
-        { src: "../src/assets/images/objekwisataslider4.png" },
-        { src: "../src/assets/images/objekwisataslider5.jpg" },
+        "../assets/images/objekwisataslider1.png",
+        "../assets/images/objekwisataslider2.png",
+        "../assets/images/objekwisataslider3.png",
+        "../assets/images/objekwisataslider4.png",
+        "../assets/images/objekwisataslider5.jpg",
       ],
-
+      currentIndex: 2,
       imgFasilitas: [
         { img: "../src/assets/images/areaparkir.png", text: "Area Parkir" },
         { img: "../src/assets/images/tempatibadah.png", text: "Tempat Ibadah" },
@@ -332,14 +389,20 @@ export default {
   methods: {
     prevImage() {
       this.currentIndex =
-        (this.currentIndex - 1 + this.images.length) % this.images.length;
+        this.currentIndex === 0
+          ? this.images.length - 1
+          : this.currentIndex - 1;
     },
     nextImage() {
-      this.currentIndex = (this.currentIndex + 1) % this.images.length;
+      this.currentIndex =
+        this.currentIndex === this.images.length - 1
+          ? 0
+          : this.currentIndex + 1;
     },
     setCurrentIndex(index) {
       this.currentIndex = index;
     },
+
     async fetchData() {
       try {
         const response = await this.$api.get("wisata/1");
@@ -434,7 +497,7 @@ a {
 }
 
 .background-baluarti {
-  background: url("../src/assets/images/Baluarti Keraton.png");
+  background: url("../assets/images/Baluarti Keraton.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
