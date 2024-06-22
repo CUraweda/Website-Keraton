@@ -518,15 +518,17 @@ export default {
           const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
           plannedDate = new Date(rawDateConvert).toISOString();
         }
-        const sendedCart = this.carts.map((cart) =>  ({
+        const sendedCart = this.carts.map((cart) => ({
           id: cart.id,
           name: cart.name,
           price: cart.price,
           quantity: cart.quantity,
           type: cart.type,
           ...(cart.cityName && { cityName: cart.cityName.value }),
-          ...(cart.nationalityId && { nationalityId: cart.nationalityId.value })
-        }))
+          ...(cart.nationalityId && {
+            nationalityId: cart.nationalityId.value,
+          }),
+        }));
 
         const response = await this.$api.post(
           "trans",
@@ -568,6 +570,10 @@ export default {
     handleCategoryChange() {
       this.cart.nationalityId = null;
       this.cart.cityName = null;
+    },
+    payWith(indicator) {
+      this.paymentMethod = indicator.value;
+      this.caraPembayaran = false; //Clos Payment Mehod Pop Up
     },
   },
 };
