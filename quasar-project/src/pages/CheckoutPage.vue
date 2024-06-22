@@ -24,74 +24,81 @@
               <div v-for="(cart, index) in carts" :key="index">
                 <div>
                   <div class="text-h6 q-mt-xs">{{ cart.name }}</div>
-                  <div class="flex items-center q-gutter-md">
-                    <q-btn
-                      size="xs"
-                      dense
-                      @click="changeQuantity('min', cart, index)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="15px"
-                        viewBox="0 -960 960 960"
-                        width="15px"
-                        fill="black"
+                  <div
+                    class="flex items-center justify-between wrap full-width"
+                  >
+                    <div class="flex items-center q-gutter-md">
+                      <q-btn
+                        size="xs"
+                        dense
+                        @click="changeQuantity('min', cart, index)"
                       >
-                        <path d="M200-440v-80h560v80H200Z" />
-                      </svg>
-                    </q-btn>
-                    <div>
-                      {{ cart.quantity }}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="15px"
+                          viewBox="0 -960 960 960"
+                          width="15px"
+                          fill="black"
+                        >
+                          <path d="M200-440v-80h560v80H200Z" />
+                        </svg>
+                      </q-btn>
+                      <div>
+                        {{ cart.quantity }}
+                      </div>
+                      <q-btn
+                        size="xs"
+                        dense
+                        @click="changeQuantity('plus', cart, index)"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="15px"
+                          viewBox="0 -960 960 960"
+                          width="15px"
+                          fill="black"
+                        >
+                          <path
+                            d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
+                          />
+                        </svg>
+                      </q-btn>
                     </div>
-                    <q-btn
-                      size="xs"
-                      dense
-                      @click="changeQuantity('plus', cart, index)"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="15px"
-                        viewBox="0 -960 960 960"
-                        width="15px"
-                        fill="black"
+
+                    <div class="col-grow q-mx-md">
+                      <q-select
+                        color="orange"
+                        class="col-grow"
+                        label-color="black"
+                        use-input
+                        input-debounce="0"
+                        v-if="cart.categoryId === 3"
+                        v-model="cart.nationalityId"
+                        @filter="filterCountry"
+                        :options="filteredCountryList"
+                        label="Negara Asal"
+                        behavior="menu"
                       >
-                        <path
-                          d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
-                        />
-                      </svg>
-                    </q-btn>
+                        <template v-slot:no-option>
+                          <q-item>
+                            <q-item-section class="text-grey">
+                              No results
+                            </q-item-section>
+                          </q-item>
+                        </template>
+                      </q-select>
+                      <q-select
+                        class="col-grow"
+                        label-color="black"
+                        v-if="cart.categoryId === 1"
+                        v-model="cart.cityName"
+                        @filter="filterCity"
+                        :options="filteredCityList"
+                        label="Kota Asal"
+                      />
+                    </div>
                   </div>
                 </div>
-                <q-select
-                  color="orange"
-                  class="q-mt-xs text-bold"
-                  label-color="black"
-                  use-input
-                  input-debounce="0"
-                  v-if="cart.categoryId === 3"
-                  v-model="cart.nationalityId"
-                  @filter="filterCountry"
-                  :options="filteredCountryList"
-                  label="Negara Asal"
-                  behavior="menu"
-                >
-                  <template v-slot:no-option>
-                    <q-item>
-                      <q-item-section class="text-grey">
-                        No results
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-select>
-                <q-select
-                  class="q-mt-xs text-bold"
-                  label-color="black"
-                  v-if="cart.categoryId === 1"
-                  v-model="cart.cityName"
-                  @filter="filterCity"
-                  :options="filteredCityList"
-                  label="Kota Asal"
-                />
               </div>
             </q-card-section>
           </q-card>
