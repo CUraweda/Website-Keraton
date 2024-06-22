@@ -62,6 +62,8 @@
                     </q-btn>
                   </div>
                 </div>
+                <q-select v-if="cart.categoryId === 3" v-model="cart.nationalityId" :options="countryList" label="Negara Asal" />
+                <q-select v-if="cart.categoryId === 1"  v-model="cart.cityName" :options="cityNameList" label="Kota Asal" />
               </div>
             </q-card-section>
           </q-card>
@@ -174,7 +176,7 @@
                       <div v-for="(tax, i) in taxes" :key="i">
                         <div class="flex items-center justify-between">
                           <div>{{ tax.label }}</div>
-                          <div>Rp. {{ formatRupiah(tax.price) }}</div>
+                          <div>Rp. {{ formatRupiah(formatTax(tax)) }}</div>
                         </div>
                       </div>
                     </div>
@@ -268,12 +270,15 @@ import logobjb from "../assets/svg/logo_bjb.svg";
 import logobca from "../assets/svg/logo_bca.svg";
 import logomandiri from "../assets/svg/logo_mandiri.svg";
 import logobni from "../assets/svg/logo_bni.svg";
+import globalParams from '../stores/globalParam'
 
 export default {
   components: { navbar },
   data() {
     return {
       caraPembayaran: ref(false),
+      cityNameList: globalParams.kotaIndonesia,
+      countryList: globalParams.negara,
       input: ref(),
       carts: ref([]),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
@@ -378,8 +383,7 @@ export default {
             Authorization: `Bearer ${this.token}`,
           },
         });
-        if (paramResponse.status === 200)
-          this.taxes = Object.values(paramResponse.data.data.data);
+        if (paramResponse.status === 200) this.taxes = paramResponse.data.data.data.nonCash.filter((data) => data.paidBy === "user")
 
         this.carts = rawCart.map((cart) => {
           this.ticketTotal += cart.quantity;
@@ -401,6 +405,9 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    formatTax(tax){
+      return tax.multiply ? this.checkoutTotal *  tax.tax: this.checkoutTotal + tax.tax
     },
     changeQuantity(indicator, rowData, indexData) {
       if (indicator != "min") {
@@ -461,7 +468,7 @@ export default {
     },
     countTagihan() {
       let taxTotal = 0;
-      for (let tax of this.taxes) taxTotal += tax.price;
+      for (let tax of this.taxes) taxTotal += tax.multiply ? this.checkoutTotal * tax.tax : tax.tax;
       this.totalTagihan = this.checkoutTotal + taxTotal;
     },
     formatRupiah(price) {

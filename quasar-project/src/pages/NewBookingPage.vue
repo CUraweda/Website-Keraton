@@ -5,24 +5,13 @@
         <div>
           <navbar :isAdmin="false" />
 
-          <q-page-sticky
-            style="z-index: 100"
-            position="bottom-right"
-            :offset="[18, 18]"
-            v-if="currentCartLength > 0"
-          >
+          <q-page-sticky style="z-index: 100" position="bottom-right" :offset="[18, 18]" v-if="currentCartLength > 0">
             <q-btn fab color="primary" to="/user/checkout">
               <q-badge color="orange" floating>{{ currentCartLength }}</q-badge>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="#e8eaed"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                fill="#e8eaed">
                 <path
-                  d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"
-                />
+                  d="m480-560-56-56 63-64H320v-80h167l-64-64 57-56 160 160-160 160ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
               </svg>
             </q-btn>
           </q-page-sticky>
@@ -41,41 +30,29 @@
           <div class="text-h5 text-bold q-mx-md q-my-md">
             Tiket Masuk Keraton & Bundling
           </div>
-          <div
-            class="flex q-gutter-md q-mx-md"
-            style="
+          <div class="flex q-gutter-md q-mx-md" style="
               overflow-x: auto;
               flex-wrap: nowrap;
               -ms-overflow-style: none;
               scrollbar-width: none;
-            "
-          >
+            ">
             <div v-for="(item, index) in tiketItems" :key="index">
               <q-card class="my-card" flat bordered>
-                <q-img
-                  :src="item.image || defaultImageUrl"
-                  class="image-card"
-                />
+                <q-img :src="item.image || defaultImageUrl" class="image-card" />
 
                 <q-card-section>
-                  <div
-                    class="text-h6 q-mt-sm q-mb-xs"
-                    style="
+                  <div class="text-h6 q-mt-sm q-mb-xs" style="
                       white-space: nowrap;
                       overflow: hidden;
                       text-overflow: ellipsis;
-                    "
-                  >
+                    ">
                     {{ item.titleBig }}
                   </div>
-                  <div
-                    class="text-caption text-grey"
-                    style="
+                  <div class="text-caption text-grey" style="
                       white-space: nowrap;
                       overflow: hidden;
                       text-overflow: ellipsis;
-                    "
-                  >
+                    ">
                     {{ item.titleMedium }}
                   </div>
                 </q-card-section>
@@ -83,24 +60,11 @@
                 <q-card-actions>
                   <div class="text-subtitle1 text-weight-medium">
                     {{
-                      item.price < 1
-                        ? "Free"
-                        : "Rp. " + formatRupiah(item.price)
-                    }}
-                  </div>
-                  <q-space />
-                  <q-btn
-                    @click="addToCart(item)"
-                    dense
-                    no-caps
-                    style="background: #fae084"
-                    ><span class="text-bold">Tambah</span
-                    ><span
-                      ><q-img
-                        src="../assets/Frame.svg"
-                        style="width: 1rem; height: 1rem"
-                        class="q-mx-xs" /></span
-                  ></q-btn>
+            item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }} </div>
+                      <q-space />
+                      <q-btn @click="addToCart(item)" dense no-caps style="background: #fae084"><span
+                          class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
+                            style="width: 1rem; height: 1rem" class="q-mx-xs" /></span></q-btn>
                 </q-card-actions>
               </q-card>
             </div>
@@ -109,42 +73,33 @@
           <div v-for="(item, index) in paketItems" :key="index">
             <div class="text-h5 text-bold q-mx-md q-my-md">
               {{
-                paketNameItems[index].name +
-                ` (minimal ${paketNameItems[index].minimumUnit} orang)`
-              }}
+            paketNameItems[index].name +
+            ` (minimal ${paketNameItems[index].minimumUnit} orang)`
+          }}
             </div>
-            <div
-              class="flex q-gutter-md q-mx-md"
-              style="
+            <div class="flex q-gutter-md q-mx-md" style="
                 overflow-x: auto;
                 flex-wrap: nowrap;
                 -ms-overflow-style: none;
                 scrollbar-width: none;
-              "
-            >
+              ">
               <div v-for="(data, index) in item" :key="index">
                 <q-card class="my-card" flat bordered>
                   <q-img :src="data.image" class="image-card" />
 
                   <q-card-section>
-                    <div
-                      class="text-h6 q-mt-sm q-mb-xs"
-                      style="
+                    <div class="text-h6 q-mt-sm q-mb-xs" style="
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                      "
-                    >
+                      ">
                       {{ data.titleBig }}
                     </div>
-                    <div
-                      class="text-caption text-grey"
-                      style="
+                    <div class="text-caption text-grey" style="
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
-                      "
-                    >
+                      ">
                       {{ data.titleMedium }}
                     </div>
                   </q-card-section>
@@ -152,25 +107,11 @@
                   <q-card-actions>
                     <div class="text-subtitle1 text-weight-medium">
                       {{
-                        data.price < 1
-                          ? "Free"
-                          : "Rp. " + formatRupiah(data.price)
-                      }}
-                    </div>
-                    <q-space />
-                    <q-btn
-                      @click="addToCart(data)"
-                      dense
-                      no-caps
-                      style="background: #fae084"
-                      class="text-bold"
-                      ><span class="text-bold">Tambah</span
-                      ><span
-                        ><q-img
-                          src="../assets/Frame.svg"
-                          style="width: 1rem; height: 1rem"
-                          class="q-mx-xs" /></span
-                    ></q-btn>
+            data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price) }} </div>
+                        <q-space />
+                        <q-btn @click="addToCart(data)" dense no-caps style="background: #fae084"
+                          class="text-bold"><span class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
+                              style="width: 1rem; height: 1rem" class="q-mx-xs" /></span></q-btn>
                   </q-card-actions>
                 </q-card>
               </div>
@@ -216,7 +157,7 @@ export default {
     this.socketConnection()
   },
   methods: {
-    socketConnection(){
+    socketConnection() {
       socket.connect()
       socket.on('tiket', () => {
         this.fetchData()
@@ -250,6 +191,7 @@ export default {
               for (let order of subType.orders) {
                 tikets.push({
                   id: order.id,
+                  categoryId: order.categoryId,
                   image: order.image,
                   titleMedium: order.desc,
                   titleBig: order.name,
@@ -261,9 +203,8 @@ export default {
               }
               break;
             case 2: //Paket Type
-              const subTypeName = `${subType.name}|${
-                subType.minimumUnits ? subType.minimumUnits : undefined
-              }`;
+              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined
+                }`;
               if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
@@ -271,6 +212,7 @@ export default {
                   id: order.id,
                   image: order.image,
                   titleMedium: order.desc,
+                  categoryId: order.categoryId,
                   titleBig: order.name,
                   minimumUnit: subType.minimumUnits,
                   quantity: 0,
@@ -314,11 +256,13 @@ export default {
           this.$router.push("/signin");
           throw Error("Anda Masih belum Log In!");
         }
+        console.log(rowData)
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
           image: rowData.image,
           quantity: 1,
+          categoryId: rowData.categoryId,
           minimumUnit: rowData.minimumUnit,
           price: rowData.price,
           type: "T",
@@ -346,11 +290,9 @@ export default {
 }
 
 .background-header {
-  background: linear-gradient(
-    90deg,
-    rgba(218, 165, 32, 0.5) 0%,
-    rgba(18, 59, 50, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(218, 165, 32, 0.5) 0%,
+      rgba(18, 59, 50, 0.5) 100%);
   height: 5.5rem;
   display: flex;
   align-items: center;
