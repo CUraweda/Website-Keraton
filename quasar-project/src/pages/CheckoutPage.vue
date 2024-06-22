@@ -518,10 +518,20 @@ export default {
           const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
           plannedDate = new Date(rawDateConvert).toISOString();
         }
+        const sendedCart = this.carts.map((cart) =>  ({
+          id: cart.id,
+          name: cart.name,
+          price: cart.price,
+          quantity: cart.quantity,
+          type: cart.type,
+          ...(cart.cityName && { cityName: cart.cityName.value }),
+          ...(cart.nationalityId && { nationalityId: cart.nationalityId.value })
+        }))
+
         const response = await this.$api.post(
           "trans",
           {
-            carts: this.carts,
+            carts: sendedCart,
             method: this.paymentMethod,
             plannedDate,
           },
