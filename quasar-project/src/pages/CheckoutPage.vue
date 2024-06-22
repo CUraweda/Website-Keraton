@@ -62,8 +62,36 @@
                     </q-btn>
                   </div>
                 </div>
-                <q-select v-if="cart.categoryId === 3" v-model="cart.nationalityId" :options="countryList" label="Negara Asal" />
-                <q-select v-if="cart.categoryId === 1"  v-model="cart.cityName" :options="cityNameList" label="Kota Asal" />
+                <q-select
+                  color="orange"
+                  class="q-mt-xs text-bold"
+                  label-color="black"
+                  use-input
+                  input-debounce="0"
+                  v-if="cart.categoryId === 3"
+                  v-model="cart.nationalityId"
+                  @filter="filterCountry"
+                  :options="filteredCountryList"
+                  label="Negara Asal"
+                  behavior="menu"
+                >
+                  <template v-slot:no-option>
+                    <q-item>
+                      <q-item-section class="text-grey">
+                        No results
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+                <q-select
+                  class="q-mt-xs text-bold"
+                  label-color="black"
+                  v-if="cart.categoryId === 1"
+                  v-model="cart.cityName"
+                  @filter="filterCity"
+                  :options="filteredCityList"
+                  label="Kota Asal"
+                />
               </div>
             </q-card-section>
           </q-card>
@@ -100,7 +128,11 @@
                 </div>
                 <q-btn no-caps class="q-mt-sm" @click="caraPembayaran = true">
                   <div class="q-gutter-x-md flex items-center justify-center">
-                    <q-icon :name="paymentMethod ? 'info' : 'warning'" size="1.5rem" :color="paymentMethod ? 'orange' : 'red'" />
+                    <q-icon
+                      :name="paymentMethod ? 'info' : 'warning'"
+                      size="1.5rem"
+                      :color="paymentMethod ? 'orange' : 'red'"
+                    />
                     <div>
                       {{
                         paymentMethod
@@ -160,9 +192,17 @@
                         Total Pemesanan
                       </div>
                       <div>
-                        <div v-for="(data, index) in carts" :key="index" class="flex items-center justify-between">
-                          <div>{{ data.name + ` (${data.quantity} Tiket)` }}</div>
-                          <div>Rp. {{ formatRupiah(data.quantity * data.price) }}</div>
+                        <div
+                          v-for="(data, index) in carts"
+                          :key="index"
+                          class="flex items-center justify-between"
+                        >
+                          <div>
+                            {{ data.name + ` (${data.quantity} Tiket)` }}
+                          </div>
+                          <div>
+                            Rp. {{ formatRupiah(data.quantity * data.price) }}
+                          </div>
                         </div>
                         <div class="flex items-center justify-between">
                           <div>Total Harga ({{ ticketTotal }} Tiket)</div>
@@ -262,7 +302,7 @@ import { ref } from "vue";
 import Cart from "stores/carts";
 import cookieHandler from "src/cookieHandler";
 import env from "stores/environment";
-import socket from 'src/socket'
+import socket from "src/socket";
 import navbar from "../components/NavbarNew.vue";
 import SimpleNotify from "simple-notify";
 import "simple-notify/dist/simple-notify.css";
@@ -270,16 +310,46 @@ import logobjb from "../assets/svg/logo_bjb.svg";
 import logobca from "../assets/svg/logo_bca.svg";
 import logomandiri from "../assets/svg/logo_mandiri.svg";
 import logobni from "../assets/svg/logo_bni.svg";
-import globalParams from '../stores/globalParam'
+import globalParams from "../stores/globalParam";
 
 export default {
   components: { navbar },
+  setup() {
+    const cart = ref({ categoryId: null, nationalityId: null, cityName: null });
+    const filteredCountryList = ref([]);
+    const filteredCityList = ref([]);
+    const countryList = globalParams.negara;
+    const cityNameList = globalParams.kotaIndonesia;
+
+    function filterCountry(val, update) {
+      update(() => {
+        const needle = val.toLowerCase();
+        filteredCountryList.value = countryList.filter(
+          (option) => option.label.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    }
+
+    function filterCity(val, update) {
+      update(() => {
+        const needle = val.toLowerCase();
+        filteredCityList.value = cityNameList.filter(
+          (option) => option.label.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    }
+
+    return {
+      cart,
+      filteredCountryList,
+      filteredCityList,
+      filterCountry,
+      filterCity,
+    };
+  },
   data() {
     return {
       caraPembayaran: ref(false),
-      cityNameList: globalParams.kotaIndonesia,
-      countryList: globalParams.negara,
-      input: ref(),
       carts: ref([]),
       token: cookieHandler.getCookie(env.TOKEN_STORAGE_NAME),
       user: JSON.parse(localStorage.getItem(env.USER_STORAGE_NAME)),
@@ -318,11 +388,13 @@ export default {
     };
   },
   mounted() {
+    this.filteredCountryList = this.countryList;
+    this.filteredCityList = this.cityNameList;
     this.setCartData().then(() => {
       this.validateCartData();
       this.countTagihan();
     });
-    this.socketConnection()
+    this.socketConnection();
     this.setDate();
   },
   watch: {
@@ -342,11 +414,11 @@ export default {
     this.storeCartToDatabase();
   },
   methods: {
-    socketConnection(){
-      socket.connect()
-      socket.on('tiket', () => {
-        this.validateCartData()
-      })
+    socketConnection() {
+      socket.connect();
+      socket.on("tiket", () => {
+        this.validateCartData();
+      });
     },
     showNotif(msg, status) {
       const myNotify = new SimpleNotify({
@@ -383,7 +455,10 @@ export default {
             Authorization: `Bearer ${this.token}`,
           },
         });
-        if (paramResponse.status === 200) this.taxes = paramResponse.data.data.data.nonCash.filter((data) => data.paidBy === "user")
+        if (paramResponse.status === 200)
+          this.taxes = paramResponse.data.data.data.nonCash.filter(
+            (data) => data.paidBy === "user"
+          );
 
         this.carts = rawCart.map((cart) => {
           this.ticketTotal += cart.quantity;
@@ -400,14 +475,16 @@ export default {
           carts: this.carts,
         });
         if (response.status != 200) throw Error(response.data.message);
-        this.carts = response.data.data
-        this.cartClass.setNewData(response.data.data)
+        this.carts = response.data.data;
+        this.cartClass.setNewData(response.data.data);
       } catch (err) {
         console.log(err);
       }
     },
-    formatTax(tax){
-      return tax.multiply ? this.checkoutTotal *  tax.tax: this.checkoutTotal + tax.tax
+    formatTax(tax) {
+      return tax.multiply
+        ? this.checkoutTotal * tax.tax
+        : this.checkoutTotal + tax.tax;
     },
     changeQuantity(indicator, rowData, indexData) {
       if (indicator != "min") {
@@ -468,7 +545,8 @@ export default {
     },
     countTagihan() {
       let taxTotal = 0;
-      for (let tax of this.taxes) taxTotal += tax.multiply ? this.checkoutTotal * tax.tax : tax.tax;
+      for (let tax of this.taxes)
+        taxTotal += tax.multiply ? this.checkoutTotal * tax.tax : tax.tax;
       this.totalTagihan = this.checkoutTotal + taxTotal;
     },
     formatRupiah(price) {
@@ -477,9 +555,9 @@ export default {
         minimumFractionDigits: 3,
       });
     },
-    payWith(indicator) {
-      this.paymentMethod = indicator.value;
-      this.caraPembayaran = false; //Clos Payment Mehod Pop Up
+    handleCategoryChange() {
+      this.cart.nationalityId = null;
+      this.cart.cityName = null;
     },
   },
 };
