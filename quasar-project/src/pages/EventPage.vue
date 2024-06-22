@@ -272,6 +272,7 @@ export default {
           name: rowData.titleBig,
           image: rowData.image,
           quantity: 1,
+          categoryId: rowData.categoryId,
           price: rowData.price,
           type: "E",
         };
