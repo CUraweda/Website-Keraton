@@ -510,10 +510,10 @@ export default {
     changeStorageQuantity(rowData) {
       try {
         const itemId = `${rowData.type}|${rowData.id}`;
-        this.carts = this.cartClass.changeQuantity(
+        this.carts = Object.value(this.cartClass.changeQuantity(
           itemId,
           rowData.quantity
-        ).userCart;
+        ).userCart);
       } catch (err) {
         console.log(err);
       }
