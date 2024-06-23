@@ -68,7 +68,7 @@ const statusSelected = ref(false);
           badge.name }}</q-badge>
                 <div>
                   {{
-          `${transaction.detailDatas.data[0].quantity} tiket x Rp. ${transaction.detailDatas.data[0].price}`
+          `${transaction.detailDatas.data[0]?.quantity} tiket x Rp. ${transaction.detailDatas.data[0]?.price}`
         }}
                 </div>
 
@@ -527,28 +527,29 @@ export default {
       if (!this.detailDialog) return (this.detailData = {});
       rowData = rowData.raw;
       const total = parseFloat(rowData.total);
+      let totalAmount = 0
       this.detailData = {
         transactionNo: rowData.id,
         status: this.simplifyStatus(rowData.status),
-        totalAmount: rowData.amount,
         planDate: rowData.plannedDate,
         createdDate: rowData.createdDate,
         payMethod: rowData.method,
-        total: this.formatRupiah(total),
+        total: this.formatRupiah(total - rowData.additionalFee),
         fee: this.formatRupiah(rowData.additionalFee),
-        totalTransaction: this.formatRupiah(total + rowData.additionalFee),
+        totalTransaction: this.formatRupiah(total),
         details: rowData.detailTrans.map((detail) => {
           const itemData = detail.order ? detail.order : detail.event;
+          console.log(detail)
+          totalAmount += detail.amount
           return {
             image: itemData.image,
             name: itemData.name,
-            price: `${detail.amount} x ${itemData.price < 1
-              ? "Free"
-              : "Rp" + this.formatRupiah(itemData.price)
-              }`,
+            price: `${detail.amount} x ${itemData.price < 1 ? "Free" : "Rp" + this.formatRupiah(itemData.price)}`,
           };
         }),
+        totalAmount
       };
+      console.log(this.detailData)
     },
     openDetailTransaksi(row) {
       detail.value = !detail.value;
@@ -566,9 +567,7 @@ export default {
           contentToPush["price"] = this.formatRupiah(orderData.price);
           contentToPush["quantity"] = detailData.amount;
           contentToPush["name"] = orderData.name;
-          contentToPush["badgeColor"] = orderData.orderSubTypeId
-            ? "blue"
-            : "orange";
+          contentToPush["badgeColor"] = orderData.orderSubTypeId? "blue": "orange";
           detailDatas.titles += orderData.name + " + ";
         } else {
           const eventData = detailData.event;
