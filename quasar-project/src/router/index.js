@@ -30,7 +30,6 @@ async function setDefaultAndCheck() {
     if (storageAlreadyExist) return
     const cartClass = new Carts();
     const checkToken = await verifyToken();
-    console.log(checkToken)
     if (checkToken.isLogin) {
       //Globalcn
       dataToStore["isLogin"] = checkToken.isLogin

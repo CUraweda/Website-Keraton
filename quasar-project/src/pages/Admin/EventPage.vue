@@ -121,8 +121,67 @@
             </q-list>
           </q-menu>
         </q-btn>
+
+        <q-btn
+          outlined
+          label="Objek Wisata"
+          no-caps
+          icon-right="keyboard_arrow_down"
+        >
+          <q-menu>
+            <q-list>
+              <q-item>
+                <q-item-section class="q-gutter-y-md">
+                  <q-btn icon="add" @click="handleDialog('wisata')" />
+                  <q-card-section
+                    v-for="(wisata, i) in wisataRelationsOptions"
+                    :key="i"
+                    class="flex items-center justify-between"
+                  >
+                    <div>{{ wisata.label }}</div>
+                    <div>
+                      <q-btn
+                        flat
+                        color="green"
+                        icon="edit"
+                        @click="handleDialog('wisata', wisata)"
+                      />
+                      <q-btn
+                        flat
+                        color="red"
+                        icon="delete"
+                        @click="confirmDelete('wisata', wisata.id)"
+                      />
+                    </div>
+                  </q-card-section>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </div>
     </div>
+
+    <q-dialog v-model="objekWisataDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Objek Wisata</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <q-input class="q-mx-sx" v-model="wisata.label" label="Name" />
+          <q-input class="q-mx-sx" v-model="wisata.to" label="Route" />
+          <q-input class="q-mx-sx" v-model="wisata.orderIdentifier" label="Identifier" />
+          <q-btn
+            :label="currentId ? 'Update' : 'Create'"
+            @click="currentId ? sendUpdate('wisata') : sendCreate('wisata')"
+            class="q-mt-md"
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
     <q-dialog v-model="typeDialog">
       <q-card>
@@ -600,6 +659,11 @@ export default {
         minimumUnits: 0,
         orderTypeId: undefined,
       }),
+      wisata: ref({
+        label: '',
+        to: '',
+        orderIdentifier: ''
+      }),
       imgURLEvent: ref(),
       imgURLTiket: ref(),
       addNewEvent: ref(),
@@ -608,6 +672,7 @@ export default {
       typeDialog: ref(false),
       subTypeDialog: ref(false),
       categoryDialog: ref(false),
+      objekWisataDialog: ref(false)
     };
   },
   mounted() {
@@ -639,6 +704,11 @@ export default {
       },
     },
     categoryDialog: {
+      handler(val) {
+        if (!val) this.resetDefault();
+      },
+    },
+    objekWisataDialog: {
       handler(val) {
         if (!val) this.resetDefault();
       },
@@ -698,6 +768,7 @@ export default {
         this.wisataRelationsOptions = helper.data.data.objekWisata.map(
           (wisata) => ({
             label: wisata.label,
+            ...wisata,
             value: wisata.orderIdentifier,
           })
         );
@@ -784,10 +855,15 @@ export default {
             requestBody = this.subType;
             requestBody.orderTypeId = requestBody.orderTypeId?.value ? requestBody.orderTypeId.value : requestBody.orderTypeId;
             delete requestBody.id;
+            break
+          case "wisata":
+            url = `wisata/${this.currentId}`
+            requestBody = this.wisata
             break;
           default:
             break;
         }
+      
         const response = await this.$api.post(url, requestBody, {
           ...(useMultipart && {
             headers: {
@@ -802,6 +878,7 @@ export default {
         this.typeDialog = false;
         this.subTypeDialog = false;
         this.categoryDialog = false;
+        this.objekWisataDialog = false
         socket.emit("tiket");
         this.fetchData();
       } catch (err) {
@@ -840,12 +917,15 @@ export default {
             break;
           case "type":
             url = `type/${id}`;
-            break;
+            break;5
           case "subType":
             url = `subtype/${id}`;
             break;
           case "category":
             url = `category/${id}`;
+            break;
+          case "wisata":
+            url = `wisata/${id}`;
             break;
           default:
             break;
@@ -904,6 +984,10 @@ export default {
             requestBody.orderTypeId = requestBody.orderTypeId?.value
               ? requestBody.orderTypeId.value
               : requestBody.orderTypeId;
+            break;
+          case "wisata":
+            url = "wisata"
+            requestBody = this.wisata
             break;
           default:
             break;
@@ -967,21 +1051,34 @@ export default {
       switch (type) {
         case "type":
           this.typeDialog = true;
-          this.currentId = itemData.id;
-          if (itemData) this.type = { ...itemData };
+          if (itemData){
+            this.currentId = itemData.id;
+            this.type = { ...itemData };
+          } 
           break;
         case "subType":
           this.subTypeDialog = true;
-          this.currentId = itemData.id;
           if (itemData){
+            this.currentId = itemData.id;
             this.defaultSubType = itemData
             this.subType = { ...itemData };
           } 
           break;
         case "category":
           this.categoryDialog = true;
-          this.currentId = itemData.id;
-          if (itemData) this.category = { ...itemData };
+          if (itemData){
+            this.currentId = itemData.id;
+            this.category = { ...itemData };
+          } 
+          break;
+        case "wisata":
+          this.objekWisataDialog = true
+          if(itemData) {
+            this.currentId = itemData.id
+            delete itemData.id
+            delete itemData.value
+            this.wisata = { ...itemData }
+          }
           break;
         default:
           break;
@@ -1032,12 +1129,17 @@ export default {
         image: null,
         subTypeId: undefined,
       };
-      (this.type = {
+      this.wisata = {
+        label: '',
+        to: '',
+        orderIdentifier: ''
+      }
+      this.type = {
         name: "",
-      }),
-        (this.category = {
+      }
+      this.category = {
           name: "",
-        });
+        };
       this.subType = {
         name: "",
         minimumUnits: 0,
