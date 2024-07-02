@@ -997,7 +997,7 @@ export default {
             headers: {
               "Content-Type": "multipart/form-data",
             },
-          }),
+        }),
         });
         if (response.status != 200) throw Error("Error Occured");
         this.showNotif(response.data.message, "success");
