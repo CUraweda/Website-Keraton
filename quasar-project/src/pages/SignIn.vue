@@ -106,7 +106,7 @@ export default {
         const response = await this.$api.post("/auth/login", payload);
         if (response.status != 200) throw Error(response.data.message);
         const { token, user } = response.data.data;
-        const cartData = Object.values(user.carts);
+        const cartData = Object.values(user.carts || {});
         delete user.carts;
 
         this.showNotif("Anda berhasil login", "success");

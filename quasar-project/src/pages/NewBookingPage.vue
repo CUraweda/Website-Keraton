@@ -38,7 +38,7 @@
             ">
             <div v-for="(item, index) in tiketItems" :key="index">
               <q-card class="my-card" flat bordered>
-                <q-img :src="hasPicsumDomain(item.image)" class="image-card" />
+                <q-img :src="item.image" class="image-card" />
 
                 <q-card-section>
                   <div class="text-h6 q-mt-sm q-mb-xs" style="
@@ -85,7 +85,7 @@
               ">
               <div v-for="(data, index) in item" :key="index">
                 <q-card class="my-card" flat bordered>
-                  <q-img :src="hasPicsumDomain(data.image)" class="image-card" />
+                  <q-img :src="data.image" class="image-card" />
 
                   <q-card-section>
                     <div class="text-h6 q-mt-sm q-mb-xs" style="
@@ -236,9 +236,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-    hasPicsumDomain(url){
-      return url.replace('https://picsum.photos/200/300', this.defaultImageUrl)
     },
     getImageURL(image) {
       if (image.startsWith("http")) {

@@ -87,7 +87,7 @@
           <div class="flex justify-center items-center q-gutter-md">
             <div v-for="(item, index) in events" :key="index">
               <q-card class="my-card" flat bordered>
-                <q-img :src="hasPicsumDomain(item.image)" class="image-card" />
+                <q-img :src="item.image" class="image-card" />
 
                 <q-card-section>
                   <div class="flex q-gutter-sm">
@@ -260,9 +260,6 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    },
-    hasPicsumDomain(url){
-      return url.replace('https://picsum.photos/200/300', this.defaultImageUrl)
     },
     addToCart(rowData) {
       try {
