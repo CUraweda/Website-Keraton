@@ -368,7 +368,7 @@ export default {
       navbarDialog: ref(false),
       toggleNavbar: ref(props.isAdmin),
       sessionData: ref(
-        JSON.parse(decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)))
+        JSON.parse(sessionStorage.getItem(env.GLOBAL_STORAGE) ? decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)) : "{}")
       ),
     };
   },
