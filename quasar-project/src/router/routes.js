@@ -22,7 +22,7 @@ import CheckoutPage from "../pages/CheckoutPage.vue";
 import BllArti from "../pages/NewBaluarti.vue";
 import Musm from "../pages/NewMuseum.vue";
 import Agng from "../pages/NewAgungDalem.vue";
-
+import JanjiTemuPage from "../pages/JanjiTemuPage.vue";
 const routes = [
   {
     path: "/agungdalem",
@@ -132,6 +132,14 @@ const routes = [
     path: "/user/checkout",
     name: "checkout",
     component: CheckoutPage,
+    meta: {
+      preventToken: true,
+    },
+  },
+  {
+    path: "/user/checkout/janji-temu",
+    name: "checkout",
+    component: JanjiTemuPage,
     meta: {
       preventToken: true,
     },
