@@ -6,9 +6,12 @@
           <navbar :isAdmin="false" />
 
           <div class="q-ma-xl"><h5>Tiket Janji Temu Keluarga Keraton</h5></div>
-          <div class="flex w-full q-ma-md res">
+          <div
+            class="flex w-full q-ma-md res"
+            style="overflow-x: auto; width: auto"
+          >
             <div
-              class="q-pa-md h-fit q-mx-sm res-card1"
+              class="h-fit q-mx-sm res-card1"
               style="text-wrap: wrap; overflow: hidden"
             >
               <q-stepper
@@ -66,7 +69,7 @@
                   <!-- <div class="q-pa-md">
                     <q-date v-model="dateRange" landscape range />
                   </div> -->
-                  <div class="q-pa-md">
+                  <div class="q-pa-sm">
                     <div class="q-gutter-sm">
                       <!-- <q-badge color="teal"> Model: {{ dateTime }} </q-badge> -->
                       <!-- <q-badge
@@ -79,26 +82,11 @@
                     </div>
 
                     <div
-                      class="q-gutter-sm row justify-around"
-                      style="
-                        width: 100%;
-                        overflow-x: auto;
-                        padding: 5px;
-                        display: flex;
-                      "
+                      class="q-gutter-sm justify-around date"
+                      style="width: 100%; justify-items: center; padding: 5px"
                     >
-                      <q-date
-                        v-model="dates"
-                        mask="YYYY-MM-DD"
-                        color="blue"
-                        class="col"
-                      />
-                      <q-time
-                        v-model="dateTime"
-                        mask="HH:mm"
-                        color="blue"
-                        class="col"
-                      />
+                      <q-date v-model="dates" mask="YYYY-MM-DD" color="blue" />
+                      <q-time v-model="dateTime" mask="HH:mm" color="blue" />
                     </div>
                   </div>
                 </q-step>
@@ -330,6 +318,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
+.date {
+  display: block;
+  margin: auto;
+}
 @media (min-width: 1022px) {
   .res {
     display: flex;
@@ -344,6 +336,10 @@ export default {
   }
   .res-cardFull {
     width: 80%;
+  }
+  .date {
+    display: flex;
+    margin: auto;
   }
 }
 </style>
