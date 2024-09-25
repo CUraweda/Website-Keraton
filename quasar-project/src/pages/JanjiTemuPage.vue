@@ -81,12 +81,34 @@
                       </q-badge> -->
                     </div>
 
+                    <q-select
+                      outlined
+                      v-model="selectTime"
+                      :options="timeAvailible"
+                      :dense="false"
+                      style="width: fit-content"
+                      :options-dense="false"
+                    >
+                      <template v-slot:prepend>
+                        <q-icon name="event" />
+                      </template>
+                    </q-select>
                     <div
                       class="q-gutter-sm justify-around date"
                       style="width: 100%; justify-items: center; padding: 5px"
                     >
-                      <q-date v-model="dates" mask="YYYY-MM-DD" color="blue" />
-                      <q-time v-model="dateTime" mask="HH:mm" color="blue" />
+                      <q-date
+                        v-model="dates"
+                        mask="YYYY-MM-DD"
+                        color="blue"
+                        :readonly="true"
+                      />
+                      <q-time
+                        v-model="dateTime"
+                        mask="HH:mm"
+                        color="blue"
+                        :readonly="true"
+                      />
                     </div>
                   </div>
                 </q-step>
@@ -110,7 +132,7 @@
                         </tr>
                         <tr>
                           <td>Kontak Pemesan</td>
-                          <td>: {{ data?.telp }}</td>
+                          <td>: {{ data?.booker_phone }}</td>
                         </tr>
                         <tr>
                           <td>Email</td>
@@ -120,17 +142,21 @@
                           <td>Hari & Tanggal</td>
                           <td>
                             :
-                            <!-- {{
-                        data.date
-                          ? data.date?.from + " s/d " + data.date?.to
-                          : ""
-                      }} -->
-                            {{ data?.date }}
+                            {{
+                              data?.datetime ? data?.datetime.split("T")[0] : ""
+                            }}
                           </td>
                         </tr>
                         <tr>
                           <td>Jam</td>
-                          <td>: {{ data?.Time }}</td>
+                          <td>
+                            :
+                            {{
+                              data?.datetime
+                                ? data?.datetime.split("T")[1].substring(0, 5)
+                                : ""
+                            }}
+                          </td>
                         </tr>
                       </table>
                     </q-card>
@@ -174,7 +200,7 @@
                   </tr>
                   <tr>
                     <td>Kontak Pemesan</td>
-                    <td>: {{ data?.telp }}</td>
+                    <td>: {{ data?.booker_phone }}</td>
                   </tr>
                   <tr>
                     <td>Email</td>
@@ -189,12 +215,19 @@
                           ? data.date?.from + " s/d " + data.date?.to
                           : ""
                       }} -->
-                      {{ data?.date }}
+                      {{ data?.datetime ? data?.datetime?.split("T")[0] : "" }}
                     </td>
                   </tr>
                   <tr>
-                    <td>Jam</td>
-                    <td>: {{ data?.Time }}</td>
+                    <td>Pukul</td>
+                    <td>
+                      :
+                      {{
+                        data?.datetime
+                          ? data?.datetime?.split("T")[1].substring(0, 5)
+                          : ""
+                      }}
+                    </td>
                   </tr>
                 </table>
               </q-card>
@@ -210,6 +243,7 @@
 <script>
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
+import { split } from "postcss/lib/list";
 
 export default {
   components: { navbar },
@@ -217,7 +251,7 @@ export default {
     const date = ref(null);
     const dateRange = ref({ from: null, to: null });
     const dates = ref();
-    const dateTime = ref();
+    const dateTime = ref("");
     const getCurrentDate = () => {
       const now = new Date();
       date.value = now.toISOString().substring(0, 10); // Format YYYY-MM-DD
@@ -229,7 +263,7 @@ export default {
       const minutes = String(now.getMinutes()).padStart(2, "0");
 
       dates.value = `${year}-${month}-${day}`;
-      dateTime.value = ` ${hours}:${minutes}`;
+      // dateTime.value = ` ${hours}:${minutes}`;
     };
     getCurrentDate();
     return {
@@ -248,10 +282,13 @@ export default {
       // dateRange: ref({ from: "", to: "" }),
       telp: ref(""),
       data: ref([]),
+      timeAvailible: ref([]),
+      selectTime: ref(""),
     };
   },
   mounted() {
     this.getCurrentDate();
+    this.fetchData();
     // Cek apakah ada user di sessionStorage
     if (localStorage.getItem("user")) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -288,8 +325,33 @@ export default {
     //   sessionStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
     //   console.log(`date: ${user.date}`);
     // },
+    selectTime(newDate) {
+      this.dates = newDate.value.split("T")[0];
+      this.dateTime = newDate.value.split("T")[1].substring(0, 5);
+    },
   },
   methods: {
+    async fetchData() {
+      try {
+        const [year, month] = this.dates.split("-"); // Mengambil tahun dan bulan dari dates
+        const response = await this.$api.get(
+          `/availability-time?month=${month}&year=${year}`
+        );
+
+        console.log(response.data.data);
+        this.timeAvailible = response.data.data.map((item) => ({
+          label:
+            "Tanggal " +
+            item.datetime.split("T")[0] +
+            " Pukul " +
+            item.datetime.split("T")[1].split(".")[0],
+          value: item.datetime,
+          disabled: item.disabled,
+        }));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
     reset() {
       this.name = "";
       this.email = "";
@@ -298,9 +360,8 @@ export default {
       const user = {
         name: this.name,
         email: this.email,
-        date: this.dates,
-        Time: this.dateTime,
-        telp: this.telp,
+        datetime: this.selectTime?.value,
+        booker_phone: this.telp,
       };
       this.data = user;
 

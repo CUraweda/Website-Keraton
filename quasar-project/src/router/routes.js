@@ -138,7 +138,7 @@ const routes = [
   },
   {
     path: "/user/checkout/janji-temu",
-    name: "checkout",
+    name: "checkoutjanji",
     component: JanjiTemuPage,
     meta: {
       preventToken: true,
