@@ -21,56 +21,10 @@
 
           <q-card class="q-mt-md">
             <q-card-section class="card-item">
-              <div v-for="(cart, index) in cartStore" :key="index">
+              <div v-for="(cart, index) in carts" :key="index">
                 <div>
                   <div class="text-h6 q-mt-xs">{{ cart.name }}</div>
-                  <div
-                    class="flex items-center justify-between wrap full-width"
-                  >
-                    <div class="flex items-center q-gutter-md">
-                      <!-- Button to decrease quantity -->
-                      <q-btn
-                        size="xs"
-                        dense
-                        @click="changeQuantity('janjiTemu', 'min', index)"
-                        :disabled="cart.quantity <= 1"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="15px"
-                          viewBox="0 -960 960 960"
-                          width="15px"
-                          fill="black"
-                        >
-                          <path d="M200-440v-80h560v80H200Z" />
-                        </svg>
-                      </q-btn>
-
-                      <!-- Quantity display -->
-                      <div>{{ cart.quantity }}</div>
-
-                      <!-- Button to increase quantity -->
-                      <q-btn
-                        size="xs"
-                        dense
-                        @click="changeQuantity('janjiTemu', 'plus', index)"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="15px"
-                          viewBox="0 -960 960 960"
-                          width="15px"
-                          fill="black"
-                        >
-                          <path
-                            d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
-                          />
-                        </svg>
-                      </q-btn>
-                    </div>
-
-                    <div class="col-grow q-mx-md">
-                      <!-- Select for categoryId 3 (Country) -->
+                  <div class="col-grow q-mx-md">
                       <q-select
                         color="orange"
                         class="col-grow"
@@ -86,14 +40,12 @@
                       >
                         <template v-slot:no-option>
                           <q-item>
-                            <q-item-section class="text-grey"
-                              >No results</q-item-section
-                            >
+                            <q-item-section class="text-grey">
+                              No results
+                            </q-item-section>
                           </q-item>
                         </template>
                       </q-select>
-
-                      <!-- Select for categoryId 1 (City) -->
                       <q-select
                         class="col-grow"
                         label-color="black"
@@ -104,93 +56,6 @@
                         label="Kota Asal"
                       />
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div v-for="(cart, index) in PaketAutomated" :key="index">
-                <div>
-                  <div class="text-h6 q-mt-xs">{{ cart.titleBig }}</div>
-                  <div
-                    class="flex items-center justify-between wrap full-width"
-                  >
-                    <div class="flex items-center q-gutter-md">
-                      <!-- Button to decrease quantity -->
-                      <q-btn
-                        size="xs"
-                        dense
-                        @click="changeQuantity('auto', 'min', index)"
-                        :disabled="cart.quantity <= 1"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="15px"
-                          viewBox="0 -960 960 960"
-                          width="15px"
-                          fill="black"
-                        >
-                          <path d="M200-440v-80h560v80H200Z" />
-                        </svg>
-                      </q-btn>
-
-                      <!-- Quantity display -->
-                      <div>{{ cart.quantity }}</div>
-
-                      <!-- Button to increase quantity -->
-                      <q-btn
-                        size="xs"
-                        dense
-                        @click="changeQuantity('auto', 'plus', index)"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="15px"
-                          viewBox="0 -960 960 960"
-                          width="15px"
-                          fill="black"
-                        >
-                          <path
-                            d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"
-                          />
-                        </svg>
-                      </q-btn>
-                    </div>
-
-                    <div class="col-grow q-mx-md">
-                      <!-- Select for categoryId 3 (Country) -->
-                      <q-select
-                        color="orange"
-                        class="col-grow"
-                        label-color="black"
-                        use-input
-                        input-debounce="0"
-                        v-if="cart.categoryId === 3"
-                        v-model="cart.nationalityId"
-                        @filter="filterCountry"
-                        :options="filteredCountryList"
-                        label="Negara Asal"
-                        behavior="menu"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey"
-                              >No results</q-item-section
-                            >
-                          </q-item>
-                        </template>
-                      </q-select>
-
-                      <!-- Select for categoryId 1 (City) -->
-                      <q-select
-                        class="col-grow"
-                        label-color="black"
-                        v-if="cart.categoryId === 1"
-                        v-model="cart.cityName"
-                        @filter="filterCity"
-                        :options="filteredCityList"
-                        label="Kota Asal"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
             </q-card-section>
@@ -326,7 +191,7 @@
                       <div v-for="(tax, i) in taxes" :key="i">
                         <div class="flex items-center justify-between">
                           <div>{{ tax.label }}</div>
-                          <div>Rp. {{ formatRupiah(tax) }}</div>
+                          <div>Rp. {{ formatRupiah(formatTax(tax)) }}</div>
                         </div>
                       </div>
                     </div>
@@ -470,9 +335,9 @@ export default {
       dateInputLabel: ref(),
       dateLabel: ref(new Date().toISOString()),
       paymentMethod: ref(),
-      // ticketTotal: ref(0),
-      // checkoutTotal: ref(0),
-      // totalTagihan: ref(0),
+      ticketTotal: ref(0),
+      checkoutTotal: ref(0),
+      totalTagihan: ref(0),
       instances: ref([
         {
           label: "Bank BJB",
@@ -495,70 +360,70 @@ export default {
           icon: [logobni],
         },
       ]),
-      PaketAutomated: ref([]),
-      cartStore: ref([]),
-      cartData: ref([]),
+      // PaketAutomated: ref([]),
+      // cartStore: ref([]),
+      // cartData: ref([]),
       TemuItem: ref([]),
     };
   },
   mounted() {
     this.filteredCountryList = this.countryList;
     this.filteredCityList = this.cityNameList;
-    // this.setCartData().then(() => {
-    //   this.validateCartData();
-    //   this.countTagihan();
-    // });
+    this.setCartData().then(() => {
+      this.validateCartData();
+      this.countTagihan();
+    });
     this.socketConnection();
     // this.setDate();
-    this.setCartData();
+    // this.setCartData();
     let info = sessionStorage.getItem("TemuItem");
     this.TemuItem = JSON.parse(info);
     this.dateInput = this.TemuItem.datetime;
   },
-  computed: {
-    // Menggabungkan cartStore dan PaketAutomated
-    allItems() {
-      let allItems = [...this.cartStore]; // Salin cartStore
+  // computed: {
+    // // Menggabungkan cartStore dan PaketAutomated
+    // allItems() {
+    //   let allItems = [...this.cartStore]; // Salin cartStore
 
-      // Jika PaketAutomated adalah array dan memiliki item
-      if (
-        Array.isArray(this.PaketAutomated) &&
-        this.PaketAutomated.length > 0
-      ) {
-        // Ambil item dari PaketAutomated
-        const paketItem = this.PaketAutomated[0]; // Ambil item pertama dari array
-        // Tambahkan quantity dan price dari PaketAutomated ke allItems
-        allItems.push({
-          name: paketItem.titleBig, // Atau ambil dari titleMedium
-          price: paketItem.price,
-          quantity: paketItem.quantity,
-          // Tambahkan properti lain jika diperlukan
-        });
-      }
+    //   // Jika PaketAutomated adalah array dan memiliki item
+    //   if (
+    //     Array.isArray(this.PaketAutomated) &&
+    //     this.PaketAutomated.length > 0
+    //   ) {
+    //     // Ambil item dari PaketAutomated
+    //     const paketItem = this.PaketAutomated[0]; // Ambil item pertama dari array
+    //     // Tambahkan quantity dan price dari PaketAutomated ke allItems
+    //     allItems.push({
+    //       name: paketItem.titleBig, // Atau ambil dari titleMedium
+    //       price: paketItem.price,
+    //       quantity: paketItem.quantity,
+    //       // Tambahkan properti lain jika diperlukan
+    //     });
+    //   }
 
-      return allItems;
-    },
+    //   return allItems;
+    // },
     // Menghitung total quantity
-    ticketTotal() {
-      return this.allItems.reduce((total, item) => total + item.quantity, 0);
-    },
-    // Menghitung total checkout
-    checkoutTotal() {
-      return this.allItems.reduce(
-        (total, item) => total + item.quantity * item.price,
-        0
-      );
-    },
+    // ticketTotal() {
+    //   return this.allItems.reduce((total, item) => total + item.quantity, 0);
+    // },
+    // // Menghitung total checkout
+    // checkoutTotal() {
+    //   return this.allItems.reduce(
+    //     (total, item) => total + item.quantity * item.price,
+    //     0
+    //   );
+    // },
     // Menghitung total tagihan (checkoutTotal + pajak/biaya transaksi)
-    totalTagihan() {
-      let total = this.checkoutTotal;
-      // Tambahkan biaya pajak jika ada
-      for (let tax of this.taxes) {
-        total += this.formatTax(tax);
-      }
-      return total;
-    },
-  },
+    // totalTagihan() {
+    //   let total = this.checkoutTotal;
+    //   // Tambahkan biaya pajak jika ada
+    //   for (let tax of this.taxes) {
+    //     total += this.formatTax(tax);
+    //   }
+    //   return total;
+    // },
+  // },
 
   watch: {
     dateInput(newVal) {
@@ -596,34 +461,24 @@ export default {
     },
     async setCartData() {
       try {
-        let data = sessionStorage.getItem("Temp_Cart_Temu");
-        console.log(data);
-        if (data) {
-          const parsedData = JSON.parse(data);
+        const rawCart = Object.values(this.cartClass.getTempItem());
+        const paramResponse = await this.$api.get("param/checkout", {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        });
+        if (paramResponse.status === 200)
+          this.taxes = paramResponse.data.data.data.nonCash.filter(
+            (data) => data.paidBy === "user"
+          );
 
-          // Check if storedData is an array or a single object and handle accordingly
-          let storedItems = Array.isArray(parsedData.storedData)
-            ? parsedData.storedData
-            : [parsedData.storedData]; // wrap in array if it's a single object
 
-          let PaketAutomated = Array.isArray(parsedData.PaketAutomated)
-            ? parsedData.PaketAutomated
-            : [parsedData.PaketAutomated];
-
-          this.cartStore = storedItems.map((data) => {
-            return {
-              ...data,
-            };
-          });
-          this.PaketAutomated = PaketAutomated.map((data) => {
-            return {
-              ...data,
-            };
-          });
-
-          // this.PaketAutomated = parsedData.PaketAutomated;
-          console.log(this.cartStore);
-        }
+        this.carts = rawCart.map((cart) => {
+          console.log(cart.price)
+          this.ticketTotal += cart.quantity;
+          this.checkoutTotal += cart.price * cart.quantity;
+          return cart;
+        });
       } catch (err) {
         console.log(err);
       }
@@ -671,49 +526,49 @@ export default {
         ? this.checkoutTotal * tax.tax
         : this.checkoutTotal + tax.tax;
     },
-    changeQuantity(type, action, index) {
-      // Access the cart item by index
-      if (type !== "auto") {
-        let cartItem = this.cartStore[index];
-        if (action === "min" && cartItem.quantity > 0) {
-          // Decrease quantity, but ensure it doesn't go below 0
-          cartItem.quantity--;
-        } else if (action === "plus") {
-          // Increase quantity
-          cartItem.quantity++;
-        }
-        // Update the cartStore array with the new quantity
-        this.cartStore.splice(index, 1, cartItem);
-      } else {
-        let cartItem = this.PaketAutomated[index];
-        if (action === "min" && cartItem.quantity > 0) {
-          // Decrease quantity, but ensure it doesn't go below 0
-          cartItem.quantity--;
-        } else if (action === "plus") {
-          // Increase quantity
-          cartItem.quantity++;
-        }
-        // Update the cartStore array with the new quantity
-        this.PaketAutomated.splice(index, 1, cartItem);
-      }
+    // changeQuantity(type, action, index) {
+    //   // Access the cart item by index
+    //   if (type !== "auto") {
+    //     let cartItem = this.cartStore[index];
+    //     if (action === "min" && cartItem.quantity > 0) {
+    //       // Decrease quantity, but ensure it doesn't go below 0
+    //       cartItem.quantity--;
+    //     } else if (action === "plus") {
+    //       // Increase quantity
+    //       cartItem.quantity++;
+    //     }
+    //     // Update the cartStore array with the new quantity
+    //     this.cartStore.splice(index, 1, cartItem);
+    //   } else {
+    //     let cartItem = this.PaketAutomated[index];
+    //     if (action === "min" && cartItem.quantity > 0) {
+    //       // Decrease quantity, but ensure it doesn't go below 0
+    //       cartItem.quantity--;
+    //     } else if (action === "plus") {
+    //       // Increase quantity
+    //       cartItem.quantity++;
+    //     }
+    //     // Update the cartStore array with the new quantity
+    //     this.PaketAutomated.splice(index, 1, cartItem);
+    //   }
 
-      // Optionally, save the updated cartStore back to sessionStorage
-      sessionStorage.setItem(
-        "Temp_Cart_Temu",
-        JSON.stringify({
-          storedData: this.cartStore,
-          PaketAutomated: this.PaketAutomated,
-        })
-      );
-    },
+    //   // Optionally, save the updated cartStore back to sessionStorage
+    //   sessionStorage.setItem(
+    //     "Temp_Cart_Temu",
+    //     JSON.stringify({
+    //       storedData: this.cartStore,
+    //       PaketAutomated: this.PaketAutomated,
+    //     })
+    //   );
+    // },
     async checkOut() {
       let plannedDate = this.dateInput;
       try {
-        if (!this.dateInput.split("T")[1]) {
-          const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
-          plannedDate = new Date(rawDateConvert).toISOString();
-        }
-        const sendedCart = this.allItems.map((cart) => ({
+        // if (!this.dateInput.split("T")[1]) {
+        //   const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
+        //   plannedDate = new Date(rawDateConvert).toISOString();
+        // }
+        const sendedCart = this.carts.map((cart) => ({
           id: cart.id,
           name: cart.name,
           price: cart.price,
@@ -728,9 +583,9 @@ export default {
         const response = await this.$api.post(
           "/trans/janji",
           {
-            TEMP_CART: sendedCart,
-            TEMP_USER_DATA: this.TemuItem,
-            Method: this.paymentMethod,
+            temp_cart: sendedCart,
+            temp_user_data: this.TemuItem,
+            method: this.paymentMethod,
           },
           {
             headers: {

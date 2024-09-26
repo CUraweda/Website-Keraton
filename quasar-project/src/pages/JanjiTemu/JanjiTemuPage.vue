@@ -288,6 +288,7 @@ export default {
       timeAvailible: ref([]),
       selectTime: ref(""),
       in_used: ref(false),
+      availabilityId: ref()
     };
   },
   mounted() {
@@ -332,7 +333,7 @@ export default {
     selectTime(newDate) {
       this.dates = newDate.value.split("T")[0];
       this.dateTime = newDate.value.split("T")[1].substring(0, 5);
-      this.in_used = newDate.in_used;
+      this.availabilityId = newDate.availabilityId
     },
   },
   methods: {
@@ -351,8 +352,7 @@ export default {
             " Pukul " +
             item.datetime.split("T")[1].split(".")[0],
           value: item.datetime,
-          in_used: item.in_used,
-          disabled: item.disabled,
+          id: item.id,
         }));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -363,13 +363,12 @@ export default {
       this.email = "";
     },
     save() {
-      console.log(this.selectTime);
       const user = {
         booker_name: this.name,
         booker_email: this.email,
         datetime: this.selectTime?.value,
         booker_phone: this.telp,
-        availibility_id: this.in_used,
+        availibility_id: this.availibility_id,
       };
       this.data = user;
       console.log(user);
