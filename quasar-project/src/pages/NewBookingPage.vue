@@ -255,6 +255,7 @@ export default {
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
+                  is_janji: order.is_janji,
                 });
               }
               break;
@@ -275,6 +276,7 @@ export default {
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
+                  is_janji: order.is_janji,
                 });
               }
               break;
@@ -293,7 +295,7 @@ export default {
         this.PaketAutomated = this.tiketItems
           .flat()
           .find((i) => i.titleBig === "Tiket Masuk Keraton Umum");
-          this.PaketAutomated.quantity = 1;
+        this.PaketAutomated.quantity = 1;
       } catch (err) {
         console.log(err);
       }
