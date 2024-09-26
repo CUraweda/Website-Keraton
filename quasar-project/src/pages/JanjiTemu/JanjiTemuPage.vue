@@ -166,7 +166,11 @@
                 <template v-slot:navigation>
                   <q-stepper-navigation>
                     <q-btn
-                      @click="$refs.stepper.next(), save()"
+                      @click="
+                        $refs.stepper.next(),
+                          save(),
+                          step === 3 ? goToCheckout() : null
+                      "
                       color="primary"
                       :label="step === 3 ? 'Finish' : 'Continue'"
                     />
@@ -242,8 +246,7 @@
 
 <script>
 import { ref } from "vue";
-import navbar from "../components/NavbarNew.vue";
-import { split } from "postcss/lib/list";
+import navbar from "../../components/NavbarNew.vue";
 
 export default {
   components: { navbar },
@@ -368,6 +371,9 @@ export default {
       sessionStorage.setItem("TemuItem", JSON.stringify(user));
       console.log(user);
       // this.reset();  // Reset jika diperlukan
+    },
+    goToCheckout() {
+      this.$router.push("/user/checkout/janji-temu");
     },
   },
 };
