@@ -128,7 +128,7 @@
                       <table style="gap: 5px; display: block">
                         <tr>
                           <td>Nama Lengkap</td>
-                          <td>: {{ data.name }}</td>
+                          <td>: {{ data.booker_name }}</td>
                         </tr>
                         <tr>
                           <td>Kontak Pemesan</td>
@@ -136,7 +136,7 @@
                         </tr>
                         <tr>
                           <td>Email</td>
-                          <td>: {{ data.email }}</td>
+                          <td>: {{ data.booker_email }}</td>
                         </tr>
                         <tr>
                           <td>Hari & Tanggal</td>
@@ -200,7 +200,7 @@
                 <table style="gap: 5px; display: block">
                   <tr>
                     <td>Nama Lengkap</td>
-                    <td>: {{ data.name }}</td>
+                    <td>: {{ data.booker_name }}</td>
                   </tr>
                   <tr>
                     <td>Kontak Pemesan</td>
@@ -208,7 +208,7 @@
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td>: {{ data.email }}</td>
+                    <td>: {{ data.booker_email }}</td>
                   </tr>
                   <tr>
                     <td>Hari & Tanggal</td>
@@ -287,6 +287,7 @@ export default {
       data: ref([]),
       timeAvailible: ref([]),
       selectTime: ref(""),
+      in_used: ref(false),
     };
   },
   mounted() {
@@ -307,18 +308,18 @@ export default {
       const user = localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))
         : {}; // Cek apakah user sudah ada atau tidak
-      user.name = newName;
+      user.booker_name = newName;
       localStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
-      console.log(user.name);
+      console.log(user.booker_name);
     },
     email(newEmail) {
       // Update email di sessionStorage saat berubah
       const user = localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))
         : {}; // Cek apakah user sudah ada atau tidak
-      user.email = newEmail;
+      user.booker_email = newEmail;
       localStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
-      console.log(`Email: ${user.email}`);
+      console.log(`Email: ${user.booker_email}`);
     },
     // dateRange(newDate) {
     //   const user = sessionStorage.getItem("user")
@@ -331,6 +332,7 @@ export default {
     selectTime(newDate) {
       this.dates = newDate.value.split("T")[0];
       this.dateTime = newDate.value.split("T")[1].substring(0, 5);
+      this.in_used = newDate.in_used;
     },
   },
   methods: {
@@ -349,6 +351,7 @@ export default {
             " Pukul " +
             item.datetime.split("T")[1].split(".")[0],
           value: item.datetime,
+          in_used: item.in_used,
           disabled: item.disabled,
         }));
       } catch (error) {
@@ -360,16 +363,18 @@ export default {
       this.email = "";
     },
     save() {
+      console.log(this.selectTime);
       const user = {
-        name: this.name,
-        email: this.email,
+        booker_name: this.name,
+        booker_email: this.email,
         datetime: this.selectTime?.value,
         booker_phone: this.telp,
+        availibility_id: this.in_used,
       };
       this.data = user;
+      console.log(user);
 
       sessionStorage.setItem("TemuItem", JSON.stringify(user));
-      console.log(user);
       // this.reset();  // Reset jika diperlukan
     },
     goToCheckout() {

@@ -208,11 +208,15 @@
 
               <div class="flex items-center q-gutter-md">
                 <div class="text-bold" style="font-size: 1rem">
-                  {{ TemuItem.name }}
+                  {{ TemuItem.booker_name }}
                 </div>
                 <div style="font-size: 1rem">
                   {{
-                    "- (" + TemuItem.email + " - " + TemuItem.booker_phone + ")"
+                    "- (" +
+                    TemuItem.booker_email +
+                    " - " +
+                    TemuItem.booker_phone +
+                    ")"
                   }}
                 </div>
               </div>
@@ -709,7 +713,7 @@ export default {
           const rawDateConvert = this.dateInput + ":00+00:00"; //Used to convert date
           plannedDate = new Date(rawDateConvert).toISOString();
         }
-        const sendedCart = this.carts.map((cart) => ({
+        const sendedCart = this.allItems.map((cart) => ({
           id: cart.id,
           name: cart.name,
           price: cart.price,
@@ -722,11 +726,11 @@ export default {
         }));
 
         const response = await this.$api.post(
-          "trans",
+          "/trans/janji",
           {
-            carts: sendedCart,
-            method: this.paymentMethod,
-            plannedDate,
+            TEMP_CART: sendedCart,
+            TEMP_USER_DATA: this.TemuItem,
+            Method: this.paymentMethod,
           },
           {
             headers: {
