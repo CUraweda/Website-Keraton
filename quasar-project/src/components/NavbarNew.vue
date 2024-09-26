@@ -137,6 +137,10 @@
           </div>
 
           <div>
+            <q-btn flat no-caps href="/admin/JanjiTemu" label="Janji Temu" />
+          </div>
+
+          <div>
             <q-btn flat no-caps href="/admin/user" label="User" />
           </div>
 
@@ -192,7 +196,13 @@
         :color="isTransparent ? 'white' : 'black'"
         to="/admin/news"
       />
-
+      <q-btn
+        flat
+        no-caps
+        label="Janji Temu"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/janji-temu"
+      />
       <q-btn
         flat
         no-caps
@@ -368,7 +378,11 @@ export default {
       navbarDialog: ref(false),
       toggleNavbar: ref(props.isAdmin),
       sessionData: ref(
-        JSON.parse(sessionStorage.getItem(env.GLOBAL_STORAGE) ? decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)) : "{}")
+        JSON.parse(
+          sessionStorage.getItem(env.GLOBAL_STORAGE)
+            ? decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE))
+            : "{}"
+        )
       ),
     };
   },

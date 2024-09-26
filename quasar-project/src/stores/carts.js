@@ -4,7 +4,7 @@ import cookieHandler from 'src/cookieHandler'
 // import { decrypt, encrypt } from './encryption'
 
 export default class Carts {
-    // static cartName = env.CART_STORAGE_NAME;
+  // static cartName = env.CART_STORAGE_NAME;
 
     constructor() {
         try {
@@ -112,12 +112,12 @@ export default class Carts {
         return this
     }
 
-    removeItem(listOfData = [{ id }]) {
-        if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
-        for (let data of listOfData) {
-            const propertyId = `${data.type}|${data.id}`
-            if (this.userCart.hasOwnProperty(propertyId)) delete this.userCart[propertyId];
-        }
-        return this
+  removeItem(listOfData = [{ id }]) {
+    if (Object.values(this.userCart).length < 1) throw Error('Cart already empty')
+    for (let data of listOfData) {
+      const propertyId = `${data.type}|${data.id}`
+      if (this.userCart.hasOwnProperty(propertyId)) delete this.userCart[propertyId];
     }
+    return this
+  }
 }

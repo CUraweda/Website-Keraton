@@ -60,7 +60,7 @@
                 <q-card-actions>
                   <div class="text-subtitle1 text-weight-medium">
                     {{
-            item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }} </div>
+                      item.price < 1 ? "Free" : "Rp. " + formatRupiah(item.price) }} </div>
                       <q-space />
                       <q-btn @click="addToCart(item)" dense no-caps style="background: #fae084"><span
                           class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
@@ -73,9 +73,9 @@
           <div v-for="(item, index) in paketItems" :key="index">
             <div class="text-h5 text-bold q-mx-md q-my-md">
               {{
-            paketNameItems[index].name +
-            ` (minimal ${paketNameItems[index].minimumUnit} orang)`
-          }}
+                paketNameItems[index].name +
+                ` (minimal ${paketNameItems[index].minimumUnit} orang)`
+              }}
             </div>
             <div class="flex q-gutter-md q-mx-md" style="
                 overflow-x: auto;
@@ -107,7 +107,7 @@
                   <q-card-actions>
                     <div class="text-subtitle1 text-weight-medium">
                       {{
-            data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price) }} </div>
+                        data.price < 1 ? "Free" : "Rp. " + formatRupiah(data.price) }} </div>
                         <q-space />
                         <q-btn @click="addToCart(data)" dense no-caps style="background: #fae084"
                           class="text-bold"><span class="text-bold">Tambah</span><span><q-img src="../assets/Frame.svg"
@@ -117,6 +117,8 @@
               </div>
             </div>
           </div>
+
+
         </div>
       </q-page>
     </q-page-container>
@@ -140,8 +142,11 @@ export default {
     return {
       tiketItems: ref(),
       paketItems: ref(),
+      tiketJanjiItems: ref()
+      janjiDefaultItems: ref()
       paketNameItems: ref(),
-      defaultImageUrl: 'src/assets/images/placeholder_image.jpg',
+      PaketAutomated: ref([]),
+      defaultImageUrl: "src/assets/images/placeholder_image.jpg",
       cart: new Carts(),
       currentCartLength: 0,
       sessionData: ref(
@@ -154,14 +159,14 @@ export default {
   },
   mounted() {
     this.fetchData();
-    this.socketConnection()
+    this.socketConnection();
   },
   methods: {
     socketConnection() {
-      socket.connect()
-      socket.on('tiket', () => {
-        this.fetchData()
-      })
+      socket.connect();
+      socket.on("tiket", () => {
+        this.fetchData();
+      });
     },
     showNotif(msg, status) {
       const myNotify = new SimpleNotify({
@@ -180,16 +185,14 @@ export default {
       try {
         const response = await this.$api.get("items/booking");
         if (response.status !== 200) throw Error("Error Occured");
-
-        let tikets = [],
-          pakets = {};
+        let tikets = [], pakets = {}, defaultJanji = []
 
         for (let subType of response.data.data) {
           if (subType.orders.length < 1) continue;
           switch (subType.orderTypeId) {
             case 1: //Tiket Type
               for (let order of subType.orders) {
-                tikets.push({
+                const payloadData = {
                   id: order.id,
                   categoryId: order.categoryId,
                   image: order.image,
@@ -199,12 +202,14 @@ export default {
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
+                }
+                if(order.needed_for_janji) 
+                tikets.push({
                 });
               }
               break;
             case 2: //Paket Type
-              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined
-                }`;
+              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined}`;
               if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
@@ -221,6 +226,9 @@ export default {
                 });
               }
               break;
+            case 4: //Janji Temu
+              const subTypeNam = 
+              break;
           }
         }
         this.tiketItems = tikets;
@@ -233,6 +241,10 @@ export default {
           const cart = Object.values(this.cart.getItem());
           this.currentCartLength = cart.length;
         }
+        this.PaketAutomated = this.tiketItems
+          .flat()
+          .find((i) => i.titleBig === "Tiket Masuk Keraton Umum");
+        this.PaketAutomated.quantity = 1;
       } catch (err) {
         console.log(err);
       }
@@ -256,7 +268,6 @@ export default {
           this.$router.push("/signin");
           throw Error("Anda Masih belum Log In!");
         }
-        console.log(rowData)
         const storedData = {
           id: rowData.id,
           name: rowData.titleBig,
@@ -267,9 +278,24 @@ export default {
           price: rowData.price,
           type: "T",
         };
+        if (rowData.titleBig === "Tiket Janji Temu") {
+          const combinedData = {
+            storedData: storedData,
+            PaketAutomated: this.PaketAutomated,
+          };
+
+          // Simpan gabungan data ke sessionStorage
+          sessionStorage.setItem(
+            "Temp_Cart_Temu",
+            JSON.stringify(combinedData)
+          );
+          if (sessionStorage.getItem("Temp_Cart_Temu")) {
+            this.$router.push("/user/information/janji-temu");
+          }
+        }
         const cartData = this.cart.addManyItem([storedData]).getItem();
         if (!cartData) throw Error("Error Occured");
-        this.currentCartLength = Object.values(cartData).length
+        this.currentCartLength = Object.values(cartData).length;
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
         return this.cart.updateItem();
       } catch (err) {

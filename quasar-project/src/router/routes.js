@@ -22,8 +22,10 @@ import CheckoutPage from "../pages/CheckoutPage.vue";
 import BllArti from "../pages/NewBaluarti.vue";
 import Musm from "../pages/NewMuseum.vue";
 import Agng from "../pages/NewAgungDalem.vue";
-
-const routes = [
+import JanjiTemuPage from "../pages/JanjiTemu/JanjiTemuPage.vue";
+import CheckoutJanjiPage from "../pages/JanjiTemu/CheckoutJanjiPage.vue";
+import AdminJanjiTemu from "../pages/Admin/JanjiTemu.vue"
+const router = [
   {
     path: "/agungdalem",
     name: "AgungDalem",
@@ -93,7 +95,15 @@ const routes = [
       onlyAdmin: true,
     },
   },
-
+  {
+    path: "/admin/janji-temu",
+    name: "AdminJanjiTemu",
+    component: AdminJanjiTemu,
+    meta: {
+      preventToken: true,
+      onlyAdmin: true,
+    },
+  },
   {
     path: "/test/qr",
     name: "QrCodePage",
@@ -132,6 +142,22 @@ const routes = [
     path: "/user/checkout",
     name: "checkout",
     component: CheckoutPage,
+    meta: {
+      preventToken: true,
+    },
+  },
+  {
+    path: "/user/checkout/janji-temu",
+    name: "checkoutjanji",
+    component: CheckoutJanjiPage,
+    meta: {
+      preventToken: true,
+    },
+  },
+  {
+    path: "/user/information/janji-temu",
+    name: "informasijanji",
+    component: JanjiTemuPage,
     meta: {
       preventToken: true,
     },
@@ -183,6 +209,7 @@ const routes = [
     path: "/:catchAll(.*)*",
     component: () => import("pages/PageNotFound.vue"),
   },
+
 ];
 
-export default routes;
+export default router;
