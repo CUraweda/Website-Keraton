@@ -10,6 +10,9 @@ export default class Carts {
         try {
             const cartData = localStorage.getItem(env.CART_STORAGE_NAME)
             this.userCart = cartData ? JSON.parse(cartData) : {}
+
+            const tempCartData = sessionStorage.getItem(env.CART_STORAGE_NAME)
+            this.tempUserCart = tempCartData ? JSON.parse(tempCartData) : {}
         } catch (err) {
             console.log(err)
         }
@@ -19,15 +22,22 @@ export default class Carts {
         return this.userCart
     }
 
+    getTempItem(){
+        return this.tempUserCart
+    }
+
     updateItem() {
         localStorage.setItem(env.CART_STORAGE_NAME, JSON.stringify(this.userCart))
-        console.log(this.userCart)
+        return this
+    }
+
+    updateTempItem(){
+        sessionStorage.setItem(env.CART_STORAGE_NAME, JSON.stringify(this.tempUserCart))
         return this
     }
 
     async updateToDB() {
         const token = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME)
-        console.log(this.userCart)
         if (!token) throw Error('Token didnt exist, please Log In')
         const response = await fetch(env.BASE_URL + "/keraton/cart/update", {
             method: "POST",
@@ -48,6 +58,13 @@ export default class Carts {
         for(let data of listOfData) this.userCart[`${data.type}|${data.id}`] = { ...data }
         return this.updateItem()
     }
+
+    setTempNew(listOfData = [{ id, name, image, price, minimumUnit, categoryId, quantity, event }]) {
+        if (listOfData.length < 1) return this
+        for(let data of listOfData) this.tempUserCart[`${data.type}|${data.id}`] = { ...data }
+        return this.updateTempItem()
+    }
+
     
     setNewData(listOfData){
         if (listOfData.length < 1) return this
@@ -66,6 +83,15 @@ export default class Carts {
         return this
     }
 
+    addManyTempItem(listOfData = [{ id, name, image, price, minimumUnit, quantity, event }]) {
+        for (let data of listOfData) {
+            const alreadyExist = this.tempUserCart[`${data.type}|${data.id}`]
+            if (alreadyExist) data.quantity = alreadyExist['quantity'] + data.quantity
+            this.tempUserCart[`${data.type}|${data.id}`] = { ...data }
+        }
+        return this
+    }
+
     changeQuantity(itemId, qty) {
         const cartItem = this.userCart[itemId]
         if (!cartItem) throw Error('Item didnt exist')
@@ -78,6 +104,11 @@ export default class Carts {
 
     clearCart(){
         this.userCart = {}
+        return this
+    }
+
+    clearTempCart(){
+        this.tempUserCart = {}
         return this
     }
 
