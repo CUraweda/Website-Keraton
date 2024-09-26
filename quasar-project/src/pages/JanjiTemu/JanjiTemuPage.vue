@@ -288,7 +288,7 @@ export default {
       timeAvailible: ref([]),
       selectTime: ref(""),
       in_used: ref(false),
-      availabilityId: ref()
+      availabilityId: ref(),
     };
   },
   mounted() {
@@ -333,7 +333,7 @@ export default {
     selectTime(newDate) {
       this.dates = newDate.value.split("T")[0];
       this.dateTime = newDate.value.split("T")[1].substring(0, 5);
-      this.availabilityId = newDate.availabilityId
+      this.availabilityId = newDate.availabilityId;
     },
   },
   methods: {
@@ -341,7 +341,7 @@ export default {
       try {
         const [year, month] = this.dates.split("-"); // Mengambil tahun dan bulan dari dates
         const response = await this.$api.get(
-          `/availability-time?month=${month}&year=${year}`
+          `/availability-time?month=${month}&year=${year}&only_active=0`
         );
 
         console.log(response.data.data);
@@ -353,6 +353,7 @@ export default {
             item.datetime.split("T")[1].split(".")[0],
           value: item.datetime,
           id: item.id,
+          availabilityId: item.id,
         }));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -368,7 +369,7 @@ export default {
         booker_email: this.email,
         datetime: this.selectTime?.value,
         booker_phone: this.telp,
-        availibility_id: this.availibility_id,
+        availability_id: this.availabilityId,
       };
       this.data = user;
       console.log(user);
