@@ -328,8 +328,7 @@ export default {
           price: rowData.price,
           type: "T",
         };
-        console.log(rowData.titleBig);
-        if (rowData.titleBig === "Tiket Janji Temu") {
+        if (rowData.is_janji === true) {
           const combinedData = {
             storedData: storedData,
             PaketAutomated: this.PaketAutomated,
