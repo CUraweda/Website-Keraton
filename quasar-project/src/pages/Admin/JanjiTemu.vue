@@ -2,8 +2,8 @@
   <div>
     <navbar :isAdmin="true" />
     <div class="q-mx-md q-mt-md">
-      <div class="text-h6 text-semibold">Edit Konten Dashboard</div>
-      <div>Ubah dan atur konten di halaman beranda web</div>
+      <div class="text-h6 text-semibold">Edit Jadwal Janji Temu</div>
+      <div>Ubah dan atur Jadwal Janji Temu di halaman ini</div>
       <div>
         <!-- <q-btn
           color="positive"
@@ -23,12 +23,62 @@
               <q-btn
                 color="positive"
                 :label="'Edit '"
-                :href="'/admin/add/' + scope.row.id"
-                @click="scope.selected = scope.row.id"
+                @click="openEditDialog(scope.row)"
               />
             </div>
           </template>
         </q-table>
+        <q-dialog v-model="editDialog">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">
+                Edit Kesediaan tanggal {{ dateInputLabel.split(" ")[0] }}
+              </div>
+            </q-card-section>
+
+            <q-card-section>
+              <q-toggle
+                v-model="dateInputChecked"
+                checked-icon="check"
+                color="red"
+                :label="dateInputChecked ? 'Active' : 'Disable'"
+                unchecked-icon="clear"
+              />
+              <q-input
+                outlined
+                dense
+                v-model="dateInputLabel"
+                label="Tanggal Pesanan"
+                class="q-mt-xs"
+                style="width: 100%"
+              >
+                <template v-slot:append>
+                  <q-icon name="event" color="orange" class="cursor-pointer">
+                    <q-popup-proxy
+                      style="display: flex; gap: 0.5rem; width: fit-content"
+                    >
+                      <q-date
+                        v-model="dateInput"
+                        style="width: 200px; padding: 0.5rem"
+                        mask="YYYY-MM-DD HH:mm"
+                      />
+                      <q-time
+                        v-model="dateInput"
+                        mask="YYYY-MM-DD HH:mm"
+                        style="width: 200px; padding: 0.5rem"
+                      />
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="Cancel" color="primary" v-close-popup />
+              <q-btn flat label="Save" color="primary" @click="saveChanges" />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
       </div>
     </div>
   </div>
@@ -47,22 +97,16 @@ const columns = [
     field: "nomor",
   },
   {
-    name: "Section",
+    name: "in_use",
     align: "center",
-    label: "Section ",
-    field: "sectionName",
+    label: "Terpakai",
+    field: "in_use",
   },
   {
-    name: "Page",
+    name: "Tanggal",
     align: "center",
-    label: "Page",
-    field: "pageName",
-  },
-  {
-    name: "Updated At",
-    align: "center",
-    label: "Updated At",
-    field: "updatedAt",
+    label: "Tanggal",
+    field: "datetime",
   },
   {
     name: "Action",
@@ -83,23 +127,61 @@ export default {
   data() {
     return {
       isAdmin: null,
+      selectedRow: ref(null),
+      editDialog: ref(false),
+      dateInputLabel: ref(),
+      dateInput: ref(),
+      dateInputChecked: ref(false),
     };
   },
   async mounted() {
     this.fetchData();
     this.isAdmin = (await verifyToken()).isAdmin;
   },
+  watch: {
+    dateInput(newVal) {
+      this.dateInputLabel = newVal;
+    },
+  },
   methods: {
+    openEditDialog(row) {
+      this.selectedRow = { ...row }; // Clone row to avoid mutating the original data
+      console.log(row);
+      this.dateInput =
+        row.time.split("T")[0] + " " + row.time.split("T")[1].substring(0, 5);
+      this.dateInputLabel = row.time; // Update label dengan nilai yang dipilih
+      this.editDialog = true;
+      this.dateInputChecked = row.disabled;
+    },
+    saveChanges() {
+      // Apply changes to the rows data
+      const rowIndex = this.rows.findIndex(
+        (row) => row.id === this.selectedRow.id
+      );
+      if (rowIndex !== -1) {
+        this.rows[rowIndex] = { ...this.selectedRow };
+      }
+      this.editDialog = false;
+      console.log(rowIndex, this.selectedRow);
+    },
     async fetchData() {
       try {
-        const response = await this.$api.get("/content");
+        const response = await this.$api.get("/availability-time");
         if (response.status != 200) throw Error("Error Occured");
         this.rows = response.data.data.map((content, i) => ({
-          id: content.id,
+          // id: content.id,
+          // nomor: i + 1,
+          // sectionName: content.sectionName,
+          // pageName: content.page.name,
+          // updatedAt: this.convertISOToReadableDate(content.updatedAt),
+          ...content,
           nomor: i + 1,
-          sectionName: content.sectionName,
-          pageName: content.page.name,
-          updatedAt: this.convertISOToReadableDate(content.updatedAt),
+          datetime:
+            "Tanggal " +
+            content.datetime.split("T")[0] +
+            " Pukul " +
+            content.datetime.split("T")[1].split(".")[0],
+          time: content.datetime,
         }));
       } catch (err) {
         console.log(err);
