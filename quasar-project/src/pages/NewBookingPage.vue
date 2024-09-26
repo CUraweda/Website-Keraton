@@ -142,10 +142,9 @@ export default {
     return {
       tiketItems: ref(),
       paketItems: ref(),
-      tiketJanjiItems: ref()
-      janjiDefaultItems: ref()
+      janjiDefaultItems: ref(),
       paketNameItems: ref(),
-      PaketAutomated: ref([]),
+      // PaketAutomated: ref([]),
       defaultImageUrl: "src/assets/images/placeholder_image.jpg",
       cart: new Carts(),
       currentCartLength: 0,
@@ -188,6 +187,7 @@ export default {
         let tikets = [], pakets = {}, defaultJanji = []
 
         for (let subType of response.data.data) {
+          let subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : 0}`;
           if (subType.orders.length < 1) continue;
           switch (subType.orderTypeId) {
             case 1: //Tiket Type
@@ -202,18 +202,26 @@ export default {
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
+                  is_janji: order.is_janji
                 }
-                if(order.needed_for_janji) 
-                tikets.push({
-                });
+                tikets.push(payloadData)
+                if (order.needed_for_janji) defaultJanji.push({
+                  id: order.id,
+                  name: order.name,
+                  image: order.image,
+                  quantity: 1,
+                  categoryId: order.categoryId,
+                  minimumUnit: subType.minimumUnit,
+                  price: order.price,
+                  type: "T",
+                })
               }
               break;
-            case 2: //Paket Type
-              const subTypeName = `${subType.name}|${subType.minimumUnits ? subType.minimumUnits : undefined}`;
+            case 2, 4:
               if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
-                pakets[subTypeName].push({
+                const payloadData = {
                   id: order.id,
                   image: order.image,
                   titleMedium: order.desc,
@@ -223,16 +231,26 @@ export default {
                   quantity: 0,
                   price: order.price,
                   unit: order.units,
-                });
+                  is_janji: order.is_janji
+                }
+                pakets[subTypeName].push(payloadData)
+                if (order.needed_for_janji) defaultJanji.push({
+                  id: order.id,
+                  name: order.name,
+                  image: order.image,
+                  quantity: 1,
+                  categoryId: order.categoryId,
+                  minimumUnit: subType.minimumUnit,
+                  price: order.price,
+                  type: "T",
+                })
               }
-              break;
-            case 4: //Janji Temu
-              const subTypeNam = 
               break;
           }
         }
         this.tiketItems = tikets;
         this.paketItems = Object.values(pakets);
+        this.janjiDefaultItems = defaultJanji
         this.paketNameItems = Object.keys(pakets).map((paket) => {
           const [name, minimumUnit] = paket.split("|");
           return { name, minimumUnit };
@@ -241,10 +259,6 @@ export default {
           const cart = Object.values(this.cart.getItem());
           this.currentCartLength = cart.length;
         }
-        this.PaketAutomated = this.tiketItems
-          .flat()
-          .find((i) => i.titleBig === "Tiket Masuk Keraton Umum");
-        this.PaketAutomated.quantity = 1;
       } catch (err) {
         console.log(err);
       }
@@ -278,26 +292,15 @@ export default {
           price: rowData.price,
           type: "T",
         };
-        if (rowData.titleBig === "Tiket Janji Temu") {
-          const combinedData = {
-            storedData: storedData,
-            PaketAutomated: this.PaketAutomated,
-          };
 
-          // Simpan gabungan data ke sessionStorage
-          sessionStorage.setItem(
-            "Temp_Cart_Temu",
-            JSON.stringify(combinedData)
-          );
-          if (sessionStorage.getItem("Temp_Cart_Temu")) {
-            this.$router.push("/user/information/janji-temu");
-          }
-        }
-        const cartData = this.cart.addManyItem([storedData]).getItem();
+        const useTempCart = rowData.is_janji
+        const cartData = !useTempCart ? this.cart.addManyItem([storedData]).getItem() : this.cart.setTempNew([storedData, ...this.janjiDefaultItems], )
         if (!cartData) throw Error("Error Occured");
-        this.currentCartLength = Object.values(cartData).length;
+        if (!useTempCart) {
+          this.currentCartLength = Object.values(cartData).length
+        } else this.$router.push("/user/information/janji-temu");
         this.showNotif(`${storedData.name} Dimasukan ke keranjang`, "success");
-        return this.cart.updateItem();
+        return !useTempCart ? this.cart.updateItem() : this.cart.updateTempItem()
       } catch (err) {
         this.showNotif(err.message, "error");
         console.log(err);
