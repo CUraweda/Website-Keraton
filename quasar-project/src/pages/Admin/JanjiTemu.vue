@@ -5,6 +5,12 @@
       <div class="text-h6 text-semibold">Edit Jadwal Janji Temu</div>
       <div>Ubah dan atur Jadwal Janji Temu di halaman ini</div>
       <div>
+        <q-btn
+          color="positive"
+          :label="'Buat Jadwal'"
+          no-caps
+          @click="openDialog()"
+        />
         <!-- <q-btn
           color="positive"
           label="News"
@@ -19,11 +25,18 @@
         /> -->
         <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-md">
           <template v-slot:body-cell-Action="scope">
-            <div class="flex items-center justify-center">
+            <div class="flex q-pa-sm q-gutter-sm items-center justify-center">
               <q-btn
                 color="positive"
-                :label="'Edit '"
+                :label="'Edit'"
+                no-caps
                 @click="openEditDialog(scope.row)"
+              />
+              <q-btn
+                color="positive"
+                no-caps
+                :label="'Delete'"
+                @click="deleteData(scope.row.id)"
               />
             </div>
           </template>
@@ -60,11 +73,11 @@
                       <q-date
                         v-model="dateInput"
                         style="width: 200px; padding: 0.5rem"
-                        mask="YYYY-MM-DD HH:mm"
+                        mask="YYYY-MM-DD"
                       />
                       <q-time
-                        v-model="dateInput"
-                        mask="YYYY-MM-DD HH:mm"
+                        v-model="dateInputtime"
+                        mask="HH:mm"
                         style="width: 200px; padding: 0.5rem"
                       />
                     </q-popup-proxy>
@@ -74,8 +87,20 @@
             </q-card-section>
 
             <q-card-actions align="right">
-              <q-btn flat label="Cancel" color="primary" v-close-popup />
-              <q-btn flat label="Save" color="primary" @click="saveChanges" />
+              <q-btn
+                flat
+                label="Cancel"
+                color="primary"
+                no-caps
+                v-close-popup
+              />
+              <q-btn
+                flat
+                label="Save"
+                color="primary"
+                no-caps
+                @click="saveChanges"
+              />
             </q-card-actions>
           </q-card>
         </q-dialog>
@@ -87,6 +112,7 @@
 <script>
 import { verifyToken } from "src/auth/auth";
 import navbar from "../../components/NavbarNew.vue";
+import Swal from "sweetalert2";
 import { ref } from "vue";
 
 const columns = [
@@ -131,7 +157,9 @@ export default {
       editDialog: ref(false),
       dateInputLabel: ref(),
       dateInput: ref(),
+      dateInputtime: ref(),
       dateInputChecked: ref(false),
+      idJadwal: ref(),
     };
   },
   async mounted() {
@@ -142,27 +170,74 @@ export default {
     dateInput(newVal) {
       this.dateInputLabel = newVal;
     },
+    dateInputtime(newVal) {
+      this.dateInputLabel = this.dateInput + " " + newVal;
+    },
   },
   methods: {
+    openDialog() {
+      this.editDialog = true;
+      this.dateInput = "";
+      this.dateInputLabel = "";
+      this.dateInputChecked = false;
+    },
     openEditDialog(row) {
       this.selectedRow = { ...row }; // Clone row to avoid mutating the original data
       console.log(row);
-      this.dateInput =
-        row.time.split("T")[0] + " " + row.time.split("T")[1].substring(0, 5);
+      this.dateInput = row.time.split("T")[0];
+      this.dateInputtime = row.time.split("T")[1].substring(0, 5);
       this.dateInputLabel = row.time; // Update label dengan nilai yang dipilih
       this.editDialog = true;
+      this.idJadwal = row.id;
       this.dateInputChecked = row.disabled;
     },
     saveChanges() {
-      // Apply changes to the rows data
-      const rowIndex = this.rows.findIndex(
-        (row) => row.id === this.selectedRow.id
-      );
-      if (rowIndex !== -1) {
-        this.rows[rowIndex] = { ...this.selectedRow };
+      console.log("Changes saved:", {
+        dateInputLabel: this.dateInputLabel.value,
+        dateInput: this.dateInput.value,
+        dateInputChecked: this.dateInputChecked.value,
+      });
+      if (!this.idJadwal) {
+        this.createData();
+      } else {
+        this.updateData(this.idJadwal);
       }
       this.editDialog = false;
-      console.log(rowIndex, this.selectedRow);
+    },
+    async createData() {
+      try {
+        // const formattedDate = this.dateInput.replace(" ", "T") + ":00.000Z";
+        const formattedDate = this.dateInput + " " + this.dateInputtime;
+
+        const response = await this.$api.post("/availability-time", {
+          datetime: formattedDate.replace(" ", "T") + ":00.000Z",
+          // dateInputChecked: this.dateInputChecked,
+        });
+        if (response.status != 200) throw Error("error");
+        this.fetchData();
+        this.showNotif(response.data.message, "success");
+        this.editDialog = false;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+    async updateData(id) {
+      try {
+        // const formattedDate = this.dateInput.replace(" ", "T") + ":00.000Z";
+        const formattedDate = this.dateInput + " " + this.dateInputtime;
+
+        const response = await this.$api.put(`/availability-time/${id}`, {
+          datetime: formattedDate.replace(" ", "T") + ":00.000Z",
+          // dateInputChecked: this.dateInputChecked,
+        });
+        if (response.status != 200) throw Error("error");
+        this.fetchData();
+        this.showNotif(response.data.message, "success");
+        this.editDialog = false;
+        this.idJadwal = null;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     },
     async fetchData() {
       try {
@@ -185,6 +260,35 @@ export default {
         }));
       } catch (err) {
         console.log(err);
+      }
+    },
+    async deleteData(id) {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      // Check if the user clicked the "Yes" button
+      if (result.isConfirmed) {
+        try {
+          const response = await this.$api.delete(`/availability-time/${id}`);
+          if (response.status !== 200) throw new Error(response.data.message);
+          this.fetchData();
+          this.showNotif(response.data.message, "success");
+        } catch (err) {
+          this.showNotif(
+            err.response ? err.response.data.message : err.message,
+            "error"
+          );
+          console.log(err);
+        }
+      } else {
+        this.showNotif("Deletion canceled", "info"); // Optional: Notify that deletion was canceled
       }
     },
     async verifyAdmin() {
