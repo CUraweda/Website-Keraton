@@ -123,16 +123,34 @@ const columns = [
     field: "nomor",
   },
   {
-    name: "in_use",
-    align: "center",
-    label: "Terpakai",
-    field: "in_use",
-  },
-  {
     name: "Tanggal",
     align: "center",
     label: "Tanggal",
     field: "datetime",
+  },
+  {
+    name: "name",
+    align: "center",
+    label: "Nama",
+    field: "booker_name",
+  },
+  {
+    name: "email",
+    align: "center",
+    label: "Email",
+    field: "booker_email",
+  },
+  {
+    name: "phone",
+    align: "center",
+    label: "No Hp",
+    field: "booker_phone",
+  },
+  {
+    name: "in_use",
+    align: "center",
+    label: "Terpakai",
+    field: "in_use",
   },
   {
     name: "Action",
@@ -243,25 +261,35 @@ export default {
       try {
         const response = await this.$api.get("/availability-time");
         if (response.status != 200) throw Error("Error Occured");
-        this.rows = response.data.data.map((content, i) => ({
-          // id: content.id,
-          // nomor: i + 1,
-          // sectionName: content.sectionName,
-          // pageName: content.page.name,
-          // updatedAt: this.convertISOToReadableDate(content.updatedAt),
-          ...content,
-          nomor: i + 1,
-          datetime:
-            "Tanggal " +
-            content.datetime.split("T")[0] +
-            " Pukul " +
-            content.datetime.split("T")[1].split(".")[0],
-          time: content.datetime,
-        }));
+        this.rows = response.data.data.map((content, i) => {
+          const bookerNames = content.BookTimetable.map(
+            (item) => item.booker_name
+          ).join(", ");
+          const bookerEmails = content.BookTimetable.map(
+            (item) => item.booker_email
+          ).join(", ");
+          const bookerPhones = content.BookTimetable.map(
+            (item) => item.booker_phone
+          ).join(", ");
+          return {
+            nomor: i + 1,
+            datetime:
+              "Tanggal " +
+              content.datetime.split("T")[0] +
+              " Pukul " +
+              content.datetime.split("T")[1].split(".")[0],
+            time: content.datetime,
+            booker_name: bookerNames || "-",
+            booker_email: bookerEmails || "-",
+            booker_phone: bookerPhones || "-",
+            in_use: content.in_use,
+          };
+        });
       } catch (err) {
         console.log(err);
       }
     },
+
     async deleteData(id) {
       const result = await Swal.fire({
         title: "Are you sure?",
