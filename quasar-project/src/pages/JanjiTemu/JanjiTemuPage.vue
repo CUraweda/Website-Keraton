@@ -368,7 +368,7 @@ export default {
         booker_email: this.email,
         datetime: this.selectTime?.value,
         booker_phone: this.telp,
-        availibility_id: this.availabilityId,
+        availabilityId: this.availabilityId,
       };
       this.data = user;
       console.log(user);
