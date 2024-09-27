@@ -25,37 +25,37 @@
                 <div>
                   <div class="text-h6 q-mt-xs">{{ cart.name }}</div>
                   <div class="col-grow q-mx-md">
-                      <q-select
-                        color="orange"
-                        class="col-grow"
-                        label-color="black"
-                        use-input
-                        input-debounce="0"
-                        v-if="cart.categoryId === 3"
-                        v-model="cart.nationalityId"
-                        @filter="filterCountry"
-                        :options="filteredCountryList"
-                        label="Negara Asal"
-                        behavior="menu"
-                      >
-                        <template v-slot:no-option>
-                          <q-item>
-                            <q-item-section class="text-grey">
-                              No results
-                            </q-item-section>
-                          </q-item>
-                        </template>
-                      </q-select>
-                      <q-select
-                        class="col-grow"
-                        label-color="black"
-                        v-if="cart.categoryId === 1"
-                        v-model="cart.cityName"
-                        @filter="filterCity"
-                        :options="filteredCityList"
-                        label="Kota Asal"
-                      />
-                    </div>
+                    <q-select
+                      color="orange"
+                      class="col-grow"
+                      label-color="black"
+                      use-input
+                      input-debounce="0"
+                      v-if="cart.categoryId === 3"
+                      v-model="cart.nationalityId"
+                      @filter="filterCountry"
+                      :options="filteredCountryList"
+                      label="Negara Asal"
+                      behavior="menu"
+                    >
+                      <template v-slot:no-option>
+                        <q-item>
+                          <q-item-section class="text-grey">
+                            No results
+                          </q-item-section>
+                        </q-item>
+                      </template>
+                    </q-select>
+                    <q-select
+                      class="col-grow"
+                      label-color="black"
+                      v-if="cart.categoryId === 1"
+                      v-model="cart.cityName"
+                      @filter="filterCity"
+                      :options="filteredCityList"
+                      label="Kota Asal"
+                    />
+                  </div>
                 </div>
               </div>
             </q-card-section>
@@ -381,48 +381,48 @@ export default {
     this.dateInput = this.TemuItem.datetime;
   },
   // computed: {
-    // // Menggabungkan cartStore dan PaketAutomated
-    // allItems() {
-    //   let allItems = [...this.cartStore]; // Salin cartStore
+  // // Menggabungkan cartStore dan PaketAutomated
+  // allItems() {
+  //   let allItems = [...this.cartStore]; // Salin cartStore
 
-    //   // Jika PaketAutomated adalah array dan memiliki item
-    //   if (
-    //     Array.isArray(this.PaketAutomated) &&
-    //     this.PaketAutomated.length > 0
-    //   ) {
-    //     // Ambil item dari PaketAutomated
-    //     const paketItem = this.PaketAutomated[0]; // Ambil item pertama dari array
-    //     // Tambahkan quantity dan price dari PaketAutomated ke allItems
-    //     allItems.push({
-    //       name: paketItem.titleBig, // Atau ambil dari titleMedium
-    //       price: paketItem.price,
-    //       quantity: paketItem.quantity,
-    //       // Tambahkan properti lain jika diperlukan
-    //     });
-    //   }
+  //   // Jika PaketAutomated adalah array dan memiliki item
+  //   if (
+  //     Array.isArray(this.PaketAutomated) &&
+  //     this.PaketAutomated.length > 0
+  //   ) {
+  //     // Ambil item dari PaketAutomated
+  //     const paketItem = this.PaketAutomated[0]; // Ambil item pertama dari array
+  //     // Tambahkan quantity dan price dari PaketAutomated ke allItems
+  //     allItems.push({
+  //       name: paketItem.titleBig, // Atau ambil dari titleMedium
+  //       price: paketItem.price,
+  //       quantity: paketItem.quantity,
+  //       // Tambahkan properti lain jika diperlukan
+  //     });
+  //   }
 
-    //   return allItems;
-    // },
-    // Menghitung total quantity
-    // ticketTotal() {
-    //   return this.allItems.reduce((total, item) => total + item.quantity, 0);
-    // },
-    // // Menghitung total checkout
-    // checkoutTotal() {
-    //   return this.allItems.reduce(
-    //     (total, item) => total + item.quantity * item.price,
-    //     0
-    //   );
-    // },
-    // Menghitung total tagihan (checkoutTotal + pajak/biaya transaksi)
-    // totalTagihan() {
-    //   let total = this.checkoutTotal;
-    //   // Tambahkan biaya pajak jika ada
-    //   for (let tax of this.taxes) {
-    //     total += this.formatTax(tax);
-    //   }
-    //   return total;
-    // },
+  //   return allItems;
+  // },
+  // Menghitung total quantity
+  // ticketTotal() {
+  //   return this.allItems.reduce((total, item) => total + item.quantity, 0);
+  // },
+  // // Menghitung total checkout
+  // checkoutTotal() {
+  //   return this.allItems.reduce(
+  //     (total, item) => total + item.quantity * item.price,
+  //     0
+  //   );
+  // },
+  // Menghitung total tagihan (checkoutTotal + pajak/biaya transaksi)
+  // totalTagihan() {
+  //   let total = this.checkoutTotal;
+  //   // Tambahkan biaya pajak jika ada
+  //   for (let tax of this.taxes) {
+  //     total += this.formatTax(tax);
+  //   }
+  //   return total;
+  // },
   // },
 
   watch: {
@@ -472,9 +472,8 @@ export default {
             (data) => data.paidBy === "user"
           );
 
-
         this.carts = rawCart.map((cart) => {
-          console.log(cart.price)
+          console.log(cart.price);
           this.ticketTotal += cart.quantity;
           this.checkoutTotal += cart.price * cart.quantity;
           return cart;
