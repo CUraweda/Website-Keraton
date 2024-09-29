@@ -80,7 +80,25 @@
                         Mask: YYYY-MM-DD HH:mm
                       </q-badge> -->
                     </div>
-
+                    <div>
+                      <q-select
+                        v-model="selectedMonth"
+                        :options="months"
+                        label="Pilih Bulan"
+                        style="width: 200px; padding: 0.5rem"
+                      />
+                      <q-select
+                        v-model="selectedYear"
+                        :options="years"
+                        label="Pilih Tahun"
+                        style="width: 200px; padding: 0.5rem"
+                      />
+                      <!-- <q-btn
+                        label="Fetch Data"
+                        @click="fetchData()"
+                        color="primary"
+                      /> -->
+                    </div>
                     <q-select
                       outlined
                       v-model="selectTime"
@@ -245,7 +263,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import navbar from "../../components/NavbarNew.vue";
 
 export default {
@@ -286,9 +304,30 @@ export default {
       telp: ref(""),
       data: ref([]),
       timeAvailible: ref([]),
-      selectTime: ref(""),
+      selectTime: ref("Pilih Jadwal"),
       in_used: ref(false),
       availabilityId: ref(),
+      setDateSelect: ref(""),
+      selectedMonth: ref(null),
+      selectedYear: ref(null),
+      months: [
+        { label: "Januari", value: 1 },
+        { label: "Februari", value: 2 },
+        { label: "Maret", value: 3 },
+        { label: "April", value: 4 },
+        { label: "Mei", value: 5 },
+        { label: "Juni", value: 6 },
+        { label: "Juli", value: 7 },
+        { label: "Agustus", value: 8 },
+        { label: "September", value: 9 },
+        { label: "Oktober", value: 10 },
+        { label: "November", value: 11 },
+        { label: "Desember", value: 12 },
+      ],
+      years: Array.from({ length: 10 }, (_, i) => {
+        const year = new Date().getFullYear() - i;
+        return { label: year.toString(), value: year.toString() };
+      }),
     };
   },
   mounted() {
@@ -304,6 +343,16 @@ export default {
     }
   },
   watch: {
+    selectedMonth(newMonth) {
+      if (newMonth && this.selectedYear) {
+        this.fetchData();
+      }
+    },
+    selectedYear(newYear) {
+      if (newYear && this.selectedMonth) {
+        this.fetchData();
+      }
+    },
     name(newName) {
       // Update nama di sessionStorage saat berubah
       const user = localStorage.getItem("user")
@@ -311,7 +360,6 @@ export default {
         : {}; // Cek apakah user sudah ada atau tidak
       user.booker_name = newName;
       localStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
-      console.log(user.booker_name);
     },
     email(newEmail) {
       // Update email di sessionStorage saat berubah
@@ -320,16 +368,7 @@ export default {
         : {}; // Cek apakah user sudah ada atau tidak
       user.booker_email = newEmail;
       localStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
-      console.log(`Email: ${user.booker_email}`);
     },
-    // dateRange(newDate) {
-    //   const user = sessionStorage.getItem("user")
-    //     ? JSON.parse(sessionStorage.getItem("user"))
-    //     : {};
-    //   user.date = newDate;
-    //   sessionStorage.setItem("user", JSON.stringify(user)); // Simpan objek user yang diperbarui
-    //   console.log(`date: ${user.date}`);
-    // },
     selectTime(newDate) {
       this.dates = newDate.value.split("T")[0];
       this.dateTime = newDate.value.split("T")[1].substring(0, 5);
@@ -341,7 +380,7 @@ export default {
       try {
         const [year, month] = this.dates.split("-"); // Mengambil tahun dan bulan dari dates
         const response = await this.$api.get(
-          `/availability-time?month=${month}&year=${year}`
+          `/availability-time?month=${this.selectedMonth.value}&year=${this.selectedYear.value}&only_active=0`
         );
 
         console.log(response.data.data);

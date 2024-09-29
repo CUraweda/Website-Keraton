@@ -137,7 +137,7 @@
           </div>
 
           <div>
-            <q-btn flat no-caps href="/admin/JanjiTemu" label="Janji Temu" />
+            <q-btn flat no-caps href="/admin/janji-temu" label="Janji Temu" />
           </div>
 
           <div>

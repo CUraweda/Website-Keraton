@@ -11,6 +11,13 @@
           no-caps
           @click="openDialog()"
         />
+        <q-btn
+          color="positive"
+          :label="'Atur Paket'"
+          no-caps
+          class="q-ma-md"
+          @click="openListbook()"
+        />
         <!-- <q-btn
           color="positive"
           label="News"
@@ -36,7 +43,7 @@
                 color="positive"
                 no-caps
                 :label="'Delete'"
-                @click="deleteData(scope.row.id)"
+                @click="deleteData(scope.row)"
               />
             </div>
           </template>
@@ -102,6 +109,53 @@
                 @click="saveChanges"
               />
             </q-card-actions>
+          </q-card>
+        </q-dialog>
+        <q-dialog v-model="listBook">
+          <q-card class="q-pa-md">
+            <q-list>
+              <q-item-label header>
+                <div v-for="item in dataListBook" :key="item.id">
+                  <h6>{{ item.name }}</h6>
+
+                  <q-list separator>
+                    <q-item v-for="order in item.orders" :key="order.id">
+                      <q-item-section avatar>
+                        <q-img :src="order.image" :alt="order.name" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>
+                          <q-btn flat icon="edit" @click="toggleEdit(order)" />
+                          {{ order.name }}
+                        </q-item-label>
+                        <q-item-label caption>{{ order.desc }}</q-item-label>
+                        <q-item-label caption
+                          >Price: {{ order.price }}</q-item-label
+                        >
+
+                        <!-- Tombol Edit -->
+
+                        <!-- Tampilkan q-toggle saat sedang edit -->
+                        <div v-if="order.isEditing">
+                          <q-toggle
+                            v-model="order.is_janji"
+                            label="Is Janji"
+                            color="primary"
+                            @update:model-value="updateOrder(order)"
+                          />
+                          <q-toggle
+                            v-model="order.needed_for_janji"
+                            label="Needed for Janji"
+                            color="primary"
+                            @update:model-value="updateOrder(order)"
+                          />
+                        </div>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </div>
+              </q-item-label>
+            </q-list>
           </q-card>
         </q-dialog>
       </div>
@@ -178,6 +232,8 @@ export default {
       dateInputtime: ref(),
       dateInputChecked: ref(false),
       idJadwal: ref(),
+      dataListBook: ref([]),
+      listBook: ref(false),
     };
   },
   async mounted() {
@@ -198,6 +254,11 @@ export default {
       this.dateInput = "";
       this.dateInputLabel = "";
       this.dateInputChecked = false;
+    },
+    openListbook() {
+      this.fetchlistBook().then(() => {
+        this.listBook = true;
+      });
     },
     openEditDialog(row) {
       this.selectedRow = { ...row }; // Clone row to avoid mutating the original data
@@ -233,7 +294,7 @@ export default {
         });
         if (response.status != 200) throw Error("error");
         this.fetchData();
-        this.showNotif(response.data.message, "success");
+        Swal.fire("Success", response.data.message, "success");
         this.editDialog = false;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -261,28 +322,28 @@ export default {
       try {
         const response = await this.$api.get("/availability-time");
         if (response.status != 200) throw Error("Error Occured");
+        console.log(response.data); // Check the fetched data
+
         this.rows = response.data.data.map((content, i) => {
-          const bookerNames = content.BookTimetable.map(
-            (item) => item.booker_name
-          ).join(", ");
-          const bookerEmails = content.BookTimetable.map(
-            (item) => item.booker_email
-          ).join(", ");
-          const bookerPhones = content.BookTimetable.map(
-            (item) => item.booker_phone
-          ).join(", ");
           return {
             nomor: i + 1,
+            id: content.id,
             datetime:
               "Tanggal " +
               content.datetime.split("T")[0] +
               " Pukul " +
               content.datetime.split("T")[1].split(".")[0],
             time: content.datetime,
-            booker_name: bookerNames || "-",
-            booker_email: bookerEmails || "-",
-            booker_phone: bookerPhones || "-",
-            in_use: content.in_use,
+            booker_name: content.BookTimetable.map(
+              (item) => item.booker_name
+            ) || ["-"],
+            booker_email: content.BookTimetable.map(
+              (item) => item.booker_email
+            ) || ["-"],
+            booker_phone: content.BookTimetable.map(
+              (item) => item.booker_phone
+            ) || ["-"],
+            in_use: content.in_use ? "Ya" : "Tidak",
           };
         });
       } catch (err) {
@@ -290,7 +351,54 @@ export default {
       }
     },
 
-    async deleteData(id) {
+    async fetchlistBook() {
+      try {
+        const response = await this.$api.get(`/items/booking`);
+        this.dataListBook = response.data.data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          minimumUnits: item.minimumUnits,
+          orderTypeId: item.orderTypeId,
+          orders: item.orders.map((order) => ({
+            id: order.id,
+            name: order.name,
+            desc: order.desc,
+            price: order.price,
+            units: order.units,
+            image: order.image,
+            is_janji: order.is_janji,
+            needed_for_janji: order.needed_for_janji,
+            isEditing: false, // properti baru untuk melacak mode edit
+          })),
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async updateOrder(order) {
+      try {
+        const payload = {
+          id: order.id,
+          is_janji: order.is_janji,
+          needed_for_janji: order.needed_for_janji,
+        };
+        await this.$api.post(`/items/update`, payload);
+        order.isEditing = !order.isEditing;
+
+        this.listBook = false;
+        Swal.fire("Success!", "updated successfully!", "success");
+      } catch (error) {
+        this.listBook = false;
+        Swal.fire("Error", "Failed to update", "error");
+        console.error(error);
+      }
+    },
+    toggleEdit(order) {
+      // Menyalakan/mematikan mode edit
+      order.isEditing = !order.isEditing;
+    },
+    async deleteData(data) {
+      const id = data.id;
       const result = await Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -304,6 +412,7 @@ export default {
       // Check if the user clicked the "Yes" button
       if (result.isConfirmed) {
         try {
+          console.log(data);
           const response = await this.$api.delete(`/availability-time/${id}`);
           if (response.status !== 200) throw new Error(response.data.message);
           this.fetchData();
