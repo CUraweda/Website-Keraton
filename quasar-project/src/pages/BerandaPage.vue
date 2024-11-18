@@ -161,66 +161,54 @@
     <section style="padding: 2rem 0" class="background-news">
       <div style="font-size: 1.75rem; text-align: center">Berita Terkini</div>
 
-      <q-carousel
-        arrows
-        swipeable
-        animated
-        infinite
-        height="40rem"
-        transition-duration="2000"
-        :autoplay="slideAutoplay"
-        transition-next="slide-left"
-        transition-prev="slide-right"
-        @mouseover="slideAutoplay = false"
-        @mouseleave="slideAutoplay = true"
-        v-model="currentSlide"
-        class="q-mt-md q-mx-lg"
-      >
-        <q-carousel-slide
+      <div class="q-gutter-md row justify-center">
+        <q-card
           v-for="(slide, index) in slides"
-          :img-src="slide.imageUrl"
           :key="index"
-          :name="index"
+          @click="goToDetail(slide.id)"
+          class="q-mx-md q-my-lg cursor-pointer"
+          style="width: 300px"
         >
-          <div class="absolute-center custom-caption">
+          <img
+            :src="slide.imageUrl"
+            alt="Slide Image"
+            style="width: 100%; height: 10rem"
+          />
+          <q-card-section>
             <div
+              class="text-h6 text-bold"
               style="
-                background: linear-gradient(
-                  0deg,
-                  rgba(0, 0, 0, 0.4),
-                  rgba(0, 0, 0, 0.4)
-                );
-                width: 100%;
-                height: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
               "
             >
-              <div class="text-h2 text-bold text-center text-white">
-                {{ slide.title }}
-              </div>
-              <div class="text-subtitle1 text-center text-white">
-                {{ slide.summary }}
-              </div>
+              {{ slide.title }}
             </div>
-          </div>
-        </q-carousel-slide>
+            <div
+              class="text-subtitle2"
+              style="
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: grey;
+              "
+            >
+              {{ slide.summary }}
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
 
-        <!-- <q-carousel-slide
-            :name="1"
-            img-src="https://cdn.quasar.dev/img/mountains.jpg"
-          />
-          <q-carousel-slide
-            :name="2"
-            img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-          />
-          <q-carousel-slide
-            :name="3"
-            img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-          />
-          <q-carousel-slide
-            :name="4"
-            img-src="https://cdn.quasar.dev/img/quasar.jpg"
-          /> -->
-      </q-carousel>
+      <div class="flex items-center justify-center q-mt-xl">
+        <q-btn
+          no-caps
+          icon-right="arrow_right_alt"
+          label="Lihat Selengkapnya"
+          @click="movePage('/news')"
+          style="background: #123b32; color: white"
+        />
+      </div>
     </section>
 
     <section
@@ -315,7 +303,7 @@
 import { ref } from "vue";
 import navbar from "../components/NavbarNew.vue";
 import footerNew from "../components/FooterNew.vue";
-import socket from "src/socket"
+import socket from "src/socket";
 
 export default {
   components: { navbar, footerNew },
@@ -337,14 +325,17 @@ export default {
     this.fetchData();
     this.fetchNews();
     this.fetchEvents();
-    this.socketConnection()
+    this.socketConnection();
   },
   methods: {
-    socketConnection(){
-      socket.connect()
-      socket.on('dashboard', () => {
-        this.fetchData()
-      })
+    goToDetail(id) {
+      this.$router.push({ path: `/detail-news/${id}` });
+    },
+    socketConnection() {
+      socket.connect();
+      socket.on("dashboard", () => {
+        this.fetchData();
+      });
     },
     async fetchData() {
       try {
@@ -397,7 +388,8 @@ export default {
     async fetchNews() {
       try {
         const response = await this.$api.get("news");
-        this.slides = response.data.data.map((news, i) => ({
+        this.slides = response.data.data.slice(0, 6).map((news) => ({
+          id: news.id,
           imageUrl: news.image,
           link: news.link,
           title: news.title,

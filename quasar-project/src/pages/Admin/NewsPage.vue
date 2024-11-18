@@ -73,64 +73,75 @@
       </div>
     </div>
 
-    <q-dialog v-model="newsDialog">
-      <q-card>
+    <q-dialog v-model="newsDialog" persistent>
+      <q-card class="custom-dialog-card">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">Add New Event</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
-        <q-card-section class="flex q-gutter-md">
+        <q-card-section class="q-gutter-md">
           <div>
             <q-input
               filled
               v-model="newsData.title"
               label="Title"
               color="black"
-              bg-color="gray"
+              bg-color="gray-2"
+              :rules="[(val) => (val && val.length > 0) || 'Title is required']"
             />
+
             <q-input
               filled
               v-model="newsData.desc"
               label="Description"
               color="black"
-              bg-color="gray"
+              bg-color="gray-2"
               class="q-mt-md"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Description is required',
+              ]"
             />
+
             <q-input
               filled
               v-model="newsData.link"
-              label="Link"
+              label="Link (optional)"
               color="black"
-              bg-color="gray"
+              bg-color="gray-2"
               class="q-mt-md"
             />
           </div>
 
           <div
-            style="
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-            "
+            class="q-mt-md"
+            style="display: flex; flex-direction: column; gap: 1rem"
           >
-            <div>
-              <q-file
-                filled
-                type="file"
-                v-model="newsData.image"
-                label="Tambahkan Image"
-                color="black"
-                class="ellipsis"
-                style="width: 10rem"
-                @update:model-value="handleUploadNews()"
-              />
-              <q-img :src="imgURLNews" v-if="imgURLNews" />
-            </div>
-            <div>
-              <q-btn :label="currentId ? 'Update': 'Create'" @click="createUpdateData" />
-            </div>
+            <q-file
+              filled
+              v-model="newsData.image"
+              label="Upload Image"
+              color="black"
+              class="ellipsis"
+              style="max-width: 15rem"
+              :rules="[(val) => val || 'Please upload an image']"
+              @update:model-value="handleUploadNews"
+            />
+            <q-img
+              :src="imgURLNews"
+              v-if="imgURLNews"
+              class="q-mt-sm"
+              style="max-width: 100%; border-radius: 8px"
+            />
+
+            <q-btn
+              :label="currentId ? 'Update News' : 'Create News'"
+              color="primary"
+              class="q-mt-md"
+              @click="createUpdateData"
+              :disable="!newsData.title || !newsData.desc || !newsData.image"
+            />
           </div>
         </q-card-section>
       </q-card>
@@ -336,5 +347,11 @@ body {
 
 .form-group button:hover {
   background-color: #0056b3;
+}
+
+.custom-dialog-card {
+  max-width: 800px;
+  width: 100%;
+  margin: auto;
 }
 </style>

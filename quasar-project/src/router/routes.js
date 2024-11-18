@@ -22,12 +22,24 @@ import CheckoutPage from "../pages/CheckoutPage.vue";
 import BllArti from "../pages/NewBaluarti.vue";
 import Musm from "../pages/NewMuseum.vue";
 import Agng from "../pages/NewAgungDalem.vue";
+import DetailBerita from "../pages/DetailBerita.vue";
+import Berita from "../pages/AllNews.vue";
 
 const routes = [
   {
     path: "/agungdalem",
     name: "AgungDalem",
     component: Agng,
+  },
+  {
+    path: "/detail-news/:id",
+    name: "DetailBerita",
+    component: DetailBerita,
+  },
+  {
+    path: "/news",
+    name: "Berita",
+    component: Berita,
   },
   {
     path: "/museum",
