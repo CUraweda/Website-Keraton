@@ -133,6 +133,10 @@
           </div>
 
           <div>
+            <q-btn flat no-caps href="/admin/voucher" label="Voucher" />
+          </div>
+
+          <div>
             <q-btn flat no-caps href="/admin/news" label="Berita" />
           </div>
 
@@ -183,6 +187,14 @@
         label="Tiket"
         :color="isTransparent ? 'white' : 'black'"
         to="/admin/event"
+      />
+
+      <q-btn
+        flat
+        no-caps
+        label="Voucher"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/voucher"
       />
 
       <q-btn
@@ -368,7 +380,11 @@ export default {
       navbarDialog: ref(false),
       toggleNavbar: ref(props.isAdmin),
       sessionData: ref(
-        JSON.parse(sessionStorage.getItem(env.GLOBAL_STORAGE) ? decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE)) : "{}")
+        JSON.parse(
+          sessionStorage.getItem(env.GLOBAL_STORAGE)
+            ? decrypt(sessionStorage.getItem(env.GLOBAL_STORAGE))
+            : "{}"
+        )
       ),
     };
   },

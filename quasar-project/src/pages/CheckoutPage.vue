@@ -186,6 +186,30 @@
                   </template>
                 </q-input>
               </div>
+
+              <div>
+                <div class="flex items-center q-gutter-md">
+                  <q-icon name="discount" color="orange" size="1.8rem" />
+                  <div>Detail Diskon</div>
+                </div>
+                <q-input
+                  outlined
+                  dense
+                  v-model="kodeVoucher"
+                  label="Masukkan Kode Voucher"
+                  class="q-mt-xs"
+                  style="width: 15rem"
+                />
+
+                <q-input
+                  outlined
+                  dense
+                  v-model="discount"
+                  label="Masukkan Kode Voucher"
+                  class="q-mt-md"
+                  style="width: 15rem"
+                />
+              </div>
             </div>
 
             <div class="q-mt-md">
@@ -223,7 +247,7 @@
                       <div v-for="(tax, i) in taxes" :key="i">
                         <div class="flex items-center justify-between">
                           <div>{{ tax.label }}</div>
-                          <div>Rp. {{ formatRupiah(formatTax(tax)) }}</div>
+                          <div>Rp. {{ formatRupiah(tax.price) }}</div>
                         </div>
                       </div>
                     </div>
@@ -370,6 +394,7 @@ export default {
       ticketTotal: ref(0),
       checkoutTotal: ref(0),
       totalTagihan: ref(0),
+      kodeVoucher: ref(""),
       instances: ref([
         {
           label: "Bank BJB",
@@ -463,15 +488,15 @@ export default {
           },
         });
         if (paramResponse.status === 200)
-          this.taxes = paramResponse.data.data.data.nonCash.filter(
-            (data) => data.paidBy === "user"
-          );
+          this.taxes = Object.values(paramResponse.data.data.data);
 
         this.carts = rawCart.map((cart) => {
           this.ticketTotal += cart.quantity;
           this.checkoutTotal += cart.price * cart.quantity;
           return cart;
         });
+
+        console.log(this.carts);
       } catch (err) {
         console.log(err);
       }
@@ -510,10 +535,9 @@ export default {
     changeStorageQuantity(rowData) {
       try {
         const itemId = `${rowData.type}|${rowData.id}`;
-        this.carts = Object.value(this.cartClass.changeQuantity(
-          itemId,
-          rowData.quantity
-        ).userCart);
+        this.carts = Object.value(
+          this.cartClass.changeQuantity(itemId, rowData.quantity).userCart
+        );
       } catch (err) {
         console.log(err);
       }
@@ -564,8 +588,7 @@ export default {
     },
     countTagihan() {
       let taxTotal = 0;
-      for (let tax of this.taxes)
-        taxTotal += tax.multiply ? this.checkoutTotal * tax.tax : tax.tax;
+      for (let tax of this.taxes) taxTotal += tax.price;
       this.totalTagihan = this.checkoutTotal + taxTotal;
     },
     formatRupiah(price) {

@@ -24,6 +24,7 @@ import Musm from "../pages/NewMuseum.vue";
 import Agng from "../pages/NewAgungDalem.vue";
 import DetailBerita from "../pages/DetailBerita.vue";
 import Berita from "../pages/AllNews.vue";
+import VoucherPage from "../pages/Admin/VoucherPage.vue";
 
 const routes = [
   {
@@ -55,6 +56,15 @@ const routes = [
     path: "/admin/subs",
     name: "SubsPage",
     component: SubsPage,
+    meta: {
+      preventToken: true,
+      onlyAdmin: true,
+    },
+  },
+  {
+    path: "/admin/voucher",
+    name: "Voucher",
+    component: VoucherPage,
     meta: {
       preventToken: true,
       onlyAdmin: true,
