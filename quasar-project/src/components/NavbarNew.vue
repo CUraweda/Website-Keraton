@@ -141,6 +141,10 @@
           </div>
 
           <div>
+            <q-btn flat no-caps href="/admin/janji-temu" label="Janji Temu" />
+          </div>
+
+          <div>
             <q-btn flat no-caps href="/admin/user" label="User" />
           </div>
 
@@ -204,7 +208,13 @@
         :color="isTransparent ? 'white' : 'black'"
         to="/admin/news"
       />
-
+      <q-btn
+        flat
+        no-caps
+        label="Janji Temu"
+        :color="isTransparent ? 'white' : 'black'"
+        to="/admin/janji-temu"
+      />
       <q-btn
         flat
         no-caps

@@ -20,6 +20,7 @@ const server = http.createServer(app);
 const allowedOrigins = [
   "http://192.168.100.7:9000",
   "http://localhost:9000", //Development
+  "http://localhost:9001", //Development
   "http://localhost:5173", // POS Development
 ];
 const corsOptions = {
