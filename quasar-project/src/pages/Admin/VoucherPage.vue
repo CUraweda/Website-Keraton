@@ -1,80 +1,94 @@
 <template>
-  <navbar :isAdmin="true" />
-  <div class="q-mx-md q-mt-md">
-    <div class="text-h6 text-semibold">Atur Kode Voucher</div>
-    <div>Ubah dan atur voucher untuk pembelian tiket</div>
-    <div class="flex justify-end">
-      <q-btn
-        label="Tambah Voucher"
-        color="primary"
-        no-caps
-        class="q-my-md"
-        @click="openDialog"
-      />
-    </div>
-    <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-md">
-      <template v-slot:body-cell-Action="scope">
-        <div
-          style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-          "
-        >
-          <q-btn
-            no-caps
-            color="positive"
-            label="Edit"
-            @click="openDialog(scope.row)"
-          />
-          <q-btn
-            no-caps
-            color="negative"
-            label="Hapus"
-            @click="handleDelete(scope.row.id)"
-          />
-        </div>
-      </template>
-    </q-table>
-
-    <q-dialog v-model="isDialogOpen">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">
-            {{ isEditMode ? "Edit Voucher" : "Tambah Voucher" }}
+  <div>
+    <navbar :isAdmin="true" />
+    <div class="q-mx-md q-mt-md">
+      <div class="text-h6 text-semibold">Atur Kode Voucher</div>
+      <div>Ubah dan atur voucher untuk pembelian tiket</div>
+      <div class="flex justify-end">
+        <q-btn
+          icon="add"
+          color="green"
+          no-caps
+          class="q-my-md"
+          @click="openDialog(null, 'create')"
+        />
+      </div>
+      <q-table :rows="rows" :columns="columns" row-key="name" class="q-mt-md">
+        <template v-slot:body-cell-Action="scope">
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 1rem;
+            "
+          >
+            <q-btn
+              no-caps
+              color="positive"
+              label="Edit"
+              @click="openDialog(scope.row, 'edit')"
+            />
+            <q-btn
+              no-caps
+              color="negative"
+              label="Hapus"
+              @click="handleDelete(scope.row.id)"
+            />
           </div>
-        </q-card-section>
-        <q-card-section>
-          <q-input
-            v-model="code"
-            label="Kode Voucher"
-            filled
-            dense
-            class="q-mb-sm"
-          />
-          <q-input
-            v-model.number="discount_price"
-            label="Harga Diskon"
-            type="number"
-            filled
-            dense
-            class="q-mb-sm"
-          />
-          <q-input
-            v-model="description"
-            label="Deskripsi"
-            type="textarea"
-            filled
-            dense
-          />
-        </q-card-section>
-        <q-card-actions align="right">
-          <q-btn no-caps label="Batal" color="negative" @click="closeDialog" />
-          <q-btn no-caps label="Simpan" color="primary" @click="handleSubmit" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+        </template>
+      </q-table>
+
+      <q-dialog v-model="isDialogOpen">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">
+              {{ isEditMode ? "Edit Voucher" : "Tambah Voucher" }}
+            </div>
+          </q-card-section>
+          <q-card-section>
+            <q-input
+              upper-case
+              v-model="code"
+              label="Kode Voucher"
+              filled
+              dense
+              class="uppercase q-mb-sm"
+              mask="AAAAAAAAAAAAAAAA"
+            />
+            <q-input
+              v-model.number="discount_price"
+              label="Harga Diskon"
+              type="number"
+              filled
+              dense
+              class="q-mb-sm"
+            />
+            <q-input
+              v-model="description"
+              label="Deskripsi"
+              type="textarea"
+              filled
+              dense
+            />
+          </q-card-section>
+          <q-card-actions align="right">
+            <q-btn
+              no-caps
+              label="Batal"
+              color="negative"
+              @click="closeDialog"
+            />
+            <q-btn
+              no-caps
+              label="Simpan"
+              color="primary"
+              @click="handleSubmit"
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </div>
 </template>
 
@@ -142,8 +156,8 @@ export default {
         console.error(error);
       }
     },
-    openDialog(row = null) {
-      if (row) {
+    openDialog(row = null, type) {
+      if (type == "edit") {
         this.isEditMode = true;
         this.selectedId = row.id;
         this.code = row.code_voucher;

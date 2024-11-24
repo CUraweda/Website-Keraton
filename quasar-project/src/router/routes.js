@@ -28,12 +28,18 @@ import AdminJanjiTemu from "../pages/Admin/JanjiTemu.vue";
 import DetailBerita from "../pages/DetailBerita.vue";
 import Berita from "../pages/AllNews.vue";
 import VoucherPage from "../pages/Admin/VoucherPage.vue";
+import MuseumAi from "../pages/MuseumAi.vue";
 
 const router = [
   {
     path: "/agungdalem",
     name: "AgungDalem",
     component: Agng,
+  },
+  {
+    path: "/wisata/museumai",
+    name: "MuseumAi",
+    component: MuseumAi,
   },
   {
     path: "/detail-news/:id",

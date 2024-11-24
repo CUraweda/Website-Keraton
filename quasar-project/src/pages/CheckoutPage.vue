@@ -107,23 +107,23 @@
         <!-- Sticky Right Content -->
         <div class="sticky-container q-mt-md" style="flex: 1">
           <div class="sticky-div q-gutter-y-md">
-            <div>
-              <div class="flex items-center q-gutter-md">
-                <q-icon name="person" color="orange" size="2rem" />
-                <div>Detail Pemesan</div>
-              </div>
-
-              <div class="flex items-center q-gutter-md">
-                <div class="text-bold" style="font-size: 1rem">
-                  {{ user.name }}
-                </div>
-                <div style="font-size: 1rem">
-                  {{ "- (" + user.email + ")" }}
-                </div>
-              </div>
-            </div>
-
             <div class="flex items-center justify-between q-gutter-md">
+              <div>
+                <div class="flex items-center q-gutter-md">
+                  <q-icon name="person" color="orange" size="2rem" />
+                  <div>Detail Pemesan</div>
+                </div>
+
+                <div class="flex items-center q-gutter-md">
+                  <div class="text-bold" style="font-size: 1rem">
+                    {{ user.name }}
+                  </div>
+                  <div style="font-size: 1rem">
+                    {{ "- (" + user.email + ")" }}
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <div class="flex items-center q-gutter-md">
                   <q-icon
@@ -150,7 +150,9 @@
                   </div>
                 </q-btn>
               </div>
+            </div>
 
+            <div class="flex items-center justify-between q-gutter-md">
               <div>
                 <div class="flex items-center q-gutter-md">
                   <q-icon
@@ -193,21 +195,23 @@
                   <div>Detail Diskon</div>
                 </div>
                 <q-input
+                  upper-case
                   outlined
                   dense
                   v-model="kodeVoucher"
                   label="Masukkan Kode Voucher"
-                  class="q-mt-xs"
+                  class="q-mt-xs uppercase"
                   style="width: 15rem"
+                  mask="AAAAAAAAAAAAAAAA"
                 />
 
-                <q-input
-                  outlined
+                <q-select
+                  v-model="diskon"
+                  :options="diskonOption"
                   dense
-                  v-model="discount"
-                  label="Masukkan Kode Voucher"
+                  outlined
+                  label="Sistem Pembayaran"
                   class="q-mt-md"
-                  style="width: 15rem"
                 />
               </div>
             </div>
@@ -247,7 +251,7 @@
                       <div v-for="(tax, i) in taxes" :key="i">
                         <div class="flex items-center justify-between">
                           <div>{{ tax.label }}</div>
-                          <div>Rp. {{ formatRupiah(tax.price) }}</div>
+                          <div>Rp. {{ formatRupiah(formatTax(tax)) }}</div>
                         </div>
                       </div>
                     </div>
@@ -395,6 +399,11 @@ export default {
       checkoutTotal: ref(0),
       totalTagihan: ref(0),
       kodeVoucher: ref(""),
+      diskon: ref(),
+      diskonOption: ref([
+        { value: 50, label: "Separuh" },
+        { value: 100, label: "Penuh" },
+      ]),
       instances: ref([
         {
           label: "Bank BJB",
@@ -488,15 +497,15 @@ export default {
           },
         });
         if (paramResponse.status === 200)
-          this.taxes = Object.values(paramResponse.data.data.data);
+          this.taxes = paramResponse.data.data.data.nonCash.filter(
+            (data) => data.paidBy === "user"
+          );
 
         this.carts = rawCart.map((cart) => {
           this.ticketTotal += cart.quantity;
           this.checkoutTotal += cart.price * cart.quantity;
           return cart;
         });
-
-        console.log(this.carts);
       } catch (err) {
         console.log(err);
       }
@@ -567,6 +576,8 @@ export default {
             carts: sendedCart,
             method: this.paymentMethod,
             plannedDate,
+            discount_code: this.kodeVoucher,
+            pay_percentage: this.diskon.value,
           },
           {
             headers: {
@@ -588,7 +599,8 @@ export default {
     },
     countTagihan() {
       let taxTotal = 0;
-      for (let tax of this.taxes) taxTotal += tax.price;
+      for (let tax of this.taxes)
+        taxTotal += tax.multiply ? this.checkoutTotal * tax.tax : tax.tax;
       this.totalTagihan = this.checkoutTotal + taxTotal;
     },
     formatRupiah(price) {
@@ -603,7 +615,7 @@ export default {
     },
     payWith(indicator) {
       this.paymentMethod = indicator.value;
-      this.caraPembayaran = false; //Clos Payment Mehod Pop Up
+      this.caraPembayaran = false;
     },
   },
 };
@@ -623,11 +635,11 @@ div {
 .sticky-container {
   display: flex;
   flex-direction: column;
-  width: 20rem; /* Adjust based on desired width */
+  width: 20rem;
 }
 
 .sticky-div {
-  position: -webkit-sticky; /* For Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
