@@ -79,11 +79,7 @@
 
                 <q-card-actions>
                   <div class="text-subtitle1 text-weight-medium">
-                    {{
-                      item.price < 1
-                        ? "Free"
-                        : "Rp. " + formatRupiah(item.price)
-                    }}
+                    {{ formatRupiah(item.price) }}
                   </div>
                   <q-space />
                   <q-btn
@@ -148,11 +144,7 @@
 
                   <q-card-actions>
                     <div class="text-subtitle1 text-weight-medium">
-                      {{
-                        data.price < 1
-                          ? "Free"
-                          : "Rp. " + formatRupiah(data.price)
-                      }}
+                      {{ formatRupiah(data.price) }}
                     </div>
                     <q-space />
                     <q-btn
@@ -276,7 +268,7 @@ export default {
                   });
               }
               break;
-            case (2, 4):
+            case (2, 4, 3):
               if (!pakets[subTypeName]) pakets[subTypeName] = [];
 
               for (let order of subType.orders) {
@@ -288,7 +280,7 @@ export default {
                   titleBig: order.name,
                   minimumUnit: subType.minimumUnits,
                   quantity: 0,
-                  price: order.price,
+                  // price: order.price,s
                   unit: order.units,
                   is_janji: order.is_janji,
                 };
@@ -331,10 +323,20 @@ export default {
       }
     },
     formatRupiah(price) {
-      return (price / 1000).toLocaleString("en-US", {
-        minimumFractionDigits: 3,
-      });
+      if (isNaN(price) || price === null || price === undefined) {
+        return ""; // Tidak menampilkan apapun jika NaN atau tidak valid
+      }
+      if (price < 1) {
+        return "Free"; // Tampilkan "Free" jika price kurang dari 1
+      }
+      return (
+        "Rp. " +
+        (price / 1000).toLocaleString("en-US", {
+          minimumFractionDigits: 3,
+        })
+      );
     },
+
     addToCart(rowData) {
       try {
         const tokenExist = cookieHandler.getCookie(env.TOKEN_STORAGE_NAME);

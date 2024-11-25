@@ -2,7 +2,7 @@
   <div>
     <navbar :isAdmin="false" />
 
-    <section ref="section1" class="background-baluarti">
+    <section ref="section1" class="background-museumai">
       <div class="text-h2 text-white text-bold text-center">Museum Ai</div>
 
       <div
@@ -10,18 +10,16 @@
         style="margin-top: 10rem"
       >
         <div style="width: 20rem" class="text-weight-bold text-center">
-          Museum Pusaka ini terletak di dalam kompleks Keraton Kasepuhan,
-          Cirebon, Jawa Barat.
+          Museum Ai ini terletak di dalam kompleks Keraton Kasepuhan, Cirebon,
+          Jawa Barat.
         </div>
 
         <div style="width: 20rem" class="text-weight-bold text-center">
-          Didirikan pada tahun 1981 oleh Sultan Sepuh XIV, Pangeran Raja
-          Mochamad Jayadiningrat.
+          Didirikan pada tahun 2024 dengan kerja sama orang orang yang hebat.
         </div>
 
         <div style="width: 20rem" class="text-weight-bold text-center">
-          Museum ini memiliki luas sekitar 1.200 meter persegi dan terdiri dari
-          dua lantai.
+          Museum ini memiliki sebuah makna dan kesan yang hebat
         </div>
       </div>
 
@@ -42,38 +40,38 @@
       </div>
 
       <div class="text-h6 q-mt-md text-center">
-        Museum ini menyimpan berbagai koleksi benda bersejarah, seperti kereta
-        kencana, gamelan, dan lukisan.
+        Museum ini menyimpan berbagai sejarah pangeran pangeran Keraton
+        Kasepuhan Cirebon
       </div>
 
       <div class="q-mt-xl">
         <div class="flex items-center justify-center q-gutter-md">
           <q-img
-            src="../assets/images/sejarahslider1.png"
+            src="../assets/images/Gambar1.jpg"
             id="card-0"
             :class="{ cardd: true, active: currentIndex === 0 }"
             class="img-card"
           />
           <q-img
-            src="../assets/images/sejarahslider2.png"
+            src="../assets/images/Gambar2.jpg"
             id="card-1"
             :class="{ cardd: true, active: currentIndex === 1 }"
             class="img-card"
           />
           <q-img
-            src="../assets/images/sejarahslider3.png"
+            src="../assets/images/Gambar3.jpg"
             id="card-2"
             :class="{ cardd: true, active: currentIndex === 2 }"
             class="img-card"
           />
           <q-img
-            src="../assets/images/sejarahslider4.png"
+            src="../assets/images/Gambar4.jpg"
             id="card-3"
             :class="{ cardd: true, active: currentIndex === 3 }"
             class="img-card"
           />
           <q-img
-            src="../assets/images/sejarahslider5.png"
+            src="../assets/images/Gambar9.jpg"
             id="card-4"
             :class="{ cardd: true, active: currentIndex === 4 }"
             class="img-card"
@@ -215,9 +213,9 @@ export default {
       wisataName: ref(),
       currentIndex: 2,
       images: [
-        { src: "../src/assets/images/sejarahslider2.png" },
-        { src: "../src/assets/images/sejarahslider1.png" },
-        { src: "../src/assets/images/sejarahslider3.png" },
+        { src: "../src/assets/images/Gambar1.jpg" },
+        { src: "../src/assets/images/Gambar2.jpg" },
+        { src: "../src/assets/images/Gambar3.jpg" },
         { src: "../src/assets/images/sejarahslider4.png" },
         { src: "../src/assets/images/sejarahslider5.png" },
       ],
@@ -246,5 +244,29 @@ export default {
 <style scoped>
 .background-footer {
   background-image: url("../assets/images/batik.png");
+}
+
+.background-museumai {
+  background-image: url("../assets/images/image23.png");
+  display: flex;
+  padding: 9.5rem 0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 1; /* Untuk memastikan konten di atas overlay */
+}
+
+.background-museumai::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Warna hitam dengan opasitas 50% */
+  z-index: -1; /* Letakkan di bawah konten */
 }
 </style>
