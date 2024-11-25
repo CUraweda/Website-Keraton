@@ -8,8 +8,8 @@ import axios from "axios";
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  // baseURL: "https://api-prmn.curaweda.com:3031/keraton/",
-  baseURL: "http://localhost:3000/keraton",
+  baseURL: "https://api-prmn.curaweda.com:3031/keraton/",
+  // baseURL: "http://localhost:3000/keraton",
 });
 
 // const api = axios.create({ baseURL: "http://localhost:3000/keraton/" });
